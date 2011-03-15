@@ -7,7 +7,7 @@ WebyMaze.ShootCli	= function(opts){
 	
 	// build this.mesh
 	var bodyWidth	= 50;
-	var geometry	= new Sphere( bodyWidth/2, 32, 16 );
+	var geometry	= new Sphere( bodyWidth/2, 16, 8 );
 	var material	= [
 		new THREE.MeshLambertMaterial( { color: 0x00aaff, shading: THREE.SmoothShading } ),
 		//new THREE.MeshBasicMaterial( { color: 0x884400, shading: THREE.FlatShading, wireframe: true } )

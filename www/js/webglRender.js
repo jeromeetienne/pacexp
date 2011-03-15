@@ -12,7 +12,7 @@ WebyMaze.WebglRender	= function(opts){
 		map	: ctxInit.map
 	})
 	// update the global scene with this.mazeCli
-	scene.addObject( this.mazeCli.buildObject3d() );
+	sceneContainer.addChild( this.mazeCli.buildObject3d() );
 
 	this.players	= {};
 	this.shoots	= {};
@@ -26,7 +26,6 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
 
-var proutprout	= false;
 WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//console.log("ctxTick", ctxTick.players)
 	
@@ -46,8 +45,28 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 			rotation	: player.rotation
 		});
 		// add this body to the scene
-		scene.addObject( this.players[bodyId].getObject3d() );
+		sceneContainer.addChild( this.players[bodyId].getObject3d() );
 	}.bind(this));
+
+	//this.mazeCli.group.rotation.z	= Math.sin( new Date().getTime() * 0.0003 ) * 0.5;
+	//this.mazeCli.group.rotation.z	= (clientX%360)*Math.PI/180;
+	//sceneContainer.position.z	= 4000+clientY*10;
+	//sceneContainer.rotation.x	= 100*Math.PI/180;
+	//sceneContainer.position.z	= 4800;
+	
+
+	var myBodyId	= Object.keys(this.players)[0];
+	var myPlayer	= this.players[myBodyId];
+	//
+	//this.mazeCli.group.rotation.z	= myPlayer.mesh.rotation.z;
+	
+	//this.group.rotation.x = - 90 * Math.PI / 180;
+	//this.group.position.y = -120;
+	//this.group.position.z = 5000;
+	//
+	
+	//sceneContainer.position.z	= 6000;
+
 
 	// handle ctxTick.shoots
 	ctxTick.shoots.forEach(function(shoot){
@@ -65,7 +84,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 			rotation	: shoot.rotation
 		});
 		// add this body to the scene
-		scene.addObject( this.shoots[bodyId].getObject3d() );
+		sceneContainer.addChild( this.shoots[bodyId].getObject3d() );
 	}.bind(this));
 	
 	Object.keys(this.shoots).forEach(function(bodyId){

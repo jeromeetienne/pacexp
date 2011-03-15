@@ -18,10 +18,10 @@ WebyMaze.MazeCli.prototype.buildObject3d	= function(){
 	material	= new THREE.MeshLambertMaterial( { color: 0xdddddd, shading: THREE.SmoothShading } )
 	material	= [
 		new THREE.MeshLambertMaterial( { color: 0xffaa00, shading: THREE.SmoothShading } ),
-		new THREE.MeshBasicMaterial( { color: 0x884400, shading: THREE.FlatShading, wireframe: true } )
+		new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
 	];
 
-	var group 	= new THREE.Object3D();
+	this.group 	= new THREE.Object3D();
 	var map		= this.map;
 	var MazeCliH	= map.length;
 	var MazeCliW	= map[0].length;
@@ -31,14 +31,15 @@ WebyMaze.MazeCli.prototype.buildObject3d	= function(){
 			var MazeCliXY	= MazeCliLine.charAt(x);
 			if( MazeCliXY != '*' )	continue;
 			
-			var mesh = new THREE.Mesh( geometry, material );
+			var mesh = new THREE.Mesh( geometry, material );			
 			mesh.position.x = x * cubeW - MazeCliW*cubeW/2;
 			mesh.position.y = y * cubeW - MazeCliH*cubeW/2;
-			mesh.matrixAutoUpdate = false;
-			mesh.updateMatrix();
+			
+			//mesh.matrixAutoUpdate = false;
+			//mesh.updateMatrix();
 
-			group.addChild( mesh );
+			this.group.addChild( mesh );
 		}
-	}		
-	return group;
+	}
+	return this.group;
 }

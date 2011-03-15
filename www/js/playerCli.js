@@ -22,29 +22,52 @@ function generateTexture() {
 	return canvas;
 }
 
+function generateTextureAvatar() {
+	var img		= document.getElementById('avatar');
+	var canvas	= document.createElement('canvas');
+	var w		= 256
+	canvas.width	= w;
+	canvas.height	= w;
+	var context	= canvas.getContext( '2d' );
+	context.translate(w, w/2)
+	context.rotate(-90*Math.PI/180);
+	context.drawImage(img, -w/4, -w/4, w/2, w/2)
+	return canvas;
+}
+
 var generatedTexture = new THREE.Texture( generateTexture() );
 generatedTexture.needsUpdate = true;
 
-
 WebyMaze.PlayerCli	= function(opts){
+
 	// get parameter from opts
 	var position	= opts.position	|| console.assert(false);
 	var rotation	= opts.rotation || console.assert(false);
-	
+
+
+var generatedTexture = new THREE.Texture( generateTextureAvatar() );
+generatedTexture.needsUpdate = true;
+
 	// build this.mesh
 	var cubeW	= 100;
 	var geometry	= new Sphere( cubeW/2, 32, 16 );
 	var material	= [
-		new THREE.MeshLambertMaterial( { color: 0xffaa00, shading: THREE.SmoothShading } ),
+		new THREE.MeshLambertMaterial( { color: 0xaaFF00, shading: THREE.SmoothShading } ),
 		new THREE.MeshBasicMaterial( { color: 0x884400, shading: THREE.FlatShading, wireframe: true } )
 	];
-	var material	= new THREE.MeshLambertMaterial( { map: generatedTexture } );
+	var material	= [
+		new THREE.MeshLambertMaterial( { color: 0x00FF00, shading: THREE.SmoothShading } ),
+		new THREE.MeshLambertMaterial( { map: generatedTexture } ),
+	];
 
 	this.mesh	= new THREE.Mesh(geometry, material);
 
 	this.mesh.position.x	= position.x;
 	this.mesh.position.y	= position.y;
 	this.mesh.rotation.z	= rotation.z;
+
+console.log("player mesh")
+console.dir(this.mesh)
 }
 
 WebyMaze.PlayerCli.prototype.destroy	= function(){
