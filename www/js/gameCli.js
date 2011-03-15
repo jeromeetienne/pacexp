@@ -8,10 +8,9 @@ WebyMaze.GameCli	= function(opts){
 	this.userInputCtor();
 	this.socketCtor();
 }
-WebyMaze.GameCli.destroy	= function(){
+WebyMaze.GameCli.prototype.destroy	= function(){
 	this.userInputDtor();	
 	this.socketDtor();
-	this.loopDtor();
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -31,6 +30,7 @@ WebyMaze.GameCli.prototype.userInputCtor	= function(){
 	}.bind(this);
 	var onKeyDown = function ( event ) {
 		switch( event.keyCode ) {
+			case 32: /* space */	send('shoot', true);		break;
 			case 38: /*up*/
 			case 87: /*W*/		send('moveForward', true);	break;
 			case 37: /*left*/
@@ -42,7 +42,9 @@ WebyMaze.GameCli.prototype.userInputCtor	= function(){
 		}
 	}.bind(this);
 	var onKeyUp = function ( event ){
+		//console.log("event. keyCode", event.keyCode)
 		switch( event.keyCode ){
+			case 32: /* space */	send('shoot', false);		break;
 			case 38: /*up*/
 			case 87: /*W*/		send('moveForward', false);	break;
 			case 37: /*left*/
@@ -96,9 +98,11 @@ WebyMaze.GameCli.prototype.socketOnConnect	= function(){
 WebyMaze.GameCli.prototype.socketOnMessage	= function(message){
 	//console.log("onMessage", JSON.stringify(message));
 	if( message.type === 'contextInit' ){
-		this.ctxInit	= message.data;
+		this.webglRender= new WebyMaze.WebglRender({
+			ctxInit	: message.data
+		})
 	}else if( message.type === 'contextTick' ){
-		this.ctxTick	= message.data;
+		this.webglRender.setCtxTick(message.data);
 	}else {
 		console.assert(false);
 	}

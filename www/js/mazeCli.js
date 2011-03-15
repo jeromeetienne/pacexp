@@ -2,18 +2,7 @@
 var WebyMaze	= WebyMaze || {};
 
 WebyMaze.MazeCli	= function(opts){
-// TODO to reenable
-//	this.map	= opts.map	|| console.assert(false);
-	this.map	= [
-		"**.*************",
-		"*...*..*...*.*.*",
-		"*...*..*.....*.*",
-		"*...*.....**.*.*",
-		"*...*..*...*...*",
-		"*..............*",
-		"*..............*",
-		"*****.***.******",
-	];
+	this.map	= opts.map	|| console.assert(false);
 }
 
 WebyMaze.MazeCli.prototype.getMap	= function(){
@@ -27,6 +16,10 @@ WebyMaze.MazeCli.prototype.buildObject3d	= function(){
 	//var geometry = new Sphere( cubeW/2, 64, 32 );
 	var material	= new THREE.MeshNormalMaterial();
 	material	= new THREE.MeshLambertMaterial( { color: 0xdddddd, shading: THREE.SmoothShading } )
+	material	= [
+		new THREE.MeshLambertMaterial( { color: 0xffaa00, shading: THREE.SmoothShading } ),
+		new THREE.MeshBasicMaterial( { color: 0x884400, shading: THREE.FlatShading, wireframe: true } )
+	];
 
 	var group 	= new THREE.Object3D();
 	var map		= this.map;
