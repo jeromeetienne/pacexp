@@ -14,6 +14,7 @@ WebyMaze.WebglRender	= function(opts){
 	// update the global scene with this.mazeCli
 	sceneContainer.addChild( this.mazeCli.buildObject3d() );
 
+	this.urBodyId	= ctxInit.urBodyId;
 	this.players	= {};
 	this.shoots	= {};
 }
@@ -48,25 +49,39 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 		sceneContainer.addChild( this.players[bodyId].getObject3d() );
 	}.bind(this));
 
+	Object.keys(this.players).forEach(function(bodyId){
+		for(var i = 0; i < ctxTick.players.length; i++){
+			var player	= ctxTick.players[i];
+			if( bodyId === player.bodyId ) return;
+		}
+		console.log("delete player", bodyId)
+		scene.removeObject( this.players[bodyId].getObject3d() );
+		this.players[bodyId].destroy();
+		delete this.players[bodyId];
+	}.bind(this));
+
 	//this.mazeCli.group.rotation.z	= Math.sin( new Date().getTime() * 0.0003 ) * 0.5;
 	//this.mazeCli.group.rotation.z	= (clientX%360)*Math.PI/180;
 	//sceneContainer.position.z	= 4000+clientY*10;
-	//sceneContainer.rotation.x	= 100*Math.PI/180;
+	sceneContainer.rotation.x	= 100*Math.PI/180;
 	//sceneContainer.position.z	= 4800;
 	
+	//camera.target.rotation.z = 90;
 
-	var myBodyId	= Object.keys(this.players)[0];
-	var myPlayer	= this.players[myBodyId];
+	//var myBodyId	= Object.keys(this.players)[0];
+	var myPlayer	= this.players[this.urBodyId];
 	//
 	//this.mazeCli.group.rotation.z	= myPlayer.mesh.rotation.z;
 	
-	//this.group.rotation.x = - 90 * Math.PI / 180;
-	//this.group.position.y = -120;
-	//this.group.position.z = 5000;
+	//sceneContainer.position.x	= -myPlayer.mesh.position.x;
+	//sceneContainer.position.y	= -myPlayer.mesh.position.y;
+	//sceneContainer.rotation.z	= -myPlayer.mesh.rotation.z;
 	//
+	//
+	//sceneContainer.rotation.x = - 90 * Math.PI / 180;
 	
-	//sceneContainer.position.z	= 6000;
-
+	myPlayer.mesh.addChild( camera )
+	
 
 	// handle ctxTick.shoots
 	ctxTick.shoots.forEach(function(shoot){
@@ -87,6 +102,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 		sceneContainer.addChild( this.shoots[bodyId].getObject3d() );
 	}.bind(this));
 	
+
 	Object.keys(this.shoots).forEach(function(bodyId){
 		for(var i = 0; i < ctxTick.shoots.length; i++){
 			var shoot	= ctxTick.shoots[i];

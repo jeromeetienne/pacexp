@@ -35,8 +35,8 @@ WebyMaze.MazeCli.prototype.buildObject3d	= function(){
 			mesh.position.x = x * cubeW - MazeCliW*cubeW/2;
 			mesh.position.y = y * cubeW - MazeCliH*cubeW/2;
 			
-			//mesh.matrixAutoUpdate = false;
-			//mesh.updateMatrix();
+			mesh.matrixAutoUpdate = false;
+			mesh.updateMatrix();
 
 			this.group.addChild( mesh );
 		}
