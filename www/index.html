@@ -17,6 +17,7 @@
 
 		<!-- <script type="text/javascript" src="../build/Three.js"></script> -->
 
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
 		<script type="text/javascript" src="vendor/three.js/examples/../build/Three.js"></script>
 		
 		<img id='avatar' src="images/jetienne-avatar.jpg" style="display: none;">
@@ -35,8 +36,13 @@
 		
 
 		<!-- To get Soundmanager -->
-		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
-	
+<!--		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
+-->	
 		<script src="js/client.js"></script>
+		<script>
+		jQuery(function(){
+			main3d();
+		})
+		</script>
 	</body>
 </html>

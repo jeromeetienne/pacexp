@@ -63,7 +63,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//this.mazeCli.group.rotation.z	= Math.sin( new Date().getTime() * 0.0003 ) * 0.5;
 	//this.mazeCli.group.rotation.z	= (clientX%360)*Math.PI/180;
 	//sceneContainer.position.z	= 4000+clientY*10;
-	sceneContainer.rotation.x	= 100*Math.PI/180;
+	//sceneContainer.rotation.x	= 100*Math.PI/180;
 	//sceneContainer.position.z	= 4800;
 	
 	//camera.target.rotation.z = 90;
@@ -80,7 +80,20 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//
 	//sceneContainer.rotation.x = - 90 * Math.PI / 180;
 	
-	myPlayer.mesh.addChild( camera )
+	if(true){
+		myPlayer.mesh.addChild( camera )
+	}else{
+		camera.position.x = myPlayer.mesh.position.x;
+		//camera.position.y = myPlayer.mesh.position.y;
+		camera.position.z = myPlayer.mesh.position.z-500;
+	
+		//camera.target.position.x = myPlayer.mesh.position.x;
+		//camera.target.position.y = myPlayer.mesh.position.y;
+		//camera.target.position.z = myPlayer.mesh.position.z;
+		
+		//camera.target.lookAt(myPlayer.mesh.position);		
+	}
+	
 	
 
 	// handle ctxTick.shoots

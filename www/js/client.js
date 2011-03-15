@@ -1,3 +1,6 @@
+/**
+ * Global var... to remove
+*/
 var container, stats;
 
 var camera, scene, renderer;
@@ -6,17 +9,42 @@ var sceneContainer;
 
 var mouseX = 0, mouseY = 0;
 
+var clientX	= null;
+var clientY	= null;
+
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY	= window.innerHeight / 2;
 
-document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+var soundRender	= null;
+var gameCli	= null;
 
-var soundRender	= new WebyMaze.SoundRender();
-var gameCli	= new WebyMaze.GameCli();
+main	= function(){
+	main3d();	return;
+	var twitterName	= "jerome_etienne";
+	if( location.hash ) twitterName = location.hash.substring(1)
+	console.log(twitterName)
+
+	var apiUrl	= 'http://twitter.com/users/'+twitterName+'.json?callback=?';
+	jQuery.getJSON(apiUrl, function(data){
+		var imgUrl	= data.profile_image_url;
+		var element	= jQuery("<img>").attr('src', imgUrl);
+		
+		jQuery('#avatar').replaceWith(element);
+		jQuery(element).bind('load', function(){
+			console.log("avatar loaded")
+			//main3d();
+		})
+	})
+}
 
 
-init();
-animate();
+main3d	= function(){	
+	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
+	soundRender	= new WebyMaze.SoundRender();
+	gameCli		= new WebyMaze.GameCli();
+	init();
+	animate();
+}
 
 function init() {
 
@@ -24,7 +52,7 @@ function init() {
 	document.body.appendChild( container );
 
 	if( true ){
-		camera = new THREE.Camera( 60/3, window.innerWidth / window.innerHeight, 1, 10000 );
+		camera = new THREE.Camera( 60/3, window.innerWidth / window.innerHeight, 1, 100000 );
 		camera.position.x = 0;
 		camera.position.y = 0;
 		camera.position.z = 4000;
@@ -74,8 +102,6 @@ console.log("scene", scene);
 	container.appendChild( stats.domElement );
 }
 
-var clientX	= null;
-var clientY	= null;
 function onDocumentMouseMove(event) {
 clientX	= event.clientX;
 clientY	= event.clientY;
