@@ -21,7 +21,8 @@ apache2_install_prod: apache2_copy_conf_prod apache2_restart
 apache2_install_dev: apache2_copy_conf_dev apache2_restart
 
 apache2_restart:
-	sudo /etc/init.d/apache2 restart
+	sudo /etc/init.d/apache2 stop
+	sudo /etc/init.d/apache2 start
 
 apache2_copy_conf_dev:
 	sudo ln -fs $(PWD)/etc/pacmazecom_dev_siteconf $(APACHE2_CONFFILE)
@@ -36,4 +37,5 @@ apache2_copy_conf_prod:
 deploy:	build deployDedixl
 
 deployDedixl:
+	#rsync -avz --rsh=ssh build/ /home/jerome/public_html/pacmaze_www_build
 	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/pacmaze_www_build
