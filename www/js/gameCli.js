@@ -14,6 +14,21 @@ WebyMaze.GameCli.prototype.destroy	= function(){
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+//		message handlers						//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.GameCli.prototype.onContextInit	= function(message){
+	console.assert(!this.webglRender);
+	this.webglRender	= new WebyMaze.WebglRender({
+		ctxInit	: message.data
+	})
+}
+WebyMaze.GameCli.prototype.onContextTick	= function(message){
+	console.assert(this.webglRender);
+	this.webglRender.setCtxTick(message.data);
+}
+
+//////////////////////////////////////////////////////////////////////////////////
 //		userInput							//
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -28,35 +43,24 @@ WebyMaze.GameCli.prototype.userInputCtor	= function(){
 			}
 		});
 	}.bind(this);
-	var onKeyDown = function ( event ) {
+	var setMove	= function(event, value){
+		// https://developer.mozilla.org/en/DOM/Event/UIEvent/KeyEvent
 		switch( event.keyCode ) {
-			case 32: /* space */	send('shoot', true);		break;
+			case 32: /* space */	send('shoot', value);		break;
+			case 90: /*Z*/
 			case 38: /*up*/
-			case 87: /*W*/		send('moveForward', true);	break;
+			case 87: /*W*/		send('moveForward', value);	break;
 			case 37: /*left*/
-			case 65: /*A*/		send('moveLeft', true);		break;
+			case 81: /*Z*/
+			case 65: /*A*/		send('moveLeft', value);	break;
 			case 40: /*down*/
-			case 83: /*S*/		send('moveBackward', true);	break;
+			case 83: /*S*/		send('moveBackward', value);	break;
 			case 39: /*right*/
-			case 68: /*D*/		send('moveRight', true);	break;
+			case 68: /*D*/		send('moveRight', value);	break;
 		}
-	}.bind(this);
-	var onKeyUp = function ( event ){
-		//console.log("event. keyCode", event.keyCode)
-		switch( event.keyCode ){
-			case 32: /* space */	send('shoot', false);		break;
-			case 38: /*up*/
-			case 87: /*W*/		send('moveForward', false);	break;
-			case 37: /*left*/
-			case 65: /*A*/		send('moveLeft', false);	break;
-			case 40: /*down*/
-			case 83: /*S*/		send('moveBackward', false);	break;
-			case 39: /*right*/
-			case 68: /*D*/		send('moveRight', false);	break;
-		}
-	}.bind(this);
-	document.addEventListener( 'keydown'	, onKeyDown	, false );
-	document.addEventListener( 'keyup'	, onKeyUp	, false );
+	}
+	document.addEventListener( 'keydown'	, function(e){setMove(e, true);}	, false );
+	document.addEventListener( 'keyup'	, function(e){setMove(e, false);}	, false );
 }
 WebyMaze.GameCli.prototype.userInputDtor	= function(){
 	console.assert(false, "not yet implemented")
@@ -93,16 +97,22 @@ WebyMaze.GameCli.prototype.socketDtor	= function(){
 
 WebyMaze.GameCli.prototype.socketOnConnect	= function(){
 	console.log("onConnect")
+	this.socketSend({
+		type	: "gameReq",
+		data	: {
+			gameTitle	: locationHash.get('gameTitle'),
+			gameId		: locationHash.get('gameId'),
+			username	: locationHash.get('username')
+		}
+	});
 }
 
 WebyMaze.GameCli.prototype.socketOnMessage	= function(message){
 	//console.log("onMessage", JSON.stringify(message));
 	if( message.type === 'contextInit' ){
-		this.webglRender= new WebyMaze.WebglRender({
-			ctxInit	: message.data
-		})
+		this.onContextInit(message);
 	}else if( message.type === 'contextTick' ){
-		this.webglRender.setCtxTick(message.data);
+		this.onContextTick(message);
 	}else {
 		console.assert(false);
 	}

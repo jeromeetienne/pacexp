@@ -1,0 +1,13 @@
+NameVirtualHost *:80
+<VirtualHost *:80>
+        ServerName	pacmaze.com
+
+        DocumentRoot /home/jerome/webwork/pacmaze/www
+
+        <Directory /home/jerome/webwork/pacmaze/www>
+        	# disable the ability to see file directory content
+                #Options -Indexes
+		AllowOverride All
+		Allow from All
+        </Directory>
+</VirtualHost>

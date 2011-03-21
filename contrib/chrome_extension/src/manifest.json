@@ -1,0 +1,13 @@
+{
+	"name"		: "egoisss",
+	"description"	: "This is a little experiment. You are a pacman trapped in a maze and you must kill others to win the game. That's it, have fun.",
+	"version"	: "1.0.1",
+	"app"		: {
+		"launch": {
+			"web_url": "http://jetienne.com"
+		}
+	},
+	"icons"	: {
+		"128": "smiley128.png"
+	}
+}

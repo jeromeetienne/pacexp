@@ -3,43 +3,70 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.MazeCli	= function(opts){
 	this.map	= opts.map	|| console.assert(false);
+	this._container	= new THREE.Object3D();
+	this.wallW	= 100;
+	
+	this._buildWalls();
+	this._buildGround();
 }
 
 WebyMaze.MazeCli.prototype.getMap	= function(){
 	return this.map;
 }
 
-WebyMaze.MazeCli.prototype.buildObject3d	= function(){
-	var cubeW	= 100;
+WebyMaze.MazeCli.prototype._buildGround	= function(){
+	var bodyW	= this.wallW;
+	var mazeH	= this.map.length;
+	var mazeW	= this.map[0].length;
 
-	var geometry	= new Cube( cubeW, cubeW, cubeW );
-	//var geometry = new Sphere( cubeW/2, 64, 32 );
-	var material	= new THREE.MeshNormalMaterial();
-	material	= new THREE.MeshLambertMaterial( { color: 0xdddddd, shading: THREE.SmoothShading } )
-	material	= [
-		new THREE.MeshLambertMaterial( { color: 0xffaa00, shading: THREE.SmoothShading } ),
+	var geometry	= new Plane(mazeW*bodyW, mazeH*bodyW, mazeW, mazeH);
+	var material	= [
+		new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
+		//new THREE.MeshNormalMaterial( ),
 		new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
 	];
 
-	this.group 	= new THREE.Object3D();
-	var map		= this.map;
-	var MazeCliH	= map.length;
-	var MazeCliW	= map[0].length;
-	for(var y = 0; y < MazeCliH; y++){
-		var MazeCliLine	= map[y];
-		for(var x = 0; x < MazeCliW; x++){
-			var MazeCliXY	= MazeCliLine.charAt(x);
-			if( MazeCliXY != '*' )	continue;
+	var mesh = new THREE.Mesh( geometry, material );
+	mesh.position.y	= -bodyW/2;
+	mesh.rotation.x	= -90*Math.PI/180;
+	
+	mesh.matrixAutoUpdate = false;
+	mesh.updateMatrix();
+
+	this._container.addChild( mesh );
+}
+
+WebyMaze.MazeCli.prototype._buildWalls	= function(){
+	var bodyW	= this.wallW;
+	var geometry	= new Cube( bodyW, bodyW, bodyW );
+	var material	= [
+		//new THREE.MeshLambertMaterial( { color: 0xffaa00, shading: THREE.SmoothShading } ),
+		new THREE.MeshLambertMaterial( { color: 0xaaaaaa, shading: THREE.FlatShading } ),
+		//new THREE.MeshNormalMaterial( ),
+		new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+	];
+
+	var mazeH	= this.map.length;
+	var mazeW	= this.map[0].length;
+	for(var mazeY = 0; mazeY < mazeH; mazeY++){
+		var mazeLine	= this.map[mazeY];
+		for(var mazeX = 0; mazeX < mazeW; mazeX++){
+			var mazeXY	= mazeLine.charAt(mazeX);
+			if( mazeXY != '*' )	continue;
 			
 			var mesh = new THREE.Mesh( geometry, material );			
-			mesh.position.x = x * cubeW - MazeCliW*cubeW/2;
-			mesh.position.y = y * cubeW - MazeCliH*cubeW/2;
+			mesh.position.x = mazeX * bodyW + bodyW/2 - mazeW*bodyW/2;
+			mesh.position.z = mazeY * bodyW + bodyW/2 - mazeH*bodyW/2;
 			
 			mesh.matrixAutoUpdate = false;
 			mesh.updateMatrix();
 
-			this.group.addChild( mesh );
+			this._container.addChild( mesh );
 		}
 	}
-	return this.group;
+	return this._container;
+}
+
+WebyMaze.MazeCli.prototype.obj3d	= function(){
+	return this._container;
 }

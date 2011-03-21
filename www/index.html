@@ -1,31 +1,79 @@
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
-		<title>three.js webgl - geometry hierarchy</title>
+		<title>PacMaze Experiment - a pacman in a maze</title>
 		<meta charset="utf-8">
 		<style type="text/css">
 			body {
-				background:#fff;
-				padding:0;
-				margin:0;
-				font-weight: bold;
-				overflow:hidden;
+				/*background	: #87CEEB;*/
+				background	: #000000;
+				padding		: 0;
+				margin		: 0;
+				overflow	: hidden;
+				font-family	: arial;
+			}
+			.above3d {
+				z-index		: 200;
+			}
+			.promptDialog  input {
+				font-size	: 1.2em;
+				font-weight	: bold;
+			}
+			.promptDialog  {
+				text-align	: center;				
+			}
+			.menuosd a {
+				font-family	: arial;
+				color		: #aaa;
+				text-decoration	: none;
+				font-weight	: bold;
+				text-shadow	: 0 0 0.3em #000, 0 0 0.3em #000;
+			}
+			.menuosd a:hover {
+				text-decoration	: underline;
+			}
+			#inlineHelpDialog a {
+				color		: #333;
+				font-weight	: bold;
+				text-decoration	: none
+				;
+			}
+			#inlineHelpDialog a:hover {
+				text-decoration	: underline;
+			}
+			.pagetitle {
+				position	: absolute;
+				top		: 10px;
+				left		: 50%;
+				
+				font-size	: 3em;
+				text-align	: center;
+				color		: #ccc;
+				font-family	: arial;
+				font-weight	: bold;
+				text-shadow	: 0 0 0.1em #fb0, 0 0 0.2em #000;
 			}
 		</style>
 	</head>
 	<body>
-
-		<!-- <script type="text/javascript" src="../build/Three.js"></script> -->
-
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
-		<script type="text/javascript" src="vendor/three.js/examples/../build/Three.js"></script>
-		
-		<img id='avatar' src="images/jetienne-avatar.jpg" style="display: none;">
-			
-		<script type="text/javascript" src="vendor/three.js/examples/js/RequestAnimationFrame.js"></script>
-		<script type="text/javascript" src="vendor/three.js/examples/js/Stats.js"></script>
+		<script src='js/jquery/jquery.url.js'></script>
+		<script src='js/jquery/jquery.labelify.js'></script>
+		<script src='js/jquery/jqModal.js'></script>
+		<link	href='js/jquery/jqModal.css' rel='stylesheet'></link>
 
-		<script src="../lib/node_modules/socket.io/support/socket.io-client/socket.io.js"></script>
+		<script type="text/javascript" src="vendor/three.js/examples/../build/Three.js"></script>
+
+		<script type="text/javascript" src="vendor/three.js/examples/js/Detector.js"></script>			
+		<script type="text/javascript" src="vendor/three.js/examples/js/RequestAnimationFrame.js"></script>
+<!--		<script type="text/javascript" src="vendor/three.js/examples/js/Stats.js"></script>
+-->
+		<script src="vendor/socket.io-client/socket.io.js"></script>
+
+		<script type="text/javascript" src="vendor/excanvas.js"></script>
+		<script type="text/javascript" src="js/Threex/Threex.WindowResize.js"></script>
+		<script type="text/javascript" src="js/Threex/Threex.TextureSmiley.js"></script>
+		<script type="text/javascript" src="js/Threex/Threex.Tween.js"></script>
 
 		<script type="text/javascript" src="js/gameCli.js"></script>
 		<script type="text/javascript" src="js/mazeCli.js"></script>
@@ -36,13 +84,136 @@
 		
 
 		<!-- To get Soundmanager -->
-<!--		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
--->	
+		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
+
+	
 		<script src="js/client.js"></script>
+		<script src="js/location_hash.js"></script>
+
 		<script>
 		jQuery(function(){
-			main3d();
+			main();
 		})
 		</script>
+		
+		<div class="above3d pagetitle" style="margin-left: -300px; width: 600px;">
+			Pacmaze Experiment
+		</div>
+
+		<!-- menuosd -->
+		<div style="position: absolute; top:10px; left:10px;" class="above3d menuosd">
+			<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
+			<br/>
+			<a href="javascript:void(0)" id="GameIdButton">Maze : <span class="value"></span></a>
+			<br/>
+			<a href="javascript:void(0)" id="ScreenshotButton">Screenshot</a>
+			<br/>
+			<a href="javascript:void(0)" id="soundButton">Sound Off</a>
+			<br/>
+			<a href="javascript:void(0)" id="inlineHelpButton">About</a>
+		</div>
+		<!-- follow me on twitter --> 
+		<a href="http://www.twitter.com/jerome_etienne"><img style="position: absolute; top:10px; right:10px;" class="above3d" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
+		<!-- username dialog -->
+		<div id="UsernameDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
+			Your Twitter Username<br/>
+			<input type="text" size=15 name="username" placeholder="twitter username...">
+		</div>
+		<!-- gameId dialog -->
+		<div id="GameIdDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
+			Name your maze<br/>
+			<input type="text" size=15 name="gameId" placeholder="maze name...">
+		</div>
+		<!-- inlineHelp dialog -->
+		<div id="inlineHelpDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
+			<h3><center><strong>Welcome in Pacmaze Experiment</strong></center></h3>
+			This is a little experiment.
+			You are a pacman trapped in a maze and you must kill others to win the game.
+			That's it, have fun.
+			<hr/>
+			<strong>Arrows</strong> to move the player.
+			<br/>
+			<strong>space</strong> to shoot.
+			<br/>
+			<strong>C </strong>to change the camera position (<strong>recommended</strong>).
+			<br/>
+			<br/>
+			<div style="font-size: smaller; float:right;">made by <a href="http://jetienne.com">jerome etienne</a></div>
+		</div>
+
+
+<!--		<canvas id="testcanvas"></canvas>
+-->		<script>
+		jQuery(function(){
+			return;
+			var canvas	= document.getElementById('testcanvas');
+			var ctx		= canvas.getContext( '2d' );
+			canvas.width	= canvas.height	= 256;
+			var w		= canvas.width;
+
+			ctx.save();
+			ctx.fillStyle	= "#FF5200";
+			ctx.fillRect(0,0,w,w);
+			ctx.restore();
+
+			var eyeDx	= w/8;
+			var eyeDy	= w/4;
+
+			var eyeW	= w/8;
+			var eyeH	= w/4;
+
+			var mouthW	= w/4;
+			var mouthDx	= 0;
+			var mouthDy	= 0;
+
+
+			ctx.fillStyle	= "rgb(0,0,0)";
+			ctx.lineCap	= "round";
+			ctx.lineWidth	= w/24;
+
+			// right eyes
+			ctx.save();
+			ctx.translate(w/2 - w/2, w/2);
+			ctx.translate(eyeDx, -eyeDy);
+			ctx.moveTo(-eyeW/2, -eyeH/2);
+			ctx.lineTo(+eyeW/2, +eyeH/2);
+			ctx.stroke();		
+			ctx.moveTo(+eyeW/2, -eyeH/2);
+			ctx.lineTo(-eyeW/2, +eyeH/2);
+			ctx.stroke();
+			ctx.restore();
+
+			// left eyes
+			ctx.save();
+			ctx.translate(w/2 + w/2, w/2);
+			ctx.translate(-eyeDx, -eyeDy);
+			ctx.moveTo(-eyeW/2, -eyeH/2);
+			ctx.lineTo(+eyeW/2, +eyeH/2);
+			ctx.stroke();				
+			ctx.moveTo(+eyeW/2, -eyeH/2);
+			ctx.lineTo(-eyeW/2, +eyeH/2);
+			ctx.stroke();
+			ctx.restore();
+
+			// mouth flat (rigth)
+			ctx.save();
+			ctx.translate(w/2 - w/2, w/2);
+			ctx.translate(+mouthDx, +mouthDy);
+			ctx.moveTo(-mouthW/2, 0);
+			ctx.lineTo(+mouthW/2, 0);
+			ctx.stroke();
+			ctx.restore();
+
+			// mouth flat (left)
+			ctx.save();
+			ctx.translate(w/2 + w/2, w/2);
+			ctx.translate(+mouthDx, +mouthDy);
+			ctx.moveTo(-mouthW/2, 0);
+			ctx.lineTo(+mouthW/2, 0);
+			ctx.stroke();
+			ctx.restore();
+		})
+		</script>
+
 	</body>
 </html>

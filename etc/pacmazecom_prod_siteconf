@@ -1,0 +1,6 @@
+NameVirtualHost *:80
+<VirtualHost *:80>
+        ServerName	pacmaze.com
+
+        DocumentRoot	/var/www/pacmaze
+</VirtualHost>
