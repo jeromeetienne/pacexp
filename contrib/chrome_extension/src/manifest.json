@@ -1,10 +1,10 @@
 {
-	"name"		: "egoisss",
-	"description"	: "This is a little experiment. You are a pacman trapped in a maze and you must kill others to win the game. That's it, have fun.",
-	"version"	: "1.0.1",
+	"name"		: "Pacmaze",
+	"description"	: "Pacmaze Experiment: It is a multi-player first personn shooter. All players are humans. Invite your friends and shoot each other :)",
+	"version"	: "1.0.7",
 	"app"		: {
 		"launch": {
-			"web_url": "http://jetienne.com"
+			"web_url": "http://pacmaze.com"
 		}
 	},
 	"icons"	: {

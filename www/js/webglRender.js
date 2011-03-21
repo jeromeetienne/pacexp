@@ -132,7 +132,7 @@ WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick){
 WebyMaze.WebglRender.prototype.cameraCtor	= function(){
 	this.cameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith', 'behindPlayer'];
 	this.cameraState	= this.cameraStates[0];
-	this.cameraState	= 'inplayer';
+	this.cameraState	= 'behindPlayer';
 	document.addEventListener( 'keydown', function(event){
 		//console.log("keydown", event.keyCode)
 		switch( event.keyCode ) {

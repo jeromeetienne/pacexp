@@ -102,19 +102,19 @@
 
 		<!-- menuosd -->
 		<div style="position: absolute; top:10px; left:10px;" class="above3d menuosd">
-			<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
+<!--			<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
 			<br/>
 			<a href="javascript:void(0)" id="GameIdButton">Maze : <span class="value"></span></a>
 			<br/>
 			<a href="javascript:void(0)" id="ScreenshotButton">Screenshot</a>
 			<br/>
-			<a href="javascript:void(0)" id="soundButton">Sound Off</a>
+-->			<a href="javascript:void(0)" id="soundButton">Sound Off</a>
 			<br/>
 			<a href="javascript:void(0)" id="inlineHelpButton">About</a>
 		</div>
 		<!-- follow me on twitter --> 
-<!--		<a href="http://www.twitter.com/jerome_etienne"><img style="position: absolute; top:10px; right:10px;" class="above3d" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
--->		<!-- username dialog -->
+		<a href="http://www.twitter.com/jerome_etienne"><img style="position: absolute; top:10px; right:10px;" class="above3d" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
+		<!-- username dialog -->
 		<div id="UsernameDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
 			Your Twitter Username<br/>
 			<input type="text" size=15 name="username" placeholder="twitter username...">
@@ -127,9 +127,8 @@
 		<!-- inlineHelp dialog -->
 		<div id="inlineHelpDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
 			<h3><center><strong>Welcome in Pacmaze Experiment</strong></center></h3>
-			This is a little experiment.
-			You are a pacman trapped in a maze and you must kill others to win the game.
-			That's it, have fun.
+			This is a little experiment. All players are humans. You are a pacman
+			trapped in a maze. Invite your friends and shoot at each other! have fun :)
 			<hr/>
 			<strong>Arrows</strong> to move the player.
 			<br/>
@@ -140,6 +139,18 @@
 			<br/>
 			<div style="font-size: smaller; float:right;">made by <a href="http://jetienne.com">jerome etienne</a></div>
 		</div>
+		
+		<!-- google analytic snipet -->
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-4037844-17']);
+			_gaq.push(['_trackPageview']); 
+			(function() {
+			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
 
 
 <!--		<canvas id="testcanvas"></canvas>
