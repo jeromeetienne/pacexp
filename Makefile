@@ -36,4 +36,4 @@ apache2_copy_conf_prod:
 deploy:	build deployDedixl
 
 deployDedixl:
-	rsync -avz --rsh=ssh build/ dedixl:/var/www/pacmaze
+	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/pacmaze_www_build
