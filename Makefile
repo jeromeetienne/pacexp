@@ -2,6 +2,7 @@
 # to automatize repeatitive actions
 
 PROJECT_NAME=pacmaze
+APACHE2_CONFFILE=/etc/apache2/site-enabled/pacmazecom.conf
 
 server:
 	node lib/server.js
