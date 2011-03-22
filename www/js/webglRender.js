@@ -288,10 +288,14 @@ WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 			type	: "changeUsername",
 			data	: username
 		});
+		// update local var
+		this.username	= username;
 		// update document.title
 		document.title	= username+" having fun with pacmaze experiment!!";
-		// update the locationHash
-		locationHash.add("username", username)
+		// put the value in the button label
+		jQuery(buttonSel+" span.value").text(username)
+		// change the gameConfig
+		gameConfig.username(username);
 	}.bind(this);
 
 	// to detect when the window is closed
@@ -333,10 +337,14 @@ WebyMaze.WebglRender.prototype.gameIdUICtor	= function(){
 		if( gameId.length == 0 )	return;
 		// if the value is same as before, ignore it
 		if( gameId == this.gameId )	return;
-		
-		// update the locationHash
-		this.gameId	= gameId;
-		locationHash.add("gameId", gameId)
+		// put the value in the button label
+		jQuery(buttonSel+" span.value").text(gameId)
+		// update page title
+		jQuery('.pagetitle a').href("http://pacmaze.com/#"+gameId)
+		// change the gameConfig
+		gameConfig.gameId(gameId);		
+		// reload the page to init new game...
+		// FIXME this is dirty
 		window.location.reload();
 	}.bind(this);
 
@@ -356,6 +364,8 @@ WebyMaze.WebglRender.prototype.gameIdUICtor	= function(){
 
 	// put the value in the button label
 	jQuery(buttonSel+" span.value").text(this.gameId)
+	// update page title
+	jQuery('.pagetitle a').attr('href', "http://pacmaze.com/#"+this.gameId)
 
 	// bind the click on the button
 	jQuery(buttonSel).click(function(){
@@ -369,8 +379,15 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 
 	jQuery(buttonSel).click(function(){
 		var dataUrl	= renderer.domElement.toDataURL("image/png");
+		// FIXME: toDataUrl doesnt display everything... e.g. fog isnt on the image
+		// - additionnaly this is only about the canvas, not all the OSD on top
+		// - maybe to use another technic to get screenshot of the viewport... chrome specific
 		console.dir(renderer.domElement.toDataURL("image/png"));
 		//jQuery("<img>").attr('src',dataUrl).appendTo("body")
+		
+		//jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: dataUrl}, function(data) {
+		//	console.log("slota", data)
+		//});
 		// TODO to code... not done server side
 	}.bind(this));	
 }
@@ -398,14 +415,12 @@ WebyMaze.WebglRender.prototype.soundUICtor	= function(){
 		var running	= soundRender.soundTrackRunning();
 		console.log("running", soundRender.soundTrackRunning())
 		if( running === false ){
-			jQuery(buttonSel).text('Sound On');
 			soundRender.soundTrackStart();
-			locationHash.del('nosound')
 		}else{
-			jQuery(buttonSel).text('Sound Off');
 			soundRender.soundTrackStop();
-			locationHash.add('nosound', 1)
 		}
+		jQuery(buttonSel).text('Sound '+ (running ? 'Off' : 'On'));
+		gameConfig.sound(running ? false : true);
 		console.log("post running", soundRender.soundTrackRunning())
 	}.bind(this));
 }

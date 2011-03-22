@@ -100,9 +100,8 @@ WebyMaze.GameCli.prototype.socketOnConnect	= function(){
 	this.socketSend({
 		type	: "gameReq",
 		data	: {
-			gameTitle	: locationHash.get('gameTitle'),
-			gameId		: locationHash.get('gameId'),
-			username	: locationHash.get('username')
+			gameId		: gameConfig.gameId(),
+			username	: gameConfig.username()
 		}
 	});
 }

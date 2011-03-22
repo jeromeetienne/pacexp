@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head></head>
+	<body>
+		<script src="js/jquery/jquery.min.js"></script>
+		<script>
+		jQuery(function(){
+			jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: "foobar"}, function(data) {
+				console.log("slota", data)
+			});
+		});
+		</script>
+	</body>
+</html>

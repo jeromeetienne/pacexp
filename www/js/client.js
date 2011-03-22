@@ -17,6 +17,7 @@ var windowHalfY	= window.innerHeight / 2;
 
 var soundRender	= null;
 var gameCli	= null;
+var gameConfig	= null;
 
 var main	= function(){
 	if( !Detector.webgl ){
@@ -25,7 +26,8 @@ var main	= function(){
 	}
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
 	soundRender	= new WebyMaze.SoundRender();
-	gameCli	= new WebyMaze.GameCli();
+	gameCli		= new WebyMaze.GameCli();
+	gameConfig	= new WebyMaze.Config();
 	init();
 	animate();
 }
@@ -41,7 +43,7 @@ function init() {
 	sceneContainer = new THREE.Object3D();
 	scene.addObject(sceneContainer)
 
-	scene.fog = new THREE.Fog( 0x000000, 1, 3000 );
+	scene.fog = new THREE.Fog(0x000000, 1, 3000);
 	//scene.fog = new THREE.FogExp2( 0x000000, 0.00025*3 );
 	//scene.fog = new THREE.FogExp2( 0x87CEEB, 0.00025*3 );
 	//scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
