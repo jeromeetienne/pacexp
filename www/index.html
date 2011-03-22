@@ -3,6 +3,9 @@
 	<head>
 		<title>PacMaze Experiment - a pacman in a maze</title>
 		<meta charset="utf-8">
+		<!-- make favicon.ico -->
+		<link rel="shortcut icon" href="images/favicon.ico">
+		
 		<style type="text/css">
 			body {
 				/*background	: #87CEEB;*/
@@ -22,12 +25,15 @@
 			.promptDialog  {
 				text-align	: center;				
 			}
-			.menuosd a {
+			.menuosd {
 				font-family	: arial;
 				color		: #aaa;
-				text-decoration	: none;
 				font-weight	: bold;
 				text-shadow	: 0 0 0.3em #000, 0 0 0.3em #000;
+			}
+			.menuosd a {
+				color		: #aaa;
+				text-decoration	: none;
 			}
 			.menuosd a:hover {
 				text-decoration	: underline;
@@ -58,6 +64,7 @@
 	<body>
 		<script src='js/jquery/jquery.min.js'></script>
 		<script src='js/jquery/jquery.url.js'></script>
+		<script src='js/jquery/jquery.cookie.js'></script>
 		<script src='js/jquery/jquery.labelify.js'></script>
 		<script src='js/jquery/jqModal.js'></script>
 		<link	href='js/jquery/jqModal.css' rel='stylesheet'></link>
@@ -66,8 +73,8 @@
 
 		<script type="text/javascript" src="vendor/three.js/contrib/Detector.js"></script>			
 		<script type="text/javascript" src="vendor/three.js/contrib/RequestAnimationFrame.js"></script>
-<!--		<script type="text/javascript" src="vendor/three.js/contrib/Stats.js"></script>
--->
+		<script type="text/javascript" src="vendor/three.js/contrib/Stats.js"></script>
+
 		<script src="vendor/socket.io-client/socket.io.js"></script>
 
 		<script type="text/javascript" src="vendor/excanvas.js"></script>
@@ -85,6 +92,8 @@
 
 		<!-- To get Soundmanager -->
 		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
+		<script>soundManager.url = 'vendor/soundmanager2/swf'; // could it be a dataUrl </script>
+		<script>soundManager.debugMode	= false;</script>
 
 	
 		<script src="js/client.js"></script>
@@ -112,8 +121,9 @@
 			<br/>
 			<a href="javascript:void(0)" id="inlineHelpButton">About</a>
 		</div>
-		<!-- follow me on twitter --> 
-		<a href="http://www.twitter.com/jerome_etienne"><img style="position: absolute; top:10px; right:10px;" class="above3d" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
+		<div style="position: absolute; bottom:10px; right:10px;" class="above3d menuosd">
+			by <a href="http://twitter.com/jerome_etienne" target='_blank'>@jerome_etienne</a>
+		</div>
 		<!-- username dialog -->
 		<div id="UsernameDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
 			Your Twitter Username<br/>
@@ -137,7 +147,6 @@
 			<strong>C </strong>to change the camera position (<strong>recommended</strong>).
 			<br/>
 			<br/>
-			<div style="font-size: smaller; float:right;">made by <a href="http://jetienne.com">jerome etienne</a></div>
 		</div>
 		
 		<!-- google analytic snipet -->

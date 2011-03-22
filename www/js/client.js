@@ -19,10 +19,13 @@ var soundRender	= null;
 var gameCli	= null;
 
 var main	= function(){
-	if( !Detector.webgl )	Detector.addGetWebGLMessage();
+	if( !Detector.webgl ){
+		alert('WebGL not supported by your browser');
+		return;
+	}
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
 	soundRender	= new WebyMaze.SoundRender();
-	gameCli		= new WebyMaze.GameCli();
+	gameCli	= new WebyMaze.GameCli();
 	init();
 	animate();
 }
@@ -32,7 +35,7 @@ function init() {
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
 
-	camera = new THREE.Camera(60, window.innerWidth / window.innerHeight, 1, 100000 );
+	camera = new THREE.Camera(60, window.innerWidth / window.innerHeight, 1, 2800 );
 
 	scene = new THREE.Scene();
 	sceneContainer = new THREE.Object3D();

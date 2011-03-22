@@ -387,7 +387,7 @@ WebyMaze.WebglRender.prototype.helpUICtor	= function(){
 	}.bind(this));
 	
 	// to make it appear on load
-	jQuery(dialogSel).jqmShow();
+	//jQuery(dialogSel).jqmShow();
 }
 
 

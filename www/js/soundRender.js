@@ -16,12 +16,7 @@ WebyMaze.SoundRender	= function(){
 	//////////////////////////////////////////////////////////////////////////
 	//		ctor/dtor						//
 	//////////////////////////////////////////////////////////////////////////
-	var ctor	= function(){
-		// do this to skip flash block handling for now. See the flashblock demo when you want to start getting fancy.
-		soundManager.useFlashBlock	= false;
-		soundManager.url	= 'vendor/soundmanager2/swf'; // directory where SM2 .SWFs live
-		soundManager.debugMode	= false;
-		
+	var ctor	= function(){		
 		soundManager.onready(soundManagerReady);
 	}
 	var dtor	= function(){
