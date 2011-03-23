@@ -385,9 +385,9 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 		console.dir(renderer.domElement.toDataURL("image/png"));
 		//jQuery("<img>").attr('src',dataUrl).appendTo("body")
 		
-		//jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: dataUrl}, function(data) {
-		//	console.log("slota", data)
-		//});
+		jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: dataUrl}, function(data) {
+			console.log("slota", data)
+		});
 		// TODO to code... not done server side
 	}.bind(this));	
 }
