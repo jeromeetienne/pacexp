@@ -200,6 +200,11 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 	 *   - camera.target.position = player.position + delta.target
 	 * - the tweening occurs at this level
 	*/
+
+// TODO
+// - factorize all function using this
+// - put that in WebyMaze.Camera class
+
 	/**
 	 * - how to test this ?
 	 * - how do i start, i seems to be stuck
@@ -229,17 +234,16 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 WebyMaze.WebglRender.prototype.cameraInPlayer	= function(){
 	var container	= this.players[this.urBodyId].obj3d();
 	var transform	= { position: {}, target: {} };
-	transform.position.x	= container.position.x;
-	transform.position.y	= 0;
-	transform.position.z	= container.position.z;
-// TODO cameraInPlayer is buggy
-// - may be this camera.far stuff
-// - change it for a normal deltaBack+ deltaUp + lookFwd
-// - factorize all function using this
-// - put that in WebyMaze.Camera class
-	transform.target.x	= camera.far*Math.cos(-container.rotation.y);
+	var deltaBack	= 0;	// TODO if this is != 0, display the player
+	var deltaUp	= 0;
+	var lookFwd	= 200;
+	var angleY	= -container.rotation.y;
+	transform.position.x	= container.position.x - deltaBack*Math.cos(angleY);
+	transform.position.y	= +deltaUp;
+	transform.position.z	= container.position.z - deltaBack*Math.sin(angleY);
+	transform.target.x	= container.position.x + lookFwd*Math.cos(angleY);
 	transform.target.y	= 0;
-	transform.target.z	= camera.far*Math.sin(-container.rotation.y);
+	transform.target.z	= container.position.z + lookFwd*Math.sin(angleY);
 	return transform;
 }
 
