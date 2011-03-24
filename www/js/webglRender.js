@@ -21,6 +21,7 @@ WebyMaze.WebglRender	= function(opts){
 	this.urBodyId	= ctxInit.urBodyId;
 	this.players	= {};
 	this.shoots	= {};
+	this.pills	= {};
 
 	console.log("ctxInit", ctxInit)
 	// init this.mazeCli
@@ -47,9 +48,10 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
-	//console.log("ctxTick", ctxTick.players)
+	//console.log("ctxTick", ctxTick)
 	this.setCtxTickPlayer(ctxTick);
 	this.setCtxTickShoot(ctxTick);
+	this.setCtxTickPill(ctxTick);
 	if( ctxTick.events.length )
 		console.log("event", JSON.stringify(ctxTick.events))
 	
@@ -121,6 +123,36 @@ WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick){
 		scene.removeObject( this.shoots[bodyId].obj3d() );
 		this.shoots[bodyId].destroy();
 		delete this.shoots[bodyId];
+	}.bind(this));
+}
+
+/**
+ * tick all the pill
+ *
+*/
+WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick){
+	// handle ctxTick.pills
+	ctxTick.pills.forEach(function(pill){
+		var bodyId	= pill.bodyId;
+		// create pill if needed
+		if( !(bodyId in this.pills) ){
+			this.pills[bodyId]	= new WebyMaze.PillCli();
+			// add this object to the scene
+			sceneContainer.addChild( this.pills[bodyId].obj3d() );
+		}
+		// update setCtxTick
+		this.pills[bodyId].setCtxTick(pill)
+	}.bind(this));
+	
+	// remove the obsolete pills
+	Object.keys(this.pills).forEach(function(bodyId){
+		for(var i = 0; i < ctxTick.pills.length; i++){
+			var pill	= ctxTick.pills[i];
+			if( bodyId === pill.bodyId ) return;
+		}
+		scene.removeObject( this.pills[bodyId].obj3d() );
+		this.pills[bodyId].destroy();
+		delete this.pills[bodyId];
 	}.bind(this));
 }
 
@@ -400,13 +432,13 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 			//document.body.appendChild(canvas);
 		
 			var smallDataUrl	= canvas.toDataURL("image/png");
-		
+
 			jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: smallDataUrl}, function(data) {
 				console.log("screenshoot uploaded. returned data:", data)
 			});
 		}
 		img.src	= dataUrl;
-		
+
 		// FIXME: toDataUrl doesnt display everything... e.g. fog isnt on the image
 		// - additionnaly this is only about the canvas, not all the OSD on top
 		// - maybe to use another technic to get screenshot of the viewport... chrome specific
@@ -430,7 +462,6 @@ WebyMaze.WebglRender.prototype.helpUICtor	= function(){
 	// to make it appear on load
 	//jQuery(dialogSel).jqmShow();
 }
-
 
 WebyMaze.WebglRender.prototype.soundUICtor	= function(){
 	var buttonSel	= '#soundButton';

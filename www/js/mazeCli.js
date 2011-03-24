@@ -1,6 +1,11 @@
 
 var WebyMaze	= WebyMaze || {};
 
+
+/**
+ * Handle the map where the player lives
+ * - TODO rename this as map
+*/
 WebyMaze.MazeCli	= function(opts){
 	this.map	= opts.map	|| console.assert(false);
 	this._container	= new THREE.Object3D();

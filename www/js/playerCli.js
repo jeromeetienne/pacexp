@@ -6,6 +6,7 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.PlayerCli	= function(opts){
 	this.username	= null;
+	this.score	= 0;
 	
 	this._canvasCtor();
 	this._containerCtor();
