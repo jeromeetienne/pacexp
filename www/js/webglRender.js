@@ -379,16 +379,40 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 
 	jQuery(buttonSel).click(function(){
 		var dataUrl	= renderer.domElement.toDataURL("image/png");
+
+
+		/**
+		 * Scale down the image to 340px wide and upload it.
+		*/
+		var dstWidth	= 640;
+		var img 	= new Image();   // Create new Image object
+		img.onload = function(){
+			var srcAspect	= renderer.domElement.width / renderer.domElement.height;
+			console.log("srcAspect", srcAspect)
+			var canvas	= document.createElement('canvas');
+			canvas.setAttribute('width', dstWidth);
+			canvas.setAttribute('height', canvas.width / srcAspect);
+			var ctx		= canvas.getContext('2d');
+			ctx.fillStyle	= "black";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+			//console.dir(document.body)
+			//document.body.appendChild(canvas);
+		
+			var smallDataUrl	= canvas.toDataURL("image/png");
+		
+			jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: smallDataUrl}, function(data) {
+				console.log("screenshoot uploaded. returned data:", data)
+			});
+		}
+		img.src	= dataUrl;
+		
 		// FIXME: toDataUrl doesnt display everything... e.g. fog isnt on the image
 		// - additionnaly this is only about the canvas, not all the OSD on top
 		// - maybe to use another technic to get screenshot of the viewport... chrome specific
-		console.dir(renderer.domElement.toDataURL("image/png"));
-		//jQuery("<img>").attr('src',dataUrl).appendTo("body")
-		
-		jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: dataUrl}, function(data) {
-			console.log("slota", data)
-		});
-		// TODO to code... not done server side
+		//jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: dataUrl}, function(data) {
+		//	console.log("screenshoot uploaded. returned data:", data)
+		//});
 	}.bind(this));	
 }
 
