@@ -4,9 +4,12 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.PlayerCli	= function(opts){
+WebyMaze.PlayerCli	= function(ctxTick, urBodyId){
+	this.bodyId	= ctxTick.bodyId;
+
+	// put username/score to null, thus trigger change on next ctxTick
 	this.username	= null;
-	this.score	= 0;
+	this.score	= null;
 	
 	this._canvasCtor();
 	this._containerCtor();
@@ -29,6 +32,9 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 	if(this.username != ctxTick.username){
 		this.username	= ctxTick.username
 		this._avatarLoad();
+	}
+	if(this.score != ctxTick.score){
+		this.score	= ctxTick.score
 	}
 }
 

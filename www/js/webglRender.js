@@ -70,7 +70,7 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
 		var bodyId	= player.bodyId;
 		// create player if needed
 		if( !(bodyId in this.players) ){
-			this.players[bodyId]	= new WebyMaze.PlayerCli();
+			this.players[bodyId]	= new WebyMaze.PlayerCli(player);
 			// add the body to the scene IIF not mine
 			if( displayMe || bodyId !== this.urBodyId){
 				sceneContainer.addChild( this.players[bodyId].obj3d() );
@@ -79,6 +79,10 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
 		// update setCtxTick
 		this.players[bodyId].setCtxTick(player)
 	}.bind(this));
+	
+	// handle the scoreUiUpdate
+	this.scoreUIUpdate();
+
 
 	// remove the obsolete players
 	Object.keys(this.players).forEach(function(bodyId){
@@ -228,6 +232,11 @@ WebyMaze.WebglRender.prototype.cameraInPlayer	= function(){
 	transform.position.x	= container.position.x;
 	transform.position.y	= 0;
 	transform.position.z	= container.position.z;
+// TODO cameraInPlayer is buggy
+// - may be this camera.far stuff
+// - change it for a normal deltaBack+ deltaUp + lookFwd
+// - factorize all function using this
+// - put that in WebyMaze.Camera class
 	transform.target.x	= camera.far*Math.cos(-container.rotation.y);
 	transform.target.y	= 0;
 	transform.target.z	= camera.far*Math.sin(-container.rotation.y);
@@ -478,4 +487,13 @@ WebyMaze.WebglRender.prototype.soundUICtor	= function(){
 		gameConfig.sound(running ? false : true);
 		console.log("post running", soundRender.soundTrackRunning())
 	}.bind(this));
+}
+
+/**
+ * This function update the dom with the current score
+*/
+WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
+	var score	= this.players[this.urBodyId].score;
+	var containSel	= '#scoreDisplay';
+	jQuery(containSel+" span.value").text(score)
 }
