@@ -12,7 +12,7 @@ WebyMaze.MazeCli	= function(opts){
 	this.wallW	= 100;
 	
 	this._buildWallsSingleColor();
-	this._buildGroundChessBoard();
+	this._buildGroundSingleColor();
 }
 
 WebyMaze.MazeCli.prototype.getMap	= function(){
