@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+	</head>
+	<body>
+		<script src='js/jquery/jquery.min.js'></script>
+		<script src='../lib/collisionUtils.js'></script>
+
+
+		<canvas id="testcanvas" style="border: solid"></canvas>
+		
+		
+		<script>
+			var impact2d	 = {};
+			/**
+			 * Test if there is a collision between the Collision and the cube. if there is, Collision is bounced
+			 *
+			 * @returns {Boolean} true if there is a collision, false otherwise
+			*/
+			impact2d.circleSquare	= function(spherePos, sphereW, cubeX, cubeY, cubeW){
+				var collisions	= [];
+				var sphereMinX	= spherePos.x - sphereW/2;
+				var sphereMinY	= spherePos.y - sphereW/2;
+				var sphereMaxX	= spherePos.x + sphereW/2;
+				var sphereMaxY	= spherePos.y + sphereW/2;
+				
+				var cubeMinX	= cubeX - cubeW/2;
+				var cubeMinY	= cubeY - cubeW/2;
+				var cubeMaxX	= cubeX + cubeW/2;
+				var cubeMaxY	= cubeY + cubeW/2;
+			
+				// if there are no collision at all, return now
+				if( sphereMinX >= cubeMaxX )	return null;
+				if( sphereMinY >= cubeMaxY )	return null;
+				if( sphereMaxY <= cubeMinY )	return null;
+				if( sphereMaxX <= cubeMinX )	return null;
+			
+			
+				var dx	= 0;
+				var dy	= 0;
+			
+				// collision with west wall
+				if( sphereMaxX > cubeMinX && sphereMinX < cubeX ){
+					dx	= cubeMinX-sphereMaxX;
+					collisions.push({
+						x	: cubeMinX,
+						y	: spherePos.y
+					})
+				}
+				// collision with north wall
+				if( sphereMaxY > cubeMinY && sphereMinY < cubeY ){
+					dy	= cubeMinY-sphereMaxY;
+					collisions.push({
+						x	: spherePos.x,
+						y	: cubeMinY
+					})
+				}
+				// collision with east wall
+				if( sphereMinX > cubeX && sphereMinX < cubeMaxX ){
+					dx	= cubeMaxX-sphereMinX;
+					collisions.push({
+						x	: cubeMaxX,
+						y	: spherePos.y
+					})
+				}
+				// collision with south wall
+				if( sphereMaxY > cubeY && sphereMinY < cubeMaxY ){
+					dy	= cubeMaxY-sphereMinY;
+					collisions.push({
+						x	: spherePos.x,
+						y	: cubeMaxX
+					})
+				}
+				
+				console.log("dx", dx, "dy", dy)
+				// if collide in X and Y, bounce in the least force
+				if( dx != 0 && dy != 0 ){
+					if( Math.abs(dx) < Math.abs(dy) ){
+						dy	= 0;
+					}else{
+						dx	= 0;
+					}
+				}
+				
+				//console.log("dx", dx, "dy", dy)
+				//// actually move spherePos
+				spherePos.x	+= dx;
+				spherePos.y	+= dy;
+				
+				return collisions.length ? collisions : null;
+			}
+		</script>
+		
+		<script>
+		jQuery(function(){
+			var collideCube	= impact2d.circleSquare;
+			var canvas	= document.getElementById('testcanvas');
+			var ctx		= canvas.getContext( '2d' );
+			canvas.width	= canvas.height	= 512;
+			var w		= canvas.width;
+
+			var begposX	= null;
+			var begposY	= null;
+			var endposX	= null;
+			var endposY	= null;
+			var sphereW	= 25;
+			var cubeW	= 150;
+			var cubes	= [
+				[w/2, w/2, cubeW]
+			]
+
+			canvas.addEventListener('click', function(event){
+				begposX	= event.clientX;
+				begposY	= event.clientY;
+				console.log("begPosX", begposX)
+				console.log("begPosY", begposY)
+			}, false);
+			canvas.addEventListener( 'mousemove', function(event){
+				endposX	= event.offsetX;
+				endposY	= event.offsetY;
+				if( !begposX )	return;
+				render();
+			}, false);
+			
+			var clear	= function(){
+				ctx.clearRect(0,0,w,w);
+			}
+			var render	= function(){
+				clear();
+				
+				// disp move vector
+				ctx.save();
+				ctx.beginPath();
+				ctx.moveTo(begposX, begposY);
+				ctx.lineTo(endposX, endposY);
+				ctx.stroke();
+				ctx.restore();
+
+				// disp end of move vector
+				ctx.save();
+				ctx.strokeStyle = "#00FF00";
+				ctx.strokeRect(endposX-sphereW/2, endposY-sphereW/2, sphereW, sphereW);
+				ctx.restore();
+				
+				cubes.forEach(function(cube){
+					dispCube(cube[0], cube[1], cube[2]);
+				})
+
+				
+				cubes.forEach(function(cube){
+					var cubeX	= cube[0];
+					var cubeY	= cube[1];
+					var cubeW	= cube[2];
+					var spherePos	= {x: endposX, y: endposY};
+					var impacts	= collideCube(spherePos, sphereW, cubeX, cubeY, cubeW)
+
+					// disp bounced position
+					ctx.save();
+					ctx.strokeStyle = "#0000FF";
+					ctx.strokeRect(spherePos.x-sphereW/2, spherePos.y-sphereW/2, sphereW, sphereW);
+					ctx.restore();
+
+					//console.log("impacts", JSON.stringify(impacts))
+					dispCube(cubeX, cubeY, cubeW, impacts ? true : false)
+					dispImpacts(impacts)
+				})
+			}
+			var dispImpacts	= function(impacts){
+				var bodyW	= 10;
+				if( !impacts )	return;
+				impacts.forEach(function(impact){
+					ctx.save();
+					ctx.strokeStyle = "#00FF00";
+					ctx.strokeRect(impact.x-bodyW/2, impact.y-bodyW/2, bodyW, bodyW);
+					ctx.restore();
+				})
+			}
+			var dispCube	= function(cubeX, cubeY, cubeW, impacted){
+				var cubeMinX	= cubeX - cubeW/2;
+				var cubeMinY	= cubeY - cubeW/2;				
+				ctx.save();
+				if( impacted )	ctx.strokeStyle = "#FF0000";
+				else		ctx.strokeStyle = "#000000";
+				ctx.strokeRect(cubeMinX, cubeMinY, cubeW, cubeW);
+				ctx.restore();
+			}
+			clear();
+		})
+		</script>
+
+	</body>
+</html>

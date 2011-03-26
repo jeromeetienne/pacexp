@@ -69,8 +69,8 @@ function init() {
 	if( typeof Stats !== "undefined" ){
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.bottom	= '0px';
-		stats.domElement.style.left	= '0px';
+		stats.domElement.style.bottom	= '40px';
+		stats.domElement.style.right	= '0';
 		stats.domElement.style.zIndex	= 100;
 		container.appendChild( stats.domElement );		
 	}
