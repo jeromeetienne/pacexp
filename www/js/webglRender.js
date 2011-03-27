@@ -81,7 +81,10 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
 	}.bind(this));
 	
 	// handle the scoreUiUpdate
-	this.scoreUIUpdate();
+	if( this.players[this.urBodyId].scoreNeedsUpdate ){
+		this.scoreUIUpdate();
+		this.players[this.urBodyId].scoreNeedsUpdate	= false;
+	}
 
 
 	// remove the obsolete players
@@ -493,7 +496,6 @@ WebyMaze.WebglRender.prototype.soundUICtor	= function(){
  * This function update the dom with the current score
 */
 WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
-	return;
 	var score	= this.players[this.urBodyId].score;
 	var containSel	= '#scoreDisplay';
 	jQuery(containSel+" span.value").text(score)

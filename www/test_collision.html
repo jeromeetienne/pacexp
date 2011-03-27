@@ -56,7 +56,7 @@
 					})
 				}
 				// collision with east wall
-				if( sphereMinX > cubeX && sphereMinX < cubeMaxX ){
+				if( sphereMaxX > cubeX && sphereMinX < cubeMaxX ){
 					dx	= cubeMaxX-sphereMinX;
 					collisions.push({
 						x	: cubeMaxX,
