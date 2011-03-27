@@ -497,6 +497,7 @@ WebyMaze.WebglRender.prototype.soundUICtor	= function(){
  * This function update the dom with the current score
 */
 WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
+	return;
 	var score	= this.players[this.urBodyId].score;
 	var containSel	= '#scoreDisplay';
 	jQuery(containSel+" span.value").text(score)
