@@ -108,14 +108,13 @@ WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick){
 	// handle ctxTick.shoots
 	ctxTick.shoots.forEach(function(shoot){
 		var bodyId	= shoot.bodyId;
+		var created	= bodyId in this.shoots;
 		// create shoot if needed
-		if( !(bodyId in this.shoots) ){
-			this.shoots[bodyId]	= new WebyMaze.ShootCli();
-			// add this object to the scene
-			sceneContainer.addChild( this.shoots[bodyId].obj3d() );
-		}
+		if( ! created )	this.shoots[bodyId]	= new WebyMaze.ShootCli();
 		// update setCtxTick
 		this.shoots[bodyId].setCtxTick(shoot)
+		// add the new shoot in sceneContainer
+		if( ! created )	sceneContainer.addChild( this.shoots[bodyId].obj3d() );
 	}.bind(this));
 	
 	// remove the obsolete shoots
@@ -138,14 +137,13 @@ WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick){
 	// handle ctxTick.pills
 	ctxTick.pills.forEach(function(pill){
 		var bodyId	= pill.bodyId;
+		var created	= bodyId in this.pills
 		// create pill if needed
-		if( !(bodyId in this.pills) ){
-			this.pills[bodyId]	= new WebyMaze.PillCli();
-			// add this object to the scene
-			sceneContainer.addChild( this.pills[bodyId].obj3d() );
-		}
+		if( !created )	this.pills[bodyId]	= new WebyMaze.PillCli();
 		// update setCtxTick
 		this.pills[bodyId].setCtxTick(pill)
+		// add this object to the scene
+		if( !created )	sceneContainer.addChild( this.pills[bodyId].obj3d() );
 	}.bind(this));
 	
 	// remove the obsolete pills
@@ -223,8 +221,6 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 	}else if( this.cameraState == 'facePlayer' ){
 		transform	= this.cameraFacePlayer();
 	}else	console.assert(false);
-
-
 
 	// update camera position
 	camera.position		= transform.position;
@@ -310,7 +306,7 @@ WebyMaze.WebglRender.prototype.cameraZenith	= function(){
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-//		UsernameUI stuff						//
+//		osb user interface stuff					//
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
