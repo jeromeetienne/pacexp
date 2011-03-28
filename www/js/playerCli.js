@@ -4,9 +4,8 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.PlayerCli	= function(ctxTick, urBodyId){
+WebyMaze.PlayerCli	= function(ctxTick){
 	this.bodyId	= ctxTick.bodyId|| console.assert(false);
-	this.urBodyId	= urBodyId	|| console.assert(false);
 
 	// put username/score to null, thus trigger change on next ctxTick
 	this.username	= null;
