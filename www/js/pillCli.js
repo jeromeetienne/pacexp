@@ -31,11 +31,11 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 WebyMaze.PillCli.prototype._containerCtor	= function(){
 	console.log("type", this.pillType)
 	// build this._container
-	var bodyWidth	= 25;
+	var bodyW	= 25;
 	var geometry = [
-		[ new Sphere( bodyWidth/2, 16, 8 )	, 500 ],
-		[ new Sphere( bodyWidth/2, 8, 4 )	, 700 ],
-		[ new Sphere( bodyWidth/2, 2, 2 )	, 1500 ],
+		[ new Sphere( bodyW/2, 16, 8 )	, 500 ],
+		[ new Sphere( bodyW/2, 8, 4 )	, 700 ],
+		[ new Sphere( bodyW/2, 2, 2 )	, 1500 ],
 	];
 
 	// determine the material based on this.pillType	
@@ -43,16 +43,31 @@ WebyMaze.PillCli.prototype._containerCtor	= function(){
 	if( this.pillType == 'white' ){
 		material	= [
 			new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading, opacity: 0.9} ),
-			//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, opacity: 0.2 } ),
-			// FIXME this wire frame is seen on my own player...should not be... displayMe
-			//new THREE.MeshBasicMaterial( { color: 0x884400, shading: THREE.FlatShading, wireframe: true } )
 		];
 	}else if( this.pillType == 'red' ){
+		this.canvas	= document.createElement('canvas');
+		this.canvas.width	= this.canvas.height	= 256;
+		this.texture	= new THREE.Texture(this.canvas);
+		// load the image
+		var img		= new Image();
+		img.onload	= function(){
+			console.log("image loaded")
+			var ctx		= this.canvas.getContext( '2d' );
+			ctx.save();
+			ctx.translate(0, 0);
+			ctx.drawImage(img, 0,0, 256,256)
+			ctx.restore();
+			
+			// mark this texture as "needsUpdate"
+			this.texture.needsUpdate = true;
+		}.bind(this);
+		img.src		= "images/textures/MarbleBeige0028_5_thumbhuge.jpg";	
+		//img.src		= "images/textures/MarbleGreen0001_39_thumbhuge.jpg";	
+
+		
 		material	= [
-			new THREE.MeshLambertMaterial( { color: 0xE3319D, shading: THREE.SmoothShading, opacity: 0.9} ),
-			//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, opacity: 0.2 } ),
-			// FIXME this wire frame is seen on my own player...should not be... displayMe
-			//new THREE.MeshBasicMaterial( { color: 0x884400, shading: THREE.FlatShading, wireframe: true } )
+			//new THREE.MeshLambertMaterial( { color: 0xE3319D, shading: THREE.SmoothShading, opacity: 0.9} ),
+			new THREE.MeshLambertMaterial( { map: this.texture } )
 		];
 	}else console.assert(false, 'unknown pillType '+this.pillType);
 

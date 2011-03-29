@@ -74,11 +74,11 @@ return;
 
 WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 	// build this._container
-	var bodyW	= 100;
+	var bodyWidth	= 100;
 	var geometry	= [
-		[ new Sphere( bodyW/2, 32, 16 )	, 500 ],
-		[ new Sphere( bodyW/2, 16, 8 )	, 700 ],
-		[ new Sphere( bodyW/2, 8, 4 )	, 1500 ]
+		[ new Sphere( bodyWidth/2, 32, 16 )	, 500 ],
+		[ new Sphere( bodyWidth/2, 16, 8 )	, 700 ],
+		[ new Sphere( bodyWidth/2, 8, 4 )	, 1500 ]
 	];
 	var material	= [
 		new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.flatShading } ),
