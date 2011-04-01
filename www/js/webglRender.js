@@ -211,25 +211,33 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 	 * - how do i start, i seems to be stuck
 	*/
 
-
-	var transform	= null;
-	if( this.cameraState == "inplayer" ){
-		transform	= this.cameraInPlayer();
-	}else if( this.cameraState == 'overPlayer' ){
-		transform	= this.cameraOverPlayer();
-	}else if( this.cameraState == 'fixedGrazing' ){
-		transform	= this.cameraFixedGrazing();
-	}else if( this.cameraState == 'behindPlayer' ){
-		transform	= this.cameraBehindPlayer();
-	}else if( this.cameraState == 'zenith' ){
-		transform	= this.cameraZenith();
-	}else if( this.cameraState == 'facePlayer' ){
-		transform	= this.cameraFacePlayer();
-	}else	console.assert(false);
+	var transform	= this.cameraTransform(this.cameraState);
 
 	// update camera position
 	camera.position		= transform.position;
 	camera.target.position	= transform.target;
+}
+
+/**
+ * tick the camera
+*/
+WebyMaze.WebglRender.prototype.cameraTransform	= function(cameraState){
+	var transform	= null;
+	if( cameraState == "inplayer" ){
+		transform	= this.cameraInPlayer();
+	}else if( cameraState == 'overPlayer' ){
+		transform	= this.cameraOverPlayer();
+	}else if( cameraState == 'fixedGrazing' ){
+		transform	= this.cameraFixedGrazing();
+	}else if( cameraState == 'behindPlayer' ){
+		transform	= this.cameraBehindPlayer();
+	}else if( cameraState == 'zenith' ){
+		transform	= this.cameraZenith();
+	}else if( cameraState == 'facePlayer' ){
+		transform	= this.cameraFacePlayer();
+	}else	console.assert(false);
+	
+	return transform;
 }
 
 WebyMaze.WebglRender.prototype.cameraInPlayer	= function(){
@@ -315,10 +323,10 @@ WebyMaze.WebglRender.prototype.cameraFixedGrazing	= function(){
 	var container	= this.players[this.urBodyId].obj3d();
 	var transform	= { position: {}, target: {} };
 	transform.position.x	= container.position.x+500;
-	transform.position.y	= +400;
+	transform.position.y	= container.position.y+400;
 	transform.position.z	= container.position.z-250;
 	transform.target.x	= container.position.x+100;
-	transform.target.y	= 0;
+	transform.target.y	= container.position.y+0;
 	transform.target.z	= container.position.z;
 	return transform;
 }
