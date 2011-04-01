@@ -42,8 +42,6 @@ WebyMaze.CameraRender.prototype.onKeyDown	= function(domEvent)
 	}
 }
 
-
-
 /**
  * tick the camera
 */
@@ -73,8 +71,6 @@ WebyMaze.CameraRender.prototype.tick	= function(targetObj3d){
 	*/
 	
 	var transform	= this.transformBuild(this.state, targetObj3d);
-
-
 
 	// update camera position
 	// TODO this 'camera' is a global... make it a ctor opts
