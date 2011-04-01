@@ -169,18 +169,24 @@ WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick){
 WebyMaze.WebglRender.prototype.cameraCtor	= function(){
 	this.cameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith', 'behindPlayer', 'fixedGrazing'];
 	this.cameraState	= this.cameraStates[0];
-	this.cameraState	= 'behindPlayer';
+	this.cameraState	= 'fixedGrazing';
+
+
 	document.addEventListener( 'keydown', function(event){
-		//console.log("keydown", event.keyCode)
 		switch( event.keyCode ) {
 			case "C".charCodeAt(0):
-				var stateIdx	= this.cameraStates.indexOf(this.cameraState)
-				stateIdx	= (stateIdx+1) % this.cameraStates.length;
-				this.cameraState= this.cameraStates[stateIdx];
-				//console.log("camera", this.cameraStates)
+				this.cameraNextState();
 				break;
 		}
 	}.bind(this), false );
+}
+
+WebyMaze.WebglRender.prototype.cameraNextState	= function(){
+	var stateIdx	= this.cameraStates.indexOf(this.cameraState)
+	stateIdx	= (stateIdx+1) % this.cameraStates.length;
+	this.cameraState= this.cameraStates[stateIdx];
+	this.cameraSetTransform(this.cameraState)
+	//console.log("camera", this.cameraStates)
 }
 
 /**
@@ -211,7 +217,11 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 	 * - how do i start, i seems to be stuck
 	*/
 
-	var transform	= this.cameraTransform(this.cameraState);
+	if( ! this._cameraTransform )	this.cameraSetTransform(this.cameraState)
+	
+
+	//var transform	= this.cameraBuildTransform(this.cameraState);
+	var transform	= this._cameraTransform;
 
 	// update camera position
 	var container	= this.players[this.urBodyId].obj3d();
@@ -227,10 +237,15 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 	};
 }
 
+WebyMaze.WebglRender.prototype.cameraSetTransform	= function(cameraState){
+	this._cameraTransform	= this.cameraBuildTransform(cameraState);
+}
+
+
 /**
  * return the cameraTransform relative to player position
 */
-WebyMaze.WebglRender.prototype.cameraTransform	= function(cameraState){
+WebyMaze.WebglRender.prototype.cameraBuildTransform	= function(cameraState){
 	var transform	= null;
 	if( cameraState == "inplayer" ){
 		transform	= this.cameraInPlayer();
@@ -338,8 +353,6 @@ WebyMaze.WebglRender.prototype.cameraFixedGrazing	= function(){
 	transform.targetZ	= +0;
 	return transform;
 }
-
-
 
 //////////////////////////////////////////////////////////////////////////////////
 //		osb user interface stuff					//
