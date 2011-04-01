@@ -214,12 +214,21 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 	var transform	= this.cameraTransform(this.cameraState);
 
 	// update camera position
-	camera.position		= transform.position;
-	camera.target.position	= transform.target;
+	var container	= this.players[this.urBodyId].obj3d();
+	camera.position	= {
+		x	: container.position.x	+ transform.position.x,
+		y	: container.position.y	+ transform.position.y,
+		z	: container.position.z	+ transform.position.z
+	};
+	camera.target.position	= {
+		x	: container.position.x	+ transform.target.x,
+		y	: container.position.y	+ transform.target.y,
+		z	: container.position.z	+ transform.target.z
+	};
 }
 
 /**
- * tick the camera
+ * return the cameraTransform relative to player position
 */
 WebyMaze.WebglRender.prototype.cameraTransform	= function(cameraState){
 	var transform	= null;
@@ -236,7 +245,7 @@ WebyMaze.WebglRender.prototype.cameraTransform	= function(cameraState){
 	}else if( cameraState == 'facePlayer' ){
 		transform	= this.cameraFacePlayer();
 	}else	console.assert(false);
-	
+	// return the transform
 	return transform;
 }
 
@@ -247,12 +256,12 @@ WebyMaze.WebglRender.prototype.cameraInPlayer	= function(){
 	var deltaUp	= 0;
 	var lookFwd	= 200;
 	var angleY	= -container.rotation.y;
-	transform.position.x	= container.position.x - deltaBack*Math.cos(angleY);
-	transform.position.y	= +deltaUp;
-	transform.position.z	= container.position.z - deltaBack*Math.sin(angleY);
-	transform.target.x	= container.position.x + lookFwd*Math.cos(angleY);
+	transform.position.x	= - deltaBack*Math.cos(angleY);
+	transform.position.y	= + deltaUp;
+	transform.position.z	= - deltaBack*Math.sin(angleY);
+	transform.target.x	= + lookFwd*Math.cos(angleY);
 	transform.target.y	= 0;
-	transform.target.z	= container.position.z + lookFwd*Math.sin(angleY);
+	transform.target.z	= + lookFwd*Math.sin(angleY);
 	return transform;
 }
 
@@ -264,12 +273,12 @@ WebyMaze.WebglRender.prototype.cameraOverPlayer	= function(){
 	var deltaUp	= 100;
 	var lookFwd	= 200;
 	var angleY	= -container.rotation.y;
-	transform.position.x	= container.position.x - deltaBack*Math.cos(angleY);
+	transform.position.x	= - deltaBack*Math.cos(angleY);
 	transform.position.y	= +deltaUp;
-	transform.position.z	= container.position.z - deltaBack*Math.sin(angleY);
-	transform.target.x	= container.position.x + lookFwd*Math.cos(angleY);
+	transform.position.z	= - deltaBack*Math.sin(angleY);
+	transform.target.x	= + lookFwd*Math.cos(angleY);
 	transform.target.y	= 0;
-	transform.target.z	= container.position.z + lookFwd*Math.sin(angleY);
+	transform.target.z	= + lookFwd*Math.sin(angleY);
 	return transform;
 }
 
@@ -280,12 +289,12 @@ WebyMaze.WebglRender.prototype.cameraBehindPlayer	= function(){
 	var deltaUp	= 100;
 	var lookFwd	= 200;
 	var angleY	= -container.rotation.y;
-	transform.position.x	= container.position.x - deltaBack*Math.cos(angleY);
+	transform.position.x	= - deltaBack*Math.cos(angleY);
 	transform.position.y	= +deltaUp;
-	transform.position.z	= container.position.z - deltaBack*Math.sin(angleY);
-	transform.target.x	= container.position.x + lookFwd*Math.cos(angleY);
+	transform.position.z	= - deltaBack*Math.sin(angleY);
+	transform.target.x	= + lookFwd*Math.cos(angleY);
 	transform.target.y	= 0;
-	transform.target.z	= container.position.z + lookFwd*Math.sin(angleY);
+	transform.target.z	= + lookFwd*Math.sin(angleY);
 	return transform;
 }
 
@@ -298,36 +307,36 @@ WebyMaze.WebglRender.prototype.cameraFacePlayer	= function(){
 	var lookFwd	= 0;
 	var angleY	= -container.rotation.y + Math.PI;
 // TODO: port this to be the usual formula. only change parameters
-	transform.position.x	= container.position.x + deltaBack*Math.cos(angleY);
+	transform.position.x	= + deltaBack*Math.cos(angleY);
 	transform.position.y	= +deltaUp;
-	transform.position.z	= container.position.z + deltaBack*Math.sin(angleY);
-	transform.target.x	= container.position.x + lookFwd*Math.cos(angleY);
+	transform.position.z	= + deltaBack*Math.sin(angleY);
+	transform.target.x	= + lookFwd*Math.cos(angleY);
 	transform.target.y	= 0;
-	transform.target.z	= container.position.z + lookFwd*Math.sin(angleY);
+	transform.target.z	= + lookFwd*Math.sin(angleY);
 	return transform;
 }
 
 WebyMaze.WebglRender.prototype.cameraZenith	= function(){
 	var container	= this.players[this.urBodyId].obj3d();
 	var transform	= { position: {}, target: {} };
-	transform.position.x	= container.position.x;
+	transform.position.x	= 0;
 	transform.position.y	= +1300;
-	transform.position.z	= container.position.z;
-	transform.target.x	= container.position.x;
+	transform.position.z	= 0;
+	transform.target.x	= 0;
 	transform.target.y	= 0;
-	transform.target.z	= container.position.z;
+	transform.target.z	= 0;
 	return transform;
 }
 
 WebyMaze.WebglRender.prototype.cameraFixedGrazing	= function(){
 	var container	= this.players[this.urBodyId].obj3d();
 	var transform	= { position: {}, target: {} };
-	transform.position.x	= container.position.x+500;
-	transform.position.y	= container.position.y+400;
-	transform.position.z	= container.position.z-250;
-	transform.target.x	= container.position.x+100;
-	transform.target.y	= container.position.y+0;
-	transform.target.z	= container.position.z;
+	transform.position.x	= +500;
+	transform.position.y	= +400;
+	transform.position.z	= -250;
+	transform.target.x	= +100;
+	transform.target.y	= +0;
+	transform.target.z	= +0;
 	return transform;
 }
 
