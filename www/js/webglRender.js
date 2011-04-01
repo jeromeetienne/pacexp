@@ -167,13 +167,13 @@ WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick){
 
 
 WebyMaze.WebglRender.prototype.cameraCtor	= function(){
-	this.cameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith', 'behindPlayer'];
+	this.cameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith', 'behindPlayer', 'fixedGrazing'];
 	this.cameraState	= this.cameraStates[0];
 	this.cameraState	= 'behindPlayer';
 	document.addEventListener( 'keydown', function(event){
 		//console.log("keydown", event.keyCode)
 		switch( event.keyCode ) {
-			case 67: /* C */
+			case "C".charCodeAt(0):
 				var stateIdx	= this.cameraStates.indexOf(this.cameraState)
 				stateIdx	= (stateIdx+1) % this.cameraStates.length;
 				this.cameraState= this.cameraStates[stateIdx];
@@ -217,6 +217,8 @@ WebyMaze.WebglRender.prototype.cameraTick	= function(){
 		transform	= this.cameraInPlayer();
 	}else if( this.cameraState == 'overPlayer' ){
 		transform	= this.cameraOverPlayer();
+	}else if( this.cameraState == 'fixedGrazing' ){
+		transform	= this.cameraFixedGrazing();
 	}else if( this.cameraState == 'behindPlayer' ){
 		transform	= this.cameraBehindPlayer();
 	}else if( this.cameraState == 'zenith' ){
@@ -245,6 +247,7 @@ WebyMaze.WebglRender.prototype.cameraInPlayer	= function(){
 	transform.target.z	= container.position.z + lookFwd*Math.sin(angleY);
 	return transform;
 }
+
 
 WebyMaze.WebglRender.prototype.cameraOverPlayer	= function(){
 	var container	= this.players[this.urBodyId].obj3d();
@@ -307,6 +310,20 @@ WebyMaze.WebglRender.prototype.cameraZenith	= function(){
 	transform.target.z	= container.position.z;
 	return transform;
 }
+
+WebyMaze.WebglRender.prototype.cameraFixedGrazing	= function(){
+	var container	= this.players[this.urBodyId].obj3d();
+	var transform	= { position: {}, target: {} };
+	transform.position.x	= container.position.x+500;
+	transform.position.y	= +400;
+	transform.position.z	= container.position.z-250;
+	transform.target.x	= container.position.x+100;
+	transform.target.y	= 0;
+	transform.target.z	= container.position.z;
+	return transform;
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //		osb user interface stuff					//

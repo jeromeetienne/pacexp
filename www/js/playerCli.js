@@ -12,8 +12,8 @@ WebyMaze.PlayerCli	= function(ctxTick){
 	this.score	= null;
 	this.scoreNeedsUpdate	= false;
 	
-	this._canvasCtor();
-	this._containerCtor();
+//	this._containerCtor();
+	this._containerCtorGhost();
 }
 
 WebyMaze.PlayerCli.prototype.destroy	= function(){
@@ -72,7 +72,50 @@ return;
 	}
 }
 
+WebyMaze.PlayerCli.prototype._containerCtorGhost	= function(){
+	var color		= 0x5500aa;
+	var fillType		= "#5500aa";
+	var smileyType		= 'happy';
+
+	var color		= 0x0044aa;
+	var fillType		= "#0044aa";
+	var smileyType		= 'hurt';
+
+	// create canvas and texture
+	this.canvas		= document.createElement('canvas');
+	this.canvas.width	= this.canvas.height	= 256;
+	this.texture		= new THREE.Texture(this.canvas);
+	THREEx.Texture.Smiley[smileyType](this.canvas, fillType);
+	this.texture.needsUpdate = true;
+
+	// build this._container
+	var bodyWidth	= 100;
+	var geometry	= new Cylinder( 16, bodyWidth/2, bodyWidth/2, bodyWidth/2, 0, 0 );
+
+// TODO lod	
+	var material	= [
+		new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
+	];
+	this._container	= new THREE.Object3D();
+	
+	var mesh	= new THREE.Mesh( geometry, material );
+	mesh.position.y	= +bodyWidth/2 - bodyWidth/4;
+	mesh.rotation.x	= 90*Math.PI/180;
+	this._container.addChild( mesh );
+
+	var material	= [
+		new THREE.MeshLambertMaterial( { map: this.texture } ),
+	];
+	
+	var geometry	= new Sphere( bodyWidth/2, 32, 16 );
+	var mesh	= new THREE.Mesh( geometry, material );
+	mesh.position.y	= +bodyWidth/2 - bodyWidth/4;
+	this._container.addChild( mesh );	
+}
+
 WebyMaze.PlayerCli.prototype._containerCtor	= function(){
+	// build the texture
+	this._canvasCtor();
 	// build this._container
 	var bodyWidth	= 100;
 	var geometry	= [
@@ -80,6 +123,7 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 		[ new Sphere( bodyWidth/2, 16, 8 )	, 700 ],
 		[ new Sphere( bodyWidth/2, 8, 4 )	, 1500 ]
 	];
+	
 	var material	= [
 		new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.flatShading } ),
 		new THREE.MeshLambertMaterial( { map: this.texture } ),
@@ -112,7 +156,7 @@ WebyMaze.PlayerCli.prototype._avatarBuildTexture	= function(img){
 	var avatarDy	= -w/16;
 
 	ctx.save();
-	ctx.fillStyle = "rgb(255,165,0)";
+	ctx.fillStyle	= "rgb(255,165,0)";
 	ctx.fillRect(0,0,w,w);
 	ctx.restore();
 
@@ -183,7 +227,7 @@ WebyMaze.PlayerCli.prototype._avatarLoad	= function(){
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
 WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function(img){
-	THREEx.Texture.Smiley.happy(this.canvas);
+	THREEx.Texture.Smiley.happy(this.canvas );
 
 	// mark this texture as "needsUpdate"
 	this.texture.needsUpdate = true;
