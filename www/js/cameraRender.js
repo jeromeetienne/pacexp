@@ -9,7 +9,14 @@ var WebyMaze	= WebyMaze || {};
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.CameraRender	= function(){
-	this.state	= 'behindPlayer';
+	// initialize object variables
+	this.state	= null;
+	this._transform	= null;
+	this._tween	= null;
+	
+	
+	// init the first state
+	this.changeState('behindPlayer');
 
 	// bind the cameraSwitch keys
 	this.$keydownCallback	= this.onKeyDown.bind(this)
@@ -45,44 +52,22 @@ WebyMaze.CameraRender.prototype.onKeyDown	= function(domEvent)
 /**
  * tick the camera
 */
-WebyMaze.CameraRender.prototype.tick	= function(targetObj3d){
-	//console.log("current state", this.state)
-	// TODO handle the camera position by state.  "inperson" "aboveandbehind" "zenith"
-	// - smooth easing later ? just one position/rotation to another
-	// - from one position/rotation to another... super flexible... with tunable tween.js
-
-	/**
-	 * Note on camera
-	 *
-	 * - express all positions in Delta
-	 *   - according to the player position
-	 *   - camera.position = player.position + delta.position
-	 *   - camera.target.position = player.position + delta.target
-	 * - the tweening occurs at this level
-	*/
-
-// TODO
-// - factorize all function using this
-// - put that in WebyMaze.Camera class
-
-	/**
-	 * - how to test this ?
-	 * - how do i start, i seems to be stuck
-	*/
-	
-	var transform	= this.transformBuild(this.state, targetObj3d);
+WebyMaze.CameraRender.prototype.tick	= function(targetObj3d)
+{
+	var transform	= this._transform;
 
 	// update camera position
 	// TODO this 'camera' is a global... make it a ctor opts
+	var angleY	= -targetObj3d.rotation.y;
 	camera.position	= {
-		x	: targetObj3d.position.x	+ transform.positionX,
-		y	: targetObj3d.position.y	+ transform.positionY,
-		z	: targetObj3d.position.z	+ transform.positionZ
+		x	: targetObj3d.position.x + transform.posX + transform.posA * Math.cos(angleY),
+		y	: targetObj3d.position.y + transform.posY,
+		z	: targetObj3d.position.z + transform.posZ + transform.posA * Math.sin(angleY)
 	};
 	camera.target.position	= {
-		x	: targetObj3d.position.x	+ transform.targetX,
-		y	: targetObj3d.position.y	+ transform.targetY,
-		z	: targetObj3d.position.z	+ transform.targetZ
+		x	: targetObj3d.position.x + transform.tgtX + transform.tgtA * Math.cos(angleY),
+		y	: targetObj3d.position.y + transform.tgtY,
+		z	: targetObj3d.position.z + transform.tgtZ + transform.tgtA * Math.sin(angleY)
 	};
 }
 
@@ -94,15 +79,50 @@ WebyMaze.CameraRender.prototype.cameraNextState	= function(){
 	var states	= WebyMaze.CameraRender.CameraStates;
 	var stateIdx	= states.indexOf(this.state)
 	stateIdx	= (stateIdx+1) % states.length;
-	this.state	= states[stateIdx];
+	this.changeState( states[stateIdx] )
 }
 
 WebyMaze.CameraRender.prototype.cameraPrevState	= function(){
 	var states	= WebyMaze.CameraRender.CameraStates;
 	var stateIdx	= states.indexOf(this.state)
 	stateIdx	= (stateIdx-1 + states.length) % states.length;
-	this.state	= states[stateIdx];
+	this.changeState( states[stateIdx] )
 }
+
+WebyMaze.CameraRender.prototype.changeState	= function(state)
+{
+	console.log("changeState", state);
+	// change the current camera state
+	// TODO is this usefull ?
+	// - is it used elsewhere
+	this.state	= state;
+	
+	// delete this._tween is needed
+	if( this._tween ){
+		this._tween.stop();
+		this._tween	= null;
+	}
+	
+	if( !this._transform ){
+console.log("first time _transform")
+		this._transform	= this.transformBuild(this.state);		
+	}else{
+console.log("create tween from", this._transform)
+console.log("to", this.transformBuild(this.state))
+
+		this._tween	= new THREEx.TWEEN.Tween(this._transform)
+					.to(this.transformBuild(this.state), 1500)
+					.easing(TWEEN.Easing.Quadratic.EaseInOut);
+		this._tween.start();
+	}
+}
+
+WebyMaze.CameraRender.prototype.changeState0	= function(state)
+{
+	this.state	= state;
+	this._transform	= this.transformBuild(this.state);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //		handle transform						//
@@ -111,105 +131,97 @@ WebyMaze.CameraRender.prototype.cameraPrevState	= function(){
 /**
  * return the cameraTransform relative to player position
 */
-WebyMaze.CameraRender.prototype.transformBuild	= function(state, targetObj3d){
+WebyMaze.CameraRender.prototype.transformBuild	= function(state){
 	var transform	= null;
 	if( state == "inplayer" ){
-		transform	= this.transformInPlayer(targetObj3d);
+		transform	= this.transformInPlayer();
 	}else if( state == 'overPlayer' ){
-		transform	= this.transformOverPlayer(targetObj3d);
+		transform	= this.transformOverPlayer();
 	}else if( state == 'fixedGrazing' ){
-		transform	= this.transformFixedGrazing(targetObj3d);
+		transform	= this.transformFixedGrazing();
 	}else if( state == 'behindPlayer' ){
-		transform	= this.transformBehindPlayer(targetObj3d);
+		transform	= this.transformBehindPlayer();
 	}else if( state == 'zenith' ){
-		transform	= this.transformZenith(targetObj3d);
+		transform	= this.transformZenith();
 	}else if( state == 'facePlayer' ){
-		transform	= this.transformFacePlayer(targetObj3d);
+		transform	= this.transformFacePlayer();
 	}else	console.assert(false);
 	// return the transform
 	return transform;
 }
 
-WebyMaze.CameraRender.prototype.transformInPlayer	= function(targetObj3d){
+WebyMaze.CameraRender.prototype.transformBuildRelative	= function(posA, posY, tgtA)
+{
 	var transform	= {};
+	transform.posX	= 0;
+	transform.posY	= posY;
+	transform.posZ	= 0;
+	transform.posA	= posA;
+	transform.tgtX	= 0;
+	transform.tgtY	= 0;
+	transform.tgtZ	= 0;
+	transform.tgtA	= tgtA;
+	return transform;
+}
+
+
+WebyMaze.CameraRender.prototype.transformInPlayer	= function(targetObj3d)
+{
 	var deltaBack	= 0;	// TODO if this is != 0, display the player
 	var deltaUp	= 0;
 	var lookFwd	= 200;
-	var angleY	= -targetObj3d.rotation.y;
-	transform.positionX	= - deltaBack*Math.cos(angleY);
-	transform.positionY	= + deltaUp;
-	transform.positionZ	= - deltaBack*Math.sin(angleY);
-	transform.targetX	= + lookFwd*Math.cos(angleY);
-	transform.targetY	= + 0;
-	transform.targetZ	= + lookFwd*Math.sin(angleY);
-	return transform;
+	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
 
-
-WebyMaze.CameraRender.prototype.transformOverPlayer	= function(targetObj3d){
-	var transform	= {};
+WebyMaze.CameraRender.prototype.transformOverPlayer	= function(targetObj3d)
+{
 	var deltaBack	= 25;	// TODO if this is != 0, display the player
 	var deltaUp	= 100;
 	var lookFwd	= 200;
-	var angleY	= -targetObj3d.rotation.y;
-	transform.positionX	= - deltaBack*Math.cos(angleY);
-	transform.positionY	= + deltaUp;
-	transform.positionZ	= - deltaBack*Math.sin(angleY);
-	transform.targetX	= + lookFwd*Math.cos(angleY);
-	transform.targetY	= + 0;
-	transform.targetZ	= + lookFwd*Math.sin(angleY);
-	return transform;
+	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
 
-WebyMaze.CameraRender.prototype.transformBehindPlayer	= function(targetObj3d){
-	var transform	= {};
+WebyMaze.CameraRender.prototype.transformBehindPlayer	= function(targetObj3d)
+{
 	var deltaBack	= 200;
 	var deltaUp	= 100;
 	var lookFwd	= 200;
-	var angleY	= -targetObj3d.rotation.y;
-	transform.positionX	= - deltaBack*Math.cos(angleY);
-	transform.positionY	= + deltaUp;
-	transform.positionZ	= - deltaBack*Math.sin(angleY);
-	transform.targetX	= + lookFwd*Math.cos(angleY);
-	transform.targetY	= + 0;
-	transform.targetZ	= + lookFwd*Math.sin(angleY);
-	return transform;
+	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
 
 
-WebyMaze.CameraRender.prototype.transformFacePlayer	= function(targetObj3d){
-	var transform	= {};
-	var deltaBack	= -200;	// TODO if this is != 0, display the player
+WebyMaze.CameraRender.prototype.transformFacePlayer	= function(targetObj3d)
+{
+	var deltaBack	= -200;
 	var deltaUp	= 75;
 	var lookFwd	= 0;
-	var angleY	= -targetObj3d.rotation.y + Math.PI;
-	transform.positionX	= + deltaBack*Math.cos(angleY);
-	transform.positionY	= + deltaUp;
-	transform.positionZ	= + deltaBack*Math.sin(angleY);
-	transform.targetX	= + lookFwd*Math.cos(angleY);
-	transform.targetY	= 0;
-	transform.targetZ	= + lookFwd*Math.sin(angleY);
+	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
+}
+
+WebyMaze.CameraRender.prototype.transformZenith	= function()
+{
+	var transform	= {};
+	transform.posX	= 0;
+	transform.posY	= +1300;
+	transform.posZ	= 0;
+	transform.posA	= 0;
+	transform.tgtX	= 0;
+	transform.tgtY	= 0;
+	transform.tgtZ	= 0;
+	transform.tgtA	= +0;
 	return transform;
 }
 
-WebyMaze.CameraRender.prototype.transformZenith	= function(targetObj3d){
+WebyMaze.CameraRender.prototype.transformFixedGrazing	= function()
+{
 	var transform	= {};
-	transform.positionX	= 0;
-	transform.positionY	= +1300;
-	transform.positionZ	= 0;
-	transform.targetX	= 0;
-	transform.targetY	= 0;
-	transform.targetZ	= 0;
-	return transform;
-}
-
-WebyMaze.CameraRender.prototype.transformFixedGrazing	= function(targetObj3d){
-	var transform	= {};
-	transform.positionX	= +500;
-	transform.positionY	= +400;
-	transform.positionZ	= -250;
-	transform.targetX	= +100;
-	transform.targetY	= +0;
-	transform.targetZ	= +0;
+	transform.posX	= +500;
+	transform.posY	= +400;
+	transform.posZ	= -250;
+	transform.posA	= 0;
+	transform.tgtX	= +100;
+	transform.tgtY	= +0;
+	transform.tgtZ	= +0;
+	transform.tgtA	= +0;
 	return transform;
 }

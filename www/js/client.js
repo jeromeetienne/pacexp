@@ -89,6 +89,7 @@ clientY	= event.clientY;
 function animate() {
 	requestAnimationFrame( animate );
 	render();
+	THREEx.TWEEN.update();
 	if( stats )	stats.update();
 }
 

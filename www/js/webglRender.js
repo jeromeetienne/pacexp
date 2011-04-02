@@ -216,7 +216,7 @@ WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 	jQuery(buttonSel+" span.value").text(this.username)
 
 	jQuery(buttonSel).click(function(){
-		this.cameraState= 'facePlayer';
+		this.cameraRender.changeState('facePlayer');
 		jQuery(inputSel).val(this.username)
 		jQuery(dialogSel).jqmShow(); 
 	}.bind(this));
