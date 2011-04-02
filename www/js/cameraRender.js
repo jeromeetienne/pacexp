@@ -104,16 +104,12 @@ WebyMaze.CameraRender.prototype.changeState	= function(state)
 	}
 	
 	if( !this._transform ){
-console.log("first time _transform")
 		this._transform	= this.transformBuild(this.state);		
 	}else{
-console.log("create tween from", this._transform)
-console.log("to", this.transformBuild(this.state))
-
 		this._tween	= new THREEx.TWEEN.Tween(this._transform)
 					.to(this.transformBuild(this.state), 1500)
-					.easing(TWEEN.Easing.Quadratic.EaseInOut);
-		this._tween.start();
+					.easing(TWEEN.Easing.Quadratic.EaseInOut)
+					.start();
 	}
 }
 

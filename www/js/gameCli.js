@@ -46,17 +46,17 @@ WebyMaze.GameCli.prototype.userInputCtor	= function(){
 	var setMove	= function(event, value){
 		// https://developer.mozilla.org/en/DOM/Event/UIEvent/KeyEvent
 		switch( event.keyCode ) {
-			case 32: /* space */	send('shoot', value);		break;
-			case 90: /*Z*/
-			case 38: /*up*/
-			case 87: /*W*/		send('moveForward', value);	break;
-			case 37: /*left*/
-			case 81: /*Z*/
-			case 65: /*A*/		send('moveLeft', value);	break;
-			case 40: /*down*/
-			case 83: /*S*/		send('moveBackward', value);	break;
-			case 39: /*right*/
-			case 68: /*D*/		send('moveRight', value);	break;
+			case " ".charCodeAt(0):	send('shoot', value);		break;
+			case "Z".charCodeAt(0):
+			case "W".charCodeAt(0):
+			case 38: /*up*/		send('moveForward', value);	break;
+			case "Q".charCodeAt(0):
+			case "A".charCodeAt(0):
+			case 37: /*left*/	send('moveLeft', value);	break;		
+			case "S".charCodeAt(0):
+			case 40: /*down*/	send('moveBackward', value);	break;
+			case "D".charCodeAt(0):
+			case 39: /*right*/	send('moveRight', value);	break;
 		}
 	}
 	document.addEventListener( 'keydown'	, function(e){setMove(e, true);}	, false );
