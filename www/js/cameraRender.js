@@ -107,8 +107,21 @@ WebyMaze.CameraRender.prototype.changeState	= function(state)
 		this._transform	= this.transformBuild(this.state);		
 	}else{
 		// TODO in face the timing will depends on the distance beween the 2
-		this._tween	= new THREEx.TWEEN.Tween(this._transform)
-					.to(this.transformBuild(this.state), 1500)
+		var t1	= this._transform;
+		var t2	= this.transformBuild(this.state);
+		console.log("t1", JSON.stringify(t1))
+		console.log("t2", JSON.stringify(t2))
+		var dx	= Math.abs(t1.posX - t2.posX);
+		var dy	= Math.abs(t1.posY - t2.posY);
+		var dz	= Math.abs(t1.posZ - t2.posZ);
+		var dist= Math.sqrt( dx*dx*dx + dy*dy*dy + dz*dz*dz);
+		var spd	= 250/1500;
+		var time= dist/spd;
+		// TODO the time must NOT linearly proportional
+		// - dist go from 13000/ 40000/ 900 
+		time	= 1500;
+		console.log("tween cam dist", dist)
+		this._tween	= new THREEx.TWEEN.Tween(t1).to(t2, time)
 					.easing(TWEEN.Easing.Quadratic.EaseInOut)
 					//.easing(TWEEN.Easing.Circular.EaseInOut)
 					//.easing(TWEEN.Easing.Back.EaseInOut)
