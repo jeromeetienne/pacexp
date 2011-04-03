@@ -114,7 +114,7 @@ WebyMaze.WebglRender.prototype.setCtxTickShootConvert	= function(ctxTick){
 	var nctx	= {
 		add	: {},
 		upd	: {},
-		del	: {}
+		del	: []
 	};
 	ctxTick.shoots.forEach(function(shootCtx){
 		var bodyId	= shootCtx.bodyId;
@@ -129,12 +129,12 @@ WebyMaze.WebglRender.prototype.setCtxTickShootConvert	= function(ctxTick){
 			var shoot	= ctxTick.shoots[i];
 			if( bodyId === shoot.bodyId ) return;
 		}
-		nctx.del[bodyId]	= true;
+		nctx.del.push(bodyId);
 	}.bind(this));
 	// remove empty fields
 	if( Object.keys(nctx.add).length === 0 )	delete nctx.add;
-	if( Object.keys(nctx.del).length === 0 )	delete nctx.del;
 	if( Object.keys(nctx.upd).length === 0 )	delete nctx.upd;
+	if( nctx.del.length === 0 )			delete nctx.del;
 	// return the just-built nctx
 	return nctx;
 }
@@ -167,8 +167,7 @@ WebyMaze.WebglRender.prototype.setCtxTickShoot0	= function(ctxTick)
 	}
 	
 	if( 'del' in ctxTick ){
-		Object.keys(ctxTick.del).forEach(function(bodyId){
-			var shootCtx	= ctxTick.del[bodyId];
+		ctxTick.del.forEach(function(bodyId){
 			console.assert( bodyId in this.shoots )
 			scene.removeObject( this.shoots[bodyId].obj3d() );
 			this.shoots[bodyId].destroy();
