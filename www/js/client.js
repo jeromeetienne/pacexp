@@ -62,6 +62,7 @@ function init() {
 	scene.addLight( directionalLight );
 	
 	renderer = new THREE.WebGLRenderer();
+	//renderer = new THREE.CanvasRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
 	container.appendChild( renderer.domElement );

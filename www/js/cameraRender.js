@@ -16,7 +16,7 @@ WebyMaze.CameraRender	= function(){
 	
 	
 	// init the first state
-	this.changeState('behindPlayer');
+	this.changeState('fixedGrazing');
 
 	// bind the cameraSwitch keys
 	this.$keydownCallback	= this.onKeyDown.bind(this)
@@ -106,9 +106,12 @@ WebyMaze.CameraRender.prototype.changeState	= function(state)
 	if( !this._transform ){
 		this._transform	= this.transformBuild(this.state);		
 	}else{
+		// TODO in face the timing will depends on the distance beween the 2
 		this._tween	= new THREEx.TWEEN.Tween(this._transform)
 					.to(this.transformBuild(this.state), 1500)
 					.easing(TWEEN.Easing.Quadratic.EaseInOut)
+					//.easing(TWEEN.Easing.Circular.EaseInOut)
+					//.easing(TWEEN.Easing.Back.EaseInOut)
 					.start();
 	}
 }

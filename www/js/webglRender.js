@@ -52,7 +52,7 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//console.log("ctxTick", ctxTick)
 	this.setCtxTickPlayer(ctxTick);
-	this.setCtxTickShoot(ctxTick);
+	this.setCtxTickShoot0(ctxTick);
 	this.setCtxTickPill(ctxTick);
 	if( ctxTick.events.length )
 		console.log("event", JSON.stringify(ctxTick.events))
@@ -110,7 +110,82 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
  * tick all the shoot
  *
 */
-WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick){
+WebyMaze.WebglRender.prototype.setCtxTickShootConvert	= function(ctxTick){
+	var nctx	= {
+		add	: {},
+		upd	: {},
+		del	: {}
+	};
+	ctxTick.shoots.forEach(function(shootCtx){
+		var bodyId	= shootCtx.bodyId;
+		var created	= bodyId in this.shoots
+		if( !created )	nctx.add[bodyId]	= shootCtx;
+		else		nctx.upd[bodyId]	= shootCtx;
+	}.bind(this));
+	
+	// remove the obsolete shoots
+	Object.keys(this.shoots).forEach(function(bodyId){
+		for(var i = 0; i < ctxTick.shoots.length; i++){
+			var shoot	= ctxTick.shoots[i];
+			if( bodyId === shoot.bodyId ) return;
+		}
+		nctx.del[bodyId]	= true;
+	}.bind(this));
+	// remove empty fields
+	if( Object.keys(nctx.add).length === 0 )	delete nctx.add;
+	if( Object.keys(nctx.del).length === 0 )	delete nctx.del;
+	if( Object.keys(nctx.upd).length === 0 )	delete nctx.upd;
+	// return the just-built nctx
+	return nctx;
+}
+
+/**
+ * tick all the shoot
+ *
+*/
+WebyMaze.WebglRender.prototype.setCtxTickShoot0	= function(ctxTick)
+{
+	ctxTick	= this.setCtxTickShootConvert(ctxTick)
+	if( Object.keys(ctxTick).length )	console.log("ctxTick", ctxTick)
+	
+	if( 'add' in ctxTick ){
+		Object.keys(ctxTick.add).forEach(function(bodyId){
+			var shootCtx	= ctxTick.add[bodyId];
+			console.assert( !(bodyId in this.shoots) )
+			this.shoots[bodyId]	= new WebyMaze.ShootCli();
+			this.shoots[bodyId].setCtxTick(shootCtx)
+			sceneContainer.addChild( this.shoots[bodyId].obj3d() );
+		}.bind(this))
+	}
+	
+	if( 'upd' in ctxTick ){
+		Object.keys(ctxTick.upd).forEach(function(bodyId){
+			var shootCtx	= ctxTick.upd[bodyId];
+			console.assert( bodyId in this.shoots )
+			this.shoots[bodyId].setCtxTick(shootCtx)
+		}.bind(this))
+	}
+	
+	if( 'del' in ctxTick ){
+		Object.keys(ctxTick.del).forEach(function(bodyId){
+			var shootCtx	= ctxTick.del[bodyId];
+			console.assert( bodyId in this.shoots )
+			scene.removeObject( this.shoots[bodyId].obj3d() );
+			this.shoots[bodyId].destroy();
+			delete this.shoots[bodyId];
+		}.bind(this))
+	}
+}
+
+/**
+ * tick all the shoot
+ *
+*/
+WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick)
+{
+	var nctx	= this.setCtxTickShootConvert(ctxTick)
+	if( Object.keys(nctx).length )	console.log("nctx", nctx)
+	
 	// handle ctxTick.shoots
 	ctxTick.shoots.forEach(function(shoot){
 		var bodyId	= shoot.bodyId;
@@ -280,7 +355,6 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 	jQuery(buttonSel).click(function(){
 		var dataUrl	= renderer.domElement.toDataURL("image/png");
 
-
 		/**
 		 * Scale down the image to 340px wide and upload it.
 		*/
@@ -301,7 +375,7 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 		
 			var smallDataUrl	= canvas.toDataURL("image/png");
 
-			jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: smallDataUrl}, function(data) {
+			jQuery.post('http://127.0.0.1:8080/upload', {dataUrl: smallDataUrl}, function(data) {
 				console.log("screenshoot uploaded. returned data:", data)
 			});
 		}

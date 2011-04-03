@@ -18,13 +18,17 @@ WebyMaze.GameCli.prototype.destroy	= function(){
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.GameCli.prototype.onContextInit	= function(message){
+	// sanity check - this.webglRender MUST NOT exist
 	console.assert(!this.webglRender);
+	// create WebyMaze.WebglRender
 	this.webglRender	= new WebyMaze.WebglRender({
 		ctxInit	: message.data
 	})
 }
 WebyMaze.GameCli.prototype.onContextTick	= function(message){
+	// sanity check - this.webglRender MUST exist
 	console.assert(this.webglRender);
+	// update WebyMaze.WebglRender
 	this.webglRender.setCtxTick(message.data);
 }
 
@@ -59,11 +63,12 @@ WebyMaze.GameCli.prototype.userInputCtor	= function(){
 			case 39: /*right*/	send('moveRight', value);	break;
 		}
 	}
+	
 	document.addEventListener( 'keydown'	, function(e){setMove(e, true);}	, false );
 	document.addEventListener( 'keyup'	, function(e){setMove(e, false);}	, false );
 }
 WebyMaze.GameCli.prototype.userInputDtor	= function(){
-	console.assert(false, "not yet implemented")
+	console.assert(false, "not yet implemented. do it with a this.$userInputKeydownCallback")
 }
 
 //////////////////////////////////////////////////////////////////////////////////

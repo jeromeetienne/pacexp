@@ -9,7 +9,9 @@ WebyMaze.SoundRender	= function(){
 	var soundsIdToUrl	= {
 		//'racketImpact'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mouseover2.mp3',
 		//'ballLoss'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mak.mp3',
-		'wallImpact'	: 'vendor/soundmanager2/demo/_mp3/click-high.mp3'
+		'wallImpact'	: 'sounds/pacman/die.mp3',
+		'die'		: 'sounds/pacman/die.mp3',
+		'eatpill'	: 'sounds/pacman/eatpill.mp3'
 	}
 	var soundTrack		= null;
 
@@ -37,7 +39,6 @@ WebyMaze.SoundRender	= function(){
 	*/
 	var soundTrackCtor	= function(){
 		//if( locationHash.get('nosound') )	return;
-		console.log("los")
 		soundTrack	= soundManager.createSound({
 			id	: 'soundTrack',
 			url	: 'sounds/Hot-Butter-Popcorn.mp3',
