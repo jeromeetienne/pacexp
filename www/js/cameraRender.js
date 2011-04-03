@@ -213,14 +213,14 @@ WebyMaze.CameraRender.prototype.transformFacePlayer	= function(targetObj3d)
 WebyMaze.CameraRender.prototype.transformZenith	= function()
 {
 	var transform	= {};
-	transform.posX	= 0;
+	transform.posX	= +0;
 	transform.posY	= +1300;
-	transform.posZ	= 0;
-	transform.posA	= 0;
-	transform.tgtX	= 0;
-	transform.tgtY	= 0;
-	transform.tgtZ	= 0;
-	transform.tgtA	= +0;
+	transform.posZ	= +0;
+	transform.posA	= +0;
+	transform.tgtX	= +0;
+	transform.tgtY	= +0;
+	transform.tgtZ	= +0;
+	transform.tgtA	= +100;
 	return transform;
 }
 
