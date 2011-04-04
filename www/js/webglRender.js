@@ -141,37 +141,47 @@ WebyMaze.WebglRender.prototype.setCtxTickShootConvert	= function(ctxTick){
 
 /**
  * tick all the shoot
- *
+ * 
+ * TODO make this function generic
+ * - the same function for shoot/pill/player
 */
 WebyMaze.WebglRender.prototype.setCtxTickShoot0	= function(ctxTick)
 {
+	// TODO
+	// - this.shoots : collection
+	// - Class
+	// -
+	var collection	= this.shoots;
+	var classCtor	= WebyMaze.ShootCli;
+	
 	ctxTick	= this.setCtxTickShootConvert(ctxTick)
 	if( Object.keys(ctxTick).length )	console.log("ctxTick", ctxTick)
+
 	
 	if( 'add' in ctxTick ){
 		Object.keys(ctxTick.add).forEach(function(bodyId){
-			var shootCtx	= ctxTick.add[bodyId];
-			console.assert( !(bodyId in this.shoots) )
-			this.shoots[bodyId]	= new WebyMaze.ShootCli();
-			this.shoots[bodyId].setCtxTick(shootCtx)
-			sceneContainer.addChild( this.shoots[bodyId].obj3d() );
+			var ctx	= ctxTick.add[bodyId];
+			console.assert( !(bodyId in collection) )
+			collection[bodyId]	= new classCtor();
+			collection[bodyId].setCtxTick(ctx)
+			sceneContainer.addChild( collection[bodyId].obj3d() );
 		}.bind(this))
 	}
 	
 	if( 'upd' in ctxTick ){
 		Object.keys(ctxTick.upd).forEach(function(bodyId){
-			var shootCtx	= ctxTick.upd[bodyId];
-			console.assert( bodyId in this.shoots )
-			this.shoots[bodyId].setCtxTick(shootCtx)
+			var ctx	= ctxTick.upd[bodyId];
+			console.assert( bodyId in collection )
+			collection[bodyId].setCtxTick(ctx)
 		}.bind(this))
 	}
 	
 	if( 'del' in ctxTick ){
 		ctxTick.del.forEach(function(bodyId){
-			console.assert( bodyId in this.shoots )
-			scene.removeObject( this.shoots[bodyId].obj3d() );
-			this.shoots[bodyId].destroy();
-			delete this.shoots[bodyId];
+			console.assert( bodyId in collection )
+			scene.removeObject( collection[bodyId].obj3d() );
+			collection[bodyId].destroy();
+			delete collection[bodyId];
 		}.bind(this))
 	}
 }
