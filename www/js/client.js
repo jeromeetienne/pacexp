@@ -61,8 +61,13 @@ function init() {
 	directionalLight.position.normalize();
 	scene.addLight( directionalLight );
 	
-	renderer = new THREE.WebGLRenderer();
-	//renderer = new THREE.CanvasRenderer();
+
+	// if url?render=canvas then render in canvas
+	if( jQuery.url.param('render') == 'canvas' ){
+		renderer = new THREE.CanvasRenderer();
+	}else{
+		renderer = new THREE.WebGLRenderer();		
+	}
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
 	container.appendChild( renderer.domElement );
