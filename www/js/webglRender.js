@@ -62,7 +62,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//console.log("ctxTick", ctxTick)
 	this.setCtxTickPlayer(ctxTick);
 	this.setCtxTickShoot(ctxTick);
-	this.setCtxTickPill(ctxTick);
+	this.setCtxTickPill0(ctxTick);
 	if( ctxTick.events.length )
 		console.log("event", JSON.stringify(ctxTick.events))
 	

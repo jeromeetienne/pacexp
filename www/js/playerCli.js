@@ -12,8 +12,8 @@ WebyMaze.PlayerCli	= function(ctxTick){
 	this.score	= null;
 	this.scoreNeedsUpdate	= false;
 	
-	//this._containerCtor();
-	this._containerCtorGhost();
+	this._containerCtor();
+	//this._containerCtorGhost();
 }
 
 WebyMaze.PlayerCli.prototype.destroy	= function(){
