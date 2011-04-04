@@ -3,12 +3,18 @@
  * - should it be merged with gameCli.js 
 */
 
+/** @namespace */
 var WebyMaze	= WebyMaze || {};
 
 //////////////////////////////////////////////////////////////////////////////////
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Renderer for webgl
+ * 
+ * @constructor
+*/
 WebyMaze.WebglRender	= function(opts){
 	var ctxInit	= opts.ctxInit		|| console.assert(false);
 
@@ -41,6 +47,9 @@ WebyMaze.WebglRender	= function(opts){
 	this.helpUICtor();
 }
 
+/**
+ * destructor
+*/
 WebyMaze.WebglRender.prototype.destroy	= function(){
 	this.mazeCli.destroy();
 }
@@ -52,7 +61,7 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//console.log("ctxTick", ctxTick)
 	this.setCtxTickPlayer(ctxTick);
-	this.setCtxTickShoot0(ctxTick);
+	this.setCtxTickShoot(ctxTick);
 	this.setCtxTickPill(ctxTick);
 	if( ctxTick.events.length )
 		console.log("event", JSON.stringify(ctxTick.events))
@@ -107,116 +116,20 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
 }
 
 /**
- * tick all the shoot
- *
-*/
-WebyMaze.WebglRender.prototype.setCtxTickShootConvert	= function(ctxTick){
-	var nctx	= {
-		add	: {},
-		upd	: {},
-		del	: []
-	};
-	ctxTick.shoots.forEach(function(shootCtx){
-		var bodyId	= shootCtx.bodyId;
-		var created	= bodyId in this.shoots
-		if( !created )	nctx.add[bodyId]	= shootCtx;
-		else		nctx.upd[bodyId]	= shootCtx;
-	}.bind(this));
-	
-	// remove the obsolete shoots
-	Object.keys(this.shoots).forEach(function(bodyId){
-		for(var i = 0; i < ctxTick.shoots.length; i++){
-			var shoot	= ctxTick.shoots[i];
-			if( bodyId === shoot.bodyId ) return;
-		}
-		nctx.del.push(bodyId);
-	}.bind(this));
-	// remove empty fields
-	if( Object.keys(nctx.add).length === 0 )	delete nctx.add;
-	if( Object.keys(nctx.upd).length === 0 )	delete nctx.upd;
-	if( nctx.del.length === 0 )			delete nctx.del;
-	// return the just-built nctx
-	return nctx;
-}
-
-/**
- * tick all the shoot
- * 
- * TODO make this function generic
- * - the same function for shoot/pill/player
-*/
-WebyMaze.WebglRender.prototype.setCtxTickShoot0	= function(ctxTick)
-{
-	// TODO
-	// - this.shoots : collection
-	// - Class
-	// -
-	var collection	= this.shoots;
-	var classCtor	= WebyMaze.ShootCli;
-	
-	ctxTick	= this.setCtxTickShootConvert(ctxTick)
-	if( Object.keys(ctxTick).length )	console.log("ctxTick", ctxTick)
-
-	
-	if( 'add' in ctxTick ){
-		Object.keys(ctxTick.add).forEach(function(bodyId){
-			var ctx	= ctxTick.add[bodyId];
-			console.assert( !(bodyId in collection) )
-			collection[bodyId]	= new classCtor();
-			collection[bodyId].setCtxTick(ctx)
-			sceneContainer.addChild( collection[bodyId].obj3d() );
-		}.bind(this))
-	}
-	
-	if( 'upd' in ctxTick ){
-		Object.keys(ctxTick.upd).forEach(function(bodyId){
-			var ctx	= ctxTick.upd[bodyId];
-			console.assert( bodyId in collection )
-			collection[bodyId].setCtxTick(ctx)
-		}.bind(this))
-	}
-	
-	if( 'del' in ctxTick ){
-		ctxTick.del.forEach(function(bodyId){
-			console.assert( bodyId in collection )
-			scene.removeObject( collection[bodyId].obj3d() );
-			collection[bodyId].destroy();
-			delete collection[bodyId];
-		}.bind(this))
-	}
-}
-
-/**
- * tick all the shoot
- *
+ * Update RenderInfo for shoots
 */
 WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick)
 {
-	var nctx	= this.setCtxTickShootConvert(ctxTick)
-	if( Object.keys(nctx).length )	console.log("nctx", nctx)
-	
-	// handle ctxTick.shoots
-	ctxTick.shoots.forEach(function(shoot){
-		var bodyId	= shoot.bodyId;
-		var created	= bodyId in this.shoots;
-		// create shoot if needed
-		if( ! created )	this.shoots[bodyId]	= new WebyMaze.ShootCli();
-		// update setCtxTick
-		this.shoots[bodyId].setCtxTick(shoot)
-		// add the new shoot in sceneContainer
-		if( ! created )	sceneContainer.addChild( this.shoots[bodyId].obj3d() );
-	}.bind(this));
-	
-	// remove the obsolete shoots
-	Object.keys(this.shoots).forEach(function(bodyId){
-		for(var i = 0; i < ctxTick.shoots.length; i++){
-			var shoot	= ctxTick.shoots[i];
-			if( bodyId === shoot.bodyId ) return;
-		}
-		scene.removeObject( this.shoots[bodyId].obj3d() );
-		this.shoots[bodyId].destroy();
-		delete this.shoots[bodyId];
-	}.bind(this));
+	this._renderInfoPatch(ctxTick.shoots, this.shoots, WebyMaze.ShootCli);
+}
+
+
+/**
+ * Update RenderInfo for shoots
+*/
+WebyMaze.WebglRender.prototype.setCtxTickPill0	= function(ctxTick)
+{
+	this._renderInfoPatch(ctxTick.pills, this.pills, WebyMaze.PillCli);
 }
 
 /**
@@ -246,6 +159,47 @@ WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick){
 		this.pills[bodyId].destroy();
 		delete this.pills[bodyId];
 	}.bind(this));
+}
+
+
+/**
+ * patch local instances based on renderInfo
+ *
+ * @param {object} renderInfo the renderInfo sent from the server
+ * @param {object} collection store all objects locally instanced from renderInfo
+ * @param {Class} classCtor the constructor to build a new instance
+*/
+WebyMaze.WebglRender.prototype._renderInfoPatch	= function(renderInfo, collection, classCtor)
+{
+	if( ! renderInfo )	return;
+	if( Object.keys(renderInfo).length )	console.log("renderInfo", renderInfo)
+	
+	if( 'add' in renderInfo ){
+		Object.keys(renderInfo.add).forEach(function(bodyId){
+			var ctx	= renderInfo.add[bodyId];
+			console.assert( !(bodyId in collection) )
+			collection[bodyId]	= new classCtor();
+			collection[bodyId].setCtxTick(ctx)
+			sceneContainer.addChild( collection[bodyId].obj3d() );
+		}.bind(this))
+	}
+	
+	if( 'upd' in renderInfo ){
+		Object.keys(renderInfo.upd).forEach(function(bodyId){
+			var ctx	= renderInfo.upd[bodyId];
+			console.assert( bodyId in collection )
+			collection[bodyId].setCtxTick(ctx)
+		}.bind(this))
+	}
+	
+	if( 'del' in renderInfo ){
+		renderInfo.del.forEach(function(bodyId){
+			console.assert( bodyId in collection )
+			scene.removeObject( collection[bodyId].obj3d() );
+			collection[bodyId].destroy();
+			delete collection[bodyId];
+		}.bind(this))
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
