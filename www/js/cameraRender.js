@@ -42,9 +42,9 @@ WebyMaze.CameraRender.CameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'z
 WebyMaze.CameraRender.prototype.onKeyDown	= function(domEvent)
 {
 	//console.log("keydown", event.keyCode)
-	if( event.keyCode === "C".charCodeAt(0) ){
+	if( domEvent.keyCode === "C".charCodeAt(0) ){
 		this.cameraNextState();
-	}else if( event.keyCode === "V".charCodeAt(0) ){
+	}else if( domEvent.keyCode === "V".charCodeAt(0) ){
 		this.cameraPrevState();
 	}
 }

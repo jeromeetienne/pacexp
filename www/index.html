@@ -8,11 +8,12 @@
 		
 		<style type="text/css">
 			body {
-				/*background	: #87CEEB;*/
-				background	: #000000;
 				padding		: 0;
 				margin		: 0;
 				overflow	: hidden;
+
+				/*background	: #87CEEB;*/
+				background	: #000000;
 				font-family	: arial;
 			}
 			.above3d {
@@ -66,6 +67,9 @@
 		</style>
 	</head>
 	<body>
+		<!-- es5-shim.js to patch missing standard functions - needed for Function.bind() in safari -->
+		<script src='vendor/es5-shim.js'></script>
+
 		<script src='js/jquery/jquery.min.js'></script>
 		<script src='js/jquery/jquery.url.js'></script>
 		<script src='js/jquery/jquery.cookie.js'></script>
@@ -178,80 +182,6 @@
 			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
-		</script>
-
-
-<!--		<canvas id="testcanvas"></canvas>
--->		<script>
-		jQuery(function(){
-			return;
-			var canvas	= document.getElementById('testcanvas');
-			var ctx		= canvas.getContext( '2d' );
-			canvas.width	= canvas.height	= 256;
-			var w		= canvas.width;
-
-			ctx.save();
-			ctx.fillStyle	= "#FF5200";
-			ctx.fillRect(0,0,w,w);
-			ctx.restore();
-
-			var eyeDx	= w/8;
-			var eyeDy	= w/4;
-
-			var eyeW	= w/8;
-			var eyeH	= w/4;
-
-			var mouthW	= w/4;
-			var mouthDx	= 0;
-			var mouthDy	= 0;
-
-
-			ctx.fillStyle	= "rgb(0,0,0)";
-			ctx.lineCap	= "round";
-			ctx.lineWidth	= w/24;
-
-			// right eyes
-			ctx.save();
-			ctx.translate(w/2 - w/2, w/2);
-			ctx.translate(eyeDx, -eyeDy);
-			ctx.moveTo(-eyeW/2, -eyeH/2);
-			ctx.lineTo(+eyeW/2, +eyeH/2);
-			ctx.stroke();		
-			ctx.moveTo(+eyeW/2, -eyeH/2);
-			ctx.lineTo(-eyeW/2, +eyeH/2);
-			ctx.stroke();
-			ctx.restore();
-
-			// left eyes
-			ctx.save();
-			ctx.translate(w/2 + w/2, w/2);
-			ctx.translate(-eyeDx, -eyeDy);
-			ctx.moveTo(-eyeW/2, -eyeH/2);
-			ctx.lineTo(+eyeW/2, +eyeH/2);
-			ctx.stroke();				
-			ctx.moveTo(+eyeW/2, -eyeH/2);
-			ctx.lineTo(-eyeW/2, +eyeH/2);
-			ctx.stroke();
-			ctx.restore();
-
-			// mouth flat (rigth)
-			ctx.save();
-			ctx.translate(w/2 - w/2, w/2);
-			ctx.translate(+mouthDx, +mouthDy);
-			ctx.moveTo(-mouthW/2, 0);
-			ctx.lineTo(+mouthW/2, 0);
-			ctx.stroke();
-			ctx.restore();
-
-			// mouth flat (left)
-			ctx.save();
-			ctx.translate(w/2 + w/2, w/2);
-			ctx.translate(+mouthDx, +mouthDy);
-			ctx.moveTo(-mouthW/2, 0);
-			ctx.lineTo(+mouthW/2, 0);
-			ctx.stroke();
-			ctx.restore();
-		})
 		</script>
 
 	</body>

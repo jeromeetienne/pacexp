@@ -20,7 +20,7 @@ var gameCli	= null;
 var gameConfig	= null;
 
 var main	= function(){
-	if( !Detector.webgl ){
+	if( jQuery.url.param('render') !== 'canvas' && !Detector.webgl ){
 		alert('WebGL not supported by your browser');
 		return;
 	}
@@ -72,6 +72,7 @@ function init() {
 	renderer.sortObjects = false;
 	container.appendChild( renderer.domElement );
 
+	// append Stats if it is defined
 	if( typeof Stats !== "undefined" ){
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
@@ -81,6 +82,7 @@ function init() {
 		container.appendChild( stats.domElement );		
 	}
 
+	// THREEx.WindowResize will handle renderer/camera reinit on window resize
 	new THREEx.WindowResize(renderer, camera);
 }
 
