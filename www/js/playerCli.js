@@ -94,7 +94,8 @@ WebyMaze.PlayerCli.prototype._containerCtorGhost	= function(){
 
 // TODO lod	
 	var material	= [
-		new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
+//		new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
+		new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 	];
 	this._container	= new THREE.Object3D();
 	
