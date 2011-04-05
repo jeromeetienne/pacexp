@@ -9,7 +9,9 @@ WebyMaze.ShootCli	= function(opts){
 		[ new Sphere( bodyWidth/2, 2, 2 )	, 1500 ],
 	];
 	var material	= [
-		new THREE.MeshLambertMaterial( { color: 0x151B8D, shading: THREE.SmoothShading, opacity: 0.9} ),
+		new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
+
+		//new THREE.MeshLambertMaterial( { color: 0x151B8D, shading: THREE.SmoothShading, opacity: 0.9} ),
 		//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, opacity: 0.2 } ),
 		// FIXME this wire frame is seen on my own player...should not be... displayMe
 		//new THREE.MeshBasicMaterial( { color: 0x884400, shading: THREE.FlatShading, wireframe: true } )

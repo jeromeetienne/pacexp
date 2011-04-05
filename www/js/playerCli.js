@@ -126,7 +126,9 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 	];
 	
 	var material	= [
-		new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.flatShading } ),
+		new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
+		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
+		//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
 		new THREE.MeshLambertMaterial( { map: this.texture } ),
 	];
 	this._container	= new THREE.LOD();

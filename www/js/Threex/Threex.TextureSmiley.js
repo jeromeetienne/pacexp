@@ -9,15 +9,9 @@ THREEx.Texture.Smiley	= {
 	/**
 	 * display an happy smiley on a canvas for texture
 	*/
-	happy	: function(canvas, fillStyle){
+	happy	: function(canvas){
 		var w		= canvas.width;
 		var ctx		= canvas.getContext( '2d' );
-		fillStyle	= fillStyle || "rgb(255,165,0)"
-		
-		ctx.save();
-		ctx.fillStyle	= fillStyle;
-		ctx.fillRect(0,0,w,w);
-		ctx.restore();
 		
 		var eyeDx	= w/16;
 		var eyeDy	= w/12;
@@ -63,15 +57,9 @@ THREEx.Texture.Smiley	= {
 	/**
 	 * display an hurt smiley on a canvas for texture
 	*/
-	hurt	: function(canvas, fillStyle){
+	hurt	: function(canvas){
 		var w		= canvas.width;
 		var ctx		= canvas.getContext( '2d' );
-		fillStyle	= fillStyle || "#FF5200";
-	
-		ctx.save();
-		ctx.fillStyle	= fillStyle;
-		ctx.fillRect(0,0,w,w);
-		ctx.restore();
 	
 		var eyeDx	= w/16;
 		var eyeDy	= w/12;
