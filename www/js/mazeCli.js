@@ -84,9 +84,9 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function(){
 	];
 
 	var mesh = new THREE.Mesh( geometry, material );
-	mesh.position.x = ((mazeW+1)%2)* bodyW/2;
+	mesh.position.x = -((mazeW+1)%2)* bodyW/2;
 	mesh.position.y	= -bodyW/2;
-	mesh.position.z = ((mazeH+1)%2)* bodyW/2;
+	mesh.position.z = -((mazeH+1)%2)* bodyW/2;
 	mesh.rotation.x	= -90*Math.PI/180;
 	
 	mesh.matrixAutoUpdate = false;
