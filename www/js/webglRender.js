@@ -45,6 +45,12 @@ WebyMaze.WebglRender	= function(opts){
 	this.screenshotUICtor();
 	this.soundUICtor();
 	this.helpUICtor();
+
+	if( ctxInit.renderInfoFull ){
+		this.setCtxTickShoot(ctxInit.renderInfoFull);
+		this.setCtxTickPill(ctxInit.renderInfoFull);
+	}
+	
 }
 
 /**
@@ -62,7 +68,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//console.log("ctxTick", ctxTick)
 	this.setCtxTickPlayer(ctxTick);
 	this.setCtxTickShoot(ctxTick);
-	this.setCtxTickPill0(ctxTick);
+	this.setCtxTickPill(ctxTick);
 	if( ctxTick.events.length )
 		console.log("event", JSON.stringify(ctxTick.events))
 	
@@ -118,6 +124,13 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
 /**
  * Update RenderInfo for shoots
 */
+WebyMaze.WebglRender.prototype.setCtxTickPlayer0	= function(ctxTick)
+{
+	this._renderInfoPatch(ctxTick.players, this.players, WebyMaze.PlayerCli);
+}
+/**
+ * Update RenderInfo for shoots
+*/
 WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick)
 {
 	this._renderInfoPatch(ctxTick.shoots, this.shoots, WebyMaze.ShootCli);
@@ -125,40 +138,11 @@ WebyMaze.WebglRender.prototype.setCtxTickShoot	= function(ctxTick)
 
 
 /**
- * Update RenderInfo for shoots
+ * Update RenderInfo for pills
 */
-WebyMaze.WebglRender.prototype.setCtxTickPill0	= function(ctxTick)
+WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick)
 {
 	this._renderInfoPatch(ctxTick.pills, this.pills, WebyMaze.PillCli);
-}
-
-/**
- * tick all the pill
- *
-*/
-WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick){
-	// handle ctxTick.pills
-	ctxTick.pills.forEach(function(pill){
-		var bodyId	= pill.bodyId;
-		var created	= bodyId in this.pills
-		// create pill if needed
-		if( !created )	this.pills[bodyId]	= new WebyMaze.PillCli();
-		// update setCtxTick
-		this.pills[bodyId].setCtxTick(pill)
-		// add this object to the scene
-		if( !created )	sceneContainer.addChild( this.pills[bodyId].obj3d() );
-	}.bind(this));
-	
-	// remove the obsolete pills
-	Object.keys(this.pills).forEach(function(bodyId){
-		for(var i = 0; i < ctxTick.pills.length; i++){
-			var pill	= ctxTick.pills[i];
-			if( bodyId === pill.bodyId ) return;
-		}
-		scene.removeObject( this.pills[bodyId].obj3d() );
-		this.pills[bodyId].destroy();
-		delete this.pills[bodyId];
-	}.bind(this));
 }
 
 
