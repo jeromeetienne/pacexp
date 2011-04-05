@@ -13,6 +13,7 @@ WebyMaze.MazeCli	= function(opts){
 	
 	this._buildWallsSingleColor();
 	this._buildGroundSingleColor();
+	//this._buildGroundChessBoard();
 }
 
 WebyMaze.MazeCli.prototype.getMap	= function(){
@@ -55,9 +56,9 @@ WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function(){
 			var material	= materials[mazeX%2][mazeY%2];
 			
 			var mesh = new THREE.Mesh( geometry, material );			
-			mesh.position.x = mazeX * bodyW + bodyW/2 - mazeW*bodyW/2;
-			mesh.position.z = mazeY * bodyW + bodyW/2 - mazeH*bodyW/2;
+			mesh.position.x = ( mazeX - Math.floor(mazeW/2) ) * bodyW;
 			mesh.position.y	= -bodyW/2;
+			mesh.position.z = ( mazeY - Math.floor(mazeH/2) ) * bodyW;
 			mesh.rotation.x	= -90*Math.PI/180;
 			
 			mesh.matrixAutoUpdate = false;
@@ -83,7 +84,9 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function(){
 	];
 
 	var mesh = new THREE.Mesh( geometry, material );
+	mesh.position.x = ((mazeW+1)%2)* bodyW/2;
 	mesh.position.y	= -bodyW/2;
+	mesh.position.z = ((mazeH+1)%2)* bodyW/2;
 	mesh.rotation.x	= -90*Math.PI/180;
 	
 	mesh.matrixAutoUpdate = false;
@@ -126,8 +129,9 @@ WebyMaze.MazeCli.prototype._buildWallsChessBoard	= function(){
 			var material	= materials[mazeX%2][mazeY%2];
 			
 			var mesh = new THREE.Mesh( geometry, material );			
-			mesh.position.x = mazeX * bodyW + bodyW/2 - mazeW*bodyW/2;
-			mesh.position.z = mazeY * bodyW + bodyW/2 - mazeH*bodyW/2;
+			mesh.position.x = ( mazeX - Math.floor(mazeW/2) ) * bodyW;
+			mesh.position.y = -bodyW/4;
+			mesh.position.z = ( mazeY - Math.floor(mazeH/2) ) * bodyW;
 			
 			mesh.matrixAutoUpdate = false;
 			mesh.updateMatrix();
@@ -159,10 +163,10 @@ WebyMaze.MazeCli.prototype._buildWallsSingleColor	= function(){
 			var mazeXY	= mazeLine.charAt(mazeX);
 			if( mazeXY != '*' )	continue;
 			
-			var mesh = new THREE.Mesh( geometry, material );			
-			mesh.position.x = mazeX * bodyW + bodyW/2 - mazeW*bodyW/2;
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.x = ( mazeX - Math.floor(mazeW/2) ) * bodyW;
 			mesh.position.y = -bodyW/4;
-			mesh.position.z = mazeY * bodyW + bodyW/2 - mazeH*bodyW/2;
+			mesh.position.z = ( mazeY - Math.floor(mazeH/2) ) * bodyW;
 			
 			mesh.matrixAutoUpdate = false;
 			mesh.updateMatrix();
