@@ -70,56 +70,13 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	this.setCtxTickPlayer(ctxTick);
 	this.setCtxTickShoot(ctxTick);
 	this.setCtxTickPill(ctxTick);
-	if( ctxTick.events.length )
+	if( ctxTick.events.length ){
 		console.log("event", JSON.stringify(ctxTick.events))
+		soundRender.play('eatPill')
+	}
 	
 	var targetObject3d	= this.players[this.urBodyId].obj3d()
 	this.cameraRender.tick(targetObject3d);
-}
-
-/**
- * tick all the players
- *
- * FIXME: setCtxTickShoot and setCtxTickPlayer share the same functions... factorize
-*/
-WebyMaze.WebglRender.prototype.setCtxTickPlayer0	= function(ctxTick){
-	var displayMe	= true;
-	// handle ctxTick.players
-	ctxTick.players.forEach(function(player){
-		var bodyId	= player.bodyId;
-		// create player if needed
-		if( !(bodyId in this.players) ){
-			this.players[bodyId]	= new WebyMaze.PlayerCli(player);
-			// add the body to the scene IIF not mine
-			if( displayMe || bodyId !== this.urBodyId){
-				sceneContainer.addChild( this.players[bodyId].obj3d() );
-			}
-		}
-		// update setCtxTick
-		this.players[bodyId].setCtxTick(player)
-	}.bind(this));
-	
-	// handle the scoreUiUpdate
-	if( this.players[this.urBodyId].scoreNeedsUpdate ){
-		this.scoreUIUpdate();
-		this.players[this.urBodyId].scoreNeedsUpdate	= false;
-	}
-
-
-	// remove the obsolete players
-	Object.keys(this.players).forEach(function(bodyId){
-		for(var i = 0; i < ctxTick.players.length; i++){
-			var player	= ctxTick.players[i];
-			if( bodyId === player.bodyId ) return;
-		}
-		console.log("delete player", bodyId)
-		// dont remove this.urBodyId
-		if( displayMe || bodyId != this.urBodyId ){
-			scene.removeObject( this.players[bodyId].obj3d() );
-		}
-		this.players[bodyId].destroy();
-		delete this.players[bodyId];
-	}.bind(this));
 }
 
 /**
@@ -348,6 +305,7 @@ WebyMaze.WebglRender.prototype.helpUICtor	= function(){
 	jQuery(buttonSel).click(function(){
 		jQuery(dialogSel).jqmShow(); 
 	}.bind(this));
+	
 	
 	// to make it appear on load
 	//jQuery(dialogSel).jqmShow();

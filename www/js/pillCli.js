@@ -28,7 +28,6 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 }
 
 WebyMaze.PillCli.prototype._containerCtor	= function(){
-	console.log("type", this.pillType)
 	// build this._container
 	var bodyW	= 25;
 	var geometry = [

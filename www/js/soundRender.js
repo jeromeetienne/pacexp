@@ -9,9 +9,8 @@ WebyMaze.SoundRender	= function(){
 	var soundsIdToUrl	= {
 		//'racketImpact'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mouseover2.mp3',
 		//'ballLoss'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mak.mp3',
-		'wallImpact'	: 'sounds/pacman/die.mp3',
 		'die'		: 'sounds/pacman/die.mp3',
-		'eatpill'	: 'sounds/pacman/eatpill.mp3'
+		'eatPill'	: 'sounds/pacman/eatpill.mp3'
 	}
 	var soundTrack		= null;
 
@@ -92,6 +91,7 @@ WebyMaze.SoundRender	= function(){
 		}
 	}
 	var play		= function(soundId){
+		console.log("soundRender.play() ",soundId);
 		if( !sounds[soundId] )	console.log("sound "+soundId+" isnt init");
 		if( !sounds[soundId] )	return;
 		sounds[soundId].play();
