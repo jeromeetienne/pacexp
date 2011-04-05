@@ -47,6 +47,7 @@ WebyMaze.WebglRender	= function(opts){
 	this.helpUICtor();
 
 	if( ctxInit.renderInfoFull ){
+		this.setCtxTickPlayer(ctxInit.renderInfoFull);
 		this.setCtxTickShoot(ctxInit.renderInfoFull);
 		this.setCtxTickPill(ctxInit.renderInfoFull);
 	}
@@ -81,7 +82,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
  *
  * FIXME: setCtxTickShoot and setCtxTickPlayer share the same functions... factorize
 */
-WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
+WebyMaze.WebglRender.prototype.setCtxTickPlayer0	= function(ctxTick){
 	var displayMe	= true;
 	// handle ctxTick.players
 	ctxTick.players.forEach(function(player){
@@ -124,7 +125,7 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick){
 /**
  * Update RenderInfo for shoots
 */
-WebyMaze.WebglRender.prototype.setCtxTickPlayer0	= function(ctxTick)
+WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick)
 {
 	this._renderInfoPatch(ctxTick.players, this.players, WebyMaze.PlayerCli);
 }

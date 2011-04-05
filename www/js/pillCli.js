@@ -4,7 +4,7 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.PillCli	= function(opts){
+WebyMaze.PillCli	= function(){
 }
 
 WebyMaze.PillCli.prototype.destroy	= function(){

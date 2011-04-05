@@ -1,6 +1,6 @@
 var WebyMaze	= WebyMaze || {};
 
-WebyMaze.ShootCli	= function(opts){
+WebyMaze.ShootCli	= function(){
 	// build this._container
 	var bodyWidth	= 25;
 	var geometry = [
