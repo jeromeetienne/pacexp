@@ -8,6 +8,8 @@ if(typeof THREEx.Texture === "undefined")	THREEx.Texture	= {};
 THREEx.Texture.Smiley	= {
 	/**
 	 * display an happy smiley on a canvas for texture
+	 *
+	 * @param {canvasElement} the canvas where we draw
 	*/
 	happy	: function(canvas){
 		var w		= canvas.width;
@@ -71,11 +73,10 @@ THREEx.Texture.Smiley	= {
 		var mouthDx	= 0;
 		var mouthDy	= w/12;
 	
-		ctx.fillStyle	= "rgb(0,0,0)";
+		ctx.fillStyle	= "#000000";
 		ctx.lineCap	= "round";
 		ctx.lineWidth	= w/48;
 
-	
 		// right eyes
 		ctx.save();
 		ctx.beginPath();
@@ -124,5 +125,68 @@ THREEx.Texture.Smiley	= {
 		ctx.lineTo(+mouthW/2, 0);
 		ctx.stroke();
 		ctx.restore();		
-	}	
+	},
+
+	/**
+	 * display an happy smiley on a canvas for texture
+	 *
+	 * @param {canvasElement} the canvas where we draw
+	*/
+	pupil	: function(canvas){
+		var w		= canvas.width;
+		var ctx		= canvas.getContext( '2d' );
+		
+		var eyeDx	= 0;
+		var eyeDy	= 0;
+	
+		var eyeW	= w/12;
+		var eyeH	= w/3;
+		
+		ctx.fillStyle	= "#000000";
+		
+		// pupil (right)
+		ctx.save();
+		ctx.translate(w/2 - w/2, w/2);
+		ctx.fillEllipse(eyeDx - eyeW/2, - eyeDy - eyeH/2, eyeW, eyeH);
+		ctx.restore();
+
+		// pupil (left)
+		ctx.save();
+		ctx.beginPath();
+		ctx.translate(w/2 + w/2, w/2);
+		ctx.fillEllipse(eyeDx - eyeW/2, - eyeDy - eyeH/2, eyeW, eyeH);
+		ctx.restore();
+	},
+
+//////////////////////////////////////////////////////////////////////////////////
+//		texture helper							//
+//////////////////////////////////////////////////////////////////////////////////
+	
+	happyTexture: function( canvasW, mapping, callback ) {
+		var canvasDrawer	= THREEx.Texture.Smiley.happy;
+		return THREEx.Texture.Smiley._buildTexture( canvasW, mapping, callback, canvasDrawer );
+	},
+	hurtTexture: function( canvasW, mapping, callback ) {
+		var canvasDrawer	= THREEx.Texture.Smiley.hurt;
+		return THREEx.Texture.Smiley._buildTexture( canvasW, mapping, callback, canvasDrawer );
+	},
+	pupilTexture: function( canvasW, mapping, callback ) {
+		var canvasDrawer	= THREEx.Texture.Smiley.pupil;
+		return THREEx.Texture.Smiley._buildTexture( canvasW, mapping, callback, canvasDrawer );
+	},
+	
+	_buildTexture: function( canvasW, mapping, callback, canvasDrawer ) {
+		canvasW		= typeof canvasW !== 'undefined' ? canvasW : 64;
+		var canvas	= document.createElement('canvas');
+		canvas.width	= canvas.height	= canvasW;
+		var texture	= new THREE.Texture(canvas, mapping);
+
+		canvasDrawer(canvas);
+
+		texture.needsUpdate	= true;
+		if( callback )	callback( this );
+		return texture;
+
+	},
+
 }
