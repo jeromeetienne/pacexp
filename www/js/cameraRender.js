@@ -14,7 +14,6 @@ WebyMaze.CameraRender	= function(){
 	this._transform	= null;
 	this._tween	= null;
 	
-	
 	// init the first state
 	this.changeState('fixedGrazing');
 
