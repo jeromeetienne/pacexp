@@ -8,7 +8,11 @@ server:
 	node lib/server.js
 
 build:
-	inliner http://localhost/~jerome/webwork/pacmaze/www/index.html > build/index.html
+	inliner http://localhost/~jerome/webwork/tweetymaze/www/index.html > build/index.html
+	cp -a www/sounds build
+	cp -a www/images build
+	mkdir -p build/vendor/soundmanager2/swf
+	cp -a www/vendor/soundmanager2/swf/soundmanager2.swf build/vendor/soundmanager2/swf
 
 .PHONY: build
 
