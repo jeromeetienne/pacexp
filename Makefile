@@ -7,7 +7,7 @@ APACHE2_CONFFILE=/etc/apache2/sites-enabled/pacmazecom.conf
 server:
 	node lib/server.js
 
-build: release_build
+build: release_build jsdoc_build
 
 clean: release_clean jsdoc_clean
 
@@ -16,6 +16,7 @@ clean: release_clean jsdoc_clean
 #################################################################################
 
 release_build:
+	echo "*" > build/.gitignore
 	inliner http://localhost/~jerome/webwork/tweetymaze/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
