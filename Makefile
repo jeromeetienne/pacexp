@@ -7,14 +7,23 @@ APACHE2_CONFFILE=/etc/apache2/sites-enabled/pacmazecom.conf
 server:
 	node lib/server.js
 
-build:
+build: release_build
+
+clean: release_clean jsdoc_clean
+
+#################################################################################
+#		release								#
+#################################################################################
+
+release_build:
 	inliner http://localhost/~jerome/webwork/tweetymaze/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
 	mkdir -p build/vendor/soundmanager2/swf
 	cp -a www/vendor/soundmanager2/swf/soundmanager2.swf build/vendor/soundmanager2/swf
 
-.PHONY: build
+release_clean:
+	rm -rf build/*
 
 #################################################################################
 #		jsdoc								#

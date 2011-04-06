@@ -25,9 +25,12 @@ var main	= function(){
 		return;
 	}
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
-	soundRender	= new WebyMaze.SoundRender();
 	gameCli		= new WebyMaze.GameCli();
 	gameConfig	= new WebyMaze.Config();
+	soundRender	= new WebyMaze.SoundRender({
+		enableTrack	: gameConfig.soundTrack() === "true",
+		enableFx	: gameConfig.soundFx() === "true"
+	});
 	init();
 	animate();
 }

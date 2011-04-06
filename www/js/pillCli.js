@@ -31,8 +31,8 @@ WebyMaze.PillCli.prototype._containerCtor	= function(){
 	// build this._container
 	var bodyW	= 25;
 	var geometry = [
-		[ new Sphere( bodyW/2, 16, 8 )	, 500 ],
-		[ new Sphere( bodyW/2, 8, 4 )	, 700 ],
+		[ new Sphere( bodyW/2, 8, 4 )	, 500 ],
+		[ new Sphere( bodyW/2, 4, 2 )	, 700 ],
 		[ new Sphere( bodyW/2, 2, 2 )	, 1500 ],
 	];
 

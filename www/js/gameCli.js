@@ -32,6 +32,12 @@ WebyMaze.GameCli.prototype.onContextTick	= function(message){
 	this.webglRender.setCtxTick(message.data);
 }
 
+WebyMaze.GameCli.prototype.onGameCompleted	= function(message){
+	// this is an alert to freeze all execution behind
+	alert("Game Completed due to " + message.data.reason)
+	location.href	= location.href;
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 //		userInput							//
 //////////////////////////////////////////////////////////////////////////////////
@@ -117,8 +123,10 @@ WebyMaze.GameCli.prototype.socketOnMessage	= function(message){
 		this.onContextInit(message);
 	}else if( message.type === 'contextTick' ){
 		this.onContextTick(message);
+	}else if( message.type === 'gameCompleted' ){
+		this.onGameCompleted(message);
 	}else {
-		console.assert(false);
+		console.assert(false, "message type unknown " + message.type);
 	}
 }
 

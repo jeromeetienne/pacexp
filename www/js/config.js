@@ -22,17 +22,37 @@ WebyMaze.Config.prototype.destroy	= function(){
 */
 WebyMaze.Config.prototype.username	= function(val)
 {
-	return val ? jQuery.cookie('username', val) : jQuery.cookie('username');
+	return this._cookieGetSet('username', val);
 }
 
 /**
  * getter/setter for sound (stored in cookie)
  * @returns {string} the value if val is undefined
 */
-WebyMaze.Config.prototype.sound		= function(val)
+WebyMaze.Config.prototype.soundTrack	= function(val)
 {
-	return val ? jQuery.cookie('sound', val) : jQuery.cookie('sound');
+	return this._cookieGetSet('soundTrack', val);
 }
+
+/**
+ * getter/setter for sound (stored in cookie)
+ * @returns {string} the value if val is undefined
+*/
+WebyMaze.Config.prototype.soundFx		= function(val)
+{
+	return this._cookieGetSet('soundFx', val);
+}
+
+WebyMaze.Config.prototype._cookieGetSet	= function(key, val)
+{
+	if( typeof val === 'undefined' )	return jQuery.cookie(key);
+	// compute the expiration date
+	var expires	= new Date();
+	expires.setTime(expires.getTime()+(30  *24*60*60*1000));
+	// actually set the cookie
+	jQuery.cookie(key, val, { expires: expires })
+}
+
 
 /**
  * getter/setter for sound (stored in location.hash for bookmarkability)

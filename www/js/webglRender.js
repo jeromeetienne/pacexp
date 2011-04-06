@@ -26,6 +26,7 @@ WebyMaze.WebglRender	= function(opts){
 	this.username	= ctxInit.username;
 	this.urBodyId	= ctxInit.urBodyId;
 	this.players	= {};
+	this.enemies	= {};
 	this.shoots	= {};
 	this.pills	= {};
 
@@ -43,11 +44,13 @@ WebyMaze.WebglRender	= function(opts){
 	this.usernameUICtor();
 	this.gameIdUICtor();
 	this.screenshotUICtor();
-	this.soundUICtor();
+	this.soundTrackUiCtor();
+	this.soundFxUiCtor();
 	this.helpUICtor();
 
 	if( ctxInit.renderInfoFull ){
 		this.setCtxTickPlayer(ctxInit.renderInfoFull);
+		this.setCtxTickEnemy(ctxInit.renderInfoFull);
 		this.setCtxTickShoot(ctxInit.renderInfoFull);
 		this.setCtxTickPill(ctxInit.renderInfoFull);
 	}
@@ -68,16 +71,22 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	//console.log("ctxTick", ctxTick)
 	this.setCtxTickPlayer(ctxTick);
+	this.setCtxTickEnemy(ctxTick);
 	this.setCtxTickShoot(ctxTick);
 	this.setCtxTickPill(ctxTick);
-	if( ctxTick.events.length ){
-		console.log("event", JSON.stringify(ctxTick.events))
-		soundRender.play('eatPill')
-	}
+	
+	this.handleRecvedEvent(ctxTick.events)
+	
+	// handle the scoreUiUpdate
+	if( this.players[this.urBodyId].scoreNeedsUpdate ){
+		this.scoreUIUpdate();
+		this.players[this.urBodyId].scoreNeedsUpdate    = false;
+	}	
 	
 	var targetObject3d	= this.players[this.urBodyId].obj3d()
 	this.cameraRender.tick(targetObject3d);
 }
+
 
 /**
  * Update RenderInfo for shoots
@@ -86,6 +95,15 @@ WebyMaze.WebglRender.prototype.setCtxTickPlayer	= function(ctxTick)
 {
 	this._renderInfoPatch(ctxTick.players, this.players, WebyMaze.PlayerCli);
 }
+
+/**
+ * Update RenderInfo for shoots
+*/
+WebyMaze.WebglRender.prototype.setCtxTickEnemy	= function(ctxTick)
+{
+	this._renderInfoPatch(ctxTick.enemies, this.enemies, WebyMaze.EnemyCli);
+}
+
 /**
  * Update RenderInfo for shoots
 */
@@ -114,7 +132,7 @@ WebyMaze.WebglRender.prototype.setCtxTickPill	= function(ctxTick)
 WebyMaze.WebglRender.prototype._renderInfoPatch	= function(renderInfo, collection, classCtor)
 {
 	if( ! renderInfo )	return;
-	if( Object.keys(renderInfo).length )	console.log("renderInfo", renderInfo)
+	//if( Object.keys(renderInfo).length )	console.log("renderInfo", renderInfo)
 	
 	if( 'add' in renderInfo ){
 		Object.keys(renderInfo.add).forEach(function(bodyId){
@@ -143,6 +161,30 @@ WebyMaze.WebglRender.prototype._renderInfoPatch	= function(renderInfo, collectio
 		}.bind(this))
 	}
 }
+
+
+WebyMaze.WebglRender.prototype.handleRecvedEvent	= function(events)
+{
+	// return now if there is no events
+	if( !events || events.length == 0 )	return;
+	// log to debug
+	console.log("event", JSON.stringify(events))
+	// go thru all events
+	events.forEach(function(event){
+		// handle events by type
+		if( event.type === 'impactPlayerPill' ){
+			this._onImpactPlayerPill(event);
+		}
+	}.bind(this));
+}
+
+WebyMaze.WebglRender.prototype._onImpactPlayerPill	= function(event)
+{
+	if( event.data.playerId == this.urBodyId ){
+		soundRender.soundFxPlay('eatPill')	
+	}
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //		osb user interface stuff					//
@@ -311,8 +353,8 @@ WebyMaze.WebglRender.prototype.helpUICtor	= function(){
 	//jQuery(dialogSel).jqmShow();
 }
 
-WebyMaze.WebglRender.prototype.soundUICtor	= function(){
-	var buttonSel	= '#soundButton';
+WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){
+	var buttonSel	= '#soundTrackButton';
 	// init the button click
 	jQuery(buttonSel).click(function(){
 		var running	= soundRender.soundTrackRunning();
@@ -322,10 +364,26 @@ WebyMaze.WebglRender.prototype.soundUICtor	= function(){
 		}else{
 			soundRender.soundTrackStop();
 		}
-		jQuery(buttonSel).text('Sound '+ (running ? 'Off' : 'On'));
-		gameConfig.sound(running ? false : true);
-		console.log("post running", soundRender.soundTrackRunning())
+		gameConfig.soundTrack(running ? false : true);
+		soundRender.enableTrack	= gameConfig.soundTrack() === "true";
+		jQuery(buttonSel+" .value").text(gameConfig.soundTrack() === 'true' ? 'On' : 'Off');
 	}.bind(this));
+
+	// set the good value in the UI
+	jQuery(buttonSel+" .value").text(gameConfig.soundTrack() === 'true' ? 'On' : 'Off');
+}
+
+WebyMaze.WebglRender.prototype.soundFxUiCtor	= function(){
+	var buttonSel	= '#soundFxButton';
+	// init the button click
+	jQuery(buttonSel).click(function(){
+		var enable	= soundRender.enableFx();
+		soundRender.enableFx( !enable )
+		gameConfig.soundFx(soundRender.enableFx()) 
+		jQuery(buttonSel+" .value").text(gameConfig.soundFx() === 'true' ? 'On' : 'Off');
+	}.bind(this));
+	// set the good value in the UI
+	jQuery(buttonSel+" .value").text(gameConfig.soundFx() === 'true' ? 'On' : 'Off');
 }
 
 /**

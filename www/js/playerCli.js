@@ -11,8 +11,6 @@ WebyMaze.PlayerCli	= function(){
 	this.scoreNeedsUpdate	= false;
 	
 	this._containerCtor();
-	//this._containerCtorGhost();
-	//this._containerCtorEyes();
 }
 
 WebyMaze.PlayerCli.prototype.destroy	= function(){
@@ -84,6 +82,7 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 	var material	= [
 		new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
 		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
+		//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
 		//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
 		new THREE.MeshLambertMaterial( { map: this.texture } ),
 	];
@@ -93,74 +92,6 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 		this._container.add( mesh, geometry[i][1] );
 	}
 }
-
-WebyMaze.PlayerCli.prototype._containerCtorGhost	= function(){
-	var color		= 0x5500aa;
-	var smileyType		= 'happy';
-
-	var color		= 0x0044aa;
-	var smileyType		= 'hurt';
-
-	// create canvas and texture
-	this.canvas		= document.createElement('canvas');
-	this.canvas.width	= this.canvas.height	= 256;
-	this.texture		= new THREE.Texture(this.canvas);
-	THREEx.Texture.Smiley[smileyType](this.canvas);
-	this.texture.needsUpdate = true;
-
-	// build this._container
-	var bodyWidth	= 100;
-	var geometry	= new Cylinder( 16, bodyWidth/2, bodyWidth/2, bodyWidth/2, 0, 0 );
-
-// TODO lod	
-	var material	= [
-		//new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
-		new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
-	];
-	this._container	= new THREE.Object3D();
-	
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= +bodyWidth/2 - bodyWidth/4;
-	mesh.rotation.x	= 90*Math.PI/180;
-	this._container.addChild( mesh );
-
-	var material	= [
-		new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
-		new THREE.MeshLambertMaterial( { map: this.texture } ),
-	];
-	
-	var geometry	= new Sphere( bodyWidth/2, 32, 16 );
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= +bodyWidth/2 - bodyWidth/4;
-	this._container.addChild( mesh );	
-}
-
-
-WebyMaze.PlayerCli.prototype._containerCtorEyes	= function()
-{
-	var bodyW	= 100;
-	this._container	= new THREE.Object3D();
-
-	var material	= [
-		new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.flatShading} ),
-		new THREE.MeshBasicMaterial( { map: THREEx.Texture.Smiley.pupilTexture() } ),
-		//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.flatShading} ),
-	];
-
-	var geometry	= new Sphere( bodyW/8, 16, 8 );
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.x	=   bodyW / 4;
-	mesh.position.y	=   bodyW / 4;
-	mesh.position.z	= + bodyW / 4;	
-	this._container.addChild( mesh );	
-
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.x	=   bodyW / 4;
-	mesh.position.y	=   bodyW / 4;
-	mesh.position.z	= - bodyW / 4;	
-	this._container.addChild( mesh );
-}
-
 
 WebyMaze.PlayerCli.prototype.obj3d	= function(){
 	return this._container;

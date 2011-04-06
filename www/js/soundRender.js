@@ -1,12 +1,17 @@
 var WebyMaze	= WebyMaze || {};
 
-WebyMaze.SoundRender	= function(){
+WebyMaze.SoundRender	= function(opts){
+	// set the default values if needed
+	opts		= opts	|| {};
+	opts.enableFx	= 'enableFx'	in opts ? opts.enableFx		: false;
+	opts.enableTrack= 'enableTrack'	in opts ? opts.enableTrack	: false;
+
 	//////////////////////////////////////////////////////////////////////////
 	//		class variables						//
 	//////////////////////////////////////////////////////////////////////////
 	// private variables	
-	var sounds		= {};
-	var soundsIdToUrl	= {
+	var soundsFx	= {};
+	var fxIdToUrl	= {
 		//'racketImpact'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mouseover2.mp3',
 		//'ballLoss'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mak.mp3',
 		'die'		: 'sounds/pacman/die.mp3',
@@ -22,12 +27,11 @@ WebyMaze.SoundRender	= function(){
 	}
 	var dtor	= function(){
 		this.soundTrackDtor();
-		
-		for(var soundId in soundsIdToUrl){
-			if( !sounds[soundId] )	continue;
-			sounds[soundId].destruct();
+		for(var fxId in soundsIdToUrl){
+			if( !soundsFx[fxId] )	continue;
+			soundsFx[fxId].destruct();
 		}
-		sounds	= {};
+		soundsFx	= {};
 	}
 	
 
@@ -37,7 +41,7 @@ WebyMaze.SoundRender	= function(){
 	 * - it is looping for ever
 	*/
 	var soundTrackCtor	= function(){
-		//if( locationHash.get('nosound') )	return;
+		// create the sound
 		soundTrack	= soundManager.createSound({
 			id	: 'soundTrack',
 			url	: 'sounds/Hot-Butter-Popcorn.mp3',
@@ -78,24 +82,34 @@ WebyMaze.SoundRender	= function(){
 			return;
 		}
 		// create the sound track
-		//soundTrackCtor();
-		// create all sounds
-		// - TODO likely an autoload is needed
-		for(var soundId in soundsIdToUrl){
-			var url	= soundsIdToUrl[soundId];
-			sounds[soundId]	= soundManager.createSound({
-				id	: soundId,
+		if( opts.enableTrack )	soundTrackStart();
+		// create all soundsFx
+		for(var fxId in fxIdToUrl){
+			var url	= fxIdToUrl[fxId];
+			soundsFx[fxId]	= soundManager.createSound({
+				id	: fxId,
 				url	: url,
 				autoLoad: true
 			});
 		}
 	}
-	var play		= function(soundId){
-		console.log("soundRender.play() ",soundId);
-		if( !sounds[soundId] )	console.log("sound "+soundId+" isnt init");
-		if( !sounds[soundId] )	return;
-		sounds[soundId].play();
+	var soundFxPlay		= function(fxId){
+		// return now if opts.enabledFx
+		if( opts.enableFx === false )	return;
+		console.log("soundRender.play() ", fxId);
+		if( !soundsFx[fxId] )	console.log("sound "+fxId+" isnt init");
+		if( !soundsFx[fxId] )	return;
+		soundsFx[fxId].play();
 	}	
+
+	//////////////////////////////////////////////////////////////////////////
+	//		getter/setter for the config				//
+	//////////////////////////////////////////////////////////////////////////
+	
+	var enableFx	= function(val){
+		if( typeof val === 'undefined' )	return opts.enableFx;
+		return opts.enableFx = val;		
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	//		run initialisation					//
@@ -104,7 +118,8 @@ WebyMaze.SoundRender	= function(){
 	ctor();
 	// return public properties
 	return {
-		play			: play,
+		enableFx		: enableFx,
+		soundFxPlay		: soundFxPlay,
 		soundTrackStart		: soundTrackStart,
 		soundTrackStop		: soundTrackStop,
 		soundTrackRunning	: soundTrackRunning

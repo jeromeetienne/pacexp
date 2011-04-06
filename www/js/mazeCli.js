@@ -80,7 +80,12 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function(){
 	var material	= [
 		new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
 		//new THREE.MeshNormalMaterial( ),
-		new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+		//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+
+		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
+
+		//new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/textures/TilesOrnate0082_2_thumbhuge.jpg'), opacity: 0.8 } ),
+		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),		
 	];
 
 	var mesh = new THREE.Mesh( geometry, material );
@@ -150,6 +155,7 @@ WebyMaze.MazeCli.prototype._buildWallsSingleColor	= function(){
 		//new THREE.MeshLambertMaterial( { color: 0xffaa00, shading: THREE.SmoothShading } ),
 		//new THREE.MeshLambertMaterial( { color: 0xaaaaaa, shading: THREE.FlatShading } ),
 		//new THREE.MeshLambertMaterial( { color: 0x0088aa, shading: THREE.FlatShading } ),
+		new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/tmp/tex0.jpg'), opacity: 0.8 } ),
 		new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 		//new THREE.MeshNormalMaterial( ),
 		//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
