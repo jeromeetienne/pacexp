@@ -49,7 +49,7 @@ function init() {
 	scene.fog = new THREE.Fog(0x000000, 1, 3000);
 	//scene.fog = new THREE.FogExp2( 0x000000, 0.00025*3 );
 	//scene.fog = new THREE.FogExp2( 0x87CEEB, 0.00025*3 );
-	//scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
+	//scene.fog = new THREE.FogExp2( 0x333, 0.001 );
 
 	//scene.addObject( wmMaze.buildObject3d() );
 	//
@@ -63,7 +63,6 @@ function init() {
 	directionalLight.position.z = 0.7;
 	directionalLight.position.normalize();
 	scene.addLight( directionalLight );
-	
 
 	// if url?render=canvas then render in canvas
 	if( jQuery.url.param('render') == 'canvas' ){
