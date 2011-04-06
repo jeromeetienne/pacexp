@@ -8,7 +8,9 @@ WebyMaze.PlayerCli	= function(){
 	// put username/score to null, thus trigger change on next ctxTick
 	this.username	= null;
 	this.score	= null;
-	this.scoreNeedsUpdate	= false;
+	
+	// TODO rename this dirtyScore
+	this.dirtyScore	= false;
 	
 	this._containerCtor();
 }
@@ -32,8 +34,8 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 		this._avatarLoad();
 	}
 	if(this.score != ctxTick.score){
-		this.score		= ctxTick.score
-		this.scoreNeedsUpdate	= true;
+		this.score	= ctxTick.score
+		this.dirtyScore	= true;
 	}
 }
 

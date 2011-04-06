@@ -15,8 +15,16 @@ WebyMaze.EnemyCli.prototype.destroy	= function(){
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick){
-	this.appearance			= ctxTick.appearance;
-	if( !this._container )	this._containerCtor();
+	if( this.appearance != ctxTick.appearance ){
+		console.log("enemey appearance change from ", this.appearance, "to", ctxTick.appearance)
+		this.appearance		= ctxTick.appearance;
+
+		if( this._container ){
+			console.log("remove the previous _container")
+			scene.removeObject(this._container)
+		}
+		this._containerCtor();
+	}
 
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
@@ -27,9 +35,9 @@ WebyMaze.EnemyCli.prototype.obj3d	= function(){
 	return this._container;
 }
 
-WebyMaze.EnemyCli.prototype._containerCtor	= function(){
-	// build this._container
-	var bodyW	= 25;
+WebyMaze.EnemyCli.prototype._containerCtor	= function()
+{
+	this._dirtyObj3d	= true;		
 
 	if( this.appearance == 'happy' ){
 		this._containerCtorGhost('happy');
@@ -48,7 +56,7 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 		var ambient	= 0xa0ff00;		
 	}else if( smileyType === 'hurt' ){
 		var color	= 0x0044aa;
-		var ambient	= 0x00a0FF;		
+		var ambient	= 0x00a0FF;
 	}
 
 	// create canvas and texture
@@ -85,7 +93,6 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 	mesh.position.y	= +bodyWidth/2 - bodyWidth/4;
 	this._container.addChild( mesh );	
 }
-
 
 WebyMaze.EnemyCli.prototype._containerCtorEyes	= function()
 {

@@ -76,11 +76,19 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	this.setCtxTickPill(ctxTick);
 	
 	this.handleRecvedEvent(ctxTick.events)
+
+	// handle the .obj3d() update for enemy
+	Object.keys(this.enemies).forEach(function(enemyId){
+		var enemy	= this.enemies[enemyId];
+		if( enemy._dirtyObj3d !== true )	return;
+		sceneContainer.addChild( enemy.obj3d() );
+		enemy._dirtyObj3d	= false;
+	}.bind(this));
 	
 	// handle the scoreUiUpdate
-	if( this.players[this.urBodyId].scoreNeedsUpdate ){
+	if( this.players[this.urBodyId].dirtyScore ){
 		this.scoreUIUpdate();
-		this.players[this.urBodyId].scoreNeedsUpdate    = false;
+		this.players[this.urBodyId].dirtyScore    = false;
 	}	
 	
 	var targetObject3d	= this.players[this.urBodyId].obj3d()
