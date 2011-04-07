@@ -9,5 +9,11 @@
 	},
 	"icons"	: {
 		"128": "smiley128.png"
-	}
+	},
+	"content_scripts": [
+		{
+			"matches": ["http://twitter.com/*"],
+			"js": ["jquery.min.js", "myscript.js"]
+		}
+	]
 }
