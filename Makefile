@@ -62,4 +62,4 @@ deploy:	build deployDedixl
 
 deployDedixl:
 	#rsync -avz --rsh=ssh build/ /home/jerome/public_html/pacmaze_www_build
-	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/pacmaze_www_build
+	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/pacmaze2_www_build
