@@ -54,7 +54,6 @@ WebyMaze.WebglRender	= function(opts){
 		this.setCtxTickShoot(ctxInit.renderInfoFull);
 		this.setCtxTickPill(ctxInit.renderInfoFull);
 	}
-	
 }
 
 /**
