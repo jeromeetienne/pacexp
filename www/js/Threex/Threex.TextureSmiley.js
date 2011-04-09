@@ -158,6 +158,26 @@ THREEx.Texture.Smiley	= {
 		ctx.restore();
 	},
 
+	/**
+	 * display the shaddow of the smiley in a texture
+	 *
+	 * @param {canvasElement} the canvas where we draw
+	*/
+	shaddow	: function(canvas){
+		var w		= canvas.width;
+		var ctx		= canvas.getContext( '2d' );
+		
+		ctx.fillStyle	= "#333333";
+
+		var circleW	= 8*w/8;
+		var circleH	= 8*w/8;
+		
+		ctx.save();
+		ctx.translate(w/2 , w/2);
+		ctx.fillEllipse(-circleW/2, -circleH/2, circleW, circleH);
+		ctx.restore();
+	},
+
 //////////////////////////////////////////////////////////////////////////////////
 //		texture helper							//
 //////////////////////////////////////////////////////////////////////////////////
@@ -172,6 +192,10 @@ THREEx.Texture.Smiley	= {
 	},
 	pupilTexture: function( canvasW, mapping, callback ) {
 		var canvasDrawer	= THREEx.Texture.Smiley.pupil;
+		return THREEx.Texture.Smiley._buildTexture( canvasW, mapping, callback, canvasDrawer );
+	},
+	shaddowTexture: function( canvasW, mapping, callback ) {
+		var canvasDrawer	= THREEx.Texture.Smiley.shaddow;
 		return THREEx.Texture.Smiley._buildTexture( canvasW, mapping, callback, canvasDrawer );
 	},
 	

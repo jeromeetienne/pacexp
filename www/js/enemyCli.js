@@ -82,8 +82,8 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 	this.texture.needsUpdate = true;
 
 	// build this._container
-	var bodyWidth	= 100;
-	var geometry	= new Cylinder( 16, bodyWidth/2, bodyWidth/2, bodyWidth/2, 0, 0 );
+	var bodyW	= 100;
+	var geometry	= new Cylinder( 16, bodyW/2, bodyW/2, bodyW/2, 0, 0 );
 
 // TODO lod	
 	var material	= [
@@ -93,7 +93,7 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 	this._container	= new THREE.Object3D();
 	
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= +bodyWidth/2 - bodyWidth/4;
+	mesh.position.y	= +bodyW/2 - bodyW/4;
 	mesh.rotation.x	= 90*Math.PI/180;
 	this._container.addChild( mesh );
 
@@ -103,10 +103,20 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 		new THREE.MeshLambertMaterial( { map: this.texture } ),
 	];
 	
-	var geometry	= new Sphere( bodyWidth/2, 32, 16 );
+	var geometry	= new Sphere( bodyW/2, 32, 16 );
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= +bodyWidth/2 - bodyWidth/4;
-	this._container.addChild( mesh );	
+	mesh.position.y	= +bodyW/2 - bodyW/4;
+	this._container.addChild( mesh );
+	
+	// do the shaddow
+	var mesh		= new THREE.Mesh(
+		new Plane( bodyW, bodyW ),
+		new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.8 } )
+	);
+	mesh.position.y	= -bodyW/2 + 1;
+	mesh.rotation.x	= - 90 * ( Math.PI / 180 );
+	mesh.overdraw	= true;
+	this._container.addChild( mesh );
 }
 
 WebyMaze.EnemyCli.prototype._containerCtorEyes	= function()
