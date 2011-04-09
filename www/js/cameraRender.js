@@ -179,7 +179,7 @@ WebyMaze.CameraRender.prototype.transformBuildRelative	= function(posA, posY, tg
 WebyMaze.CameraRender.prototype.transformInPlayer	= function(targetObj3d)
 {
 	var deltaBack	= 0;	// TODO if this is != 0, display the player
-	var deltaUp	= 0;
+	var deltaUp	= 50;
 	var lookFwd	= 200;
 	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
@@ -227,7 +227,7 @@ WebyMaze.CameraRender.prototype.transformFixedGrazing	= function()
 {
 	var transform	= {};
 	transform.posX	= +500;
-	transform.posY	= +400;
+	transform.posY	= +200;
 	transform.posZ	= -250;
 	transform.posA	= 0;
 	transform.tgtX	= +100;

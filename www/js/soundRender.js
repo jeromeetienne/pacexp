@@ -46,7 +46,7 @@ WebyMaze.SoundRender	= function(opts){
 			id	: 'soundTrack',
 			url	: 'sounds/Hot-Butter-Popcorn.mp3',
 			autoLoad: true,
-			volume	: 50,
+			volume	: 100,
 			onload	: function() {
 				soundTrack.play();
 			},
@@ -88,6 +88,7 @@ WebyMaze.SoundRender	= function(opts){
 			var url	= fxIdToUrl[fxId];
 			soundsFx[fxId]	= soundManager.createSound({
 				id	: fxId,
+				volume	: 50,
 				url	: url,
 				autoLoad: true
 			});

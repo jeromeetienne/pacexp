@@ -58,7 +58,7 @@ function init() {
 	scene.addLight( new THREE.AmbientLight( 0xAAAAAA ) );
 
 	var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
-	directionalLight.position.x = -0.36;
+	directionalLight.position.x = -0;
 	directionalLight.position.y = 0.3;
 	directionalLight.position.z = 0.7;
 	directionalLight.position.normalize();
