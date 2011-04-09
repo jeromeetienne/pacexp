@@ -29,7 +29,7 @@ WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick){
 
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
-	this._container.rotation.y	= ctxTick.rotation.z;
+	this._container.rotation.y	= -ctxTick.rotation.z;
 }
 
 WebyMaze.EnemyCli.prototype.obj3d	= function(){
