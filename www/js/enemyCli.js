@@ -4,7 +4,8 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.EnemyCli	= function(){
+WebyMaze.EnemyCli	= function()
+{
 }
 
 WebyMaze.EnemyCli.prototype.destroy	= function(){
@@ -37,24 +38,38 @@ WebyMaze.EnemyCli.prototype.obj3d	= function(){
 
 WebyMaze.EnemyCli.prototype._containerCtor	= function()
 {
-	this._dirtyObj3d	= true;		
+	var textureType	= this.appearance.match(/^(.*)-(.*)/)[1]
+	var colorStr	= this.appearance.match(/^(.*)-(.*)/)[2]
 
-	if( this.appearance == 'happy' ){
-		this._containerCtorGhost('happy');
-	}else if( this.appearance == 'hurt' ){
-		this._containerCtorGhost('hurt');
-	}else if( this.appearance == 'eyes' ){
-		this._containerCtorEyes('eyes');
+	if( textureType == 'happy' ){
+		this._containerCtorGhost(this.appearance);
+	}else if( textureType == 'hurt' ){
+		this._containerCtorGhost(this.appearance);
+	}else if( textureType == 'eyes' ){
+		this._containerCtorEyes(this.appearance);
 	}else console.assert(false, 'unknown appearance '+this.appearance);
+
+	this._dirtyObj3d	= true;
 }
 
 
 WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
-	if( smileyType === 'happy' ){
+	var textureType	= smileyType.match(/^(.*)-(.*)/)[1]
+	var colorStr	= smileyType.match(/^(.*)-(.*)/)[2]
+
+	if( colorStr === 'red' ){
 		var color	= 0x5500aa;
-		//var color	= 0xff5500;
-		var ambient	= 0xa0ff00;		
-	}else if( smileyType === 'hurt' ){
+		var ambient	= 0xDC143C;		
+	}else if( colorStr === 'pink' ){
+		var color	= 0x5500aa;
+		var ambient	= 0xff8080;		
+	}else if( colorStr === 'orange' ){
+		var color	= 0x5500aa;
+		var ambient	= 0xFF4500;		
+	}else if( colorStr === 'lightblue' ){
+		var color	= 0x5500aa;
+		var ambient	= 0x3DC5CC;
+	}else if( colorStr === 'blue' ){
 		var color	= 0x0044aa;
 		var ambient	= 0x00a0FF;
 	}
@@ -63,7 +78,7 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 	this.canvas		= document.createElement('canvas');
 	this.canvas.width	= this.canvas.height	= 256;
 	this.texture		= new THREE.Texture(this.canvas);
-	THREEx.Texture.Smiley[smileyType](this.canvas);
+	THREEx.Texture.Smiley[textureType](this.canvas);
 	this.texture.needsUpdate = true;
 
 	// build this._container
