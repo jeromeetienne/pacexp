@@ -231,14 +231,27 @@ WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 	jQuery(inputSel).blur(function(event){
 		onClose();
 	}.bind(this))
+
+
+	// prevent keys to go beyond the modal
+	jQuery(inputSel).bind('keypress', function(event){
+		event.stopPropagation();
+	});
+	jQuery(inputSel).bind('keyup', function(event){
+		event.stopPropagation();
+	});
+	jQuery(inputSel).bind('keydown', function(event){
+		event.stopPropagation();
+	});
 	
-	// to detect when enter is pressed, the window is closed
+	//// to detect when enter is pressed, the window is closed
 	jQuery(inputSel).bind('keypress', function(event){
 		console.log("keycode", event.keyCode);
 		if( event.keyCode == 13 ){
 			jQuery(dialogSel).jqmHide(); 
 			onClose();
 		}
+		event.stopPropagation();
 	}.bind(this));
 	
 	// put the value in the button label

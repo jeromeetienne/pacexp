@@ -32,10 +32,36 @@ WebyMaze.GameCli.prototype.onContextTick	= function(message){
 	this.webglRender.setCtxTick(message.data);
 }
 
-WebyMaze.GameCli.prototype.onGameCompleted	= function(message){
-	// this is an alert to freeze all execution behind
-	alert("Game Completed due to " + message.data.reason)
-	location.href	= location.href;
+WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
+{
+	// destroy the socket ... just a trick to free the game
+	this.socketDtor();
+	
+	// determine the dialogSel based on reason
+	var reason	= message.data.reason;
+	var dialogSel	= null;
+	if( reason === "noMorePills" ){
+		dialogSel	= '#gameCompletedNoMorePillsDialog';	
+	}else if( reason === "playerKilled" ){
+		dialogSel	= '#gameCompletedPlayerKilledDialog';
+	}else{
+		console.assert(false);
+	}
+
+	// report the score
+	var score	= jQuery("#scoreDisplay span.value").text()
+	jQuery(dialogSel+" span.score").text(score)
+
+	// init dialogs
+	jQuery(dialogSel).jqm({
+		onHide	: function(){
+			console.log("hide")
+			// reload the page
+			location.href	= location.href;			
+		}
+	});
+	jQuery(dialogSel).jqmShow(); 
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -103,11 +129,11 @@ WebyMaze.GameCli.prototype.socketCtor	= function(){
 }
 
 WebyMaze.GameCli.prototype.socketDtor	= function(){
-	console.assert(false, "not yet implemented")	
+	this._sockio.disconnect();
 }
 
 WebyMaze.GameCli.prototype.socketOnConnect	= function(){
-	console.log("onConnect")
+	console.log("onConnect", this._sockio)
 	this.socketSend({
 		type	: "gameReq",
 		data	: {
