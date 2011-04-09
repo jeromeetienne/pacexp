@@ -12,10 +12,11 @@ WebyMaze.SoundRender	= function(opts){
 	// private variables	
 	var soundsFx	= {};
 	var fxIdToUrl	= {
-		//'racketImpact'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mouseover2.mp3',
-		//'ballLoss'	: 'webymaze/vendor/soundmanager2/demo/_mp3/mak.mp3',
 		'die'		: 'sounds/pacman/die.mp3',
-		'eatPill'	: 'sounds/pacman/eatpill.mp3'
+		'win'		: 'sounds/pacman/vcs_90.mp3',
+		'eatPill'	: 'sounds/pacman/eating.short.mp3',
+		'eatEnergizer'	: 'sounds/pacman/eatpill.mp3',
+		'eatGhost'	: 'sounds/pacman/eatghost.mp3'
 	}
 	var soundTrack		= null;
 

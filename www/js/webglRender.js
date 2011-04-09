@@ -74,7 +74,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	this.setCtxTickShoot(ctxTick);
 	this.setCtxTickPill(ctxTick);
 	
-	this.handleRecvedEvent(ctxTick.events)
+	this.tickEventHandler(ctxTick.events)
 
 	// handle the .obj3d() update for enemy
 	Object.keys(this.enemies).forEach(function(enemyId){
@@ -169,8 +169,11 @@ WebyMaze.WebglRender.prototype._renderInfoPatch	= function(renderInfo, collectio
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+//		handle tick events						//
+//////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.WebglRender.prototype.handleRecvedEvent	= function(events)
+WebyMaze.WebglRender.prototype.tickEventHandler	= function(events)
 {
 	// return now if there is no events
 	if( !events || events.length == 0 )	return;
@@ -179,19 +182,19 @@ WebyMaze.WebglRender.prototype.handleRecvedEvent	= function(events)
 	// go thru all events
 	events.forEach(function(event){
 		// handle events by type
-		if( event.type === 'impactPlayerPill' ){
-			this._onImpactPlayerPill(event);
-		}
+		if( event.type === 'playSound' ){
+			this._onPlaySound(event);
+		}else console.assert(false);
+
+		
 	}.bind(this));
 }
 
-WebyMaze.WebglRender.prototype._onImpactPlayerPill	= function(event)
+WebyMaze.WebglRender.prototype._onPlaySound	= function(event)
 {
-	if( event.data.playerId == this.urBodyId ){
-		soundRender.soundFxPlay('eatPill')	
-	}
+	var fxId	 = event.data;
+	soundRender.soundFxPlay(fxId)	
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////
 //		osb user interface stuff					//
@@ -281,8 +284,6 @@ WebyMaze.WebglRender.prototype.gameIdUICtor	= function(){
 		if( gameId == this.gameId )	return;
 		// put the value in the button label
 		jQuery(buttonSel+" span.value").text(gameId)
-		// update page title
-		jQuery('.pagetitle a').href("http://pacmaze.com/#"+gameId)
 		// change the gameConfig
 		gameConfig.gameId(gameId);		
 		// reload the page to init new game...

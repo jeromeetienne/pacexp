@@ -41,8 +41,10 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	var reason	= message.data.reason;
 	var dialogSel	= null;
 	if( reason === "noMorePills" ){
+		soundRender.soundFxPlay('win')
 		dialogSel	= '#gameCompletedNoMorePillsDialog';	
 	}else if( reason === "playerKilled" ){
+		soundRender.soundFxPlay('die')
 		dialogSel	= '#gameCompletedPlayerKilledDialog';
 	}else{
 		console.assert(false);
@@ -55,9 +57,8 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	// init dialogs
 	jQuery(dialogSel).jqm({
 		onHide	: function(){
-			console.log("hide")
 			// reload the page
-			location.href	= location.href;			
+			window.location.reload();
 		}
 	});
 	jQuery(dialogSel).jqmShow(); 
