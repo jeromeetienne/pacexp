@@ -12,8 +12,8 @@ WebyMaze.MazeCli	= function(opts){
 	this.wallW	= 100;
 	
 	this._buildWallsSingleColor();
-	this._buildGroundSingleColor();
-	//this._buildGroundChessBoard();
+	//this._buildGroundSingleColor();
+	this._buildGroundChessBoard();
 }
 
 WebyMaze.MazeCli.prototype.getMap	= function(){
@@ -42,8 +42,11 @@ WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function(){
 	colors.forEach(function(colorsY, idxY){
 		colorsY.forEach(function(colorX, idxX){
 			materials[idxY][idxX]	= [
+				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/GraniteWall.png') } )
+				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/SpaceTiles.png') } )
+				new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
 				//new THREE.MeshLambertMaterial( { color: colorX, shading: THREE.FlatShading } ),
-				new THREE.MeshBasicMaterial( { color: colorX } )
+				//new THREE.MeshBasicMaterial( { color: colorX } )
 				//new THREE.MeshBasicMaterial( { color: colorX, map: THREE.ImageUtils.loadTexture('images/tmp/tex0.jpg') } )
 			];			
 		})
@@ -161,8 +164,12 @@ WebyMaze.MazeCli.prototype._buildWallsSingleColor	= function(){
 		//new THREE.MeshLambertMaterial( { map: THREE.ImageUtils.loadTexture('images/tmp/tex0.jpg'), opacity: 0.8 } ),
 		//new THREE.MeshNormalMaterial( ),
 		//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+		//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+		//				, map: THREE.ImageUtils.loadTexture('images/tmp/tex0.jpg') } ),
+		//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+		//				, map: THREE.ImageUtils.loadTexture('images/tmp/SpaceportHexagons.png') } ),
 		new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-						, map: THREE.ImageUtils.loadTexture('images/tmp/tex0.jpg') } ),
+						, map: THREE.ImageUtils.loadTexture('images/tmp/BluePaintedTiles.png') } ),
 	];
 
 	var mazeH	= this.map.length;
