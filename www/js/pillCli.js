@@ -17,6 +17,7 @@ WebyMaze.PillCli.prototype.destroy	= function(){
 WebyMaze.PillCli.prototype.setCtxTick	= function(ctxTick){
 	this.pillType			= ctxTick.pillType;
 	if( !this._container )	this._containerCtor();
+	//if( !this._container )	this._containerSpriteCtor();
 
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
@@ -27,6 +28,24 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 	return this._container;
 }
 
+WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
+{
+	var mesh	= new THREE.Sprite({
+		map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
+		useScreenCoordinates	: false
+	});
+
+	if( this.pillType == 'white' ){
+		mesh.scale.set( 0.4, 0.4, 1.0 );
+	}else if( this.pillType == 'red' ){
+		mesh.scale.set( 0.6, 0.6, 1.0 );
+	}else {
+		console.assert(false);
+	}
+
+	this._container	= new THREE.Object3D();
+	this._container.addChild(mesh)
+}
 WebyMaze.PillCli.prototype._containerCtor	= function(){
 	// build this._container
 	var bodyW	= 25;
@@ -40,7 +59,7 @@ WebyMaze.PillCli.prototype._containerCtor	= function(){
 	var material	= null;
 	if( this.pillType == 'white' ){
 		material	= [
-			new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading, opacity: 0.9} ),
+			new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading} ),
 		];
 	}else if( this.pillType == 'red' ){
 		this.canvas	= document.createElement('canvas');
