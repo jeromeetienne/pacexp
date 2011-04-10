@@ -76,12 +76,10 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 	this._canvasCtor();
 	// build this._container
 	var bodyW	= 100;
-	var geometry	= [
-		[ new THREE.Sphere( bodyW/2, 32, 16 )	, 500 ],
-		[ new THREE.Sphere( bodyW/2, 16, 8 )	, 700 ],
-		[ new THREE.Sphere( bodyW/2, 8, 4 )	, 1500 ]
-	];
-	
+
+
+	this._container	= new THREE.Object3D();
+
 	var material	= [
 		new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
 		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
@@ -89,11 +87,19 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 		//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
 		new THREE.MeshLambertMaterial( { map: this.texture } ),
 	];
-	this._container	= new THREE.LOD();
-	for(var i = 0; i < geometry.length; i++ ) {
-		var mesh = new THREE.Mesh( geometry[i][0], material );
-		this._container.add( mesh, geometry[i][1] );
-	}
+	var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
+	var mesh	= new THREE.Mesh( geometry, material );
+	this._container.addChild( mesh );
+	
+	// do the shaddow
+	var mesh		= new THREE.Mesh(
+		new THREE.Plane( bodyW, bodyW ),
+		new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.5 } )
+	);
+	mesh.position.y	= -bodyW/2 + 1;
+	mesh.rotation.x	= - 90 * ( Math.PI / 180 );
+	mesh.overdraw	= true;
+	this._container.addChild( mesh );
 }
 
 WebyMaze.PlayerCli.prototype.obj3d	= function(){

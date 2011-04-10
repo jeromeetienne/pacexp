@@ -49,10 +49,19 @@ WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 WebyMaze.PillCli.prototype._containerCtor	= function(){
 	// build this._container
 	var bodyW	= 25;
+	var detailMult	= 1;
+	if( this.pillType == 'white' ){
+		detailMult	= 1;
+		bodyW		= 25;
+	}else{
+		detailMult	= 4;
+		bodyW		= 50;
+	}
+	
 	var geometry = [
-		[ new THREE.Sphere( bodyW/2, 8, 4 )	, 500 ],
-		[ new THREE.Sphere( bodyW/2, 4, 2 )	, 700 ],
-		[ new THREE.Sphere( bodyW/2, 2, 2 )	, 1500 ],
+		[ new THREE.Sphere( bodyW/2, 8*detailMult, 4*detailMult )	, 500 ],
+		[ new THREE.Sphere( bodyW/2, 4*detailMult, 2*detailMult )	, 700 ],
+		[ new THREE.Sphere( bodyW/2, 3*detailMult, 2*detailMult )	, 1500 ],
 	];
 
 	// determine the material based on this.pillType	
@@ -62,29 +71,10 @@ WebyMaze.PillCli.prototype._containerCtor	= function(){
 			new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading} ),
 		];
 	}else if( this.pillType == 'red' ){
-		this.canvas	= document.createElement('canvas');
-		this.canvas.width	= this.canvas.height	= 256;
-		this.texture	= new THREE.Texture(this.canvas);
-		// load the image
-		var img		= new Image();
-		img.onload	= function(){
-			console.log("image loaded")
-			var ctx		= this.canvas.getContext( '2d' );
-			ctx.save();
-			ctx.translate(0, 0);
-			ctx.drawImage(img, 0,0, 256,256)
-			ctx.restore();
-			
-			// mark this texture as "needsUpdate"
-			this.texture.needsUpdate = true;
-		}.bind(this);
-		img.src		= "images/textures/MarbleBeige0028_5_thumbhuge.jpg";	
-		//img.src		= "images/textures/MarbleGreen0001_39_thumbhuge.jpg";	
-
-		
 		material	= [
-			//new THREE.MeshLambertMaterial( { color: 0xE3319D, shading: THREE.SmoothShading, opacity: 0.9} ),
-			new THREE.MeshLambertMaterial( { map: this.texture } )
+			new THREE.MeshPhongMaterial( { ambient: 0xFF0000, color: 0x00FF00, specular: 0x555555, shininess: 10 } ),
+			
+			//new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading} ),
 		];
 	}else console.assert(false, 'unknown pillType '+this.pillType);
 

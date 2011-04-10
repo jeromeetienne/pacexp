@@ -154,7 +154,7 @@ WebyMaze.MazeCli.prototype._buildWallsChessBoard	= function(){
 
 WebyMaze.MazeCli.prototype._buildWallsSingleColor	= function(){
 	var bodyW	= this.wallW;
-	var geometry	= new THREE.Cube( bodyW, bodyW/2, bodyW );
+	var geometry	= new THREE.Cube( bodyW, bodyW/3, bodyW );
 
 	var material	= [
 		//new THREE.MeshLambertMaterial( { color: 0xffaa00, shading: THREE.SmoothShading } ),
@@ -182,7 +182,7 @@ WebyMaze.MazeCli.prototype._buildWallsSingleColor	= function(){
 			
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.position.x = ( mazeX - Math.floor(mazeW/2) ) * bodyW;
-			mesh.position.y = -bodyW/4;
+			mesh.position.y = -bodyW/2 + bodyW/3/2 ;
 			mesh.position.z = ( mazeY - Math.floor(mazeH/2) ) * bodyW;
 			
 			mesh.matrixAutoUpdate = false;
