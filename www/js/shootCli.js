@@ -4,9 +4,9 @@ WebyMaze.ShootCli	= function(){
 	// build this._container
 	var bodyWidth	= 25;
 	var geometry = [
-		[ new Sphere( bodyWidth/2, 16, 8 )	, 500 ],
-		[ new Sphere( bodyWidth/2, 8, 4 )	, 700 ],
-		[ new Sphere( bodyWidth/2, 2, 2 )	, 1500 ],
+		[ new THREE.Sphere( bodyWidth/2, 16, 8 )	, 500 ],
+		[ new THREE.Sphere( bodyWidth/2, 8, 4 )		, 700 ],
+		[ new THREE.Sphere( bodyWidth/2, 2, 2 )		, 1500 ],
 	];
 	var material	= [
 		new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),

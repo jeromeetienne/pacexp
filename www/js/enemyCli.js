@@ -83,35 +83,36 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 
 	// build this._container
 	var bodyW	= 100;
-	var geometry	= new Cylinder( 16, bodyW/2, bodyW/2, bodyW/2, 0, 0 );
 
 // TODO lod	
+	this._container	= new THREE.Object3D();
+
 	var material	= [
 		//new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
 		new THREE.MeshPhongMaterial( { ambient: ambient, color: color, specular: 0x555555, shininess: 10 } ),
 	];
-	this._container	= new THREE.Object3D();
 	
+	var geometry	= new THREE.Cylinder( 16, bodyW/2, bodyW/2, bodyW/2, 0, 0 );
 	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= +bodyW/2 - bodyW/4;
+	mesh.position.y	= 0;
 	mesh.rotation.x	= 90*Math.PI/180;
 	this._container.addChild( mesh );
 
 	var material	= [
 		new THREE.MeshPhongMaterial( { ambient: ambient, color: color, specular: 0x555555, shininess: 10 } ),
+		new THREE.MeshBasicMaterial( { map: this.texture } ),
 		//new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
-		new THREE.MeshLambertMaterial( { map: this.texture } ),
 	];
 	
-	var geometry	= new Sphere( bodyW/2, 32, 16 );
+	var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= +bodyW/2 - bodyW/4;
 	this._container.addChild( mesh );
 	
 	// do the shaddow
 	var mesh		= new THREE.Mesh(
-		new Plane( bodyW, bodyW ),
-		new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.8 } )
+		new THREE.Plane( bodyW, bodyW ),
+		new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.5 } )
 	);
 	mesh.position.y	= -bodyW/2 + 1;
 	mesh.rotation.x	= - 90 * ( Math.PI / 180 );
@@ -130,7 +131,7 @@ WebyMaze.EnemyCli.prototype._containerCtorEyes	= function()
 		//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.flatShading} ),
 	];
 
-	var geometry	= new Sphere( bodyW/8, 16, 8 );
+	var geometry	= new THREE.Sphere( bodyW/8, 16, 8 );
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.x	=   bodyW / 4;
 	mesh.position.y	=   bodyW / 4;

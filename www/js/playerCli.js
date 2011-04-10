@@ -77,9 +77,9 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 	// build this._container
 	var bodyW	= 100;
 	var geometry	= [
-		[ new Sphere( bodyW/2, 32, 16 )	, 500 ],
-		[ new Sphere( bodyW/2, 16, 8 )	, 700 ],
-		[ new Sphere( bodyW/2, 8, 4 )	, 1500 ]
+		[ new THREE.Sphere( bodyW/2, 32, 16 )	, 500 ],
+		[ new THREE.Sphere( bodyW/2, 16, 8 )	, 700 ],
+		[ new THREE.Sphere( bodyW/2, 8, 4 )	, 1500 ]
 	];
 	
 	var material	= [
