@@ -1,7 +1,7 @@
 #!/usr/bin/make
 # to automatize repeatitive actions
 
-PROJECT_NAME=pacmaze
+PROJECT_NAME=pacmaze1
 
 server:
 	node lib/server.js
@@ -9,6 +9,10 @@ server:
 build: release_build jsdoc_build
 
 clean: release_clean jsdoc_clean
+
+install: upstart_install
+
+uninstall: upstart_uninstall
 
 #################################################################################
 #		release								#
@@ -48,16 +52,38 @@ apache2_restart:
 	sudo /etc/init.d/apache2 start
 
 apache2_copy_conf_dev:
-	#sudo ln -fs $(PWD)/etc/pacmazecom_dev_siteconf /etc/apache2/sites-enabled/pacmaze1com.conf
+	sudo ln -fs $(PWD)/etc/apache2/pacmaze_dev_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
 
 apache2_copy_conf_prod:
-	sudo ln -fs $(PWD)/etc/pacmazecom_prod_siteconf /etc/apache2/sites-enabled/pacmaze1com.conf
+	sudo ln -fs $(PWD)/etc/apache2/pacmaze_prod_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
 
+#################################################################################
+#		upstart								#
+#################################################################################
+
+upstart_install:
+	sudo cp etc/upstart/pacmaze.upstart	/etc/init/$(PROJECT_NAME).conf
+
+upstart_uninstall:
+	sudo rm -f /etc/init/$(PROJECT_NAME).conf
+
+upstart_start:
+	sudo initctl start $(PROJECT_NAME)
+
+upstart_stop:
+	sudo initctl stop $(PROJECT_NAME)
+
+upstart_status:
+	sudo initctl status $(PROJECT_NAME)
+
+upstart_restart:
+	sudo initctl restart $(PROJECT_NAME)
+	
 #################################################################################
 #		deploy								#
 #################################################################################
 
-deploy:	build deployDedixl
+deploy:	release_build deployDedixl
 
 deployDedixl:
 	#rsync -avz --rsh=ssh build/ /home/jerome/public_html/pacmaze_www_build

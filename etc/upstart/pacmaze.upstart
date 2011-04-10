@@ -1,0 +1,14 @@
+description "pacmaze1"
+author      "Jerome Etienne"
+ 
+# respawn flag means that the process will be restarted if ended unexpectedly.
+respawn
+
+start on startup
+stop on shutdown
+ 
+script
+	export HOME="/home/jerome"
+	cd $HOME/webwork/tweetymaze
+	exec make server
+end script
