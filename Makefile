@@ -40,19 +40,19 @@ jsdoc_clean:
 #		Apache2								#
 #################################################################################
 
-apache2_install_prod: apache2_copy_conf_prod apache2_restart
-
 apache2_install_dev: apache2_copy_conf_dev apache2_restart
+
+apache2_install_prod: apache2_copy_conf_prod apache2_restart
 
 apache2_restart:
 	sudo /etc/init.d/apache2 stop
 	sudo /etc/init.d/apache2 start
 
 apache2_copy_conf_dev:
-	sudo ln -fs $(PWD)/etc/pacmazecom_dev_siteconf $(APACHE2_CONFFILE)
+	#sudo ln -fs $(PWD)/etc/pacmazecom_dev_siteconf $(APACHE2_CONFFILE)
 
 apache2_copy_conf_prod:
-	sudo ln -fs $(PWD)/etc/pacmazecom_prod_siteconf $(APACHE2_CONFFILE)
+	sudo ln -fs $(PWD)/etc/pacmaze1com_prod_siteconf $(APACHE2_CONFFILE)
 
 #################################################################################
 #		deploy								#
