@@ -343,7 +343,7 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 		
 			var smallDataUrl	= canvas.toDataURL("image/png");
 
-			jQuery.post('http://127.0.0.1:8080/upload', {dataUrl: smallDataUrl}, function(data) {
+			jQuery.post('http://127.0.0.1:8082/upload', {dataUrl: smallDataUrl}, function(data) {
 				console.log("screenshoot uploaded. returned data:", data)
 			});
 		}
