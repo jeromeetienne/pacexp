@@ -1,7 +1,6 @@
 NameVirtualHost *:80
 <VirtualHost *:80>
-        ServerName	pacmaze2.jetienne.com
-        ServerAlias	pacmaze.com
+        ServerName	pacmaze1.jetienne.com
 
-        DocumentRoot	/home/jerome/public_html/pacmaze2_www_build
+        DocumentRoot	/home/jerome/public_html/pacmaze1_www_build
 </VirtualHost>
