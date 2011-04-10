@@ -81,6 +81,7 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 		[ new Sphere( bodyW/2, 16, 8 )	, 700 ],
 		[ new Sphere( bodyW/2, 8, 4 )	, 1500 ]
 	];
+	
 	var material	= [
 		new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
 		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
@@ -91,7 +92,6 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 	this._container	= new THREE.LOD();
 	for(var i = 0; i < geometry.length; i++ ) {
 		var mesh = new THREE.Mesh( geometry[i][0], material );
-		
 		this._container.add( mesh, geometry[i][1] );
 	}
 }
