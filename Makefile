@@ -2,7 +2,6 @@
 # to automatize repeatitive actions
 
 PROJECT_NAME=pacmaze
-APACHE2_CONFFILE=/etc/apache2/sites-enabled/pacmazecom.conf
 
 server:
 	node lib/server.js
@@ -49,10 +48,10 @@ apache2_restart:
 	sudo /etc/init.d/apache2 start
 
 apache2_copy_conf_dev:
-	#sudo ln -fs $(PWD)/etc/pacmazecom_dev_siteconf $(APACHE2_CONFFILE)
+	#sudo ln -fs $(PWD)/etc/pacmazecom_dev_siteconf /etc/apache2/sites-enabled/pacmaze1com.conf
 
 apache2_copy_conf_prod:
-	sudo ln -fs $(PWD)/etc/pacmaze1com_prod_siteconf $(APACHE2_CONFFILE)
+	sudo ln -fs $(PWD)/etc/pacmazecom_prod_siteconf /etc/apache2/sites-enabled/pacmaze1com.conf
 
 #################################################################################
 #		deploy								#
