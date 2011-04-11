@@ -3,7 +3,9 @@ NameVirtualHost *:80
         ServerName	pacmaze1.jetienne.com
 
 	# jme- apparently this is needed for setting 'expires' header
-	AllowOverride FileInfo Options Indexes
+	<Directory /home/jerome/public_html/pacmaze1_www_build>
+		AllowOverride FileInfo Options Indexes
+	</Directory>
 
         DocumentRoot	/home/jerome/public_html/pacmaze1_www_build
 </VirtualHost>
