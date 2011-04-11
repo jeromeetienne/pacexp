@@ -2,5 +2,8 @@ NameVirtualHost *:80
 <VirtualHost *:80>
         ServerName	pacmaze1.jetienne.com
 
+	# jme- apparently this is needed for setting 'expires' header
+	AllowOverride FileInfo Options Indexes
+
         DocumentRoot	/home/jerome/public_html/pacmaze1_www_build
 </VirtualHost>
