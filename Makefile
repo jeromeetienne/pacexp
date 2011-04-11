@@ -23,6 +23,7 @@ release_build:
 	inliner http://localhost/~jerome/webwork/tweetymaze/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
+	#cp etc/apache2/htaccess build/.htaccess
 	mkdir -p build/vendor/soundmanager2/swf
 	cp -a www/vendor/soundmanager2/swf/soundmanager2.swf build/vendor/soundmanager2/swf
 

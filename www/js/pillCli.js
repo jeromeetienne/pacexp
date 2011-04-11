@@ -31,7 +31,8 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 {
 	var mesh	= new THREE.Sprite({
-		map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
+		//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
+		map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
 		useScreenCoordinates	: false
 	});
 
@@ -46,6 +47,7 @@ WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 	this._container	= new THREE.Object3D();
 	this._container.addChild(mesh)
 }
+
 WebyMaze.PillCli.prototype._containerCtor	= function(){
 	// build this._container
 	var bodyW	= 25;
