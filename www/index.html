@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="en" manifest="cache.manifest">
 	<head>
 		<title>PacMaze Experiment - a pacman in a maze</title>
 		<meta charset="utf-8">
 		<!-- make favicon.ico -->
 		<link rel="shortcut icon" href="images/favicon.ico">
-		<meta="content-type" content="text/html; charset=utf8">
 		<style type="text/css">
 			body {
 				padding		: 0;
@@ -83,8 +82,8 @@
 		<script type="text/javascript" src="vendor/three.js.new/build/Three.js"></script>
 		<script type="text/javascript" src="vendor/three.js.new/contrib/Detector.js"></script>
 		<script type="text/javascript" src="vendor/three.js.new/contrib/RequestAnimationFrame.js"></script>
-		<script type="text/javascript" src="vendor/three.js.new/contrib/Stats.js"></script>
-
+<!--		<script type="text/javascript" src="vendor/three.js.new/contrib/Stats.js"></script>
+-->
 		<script src="vendor/socket.io-client/socket.io.js"></script>
 
 		<!-- TODO put excanvas in threex -->
@@ -104,7 +103,6 @@
 		<script type="text/javascript" src="js/cameraRender.js"></script>
 		<script type="text/javascript" src="js/webglRender.js"></script>
 		
-
 		<!-- To get Soundmanager -->
 		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
 		<script>soundManager.url = 'vendor/soundmanager2/swf'; // FIXME ? could it be a dataUrl </script>
@@ -135,13 +133,13 @@
 		<div style="position: absolute; top:10px; left:10px;" class="above3d menuosd">
 			<span id="scoreDisplay">Score : <span class="value"></span></span>
 			<br/>
-			<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
+<!--			<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
 			<br/>
 			<a href="javascript:void(0)" id="GameIdButton">Maze : <span class="value"></span></a>
 			<br/>
 			<a href="javascript:void(0)" id="ScreenshotButton">Screenshot</a>
 			<br/>
-			<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
+-->			<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
 			<br/>
 			<a href="javascript:void(0)" id="soundFxButton">Sound Fx <span class="value">Off</span></a>
 			<br/>

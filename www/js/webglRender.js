@@ -371,7 +371,7 @@ WebyMaze.WebglRender.prototype.helpUICtor	= function(){
 	
 	
 	// to make it appear on load
-	//jQuery(dialogSel).jqmShow();
+	jQuery(dialogSel).jqmShow();
 }
 
 WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){

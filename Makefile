@@ -18,14 +18,18 @@ uninstall: upstart_uninstall
 #		release								#
 #################################################################################
 
-release_build:
+release_build: release_clean
 	echo "*" > build/.gitignore
 	inliner http://localhost/~jerome/webwork/tweetymaze/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
-	#cp etc/apache2/htaccess build/.htaccess
+	cp etc/apache2/htaccess build/.htaccess
 	mkdir -p build/vendor/soundmanager2/swf
 	cp -a www/vendor/soundmanager2/swf/soundmanager2.swf build/vendor/soundmanager2/swf
+	mkdir -p build/vendor/socket.io-client/lib/vendor/web-socket-js/
+	unzip www/vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.zip -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
+	#echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
+	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
 
 release_clean:
 	rm -rf build/*
