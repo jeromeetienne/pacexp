@@ -37,9 +37,6 @@ var main	= function(){
 
 function init() {
 
-	container = document.createElement( 'div' );
-	document.body.appendChild( container );
-
 	camera = new THREE.Camera(60, window.innerWidth / window.innerHeight, 1, 2800 );
 
 	scene = new THREE.Scene();
@@ -72,7 +69,12 @@ function init() {
 	}
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
-	container.appendChild( renderer.domElement );
+
+	container = document.createElement( 'div' );
+	document.body.appendChild( container );
+	jQuery("#canvasContainer").empty().append( renderer.domElement )
+
+	//container.appendChild( renderer.domElement );
 
 	// append Stats if it is defined
 	if( typeof Stats !== "undefined" ){
