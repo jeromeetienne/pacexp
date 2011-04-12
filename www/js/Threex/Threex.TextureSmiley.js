@@ -54,7 +54,7 @@ THREEx.Texture.Smiley	= {
 		ctx.translate(w/2 + w/2, w/2);
 		ctx.arc(0, mouthDy, mouthW, mouthRbeg, mouthRend, false)
 		ctx.fill();
-		ctx.restore();	
+		ctx.restore();
 	},
 	/**
 	 * display an hurt smiley on a canvas for texture
@@ -177,6 +177,27 @@ THREEx.Texture.Smiley	= {
 		ctx.fillEllipse(-circleW/2, -circleH/2, circleW, circleH);
 		ctx.restore();
 	},
+	
+	/**
+	 * display the shaddow of the smiley in a texture
+	 *
+	 * @param {canvasElement} the canvas where we draw
+	*/
+	textOnBack	: function(canvas, textData){
+		var w		= canvas.width;
+		var ctx		= canvas.getContext( '2d' );
+		
+		ctx.fillStyle	= "#000000";
+		
+		ctx.save();
+		ctx.translate(w/2, w/2)
+		ctx.font	= "30px bold Arial";
+		var textW	= ctx.measureText(textData).width;
+		ctx.strokeStyle	= "rgb(0,0,0)";
+		console.log("measutreText", ctx.measureText(textData));
+		ctx.fillText(textData, -textW/2, 0);
+		ctx.restore();
+	},
 
 //////////////////////////////////////////////////////////////////////////////////
 //		texture helper							//
@@ -210,7 +231,6 @@ THREEx.Texture.Smiley	= {
 		texture.needsUpdate	= true;
 		if( callback )	callback( this );
 		return texture;
-
 	},
 
 }

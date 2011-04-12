@@ -56,17 +56,20 @@ WebyMaze.EnemyCli.prototype._containerCtor	= function()
 WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 	var textureType	= smileyType.match(/^(.*)-(.*)/)[1]
 	var colorStr	= smileyType.match(/^(.*)-(.*)/)[2]
-
 	if( colorStr === 'red' ){
+		var textOnBack	= "Blinky";
 		var color	= 0x5500aa;
 		var ambient	= 0xDC143C;		
 	}else if( colorStr === 'pink' ){
+		var textOnBack	= "Pinky";
 		var color	= 0x5500aa;
 		var ambient	= 0xff8080;		
 	}else if( colorStr === 'orange' ){
+		var textOnBack	= "Clyde";
 		var color	= 0x5500aa;
 		var ambient	= 0xFF4500;		
 	}else if( colorStr === 'lightblue' ){
+		var textOnBack	= "Inky";
 		var color	= 0x5500aa;
 		var ambient	= 0x3DC5CC;
 	}else if( colorStr === 'blue' ){
@@ -79,6 +82,7 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 	this.canvas.width	= this.canvas.height	= 256;
 	this.texture		= new THREE.Texture(this.canvas);
 	THREEx.Texture.Smiley[textureType](this.canvas);
+	if( textOnBack )	THREEx.Texture.Smiley.textOnBack(this.canvas, textOnBack );
 	this.texture.needsUpdate = true;
 
 	// build this._container

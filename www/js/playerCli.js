@@ -81,10 +81,10 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 	this._container	= new THREE.Object3D();
 
 	var material	= [
-		new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
+		//new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
 		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 		//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
-		//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
+		new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
 		new THREE.MeshLambertMaterial( { map: this.texture } ),
 	];
 	var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
@@ -188,8 +188,15 @@ WebyMaze.PlayerCli.prototype._avatarLoad	= function(){
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function(img){
-	THREEx.Texture.Smiley.happy(this.canvas );
+WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function()
+{
+	var canvasW	= 64;
+	var canvas	= document.createElement('canvas');
+	canvas.width	= canvas.height	= canvasW;
+	var texture	= new THREE.Texture(canvas);
+
+	THREEx.Texture.Smiley.happy(this.canvas);
+	THREEx.Texture.Smiley.textOnBack(this.canvas, 'Smiley');
 
 	// mark this texture as "needsUpdate"
 	this.texture.needsUpdate = true;
@@ -198,7 +205,7 @@ WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function(img){
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.PlayerCli.prototype.buildHurtTexture	= function(img){
+WebyMaze.PlayerCli.prototype.buildHurtTexture	= function(){
 	// 
 	THREEx.Texture.Smiley.hurt(this.canvas);
 
