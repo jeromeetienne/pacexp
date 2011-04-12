@@ -194,7 +194,7 @@ WebyMaze.CameraRender.prototype.transformOverPlayer	= function(targetObj3d)
 
 WebyMaze.CameraRender.prototype.transformBehindPlayer	= function(targetObj3d)
 {
-	var deltaBack	= 600;
+	var deltaBack	= 500;
 	var deltaUp	= 300;
 	var lookFwd	= 200;
 	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
