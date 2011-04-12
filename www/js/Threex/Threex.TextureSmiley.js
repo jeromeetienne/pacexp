@@ -190,7 +190,7 @@ THREEx.Texture.Smiley	= {
 		ctx.fillStyle	= "#000000";
 		
 		ctx.save();
-		ctx.translate(w/2, w/2)
+		ctx.translate(w/2, w/2-w/32)
 		ctx.font	= "30px bolder Arial";
 		var textW	= ctx.measureText(textData).width;
 		ctx.strokeStyle	= "rgb(0,0,0)";

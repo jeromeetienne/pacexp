@@ -83,7 +83,8 @@ WebyMaze.GameCli.prototype.userInputCtor	= function(){
 	var setMove	= function(event, value){
 		// https://developer.mozilla.org/en/DOM/Event/UIEvent/KeyEvent
 		switch( event.keyCode ) {
-			case " ".charCodeAt(0):	send('shoot', value);		break;
+// shoot disabled
+//			case " ".charCodeAt(0):	send('shoot', value);		break;
 			case "Z".charCodeAt(0):
 			case "W".charCodeAt(0):
 			case 38: /*up*/		send('moveForward', value);	break;

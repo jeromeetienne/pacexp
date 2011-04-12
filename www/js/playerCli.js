@@ -196,7 +196,7 @@ WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function()
 	var texture	= new THREE.Texture(canvas);
 
 	THREEx.Texture.Smiley.happy(this.canvas);
-	THREEx.Texture.Smiley.textOnBack(this.canvas, 'Smiley');
+	THREEx.Texture.Smiley.textOnBack(this.canvas, 'Packy');
 
 	// mark this texture as "needsUpdate"
 	this.texture.needsUpdate = true;
