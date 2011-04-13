@@ -20,7 +20,7 @@ var gameCli	= null;
 var gameConfig	= null;
 
 var main	= function(){
-	if( jQuery.url.param('render') !== 'canvas' && !Detector.webgl ){
+	if( jQuery.url.param('render') !== 'canvas' && !document.createElement('canvas').getContext('experimental-webgl')  ){
 		alert('WebGL not supported by your browser');
 		return;
 	}
