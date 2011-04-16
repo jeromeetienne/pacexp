@@ -37,7 +37,7 @@ WebyMaze.WebglRender	= function(opts){
 	})
 	// update the global scene with this.mazeCli
 	sceneContainer.addChild( this.mazeCli.obj3d() );
-	
+
 	this.cameraRender	= new WebyMaze.CameraRender();
 
 	// TODO put the whole UI stuff in its own class (like camera)
@@ -370,7 +370,7 @@ WebyMaze.WebglRender.prototype.helpUICtor	= function(){
 	}.bind(this));
 	
 	// to make it appear on load
-	jQuery(dialogSel).jqmShow();
+	//jQuery(dialogSel).jqmShow();
 }
 
 WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){
