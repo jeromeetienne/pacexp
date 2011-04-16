@@ -7,9 +7,9 @@ var urlBase	= "http://pacmaze.com";
 //										//
 //////////////////////////////////////////////////////////////////////////////////
 
-detailTweetUrl	= function()
+detailTweetLink	= function()
 {
-	return jQuery(".tweet-text.tweet-text-large a").attr('href');
+	return jQuery(".tweet-text.tweet-text-large a[rel=nofollow][target=_blank]");
 }
 
 detailTweetExist	= function()
@@ -31,6 +31,11 @@ var tweetMediaStr	= ''+
 var timeoutCb	= function()
 {
 	//console.log("a", jQuery(".tweet-text.tweet-text-large a"));
+
+	setTimeout(timeoutCb, 0.5*1000);
+
+	// failed attempts to get prevent key event from going in twitter ui
+	//jQuery("div.media-instance-container").keypress(function(event){ console.log("keypress")})
 	
 	if( jQuery('div.media-instance-container').length ){
 		console.log("there is a div media instance already. doing nothing")
@@ -38,24 +43,23 @@ var timeoutCb	= function()
 	}
 
 
-	setTimeout(timeoutCb, 0.5*1000);
-
-	if( !detailTweetExist() ){
+	if( jQuery(".tweet-text.tweet-text-large").length === 0 ){
 		console.log("no detailed twwet. doing nothing")
 		return;
 	}
+	
+	// scrap includedUrl from the page
+	var includedUrl	= null;
+	jQuery(".tweet-text.tweet-text-large a[rel=nofollow][target=_blank]").each(function(){
+		var href	= jQuery(this).attr('href');
+		if( href.match(/^http:\/\/pacmaze.com/) === null )	return;
+		includedUrl	= href;
+	})
 
-	var href	= detailTweetUrl();
-	var media	= jQuery(tweetMediaStr)
-	
+	if( !includedUrl )	return;
+
+	var media	= jQuery(tweetMediaStr)	
 	jQuery('div.tweet-media').empty().append(media);
-	
-	return;
-	
-	var href	= detailTweetUrl();
-	console.log("losta")
-	if( !href )	return;
-	console.log("href=", href)	
 }
 
 // TODO is there better than this timer ? like a event on dom change ?
