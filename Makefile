@@ -1,7 +1,7 @@
 #!/usr/bin/make
 # to automatize repeatitive actions
 
-PROJECT_NAME=pacmaze1
+PROJECT_NAME=tweetymaze
 
 server:
 	node lib/server.js
@@ -21,16 +21,19 @@ uninstall: upstart_uninstall
 release_build: release_clean
 	echo "*" > build/.gitignore
 	cp www/webglTest.html build
-	inliner http://localhost/~jerome/webwork/tweetymaze/www/index.html > build/index.html
+	inliner http://localhost/~jerome/webwork/$(PROJECT_NAME)/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
+	cp www/images/favicon.ico build
 	cp etc/apache2/htaccess build/.htaccess
 	mkdir -p build/vendor/soundmanager2/swf
 	cp -a www/vendor/soundmanager2/swf/soundmanager2.swf build/vendor/soundmanager2/swf
 	mkdir -p build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	unzip www/vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.zip -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
-	#echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
-	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
+	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	echo "\nNETWORK:\n*\n" > build/cache.manifest
+	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
 
 release_clean:
 	rm -rf build/*
@@ -93,4 +96,4 @@ deploy:	release_build deployDedixl
 
 deployDedixl:
 	#rsync -avz --rsh=ssh build/ /home/jerome/public_html/pacmaze_www_build
-	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/pacmaze1_www_build
+	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/$(PROJECT_NAME)_www_build
