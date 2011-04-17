@@ -40,9 +40,11 @@ var main	= function(){
 	animate();
 }
 
-function init() {
-
-	camera = new THREE.Camera(60, window.innerWidth / window.innerHeight, 1, 2800 );
+function init()
+{
+	var configScene	= WebyMaze.ConfigCli.scene;
+	//camera = new THREE.Camera(60, window.innerWidth / window.innerHeight, 1, 2800 );
+	camera = new THREE.Camera(configScene.cameraFov, window.innerWidth / window.innerHeight, configScene.cameraNear, configScene.cameraFar);
 
 	scene = new THREE.Scene();
 	sceneContainer = new THREE.Object3D();

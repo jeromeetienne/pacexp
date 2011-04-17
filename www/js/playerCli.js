@@ -92,7 +92,8 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function()
 			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
 			new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
-			new THREE.MeshLambertMaterial( { map: this.texture } ),
+			//new THREE.MeshLambertMaterial( { map: this.texture } ),
+			new THREE.MeshBasicMaterial( { map: this.texture } ),
 		];
 	}else{
 		var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );

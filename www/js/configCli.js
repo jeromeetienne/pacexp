@@ -5,5 +5,12 @@ var WebyMaze	= WebyMaze || {};
 WebyMaze.ConfigCli	= {}
 
 WebyMaze.ConfigCli.ui	= {
-	showStat	: true
+	showStat	: true,
 };
+
+WebyMaze.ConfigCli.scene	= {
+	cameraFov	: 60,
+	cameraNear	: 1,
+	cameraFar	: 2800
+};
+
