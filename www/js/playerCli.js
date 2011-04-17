@@ -9,7 +9,6 @@ WebyMaze.PlayerCli	= function(){
 	this.username	= null;
 	this.score	= null;
 	
-	// TODO rename this dirtyScore
 	this.dirtyScore	= false;
 	
 	this._containerCtor();
@@ -29,8 +28,6 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 	this._container.position.z	= ctxTick.position.y;
 	this._container.rotation.y	= -ctxTick.rotation.z;
 
-console.log("player rot z", this._container.rotation.y);
-	
 	if(this.username != ctxTick.username){
 		this.username	= ctxTick.username
 		this._avatarLoad();
@@ -73,7 +70,10 @@ return;
 	}
 }
 
-WebyMaze.PlayerCli.prototype._containerCtor	= function(){
+WebyMaze.PlayerCli.prototype._containerCtor	= function()
+{
+	// determine if renderer is webGl or not
+	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	// build the texture
 	this._canvasCtor();
 	// build this._container
@@ -82,26 +82,44 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function(){
 
 	this._container	= new THREE.Object3D();
 
-	var material	= [
-		//new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
-		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
-		//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
-		new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
-		new THREE.MeshLambertMaterial( { map: this.texture } ),
-	];
-	var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
+	// determine if renderer is webGl or not
+	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
+	// set the material depending on renderer capabilities
+	if( isWebGL ){
+		var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
+		var material	= [
+			//new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
+			new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
+			new THREE.MeshLambertMaterial( { map: this.texture } ),
+		];
+	}else{
+		var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );
+		var material	= [
+			new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.FlatShading } ),
+			
+			//new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.flatShading } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
+			//new THREE.MeshLambertMaterial( { map: this.texture } ),
+		];		
+	}
 	var mesh	= new THREE.Mesh( geometry, material );
 	this._container.addChild( mesh );
 	
 	// do the shaddow
-	var mesh		= new THREE.Mesh(
-		new THREE.Plane( bodyW, bodyW ),
-		new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.5 } )
-	);
-	mesh.position.y	= -bodyW/2 + 1;
-	mesh.rotation.x	= - 90 * ( Math.PI / 180 );
-	mesh.overdraw	= true;
-	this._container.addChild( mesh );
+	if( isWebGL ){
+		var mesh		= new THREE.Mesh(
+			new THREE.Plane( bodyW, bodyW ),
+			new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.5 } )
+		);
+		mesh.position.y	= -bodyW/2 + 1;
+		mesh.rotation.x	= - 90 * ( Math.PI / 180 );
+		mesh.overdraw	= true;
+		this._container.addChild( mesh );		
+	}
 }
 
 WebyMaze.PlayerCli.prototype.obj3d	= function(){
