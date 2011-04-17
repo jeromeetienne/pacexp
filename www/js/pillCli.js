@@ -59,26 +59,37 @@ WebyMaze.PillCli.prototype._containerCtor	= function(){
 		detailMult	= 4;
 		bodyW		= 50;
 	}
-	
-	var geometry = [
-		[ new THREE.Sphere( bodyW/2, 8*detailMult, 4*detailMult )	, 500 ],
-		[ new THREE.Sphere( bodyW/2, 4*detailMult, 2*detailMult )	, 700 ],
-		[ new THREE.Sphere( bodyW/2, 3*detailMult, 2*detailMult )	, 1500 ],
-	];
 
-	// determine the material based on this.pillType	
-	var material	= null;
-	if( this.pillType == 'white' ){
-		material	= [
-			new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading} ),
+
+	// determine if renderer is webGl or not
+	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
+	if( isWebGL ){
+		var geometry = [
+			[ new THREE.Sphere( bodyW/2, 8*detailMult, 4*detailMult )	, 500 ],
+			[ new THREE.Sphere( bodyW/2, 4*detailMult, 2*detailMult )	, 700 ],
+			[ new THREE.Sphere( bodyW/2, 3*detailMult, 2*detailMult )	, 1500 ],
 		];
-	}else if( this.pillType == 'red' ){
-		material	= [
-			new THREE.MeshPhongMaterial( { ambient: 0xFF0000, color: 0x00FF00, specular: 0x555555, shininess: 10 } ),
-			
-			//new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading} ),
+		// determine the material based on this.pillType	
+		var material	= null;
+		if( this.pillType == 'white' ){
+			material	= new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading} )
+		}else if( this.pillType == 'red' ){
+			material	= new THREE.MeshPhongMaterial( { ambient: 0xFF0000, color: 0x00FF00, specular: 0x555555, shininess: 10 } );
+		}else console.assert(false, 'unknown pillType '+this.pillType);
+	}else{
+		var geometry	= [
+			[ new THREE.Cube( bodyW/3, bodyW/3, bodyW/3, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } ), 99999 ]
 		];
-	}else console.assert(false, 'unknown pillType '+this.pillType);
+		// determine the material based on this.pillType	
+		var material	= null;
+		if( this.pillType == 'white' ){
+			material	= new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.FlatShading } );
+		}else if( this.pillType == 'red' ){
+			material	= new THREE.MeshLambertMaterial( { color: 0xFF0000, shading: THREE.FlatShading } );
+		}else console.assert(false, 'unknown pillType '+this.pillType);
+	}
+	
+
 
 	// build the object	
 	this._container	= new THREE.LOD();

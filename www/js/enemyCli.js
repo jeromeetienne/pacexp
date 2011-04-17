@@ -53,7 +53,8 @@ WebyMaze.EnemyCli.prototype._containerCtor	= function()
 }
 
 
-WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
+WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType)
+{
 	var textureType	= smileyType.match(/^(.*)-(.*)/)[1]
 	var colorStr	= smileyType.match(/^(.*)-(.*)/)[2]
 	if( colorStr === 'red' ){
@@ -95,46 +96,42 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType){
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 
 
-	// add the Robe
-	if( isWebGL ){
-		var material	= [
-			//new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
-			new THREE.MeshPhongMaterial( { ambient: ambient, color: color, specular: 0x555555, shininess: 10 } ),
-		];
-		var geometry	= new THREE.Cylinder( 16, bodyW/2, bodyW/2, bodyW/2, 0, 0 );
-	}else{
-		var material	= [
-			new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
-			//new THREE.MeshPhongMaterial( { ambient: ambient, color: color, specular: 0x555555, shininess: 10 } ),
-		];
-		var geometry	= new THREE.Cylinder( 16, bodyW/2, bodyW/2, bodyW/2, 0, 0 );		
-	}	
-	var geometry	= new THREE.Cylinder( 16, bodyW/2, bodyW/2, bodyW/2, 0, 0 );
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= 0;
-	mesh.rotation.x	= 90*Math.PI/180;
-	this._container.addChild( mesh );
-
 	// add the Head
 	if( isWebGL ){
+		var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
 		var material	= [
 			new THREE.MeshPhongMaterial( { ambient: ambient, color: color, specular: 0x555555, shininess: 10 } ),
 			new THREE.MeshBasicMaterial( { map: this.texture } ),
-			//new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
+			//new THREE.MeshLambertMaterial( { color: color, shading: THREE.FlatShading} ),
 		];
-		var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
 	}else{
+		//var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );		
+		var geometry	= new THREE.Cube( bodyW/2, bodyW*3/4, bodyW/2 );
 		var material	= [
-			new THREE.MeshLambertMaterial( { color: color, shading: THREE.flatShading} ),
+			//new THREE.MeshLambertMaterial( { color: 0x0088aa, shading: THREE.FlatShading } ),
+			//new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.FlatShading } ),
+			new THREE.MeshLambertMaterial( { color: ambient, shading: THREE.FlatShading} ),
 		];
-		var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );		
 	}
-	
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= +bodyW/2 - bodyW/4;
 	this._container.addChild( mesh );
 	
-	// do the shaddow
+
+	// add the Robe
+	if( isWebGL ){
+		var geometry	= new THREE.Cylinder( 16, bodyW/2, bodyW/2, bodyW/2, 0, 0 );
+		var material	= [
+			//new THREE.MeshLambertMaterial( { color: color, shading: THREE.FlatShading} ),
+			new THREE.MeshPhongMaterial( { ambient: ambient, color: color, specular: 0x555555, shininess: 10 } ),
+		];
+		var mesh	= new THREE.Mesh( geometry, material );
+		mesh.position.y	= 0;
+		mesh.rotation.x	= 90*Math.PI/180;
+		this._container.addChild( mesh );
+	}	
+
+	// add the shaddow
 	if( isWebGL ){
 		var mesh		= new THREE.Mesh(
 			new THREE.Plane( bodyW, bodyW ),
@@ -153,9 +150,9 @@ WebyMaze.EnemyCli.prototype._containerCtorEyes	= function()
 	this._container	= new THREE.Object3D();
 
 	var material	= [
-		new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.flatShading} ),
+		new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
 		new THREE.MeshBasicMaterial( { map: THREEx.Texture.Smiley.pupilTexture() } ),
-		//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.flatShading} ),
+		//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
 	];
 
 	var geometry	= new THREE.Sphere( bodyW/8, 16, 8 );
