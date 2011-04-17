@@ -28,6 +28,8 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
 	this._container.rotation.y	= -ctxTick.rotation.z;
+
+console.log("player rot z", this._container.rotation.y);
 	
 	if(this.username != ctxTick.username){
 		this.username	= ctxTick.username

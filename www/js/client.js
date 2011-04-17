@@ -75,6 +75,7 @@ function init() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
 
+	// append the renderer to the DOM
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
 	jQuery("#canvasContainer").empty().append( renderer.domElement )
