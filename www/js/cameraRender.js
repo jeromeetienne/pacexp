@@ -15,7 +15,7 @@ WebyMaze.CameraRender	= function(){
 	this._tween	= null;
 	
 	// init the first state
-	this.changeState('behindPlayer');
+	this.changeState('fixedZenith');
 
 	// bind the cameraSwitch keys
 	this.$keydownCallback	= this.onKeyDown.bind(this)
@@ -28,17 +28,22 @@ WebyMaze.CameraRender.prototype.destroy	= function()
 	document.removeEventListener( 'keydown', this.$keydownCallback, false);
 }
 
+// mixin MicroEvent 
+MicroEvent.mixin(WebyMaze.CameraRender);
+
 /**
  * Define all possible cameraStates
 */
-WebyMaze.CameraRender.CameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith', 'behindPlayer', 'fixedGrazing'];
+WebyMaze.CameraRender.CameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+					'behindPlayer', 'fixedZenith', 'fixedGrazing'];
 
-WebyMaze.CameraRender.RotationType	= {
+WebyMaze.CameraRender.State2RotationType= {
 	'overPlayer'	: "relative",
 	'inplayer'	: "relative",
 	'facePlayer'	: "relative",
 	'zenith'	: "relative",
 	'behindPlayer'	: "relative",
+	'fixedZenith'	: "absolute",
 	'fixedGrazing'	: "absolute"
 };
 
@@ -100,10 +105,11 @@ WebyMaze.CameraRender.prototype.cameraPrevState	= function(){
 
 WebyMaze.CameraRender.prototype.changeState	= function(state)
 {
+	// save the old State
+	var oldState	= this.state;
+	// log to debug
 	console.log("changeState", state);
 	// change the current camera state
-	// TODO is this usefull ?
-	// - is it used elsewhere
 	this.state	= state;
 	
 	// delete this._tween is needed
@@ -136,14 +142,9 @@ WebyMaze.CameraRender.prototype.changeState	= function(state)
 					//.easing(TWEEN.Easing.Back.EaseInOut)
 					.start();
 	}
+	// tigger the event
+	this.trigger('stateChange', this.state, oldState);
 }
-
-WebyMaze.CameraRender.prototype.changeState0	= function(state)
-{
-	this.state	= state;
-	this._transform	= this.transformBuild(this.state);
-}
-
 
 //////////////////////////////////////////////////////////////////////////////////
 //		handle transform						//
@@ -158,6 +159,8 @@ WebyMaze.CameraRender.prototype.transformBuild	= function(state){
 		transform	= this.transformInPlayer();
 	}else if( state == 'overPlayer' ){
 		transform	= this.transformOverPlayer();
+	}else if( state == 'fixedZenith' ){
+		transform	= this.transformFixedZenith();
 	}else if( state == 'fixedGrazing' ){
 		transform	= this.transformFixedGrazing();
 	}else if( state == 'behindPlayer' ){
@@ -226,10 +229,28 @@ WebyMaze.CameraRender.prototype.transformZenith	= function()
 	transform.posY	= +1300;
 	transform.posZ	= +0;
 	transform.posA	= +0;
+
 	transform.tgtX	= +0;
 	transform.tgtY	= +0;
 	transform.tgtZ	= +0;
 	transform.tgtA	= +100;
+	return transform;
+}
+
+WebyMaze.CameraRender.prototype.transformFixedZenith	= function()
+{
+	var transform	= {};
+
+	transform.posX	= +50;
+	transform.posY	= +800;
+	transform.posZ	= -0;
+	transform.posA	=  0;
+
+	transform.tgtX	= +0;
+	transform.tgtY	= +0;
+	transform.tgtZ	= +0;
+	transform.tgtA	= +0;
+
 	return transform;
 }
 

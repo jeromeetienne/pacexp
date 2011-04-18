@@ -38,7 +38,20 @@ WebyMaze.WebglRender	= function(opts){
 	// update the global scene with this.mazeCli
 	sceneContainer.addChild( this.mazeCli.obj3d() );
 
+	// init CameraRender
 	this.cameraRender	= new WebyMaze.CameraRender();
+	this.cameraRender.bind('stateChange', function(newState, oldState){
+		console.log("newState", newState, "oldState", oldState)
+		var rotationType	= WebyMaze.CameraRender.State2RotationType[newState];
+		var rotation2ControlType= {
+			"absolute"	: 'cardinalAbsolute',
+			"relative"	: 'guidedRelative'
+		};
+		gameCli.socketSend({
+			type	: 'setControlType',
+			data	: rotation2ControlType[rotationType]
+		})
+	})
 	
 	// init MinimapRender
 	this._minimapRender	= new WebyMaze.MinimapRender({
