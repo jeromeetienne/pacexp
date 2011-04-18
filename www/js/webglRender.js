@@ -111,7 +111,12 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	
 
 	// update MinimapRender
-	this._minimapRender.update(this.urBodyId, this.players, this.enemies);
+	this._minimapRender.update({
+		urBodyId	: this.urBodyId,
+		players		: this.players,
+		enemies		: this.enemies,
+		rotationType	: WebyMaze.CameraRender.State2RotationType[this.cameraRender.getState()]
+	});
 
 	// update CameraRender	
 	var targetObject3d	= this.players[this.urBodyId].obj3d()

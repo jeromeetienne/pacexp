@@ -8,9 +8,14 @@ WebyMaze.MinimapRender	= function(opts)
 {
 	this._mazeCli	= opts.mazeCli	|| console.assert(false);
 
-	this._canvasW	= this._canvasH	= 256;
+	this._canvasW	= this._canvasH	= 128;
+	this._scale	= 2;
+	this._posX	= 300;
+	this._posY	= 300;
+
 	this._tileW	= this._canvasW/this._mazeCli.mapW();
 	this._tileH	= this._canvasH/this._mazeCli.mapH();
+
 
 	this._containerCtor();
 }
@@ -23,84 +28,36 @@ WebyMaze.MinimapRender.prototype.obj3d	= function(){
 	return this._container;
 }
 
+WebyMaze.MinimapRender.prototype.map2canvasX	= function(mapX)
+{
+	return mapX * this._tileW;
+}
+
+WebyMaze.MinimapRender.prototype.map2canvasY	= function(mapY)
+{
+	return mapY * this._tileH;
+}
+
 WebyMaze.MinimapRender.prototype._containerCtor	= function()
 {
 	// create the sprite
 	this._spriteWall	= new THREE.Sprite({
 		//map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
 		map			: this._mapTexture(),
-		blending		: THREE.NormalBlending,
+		//blending		: THREE.NormalBlending,
 		//blending		: THREE.SubtractiveBlending,
 		//blending		: THREE.AdditiveBlending,
 		useScreenCoordinates	: true
 	});
-	this._spriteWall.position.x	= 300;
-	this._spriteWall.position.y	= 300;
-	
-	this._spriteWall.scale.x	= 0.5;
-	this._spriteWall.scale.y	= 0.5;
+	this._spriteWall.position.x	= this._posX;
+	this._spriteWall.position.y	= this._posY;
+
+	this._spriteWall.scale.x	= this._scale;
+	this._spriteWall.scale.y	= this._scale;
 
 	// put it ina container
 	this._container	= new THREE.Object3D();
 	this._container.addChild(this._spriteWall)
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-//		misc								//
-//////////////////////////////////////////////////////////////////////////////////
-
-var time	= 0;
-WebyMaze.MinimapRender.prototype.update	= function(urBodyId, players, enemies)
-{
-	//this._texture.needsUpdate = true
-	
-	var targetObj3d	= players[urBodyId].obj3d();
-	this._spriteWall.rotation	= targetObj3d.rotation.y + 90*Math.PI/180;
-	
-
-	
-return;
-	var ctx	= this._canvas.getContext( '2d' );
-
-//this._renderMap2Canvas(this._canvas);
-	
-	var space2canvasX	= function(spaceX){
-		var offsetX	= Math.floor(this._mazeCli.mapW()/2)
-		var scaledX	= spaceX / this._mazeCli.tileW;
-		return (scaledX + offsetX) * this._tileW;
-	}.bind(this);
-	var space2canvasY	= function(spaceY){
-		var offsetY	= Math.floor(this._mazeCli.mapH()/2)
-		var scaledY	= spaceY / this._mazeCli.tileH;
-		return (scaledY + offsetY) * this._tileH;
-	}.bind(this);
-
-	ctx.fillStyle	= "rgb(255,0, 0)";
-	
-	Object.keys(enemies).forEach(function(enemyId){
-		var enemy	= enemies[enemyId];
-		var colorStr	= enemy.colorStr();
-		var spaceX	= enemy.obj3d().position.x;
-		var spaceY	= enemy.obj3d().position.z;
-		var canvasX	= space2canvasX(spaceX);
-		var canvasY	= space2canvasY(spaceY);
-		
-		ctx.fillRect(canvasX, canvasY, this._tileW, this._tileH);
-	}.bind(this));
-
-
-	ctx.fillStyle	= "rgb(255,255, 0)";
-	Object.keys(players).forEach(function(playerId){
-		var player	= players[playerId];
-		var spaceX	= player.obj3d().position.x;
-		var spaceY	= player.obj3d().position.z;
-		var canvasX	= space2canvasX(spaceX);
-		var canvasY	= space2canvasY(spaceY);
-		ctx.fillRect(canvasX, canvasY, this._tileW, this._tileH);
-	}.bind(this));
-
-	this._texture.needsUpdate = true
 }
 
 WebyMaze.MinimapRender.prototype._mapTexture	= function()
@@ -126,14 +83,45 @@ WebyMaze.MinimapRender.prototype._renderMap2Canvas	= function(canvas)
 
 	ctx.fillStyle	= "#FF8C00";
 
-	var map2canvasX	= function(mapX){ return mapX * this._tileW; }.bind(this);
-	var map2canvasY	= function(mapY){ return mapY * this._tileH; }.bind(this);
-
 	this._mazeCli.mapForEach(function(mapX, mapY, mapChar){
 		if( mapChar == '*' )	return;
-		var canvasX	= map2canvasX(mapX);
-		var canvasY	= map2canvasY(mapY);
+		var canvasX	= this.map2canvasX(mapX);
+		var canvasY	= this.map2canvasY(mapY);
 		ctx.fillRect(canvasX, canvasY, this._tileW, this._tileH);
 	}.bind(this));
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+//		misc								//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.MinimapRender.prototype.update	= function(opts)
+{
+	var urBodyId	= opts.urBodyId		|| console.assert(false);
+	var players	= opts.players		|| console.assert(false);
+	var enemies	= opts.enemies		|| console.assert(false);
+	var rotationType= opts.rotationType	|| console.assert(false);
+	//this._texture.needsUpdate = true
+	
+	var targetObj3d	= players[urBodyId].obj3d();
+
+	var space2mapX	= function(spaceX){ return spaceX / this._tileW + Math.floor(this._mazeCli.mapW()/2);	}.bind(this);
+	var space2mapY	= function(spaceY){ return spaceY / this._tileH + Math.floor(this._mazeCli.mapH()/2);	}.bind(this);
+	
+	var mapX	= space2mapX(targetObj3d.position.z);
+	var mapY	= space2mapY(targetObj3d.position.x);
+	var canvasX	= this.map2canvasX( mapX );
+	var canvasY	= this.map2canvasY( mapY );
+
+	this._spriteWall.position.x	= this._posX;
+	this._spriteWall.position.y	= this._posY;
+
+	// do the rotation
+	if( rotationType === "relative" ){
+		this._spriteWall.rotation	= -targetObj3d.rotation.y + 90*Math.PI/180;
+	}else if( rotationType === 'absolute' ){
+		this._spriteWall.rotation	= -90*Math.PI/180;
+	}else console.assert(false, "rotationType "+rotationType+" is unknown")
+}
+
 

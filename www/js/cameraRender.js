@@ -103,6 +103,12 @@ WebyMaze.CameraRender.prototype.cameraPrevState	= function(){
 	this.changeState( states[stateIdx] )
 }
 
+WebyMaze.CameraRender.prototype.getState	= function()
+{
+	return this.state;
+}
+
+
 WebyMaze.CameraRender.prototype.changeState	= function(state)
 {
 	// save the old State
