@@ -13,7 +13,12 @@ var WebyMaze	= WebyMaze || {};
 WebyMaze.MazeCli	= function(opts){
 	this.map	= opts.map	|| console.assert(false);
 	this._container	= new THREE.Object3D();
-	this.wallW	= 100;
+	
+	this.tileW	= 100;
+	this.tileH	= 100;
+
+	/** @deprecated */
+	this.wallW	= this.tileW;
 
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
@@ -23,7 +28,7 @@ WebyMaze.MazeCli	= function(opts){
 	//else		this._buildGroundSingleColor();
 	this._buildGroundChessBoard();
 	// build Walls
-	this._buildWallsSingleColor();
+	this._buildWalls();
 }
 
 WebyMaze.MazeCli.prototype.destroy	= function()
@@ -40,6 +45,61 @@ WebyMaze.MazeCli.prototype.getMap	= function(){
 
 WebyMaze.MazeCli.prototype.obj3d	= function(){
 	return this._container;
+}
+
+WebyMaze.MazeCli.prototype.mapW	= function()
+{
+	return this.map[0].length;
+}
+
+WebyMaze.MazeCli.prototype.mapH	= function()
+{
+	return this.map.length
+}
+
+WebyMaze.MazeCli.prototype.mapChar	= function(x, y)
+{
+	console.assert(x >= 0);
+	console.assert(x < this.mapW());
+	console.assert(y >= 0);
+	console.assert(y < this.mapH());
+
+	var mazeLine	= this.map[y];
+	var mapChar	= mazeLine.charAt(x);
+	return mapChar;
+}
+
+WebyMaze.MazeCli.prototype.mapForEach	= function(callback)
+{
+	var mazeH	= this.mapH();
+	var mazeW	= this.mapW();
+	for(var mazeY = 0; mazeY < mazeH; mazeY++){
+		for(var mazeX = 0; mazeX < mazeW; mazeX++){
+			var mapChar	= this.mapChar(mazeX, mazeY);
+			callback(mazeX, mazeY, mapChar);
+		}
+	}
+}
+
+WebyMaze.MazeCli.prototype.map2spaceX	= function(mapX)
+{
+	return ( mapX - Math.floor(this.mapW()/2) ) * this.tileW;
+}
+
+WebyMaze.MazeCli.prototype.map2spaceY	= function(mapY)
+{
+	return ( mapY - Math.floor(this.mapH()/2) ) * this.tileH;
+}
+
+
+WebyMaze.MazeCli.prototype.space2mapX	= function(spaceX)
+{
+	return	Math.floor(spaceX / this.tileW) + Math.floor(this.mapW()/2)
+}
+
+WebyMaze.MazeCli.prototype.space2mapY	= function(spaceY)
+{
+	return	Math.floor(spaceY / this.tileH) + Math.floor(this.mapH()/2)
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -64,28 +124,20 @@ WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function()
 		];
 	}
 
-	var mazeH	= this.map.length;
-	var mazeW	= this.map[0].length;
-	for(var mazeY = 0; mazeY < mazeH; mazeY++){
-		var mazeLine	= this.map[mazeY];
-		for(var mazeX = 0; mazeX < mazeW; mazeX++){
-			var mazeXY	= mazeLine.charAt(mazeX);
-			if( mazeXY == '*' )	continue;
-			
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.position.x = ( mazeX - Math.floor(mazeW/2) ) * bodyW;
-			mesh.position.y	= -bodyW/2;
-			mesh.position.z = ( mazeY - Math.floor(mazeH/2) ) * bodyW;
-			mesh.rotation.x	= -90*Math.PI/180;
-			
-			mesh.matrixAutoUpdate = false;
-			mesh.updateMatrix();
+	this.mapForEach(function(mapX, mapY, mapChar){
+		if( mapChar == '*' )	return;
+		
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.x = this.map2spaceX(mapX);
+		mesh.position.y	= -bodyW/2;
+		mesh.position.z = this.map2spaceY(mapY);
+		mesh.rotation.x	= -90*Math.PI/180;
+		
+		mesh.matrixAutoUpdate = false;
+		mesh.updateMatrix();
 
-			this._container.addChild( mesh );
-		}
-	}
-
-	this._container.addChild( mesh );
+		this._container.addChild( mesh );
+	}.bind(this))
 }
 
 WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function(){
@@ -139,54 +191,11 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function(){
 //		Walls								//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.MazeCli.prototype._buildWallsChessBoard	= function(){
-	var bodyW	= this.wallW;
-	var geometry	= new THREE.Cube( bodyW, bodyW, bodyW );
-	// color of the chessBoard
-	var colors	= [
-		[0xcccccc, 0xffffff],
-		[0xaaffaa, 0x88cc88]
-	]
-	// build material from color
-	var materials	= [[],[]];
-	colors.forEach(function(colorsY, idxY){
-		colorsY.forEach(function(colorX, idxX){
-			materials[idxY][idxX]	= [
-				new THREE.MeshLambertMaterial( { color: colorX, shading: THREE.FlatShading } ),
-				//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
-			];	
-		})
-	})
-
-	var mazeH	= this.map.length;
-	var mazeW	= this.map[0].length;
-	for(var mazeY = 0; mazeY < mazeH; mazeY++){
-		var mazeLine	= this.map[mazeY];
-		for(var mazeX = 0; mazeX < mazeW; mazeX++){
-			var mazeXY	= mazeLine.charAt(mazeX);
-			if( mazeXY != '*' )	continue;
-		
-			var material	= materials[mazeX%2][mazeY%2];
-			
-			var mesh = new THREE.Mesh( geometry, material );			
-			mesh.position.x = ( mazeX - Math.floor(mazeW/2) ) * bodyW;
-			mesh.position.y = -bodyW/4;
-			mesh.position.z = ( mazeY - Math.floor(mazeH/2) ) * bodyW;
-			
-			mesh.matrixAutoUpdate = false;
-			mesh.updateMatrix();
-
-			this._container.addChild( mesh );
-		}
-	}
-	return this._container;
-}
-
-WebyMaze.MazeCli.prototype._buildWallsSingleColor	= function(){
+WebyMaze.MazeCli.prototype._buildWalls	= function()
+{
 	var bodyW	= this.wallW;
 	//var geometry	= new THREE.Cube( bodyW, bodyW/3, bodyW );
 	var geometry	= new THREE.Cube( bodyW, bodyW/3, bodyW, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
-	
 
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
@@ -204,25 +213,20 @@ WebyMaze.MazeCli.prototype._buildWallsSingleColor	= function(){
 		];		
 	}
 
-	var mazeH	= this.map.length;
-	var mazeW	= this.map[0].length;
-	for(var mazeY = 0; mazeY < mazeH; mazeY++){
-		var mazeLine	= this.map[mazeY];
-		for(var mazeX = 0; mazeX < mazeW; mazeX++){
-			var mazeXY	= mazeLine.charAt(mazeX);
-			if( mazeXY != '*' )	continue;
-			
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.position.x = ( mazeX - Math.floor(mazeW/2) ) * bodyW;
-			mesh.position.y = -bodyW/2 + bodyW/3/2 ;
-			mesh.position.z = ( mazeY - Math.floor(mazeH/2) ) * bodyW;
-			
-			mesh.matrixAutoUpdate = false;
-			mesh.updateMatrix();
+	this.mapForEach(function(mapX, mapY, mapChar){
+		if( mapChar != '*' )	return;
+		
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.x = this.map2spaceX(mapX);
+		mesh.position.y = -bodyW/2 + bodyW/3/2 ;
+		mesh.position.z = this.map2spaceY(mapY);
+		
+		mesh.matrixAutoUpdate = false;
+		mesh.updateMatrix();
 
-			this._container.addChild( mesh );
-		}
-	}
+		this._container.addChild( mesh );
+	}.bind(this));
+
 	return this._container;
 }
 

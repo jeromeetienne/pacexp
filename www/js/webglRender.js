@@ -39,6 +39,12 @@ WebyMaze.WebglRender	= function(opts){
 	sceneContainer.addChild( this.mazeCli.obj3d() );
 
 	this.cameraRender	= new WebyMaze.CameraRender();
+	
+	// init MinimapRender
+	this._minimapRender	= new WebyMaze.MinimapRender({
+		mazeCli	: this.mazeCli
+	});
+	sceneContainer.addChild( this._minimapRender.obj3d() );
 
 	// TODO put the whole UI stuff in its own class (like camera)
 	this.usernameUICtor();
@@ -88,8 +94,13 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	if( this.players[this.urBodyId].dirtyScore ){
 		this.scoreUIUpdate();
 		this.players[this.urBodyId].dirtyScore    = false;
-	}	
+	}
 	
+
+	// update MinimapRender
+	this._minimapRender.update(this.urBodyId, this.players, this.enemies);
+
+	// update CameraRender	
 	var targetObject3d	= this.players[this.urBodyId].obj3d()
 	this.cameraRender.tick(targetObject3d);
 }

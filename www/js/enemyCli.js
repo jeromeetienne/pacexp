@@ -15,6 +15,25 @@ WebyMaze.EnemyCli.prototype.destroy	= function(){
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
 
+WebyMaze.EnemyCli.prototype.textureType	= function()
+{
+	return this.appearance.match(/^(.*)-(.*)/)[1];
+}
+
+WebyMaze.EnemyCli.prototype.colorStr	= function()
+{
+	return this.appearance.match(/^(.*)-(.*)/)[2];
+}
+
+
+WebyMaze.EnemyCli.prototype.obj3d	= function(){
+	return this._container;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//		misc								//
+//////////////////////////////////////////////////////////////////////////////////
+
 WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick){
 	if( this.appearance != ctxTick.appearance ){
 		console.log("enemey appearance change from ", this.appearance, "to", ctxTick.appearance)
@@ -32,31 +51,25 @@ WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick){
 	this._container.rotation.y	= -ctxTick.rotation.z;
 }
 
-WebyMaze.EnemyCli.prototype.obj3d	= function(){
-	return this._container;
-}
-
 WebyMaze.EnemyCli.prototype._containerCtor	= function()
 {
-	var textureType	= this.appearance.match(/^(.*)-(.*)/)[1]
-	var colorStr	= this.appearance.match(/^(.*)-(.*)/)[2]
+	var textureType	= this.textureType();
 
 	if( textureType == 'happy' ){
-		this._containerCtorGhost(this.appearance);
+		this._containerCtorGhost();
 	}else if( textureType == 'hurt' ){
-		this._containerCtorGhost(this.appearance);
+		this._containerCtorGhost();
 	}else if( textureType == 'eyes' ){
-		this._containerCtorEyes(this.appearance);
+		this._containerCtorEyes();
 	}else console.assert(false, 'unknown appearance '+this.appearance);
 
 	this._dirtyObj3d	= true;
 }
 
-
-WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType)
+WebyMaze.EnemyCli.prototype._containerCtorGhost	= function()
 {
-	var textureType	= smileyType.match(/^(.*)-(.*)/)[1]
-	var colorStr	= smileyType.match(/^(.*)-(.*)/)[2]
+	var textureType	= this.textureType();
+	var colorStr	= this.colorStr();
 	if( colorStr === 'red' ){
 		var textOnBack	= "Blinky";
 		var color	= 0x5500aa;
@@ -76,7 +89,7 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType)
 	}else if( colorStr === 'blue' ){
 		var color	= 0x0044aa;
 		var ambient	= 0x00a0FF;
-	}
+	}else	console.assert(false);
 
 	// create canvas and texture
 	this.canvas		= document.createElement('canvas');
@@ -106,7 +119,7 @@ WebyMaze.EnemyCli.prototype._containerCtorGhost	= function(smileyType)
 		];
 	}else{
 		//var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );		
-		var geometry	= new THREE.Cube( bodyW/2, bodyW*3/4, bodyW/2 );
+		var geometry	= new THREE.Cube( bodyW/4, bodyW*0.8, bodyW/2 );
 		var material	= [
 			//new THREE.MeshLambertMaterial( { color: 0x0088aa, shading: THREE.FlatShading } ),
 			//new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.FlatShading } ),

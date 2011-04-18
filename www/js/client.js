@@ -20,6 +20,7 @@ var gameCli	= null;
 var gameConfig	= null;
 
 var main	= function(){
+	// TODO put back detector
 	try {
 		var webGlSupport	= !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
 	}catch(e){
@@ -58,7 +59,7 @@ function init()
 	//scene.addObject( wmMaze.buildObject3d() );
 	//
 	//scene.addObject( wmPlayer.buildObject3d() );
-	
+
 	scene.addLight( new THREE.AmbientLight( 0xAAAAAA ) );
 
 	var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
@@ -72,7 +73,7 @@ function init()
 	if( jQuery.url.param('render') == 'canvas' ){
 		renderer = new THREE.CanvasRenderer();
 	}else{
-		renderer = new THREE.WebGLRenderer();		
+		renderer = new THREE.WebGLRenderer();
 	}
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
@@ -80,7 +81,7 @@ function init()
 	// append the renderer to the DOM
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
-	jQuery("#canvasContainer").empty().append( renderer.domElement )
+	jQuery("#canvasContainer").empty().append( renderer.domElement );
 
 	//container.appendChild( renderer.domElement );
 
@@ -91,7 +92,7 @@ function init()
 		stats.domElement.style.bottom	= '40px';
 		stats.domElement.style.right	= '0';
 		stats.domElement.style.zIndex	= 100;
-		container.appendChild( stats.domElement );		
+		container.appendChild( stats.domElement );
 	}
 
 	// THREEx.WindowResize will handle renderer/camera reinit on window resize

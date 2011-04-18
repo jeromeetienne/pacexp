@@ -98,7 +98,7 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function()
 	}else{
 		//var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );
 		//var geometry	= new THREE.Cube( bodyW, bodyW/2, bodyW/2 );
-		var geometry	= new THREE.Cube( bodyW, bodyW/2, bodyW/2, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
+		var geometry	= new THREE.Cube( bodyW*0.5, bodyW*0.5, bodyW*0.5, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
 		var material	= [
 			new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.FlatShading } ),
 			
