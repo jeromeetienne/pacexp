@@ -15,7 +15,7 @@ WebyMaze.CameraRender	= function(){
 	this._tween	= null;
 	
 	// init the first state
-	this.changeState('fixedGrazing');
+	this.changeState('behindPlayer');
 
 	// bind the cameraSwitch keys
 	this.$keydownCallback	= this.onKeyDown.bind(this)
@@ -32,6 +32,16 @@ WebyMaze.CameraRender.prototype.destroy	= function()
  * Define all possible cameraStates
 */
 WebyMaze.CameraRender.CameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith', 'behindPlayer', 'fixedGrazing'];
+
+WebyMaze.CameraRender.RotationType	= {
+	'overPlayer'	: "relative",
+	'inplayer'	: "relative",
+	'facePlayer'	: "relative",
+	'zenith'	: "relative",
+	'behindPlayer'	: "relative",
+	'fixedGrazing'	: "absolute"
+};
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //		handle tick							//
