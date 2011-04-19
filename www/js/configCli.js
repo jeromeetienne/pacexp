@@ -8,10 +8,13 @@ WebyMaze.ConfigCli	= {
 	tweetymaze	: {dev: {}, prod: {}}
 };
 
-
-WebyMaze.ConfigCli.PROJECT	= 'pacmaze';
-//WebyMaze.ConfigCli.PROJECT	= 'tweetymaze';
-WebyMaze.ConfigCli.ENV		= 'prod';
+if( false ){
+	WebyMaze.ConfigCli.PROJECT	= 'pacmaze';
+	WebyMaze.ConfigCli.ENV		= 'prod';	
+}else{
+	WebyMaze.ConfigCli.PROJECT	= 'tweetymaze';
+	WebyMaze.ConfigCli.ENV		= 'dev';
+}
 
 //////////////////////////////////////////////////////////////////////////////////
 //		webglRender							//
