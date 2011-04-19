@@ -86,7 +86,7 @@ function init()
 	//container.appendChild( renderer.domElement );
 
 	// append Stats if it is defined
-	if( typeof Stats !== "undefined" && WebyMaze.ConfigCli.ui.showStat ){
+	if( typeof Stats !== "undefined" && WebyMaze.ConfigCli.client.showStat ){
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.bottom	= '40px';

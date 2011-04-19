@@ -248,6 +248,12 @@ WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 	var inputSel	= '#UsernameDialog input[name=username]';
 	var dialogSel	= '#UsernameDialog';
 	var buttonSel	= '#UsernameButton';
+	var menuLineSel	= '#usernameMenuLine';
+	
+	// honore this._config
+	if( this._config.showUsernameMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
 	
 	// init dialogs
 	jQuery(dialogSel).jqm();
@@ -315,6 +321,12 @@ WebyMaze.WebglRender.prototype.gameIdUICtor	= function(){
 	var inputSel	= '#GameIdDialog input[name=gameId]';
 	var dialogSel	= '#GameIdDialog';
 	var buttonSel	= '#GameIdButton';
+	var menuLineSel	= '#gameIdMenuLine';
+
+	// honore this._config
+	if( this._config.showGameIdMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
 	
 	// init dialogs
 	jQuery(dialogSel).jqm();
@@ -363,6 +375,12 @@ WebyMaze.WebglRender.prototype.gameIdUICtor	= function(){
 
 WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 	var buttonSel	= '#ScreenshotButton';
+	var menuLineSel	= '#screenshotMenuLine';
+
+	// honore this._config
+	if( this._config.showScreenshotMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
 
 	jQuery(buttonSel).click(function(){
 		var dataUrl	= renderer.domElement.toDataURL("image/png");
@@ -411,6 +429,12 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 WebyMaze.WebglRender.prototype.aboutUICtor	= function(){
 	var dialogSel	= '#aboutDialog';
 	var buttonSel	= '#aboutButton';
+	var menuLineSel	= '#aboutMenuLine';
+	
+	// honore this._config
+	if( this._config.showAboutMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
 
 	// init dialogs
 	jQuery(dialogSel).jqm();
@@ -425,6 +449,13 @@ WebyMaze.WebglRender.prototype.aboutUICtor	= function(){
 
 WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){
 	var buttonSel	= '#soundTrackButton';
+	var menuLineSel	= '#soundTrackMenuLine';
+	
+	// honore this._config
+	if( this._config.showSoundTrackMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
+
 	// init the button click
 	jQuery(buttonSel).click(function(){
 		var running	= soundRender.soundTrackRunning();
@@ -445,6 +476,13 @@ WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){
 
 WebyMaze.WebglRender.prototype.soundFxUiCtor	= function(){
 	var buttonSel	= '#soundFxButton';
+	var menuLineSel	= '#soundFxMenuLine';
+	
+	// honore this._config
+	if( this._config.showSoundFxMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
+
 	// init the button click
 	jQuery(buttonSel).click(function(){
 		var enable	= soundRender.enableFx();
