@@ -20,7 +20,7 @@ WebyMaze.WebglRender	= function(opts){
 
 
 	this._config	= WebyMaze.ConfigCli.webglRender;
-	
+console.log("webglRender", this._config);
 // TODO put that init else where... like in gameCli init
 // update: not so sure... maybe just a poor class name
 
@@ -60,7 +60,11 @@ WebyMaze.WebglRender	= function(opts){
 			type	: 'setControlType',
 			data	: rotation2ControlType[configRotation][rotationType]
 		})
-	})
+	}.bind(this));
+	// init the first state
+	this.cameraRender.changeState('fixedZenith');
+
+
 	
 	// init MinimapRender
 	this._minimapRender	= new WebyMaze.MinimapRender({

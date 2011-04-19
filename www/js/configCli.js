@@ -10,7 +10,7 @@ WebyMaze.ConfigCli	= {
 
 
 WebyMaze.ConfigCli.PROJECT	= 'pacmaze';
-WebyMaze.ConfigCli.PROJECT	= 'tweetymaze';
+//WebyMaze.ConfigCli.PROJECT	= 'tweetymaze';
 WebyMaze.ConfigCli.ENV		= 'dev';
 //////////////////////////////////////////////////////////////////////////////////
 //		webglRender							//
@@ -34,8 +34,8 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	playerRotation	: 'free'
 };
 
-WebyMaze.ConfigCli.ui	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].ui;
-//WebyMaze.ConfigCli.ui	= WebyMaze.ConfigCli['pacmaze']['dev'].ui;
+WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].webglRender;
+//WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli['pacmaze']['dev'].ui;
 
 //////////////////////////////////////////////////////////////////////////////////
 //		ui								//

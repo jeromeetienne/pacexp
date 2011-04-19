@@ -14,9 +14,8 @@ WebyMaze.CameraRender	= function(){
 	this._transform	= null;
 	this._tween	= null;
 	
-	// init the first state
-	this.changeState('fixedZenith');
-
+	this.state	= null;
+	
 	// bind the cameraSwitch keys
 	this.$keydownCallback	= this.onKeyDown.bind(this)
 	document.addEventListener( 'keydown', this.$keydownCallback, false);

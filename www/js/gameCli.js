@@ -119,7 +119,7 @@ WebyMaze.GameCli.prototype.socketCtor	= function(){
 	// - NOTE: not sure about this. i dont understand flash 'security'
 	// - TODO point that to this game
 //	WEB_SOCKET_SWF_LOCATION	= 'http://easywebsocket.org/node/server/node_modules/socket.io/support/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.swf';
-	WEB_SOCKET_SWF_LOCATION	= 'vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.swf';
+	WEB_SOCKET_SWF_LOCATION	= 'vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMain.swf';
 
 	// create and config the socket
 	this._sockio	= new io.Socket(listenHost, {
