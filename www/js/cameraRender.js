@@ -56,7 +56,7 @@ WebyMaze.CameraRender.prototype.onKeyDown	= function(domEvent)
 {
 	var pageUp	= 33;
 	var pageDown	= 34;
-	console.log("keydown", event.keyCode)
+	//console.log("keydown", event.keyCode)
 	if( domEvent.keyCode === "C".charCodeAt(0) || domEvent.keyCode == pageDown ){
 		this.cameraNextState();
 	}else if( domEvent.keyCode === "V".charCodeAt(0) || domEvent.keyCode == pageUp ){
