@@ -19,6 +19,8 @@ WebyMaze.WebglRender	= function(opts){
 	var ctxInit	= opts.ctxInit		|| console.assert(false);
 
 
+	this._config	= WebyMaze.ConfigCli.webglRender;
+	
 // TODO put that init else where... like in gameCli init
 // update: not so sure... maybe just a poor class name
 
@@ -43,13 +45,20 @@ WebyMaze.WebglRender	= function(opts){
 	this.cameraRender.bind('stateChange', function(newState, oldState){
 		console.log("newState", newState, "oldState", oldState)
 		var rotationType	= WebyMaze.CameraRender.State2RotationType[newState];
+		var configRotation	= this._config.playerRotation;
 		var rotation2ControlType= {
-			"absolute"	: 'cardinalAbsolute',
-			"relative"	: 'guidedRelative'
+			'grid'	: {
+				"absolute"	: 'cardinalAbsolute',
+				"relative"	: 'guidedRelative'				
+			},
+			'free'	: {				
+				"absolute"	: 'freeRelative',
+				"relative"	: 'freeRelative'
+			}
 		};
 		gameCli.socketSend({
 			type	: 'setControlType',
-			data	: rotation2ControlType[rotationType]
+			data	: rotation2ControlType[configRotation][rotationType]
 		})
 	})
 	
@@ -369,6 +378,12 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 			//console.dir(document.body)
 			//document.body.appendChild(canvas);
+			
+			jQuery(canvas).css({
+				position:	'absolute',
+				top:		'0px',
+				right:		'0px'
+			}).appendTo('body')
 		
 			var smallDataUrl	= canvas.toDataURL("image/png");
 
