@@ -162,13 +162,20 @@ WebyMaze.EnemyCli.prototype._containerCtorEyes	= function()
 	var bodyW	= 100;
 	this._container	= new THREE.Object3D();
 
-	var material	= [
-		new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
-		new THREE.MeshBasicMaterial( { map: THREEx.Texture.Smiley.pupilTexture() } ),
-		//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
-	];
-
-	var geometry	= new THREE.Sphere( bodyW/8, 16, 8 );
+	// determine if renderer is webGl or not
+	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
+	if( isWebGL ){
+		var material	= [
+			new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
+			new THREE.MeshBasicMaterial( { map: THREEx.Texture.Smiley.pupilTexture() } ),
+			//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
+		];
+		var geometry	= new THREE.Sphere( bodyW/8, 16, 8 );
+	}else{
+		var geometry	= new THREE.Cube( bodyW/8, bodyW/8, bodyW/8 );
+		var material	= new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	}
+	
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.x	=   bodyW / 4;
 	mesh.position.y	=   bodyW / 4;
