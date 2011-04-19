@@ -67,10 +67,12 @@ console.log("webglRender", this._config);
 
 	
 	// init MinimapRender
-	this._minimapRender	= new WebyMaze.MinimapRender({
-		mazeCli	: this.mazeCli
-	});
-	sceneContainer.addChild( this._minimapRender.obj3d() );
+	if( this._config.minimapEnabled === true ){
+		this._minimapRender	= new WebyMaze.MinimapRender({
+			mazeCli	: this.mazeCli
+		});
+		sceneContainer.addChild( this._minimapRender.obj3d() );		
+	}
 
 	// TODO put the whole UI stuff in its own class (like camera)
 	this.usernameUICtor();
@@ -78,7 +80,7 @@ console.log("webglRender", this._config);
 	this.screenshotUICtor();
 	this.soundTrackUiCtor();
 	this.soundFxUiCtor();
-	this.helpUICtor();
+	this.aboutUICtor();
 
 	if( ctxInit.renderInfoFull ){
 		this.setCtxTickPlayer(ctxInit.renderInfoFull);
@@ -124,7 +126,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	
 
 	// update MinimapRender
-	this._minimapRender.update({
+	this._minimapRender && this._minimapRender.update({
 		urBodyId	: this.urBodyId,
 		players		: this.players,
 		enemies		: this.enemies,
@@ -406,9 +408,9 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 	}.bind(this));	
 }
 
-WebyMaze.WebglRender.prototype.helpUICtor	= function(){
-	var dialogSel	= '#inlineHelpDialog';
-	var buttonSel	= '#inlineHelpButton';
+WebyMaze.WebglRender.prototype.aboutUICtor	= function(){
+	var dialogSel	= '#aboutDialog';
+	var buttonSel	= '#aboutButton';
 
 	// init dialogs
 	jQuery(dialogSel).jqm();
@@ -459,6 +461,6 @@ WebyMaze.WebglRender.prototype.soundFxUiCtor	= function(){
 */
 WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
 	var score	= this.players[this.urBodyId].score;
-	var containSel	= '#scoreDisplay';
+	var containSel	= '#scoreMenuLine';
 	jQuery(containSel+" span.value").text(score)
 }

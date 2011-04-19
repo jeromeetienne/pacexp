@@ -12,30 +12,38 @@ WebyMaze.ConfigCli	= {
 WebyMaze.ConfigCli.PROJECT	= 'pacmaze';
 //WebyMaze.ConfigCli.PROJECT	= 'tweetymaze';
 WebyMaze.ConfigCli.ENV		= 'dev';
+
 //////////////////////////////////////////////////////////////////////////////////
 //		webglRender							//
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.ConfigCli.sample.webglRender	= {
 	/** playerRotation Determine the type of player control */
-	playerRotation	: 'free'
+	playerRotation	: 'free',
 	//playerRotation: 'grid'
+	/** minimapEnabled  to enable the minimap */
+	minimapEnabled	: true
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
-	playerRotation	: 'grid'
+	playerRotation	: 'grid',
+	minimapEnabled	: false
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
-	playerRotation	: 'grid'
+	playerRotation	: 'grid',
+	minimapEnabled	: true
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
-	playerRotation	: 'free'
+	playerRotation	: 'free',
+	minimapEnabled	: true
 };
 
 WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].webglRender;
 //WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli['pacmaze']['dev'].ui;
+
+console.log("super configcli", WebyMaze.ConfigCli.webglRender);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		ui								//

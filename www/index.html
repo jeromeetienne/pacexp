@@ -34,6 +34,9 @@
 				font-weight	: bold;
 				text-shadow	: 0 0 0.3em #000, 0 0 0.3em #000;
 			}
+			.menuosd span.line {
+				display		: block;
+			}
 			.menuosd .value {
 				color		: #888;
 			}
@@ -44,13 +47,13 @@
 			.menuosd a:hover {
 				text-decoration	: underline;
 			}
-			#inlineHelpDialog a {
+			#aboutDialog a {
 				color		: #333;
 				font-weight	: bold;
 				text-decoration	: none
 				;
 			}
-			#inlineHelpDialog a:hover {
+			#aboutDialog a:hover {
 				text-decoration	: underline;
 			}
 			.pagetitle {
@@ -143,27 +146,37 @@
 
 		<!-- menuosd -->
 		<div style="position: absolute; top:10px; left:10px;" class="above3d menuosd">
-			<span id="scoreDisplay">Score : <span class="value"></span></span>
-			<br/>
-			<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
-			<br/>
-			<a href="javascript:void(0)" id="GameIdButton">Maze : <span class="value"></span></a>
-			<br/>
-			<a href="javascript:void(0)" id="ScreenshotButton">Screenshot</a>
-			<br/>
-			<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
-			<br/>
-			<a href="javascript:void(0)" id="soundFxButton">Sound Fx <span class="value">Off</span></a>
-			<br/>
-			<a href="http://twitter.com/share" data-text="Pacmaze is just too cool!!! Im playing right now, come play with me!!" class="twitter-share-button" data-count="none">Tweet</a>
-			<span>Invite Friends</span>
-			<br/>
-			<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>
-<!--			<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
--->			<span>Share</span>
-			<br/>
-			<a href="javascript:void(0)" id="inlineHelpButton">About</a>
-			<br/>
+			<span id="scoreMenuLine" class="line">
+				Score : <span class="value"></span>
+			</span>
+			<span id="usernameMenuLine" class="line">
+				<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
+			</span>
+			<span id="gameIdMenuLine" class="line">
+				<a href="javascript:void(0)" id="GameIdButton">Maze : <span class="value"></span></a>
+			</span>
+			<span id="screenshotMenuLine" class="line">
+				<a href="javascript:void(0)" id="ScreenshotButton">Screenshot</a>
+			</span>
+			<span id="soundTrackMenuLine" class="line">
+				<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
+			</span>
+			<span id="soundFxMenuLine" class="line">
+				<a href="javascript:void(0)" id="soundFxButton">Sound Fx <span class="value">Off</span></a>
+			</span>
+			<span id="inviteFriendsMenuLine" class="line">
+				<a href="http://twitter.com/share" data-text="Pacmaze is just too cool!!! Im playing right now, come play with me!!" class="twitter-share-button" data-count="none">Tweet</a>
+				<span>Invite Friends</span>
+			</span>
+			<span id="inviteFriendsMenuLine" class="line">
+				<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>
+	<!--			<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	-->			<span>Share</span>
+				<br/>
+			</span>
+			<span id="aboutMenuLine" class="line">
+				<a href="javascript:void(0)" id="aboutButton">About</a>
+			</span>
 		</div>
 
 
@@ -181,7 +194,7 @@
 			<input type="text" size=15 name="gameId" placeholder="maze name...">
 		</div>
 		<!-- inlineHelp dialog -->
-		<div id="inlineHelpDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
+		<div id="aboutDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
 			<div style="float: right">
 				<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>
 			</div>

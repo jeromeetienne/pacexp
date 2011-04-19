@@ -51,7 +51,7 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	}
 
 	// report the score
-	var score	= jQuery("#scoreDisplay span.value").text()
+	var score	= jQuery("#scoreMenuLine span.value").text()
 	jQuery(dialogSel+" span.score").text(score)
 	
 	var dataText	= jQuery(dialogSel+" div a[data-text]").attr('data-text');
