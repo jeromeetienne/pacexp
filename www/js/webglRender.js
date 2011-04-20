@@ -505,3 +505,30 @@ WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
 	jQuery(containSel+" span.value").text(score)
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
