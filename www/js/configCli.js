@@ -37,7 +37,9 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	/** showSoundFxMenu to show the soundFxMenuLine */
 	showSoundFxMenu		: true,
 	/** showAboutMenu to show the aboutMenuLine */
-	showAboutMenu		: true
+	showAboutMenu		: true,
+	/** showAboutDialogOnLaunch to show the aboutDialog when the app launch */
+	showAboutDialogOnLaunch	: true
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
@@ -48,7 +50,8 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	showScreenshotMenu	: false,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
-	showAboutMenu		: true
+	showAboutMenu		: true,
+	showAboutDialogOnLaunch	: true
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
@@ -59,7 +62,8 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	showScreenshotMenu	: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
-	showAboutMenu		: true
+	showAboutMenu		: true,
+	showAboutDialogOnLaunch	: false
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
@@ -70,7 +74,8 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	showScreenshotMenu	: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
-	showAboutMenu		: true
+	showAboutMenu		: true,
+	showAboutDialogOnLaunch	: false
 };
 
 WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].webglRender;
@@ -96,7 +101,7 @@ WebyMaze.ConfigCli.pacmaze.dev.client	= {
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.client	= {
-	showStat	: true,
+	showStat	: true
 };
 
 WebyMaze.ConfigCli.client	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].client;

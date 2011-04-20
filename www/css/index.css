@@ -1,0 +1,69 @@
+body {
+	padding		: 0;
+	margin		: 0;
+	overflow	: hidden;
+
+	/*background	: #87CEEB;*/
+	background	: #000000;
+	font-family	: arial;
+}
+#canvasContainer {
+	line-height	: 0;
+}
+.above3d {
+	z-index		: 200;
+}
+.promptDialog  input {
+	font-size	: 1.2em;
+	font-weight	: bold;
+}
+.promptDialog  {
+	text-align	: center;				
+}
+.menuosd {
+	font-family	: arial;
+	color		: #aaa;
+	font-weight	: bold;
+	text-shadow	: 0 0 0.3em #000, 0 0 0.3em #000;
+}
+.menuosd span.line {
+	display		: block;
+}
+.menuosd .value {
+	color		: #888;
+}
+.menuosd a {
+	color		: #aaa;
+	text-decoration	: none;
+}
+.menuosd a:hover {
+	text-decoration	: underline;
+}
+#aboutDialog a {
+	color		: #333;
+	font-weight	: bold;
+	text-decoration	: none
+	;
+}
+#aboutDialog a:hover {
+	text-decoration	: underline;
+}
+.pagetitle {
+	position	: absolute;
+	top		: 10px;
+	left		: 50%;
+	
+	font-size	: 3em;
+	text-align	: center;
+	color		: #ccc;
+	font-family	: arial;
+	font-weight	: bold;
+	text-shadow	: 0 0 0.1em #fb0, 0 0 0.2em #000;
+}
+.pagetitle a {
+	color	: inherit;
+	text-decoration	: none;
+}
+.jqmWindow h3 {
+	text-align	: center;
+}

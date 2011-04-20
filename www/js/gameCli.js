@@ -36,13 +36,14 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 {
 	// destroy the socket ... just a trick to free the game
 	this.socketDtor();
-	
+
+console.log("message", message)
 	// determine the dialogSel based on reason
 	var reason	= message.data.reason;
 	var dialogSel	= null;
 	if( reason === "noMorePills" ){
 		soundRender.soundFxPlay('win')
-		dialogSel	= '#gameCompletedNoMorePillsDialog';	
+		dialogSel	= '#gameCompletedNoMorePillsDialog';
 	}else if( reason === "playerKilled" ){
 		soundRender.soundFxPlay('die')
 		dialogSel	= '#gameCompletedPlayerKilledDialog';
@@ -54,18 +55,19 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	var score	= jQuery("#scoreMenuLine span.value").text()
 	jQuery(dialogSel+" span.score").text(score)
 	
-	var dataText	= jQuery(dialogSel+" div a[data-text]").attr('data-text');
-console.log("dataText", dataText)
-
+	
+	// normal callback
+	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}
+	var toClose	= function(){ window.location.reload();		}
+	
 	// init dialogs
-	jQuery(dialogSel).jqm({
-		onHide	: function(){
-			// reload the page
-			window.location.reload();
-		}
-	});
-	jQuery(dialogSel).jqmShow(); 
+	jQuery(dialogSel).jqm({ onHide	: toClose.bind(this)});
+	// bind some event
+	jQuery(dialogSel).bind('keypress', toClose.bind(this));
+	jQuery(dialogSel).click(toClose.bind(this));
 
+	// to make it appear on load
+	toOpen();
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +115,7 @@ WebyMaze.GameCli.prototype.userInputDtor	= function(){
 
 WebyMaze.GameCli.prototype.socketCtor	= function(){
 	var listenHost	= location.hostname;
-	var listenPort	= 8082;		
+	var listenPort	= 8084;		
 	
 	// configure the swf for the flash websocket
 	// - NOTE: not sure about this. i dont understand flash 'security'

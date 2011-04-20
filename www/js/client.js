@@ -26,8 +26,15 @@ var main	= function(){
 	}catch(e){
 		var webGlSupport	= false;
 	}
-	if( jQuery.url.param('render') !== 'canvas' && webGlSupport === false ){
-		alert('WebGL not supported by your browser');
+	var webGlNeeded	= jQuery.url.param('render') !== 'canvas';
+	var webGlDisable= jQuery.url.param('webGlDisable') ? parseInt(jQuery.url.param('webGlDisable')) : false;
+	if( webGlDisable )	webGlSupport	= false;
+	console.log("webGlDisable", webGlDisable);
+	console.log("webGlSupport", webGlSupport);
+	console.log("webGlNeeded", webGlNeeded);
+	if( webGlNeeded && !webGlSupport ){
+		jQuery('#noWebGLDialog').jqm();
+		jQuery('#noWebGLDialog').jqmShow(); 		
 		return;
 	}
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	

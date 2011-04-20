@@ -1,78 +1,11 @@
 <!DOCTYPE HTML>
-<html lang="en" manifest="cache.manifest">
+<html lang="en">
 	<head>
 		<title>PacMaze Experiment - Pacmaze1 a pacman in a maze</title>
 		<meta charset="utf-8">
 		<!-- make favicon.ico -->
 		<link rel="shortcut icon" href="images/favicon.ico">
-		<style type="text/css">
-			body {
-				padding		: 0;
-				margin		: 0;
-				overflow	: hidden;
-
-				/*background	: #87CEEB;*/
-				background	: #000000;
-				font-family	: arial;
-			}
-			#canvasContainer {
-				line-height	: 0;
-			}
-			.above3d {
-				z-index		: 200;
-			}
-			.promptDialog  input {
-				font-size	: 1.2em;
-				font-weight	: bold;
-			}
-			.promptDialog  {
-				text-align	: center;				
-			}
-			.menuosd {
-				font-family	: arial;
-				color		: #aaa;
-				font-weight	: bold;
-				text-shadow	: 0 0 0.3em #000, 0 0 0.3em #000;
-			}
-			.menuosd span.line {
-				display		: block;
-			}
-			.menuosd .value {
-				color		: #888;
-			}
-			.menuosd a {
-				color		: #aaa;
-				text-decoration	: none;
-			}
-			.menuosd a:hover {
-				text-decoration	: underline;
-			}
-			#aboutDialog a {
-				color		: #333;
-				font-weight	: bold;
-				text-decoration	: none
-				;
-			}
-			#aboutDialog a:hover {
-				text-decoration	: underline;
-			}
-			.pagetitle {
-				position	: absolute;
-				top		: 10px;
-				left		: 50%;
-				
-				font-size	: 3em;
-				text-align	: center;
-				color		: #ccc;
-				font-family	: arial;
-				font-weight	: bold;
-				text-shadow	: 0 0 0.1em #fb0, 0 0 0.2em #000;
-			}
-			.pagetitle a {
-				color	: inherit;
-				text-decoration	: none;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
 	</head>
 	<body>
 		<!-- es5-shim.js to patch missing standard functions - needed for Function.bind() in safari -->
@@ -126,9 +59,7 @@
 
 		<script>
 		"use strict";
-		jQuery(function(){
-			main();
-		})
+		jQuery(function(){	main();	})
 		</script>
 		
 		<div id="pageContainer">
@@ -139,7 +70,7 @@
 					  jQuery("body").css('font-size', window.innerWidth/80);
 					- not sure if it is a good thing or not
 					-->
-					<a href="http://pacmaze.com" target='_blank'>Pacmaze Experiment</a>
+					<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Pacmaze Experiment</a>
 				</div>
 				<div id="canvasContainer"></div> 
 		</div>
@@ -164,15 +95,10 @@
 			<span id="soundFxMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="soundFxButton">Sound Fx <span class="value">Off</span></a>
 			</span>
-			<span id="inviteFriendsMenuLine" class="line" style="display: none">
-				<a href="http://twitter.com/share" data-text="Pacmaze is just too cool!!! Im playing right now, come play with me!!" class="twitter-share-button" data-count="none">Tweet</a>
-				<span>Invite Friends</span>
-			</span>
-			<span id="inviteFriendsMenuLine" class="line" style="display: none">
+			<span id="inviteFriendsMenuLine" class="line">
 				<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>
-	<!--			<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	-->			<span>Share</span>
-				<br/>
+				<!--<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				--><span>Share</span>
 			</span>
 			<span id="aboutMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="aboutButton">About</a>
@@ -195,21 +121,31 @@
 		</div>
 		<!-- inlineHelp dialog -->
 		<div id="aboutDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
-			<div style="float: right">
+			<div style="float: right;">
 				<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>
 			</div>
-			<h3><center><strong>Welcome in Pacmaze One</strong></center></h3>
-			<span>Invite Friends</span>
-			You are a pacman trapped in a maze!
-			Use <strong>Arrows</strong> to move.
-			That's it. Have fun :)
-			<br/>
+			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
+			<p>
+				You are a pacman trapped in a maze!
+			</p>
+			<p>
+				Use <strong>Arrows</strong> to move the player.
+			</p>
+			<p>
+				Use <strong>pageUp pageDown</strong> to move the camera.
+			</p>
+			<p>
+				That's it. Have fun :)
+			</p>
 			<a href="#" class="jqmClose"><em>Close</em></a>
+			<!-- hidden <input> to be able to trigger focus and bind keypress on the dialog -->
+			<input type="text" style='position: absolute; left: -5000px'>
 		</div>
-
+		<!-- follow me on twitter --> 
+		<a href="http://www.twitter.com/jerome_etienne"><img class="above3d" style="position: absolute; top: 10px; right: 10px; border: 0;" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a> 
 		<!-- gameCompletedNoMorePills dialog -->
 		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
-			<div style="float: right">
+			<div style="float: right;">
 				<a href="http://twitter.com/share" data-text="i had so much fun with pacmaze. I did $SCORE$! beat that" class="twitter-share-button" data-count="none">Tweet</a>
 			</div>
 			Congratulations! you win! Your score is <span class="score"></span>
@@ -218,13 +154,27 @@
 		</div>
 		<!-- gameCompletedNoMorePills dialog -->
 		<div id="gameCompletedPlayerKilledDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
-			<div style="float: right">
-				<a href="http://twitter.com/share" data-text="duh just lost at pacmaze with $SCORE$ points. But im eager to try again!!!" class="twitter-share-button" data-count="none">Tweet</a>
+			<div style="float: right;">
+				<a href="http://twitter.com/share" data-text="i had so much fun with pacmaze. I did $SCORE$! beat that" class="twitter-share-button" data-count="none">Tweet</a>
 			</div>
 			Oh you died... Your score was <span class="score"></span>. Try again ?
-			
 			<br/>
-			<br/>
+			<a href="#" class="jqmClose"><em>Close</em></a>
+			<!-- hidden <input> to be able to trigger focus and bind keypress on the dialog -->
+			<input type="text" style='position: absolute; left: -5000px'>
+		</div>
+		<!-- gameCompletedNoMorePills dialog -->
+		<div id="noWebGLDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
+			<h3>Ouch no WebGL :(</h3>
+			<p>
+				Sorry, WebGL is not available on your computer and WebGL is needed for this game.
+				You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more about Pacmaze</a>
+				or look at a video of the game.
+				<!--Go <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
+				Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->
+			</p>
+			<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/9_ZtsK4rU4g" frameborder="0" allowfullscreen></iframe>
+			-->
 			<a href="#" class="jqmClose"><em>Close</em></a>
 		</div>
 		

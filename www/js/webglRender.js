@@ -21,6 +21,7 @@ WebyMaze.WebglRender	= function(opts){
 
 	this._config	= WebyMaze.ConfigCli.webglRender;
 console.log("webglRender", this._config);
+
 // TODO put that init else where... like in gameCli init
 // update: not so sure... maybe just a poor class name
 
@@ -63,8 +64,6 @@ console.log("webglRender", this._config);
 	}.bind(this));
 	// init the first state
 	this.cameraRender.changeState('fixedZenith');
-
-
 	
 	// init MinimapRender
 	if( this._config.minimapEnabled === true ){
@@ -411,7 +410,7 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function(){
 		
 			var smallDataUrl	= canvas.toDataURL("image/png");
 
-			jQuery.post('http://127.0.0.1:8082/upload', {dataUrl: smallDataUrl}, function(data) {
+			jQuery.post('http://127.0.0.1:8084/upload', {dataUrl: smallDataUrl}, function(data) {
 				console.log("screenshoot uploaded. returned data:", data)
 			});
 		}
@@ -436,15 +435,18 @@ WebyMaze.WebglRender.prototype.aboutUICtor	= function(){
 	// make the menuLine visible
 	jQuery(menuLineSel).css('display', 'block');
 
+	// normal callback
+	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}
+	var toClose	= function(){ jQuery(dialogSel).jqmHide();	}
+	
 	// init dialogs
 	jQuery(dialogSel).jqm();
-	// init the button click
-	jQuery(buttonSel).click(function(){
-		jQuery(dialogSel).jqmShow(); 
-	}.bind(this));
-	
+	// bind some event
+	jQuery(buttonSel).click(toOpen.bind(this));
+	jQuery(dialogSel).bind('keypress', toClose.bind(this));
+	jQuery(dialogSel).click(toClose.bind(this));
 	// to make it appear on load
-	//jQuery(dialogSel).jqmShow();
+	if( this._config.showAboutDialogOnLaunch )	toOpen();
 }
 
 WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){
@@ -502,3 +504,4 @@ WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
 	var containSel	= '#scoreMenuLine';
 	jQuery(containSel+" span.value").text(score)
 }
+
