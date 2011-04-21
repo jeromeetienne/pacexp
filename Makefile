@@ -2,6 +2,7 @@
 # to automatize repeatitive actions
 
 PROJECT_NAME=tweetymaze
+PROJECT_VERSION=0
 
 server:
 	node lib/server.js
