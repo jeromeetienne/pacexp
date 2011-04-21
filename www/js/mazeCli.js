@@ -116,7 +116,9 @@ WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function()
 	// build material from color
 	if( isWebGL ){
 		var material	= [
-			new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
+			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
+			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+							, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } ),
 		];
 	}else{
 		var material	= [

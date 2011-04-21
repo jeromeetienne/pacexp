@@ -77,11 +77,18 @@ function init()
 	scene.addLight( directionalLight );
 	
 	// add a pointLight to experiment with it
-	var pointLight1	= new THREE.PointLight( 0xff0040, 20, 400 );
+	var pointLight1	= new THREE.PointLight( 0x4444FF, 10, 1500 );
 	scene.addLight( pointLight1 );	
 	pointLight1.position.x = 0;
-	pointLight1.position.y = 300;
+	pointLight1.position.y = 1000;
 	pointLight1.position.z = 0;
+
+	// add a pointLight to experiment with it
+	var pointLight2	= new THREE.PointLight( 0x44FF44, 10, 1500 );
+	scene.addLight( pointLight2 );	
+	pointLight2.position.x = 11*100;
+	pointLight2.position.y = 1000;
+	pointLight2.position.z = 11*100;
 
 	// if url?render=canvas then render in canvas
 	if( jQuery.url.param('render') == 'canvas' ){

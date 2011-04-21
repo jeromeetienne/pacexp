@@ -41,10 +41,15 @@ WebyMaze.ShootCli.prototype.destroy	= function(){
 	
 }
 
-WebyMaze.ShootCli.prototype.setCtxTick	= function(ctxTick){
+WebyMaze.ShootCli.prototype.setCtxTick	= function(ctxTick)
+{
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
 	this._container.rotation.y	= ctxTick.rotation.z;
+
+	//this._light.position.x	= ctxTick.position.x;
+	//this._light.position.z	= 300;
+	//this._light.rotation.y	= ctxTick.rotation.z;
 }
 
 WebyMaze.ShootCli.prototype.obj3d	= function(){

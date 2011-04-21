@@ -61,17 +61,17 @@ apache2_restart:
 	sudo /etc/init.d/apache2 start
 
 apache2_copy_conf_dev:
-	sudo ln -fs $(PWD)/etc/apache2/pacmaze_dev_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
+	sudo ln -fs $(PWD)/etc/apache2/$(PROJECT_NAME).dev_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
 
 apache2_copy_conf_prod:
-	sudo ln -fs $(PWD)/etc/apache2/pacmaze_prod_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
+	sudo ln -fs $(PWD)/etc/apache2/$(PROJECT_NAME).prod_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
 
 #################################################################################
 #		upstart								#
 #################################################################################
 
 upstart_install:
-	sudo cp etc/upstart/pacmaze.upstart	/etc/init/$(PROJECT_NAME).conf
+	sudo cp etc/upstart/$(PROCJECT_NAME).upstart	/etc/init/$(PROJECT_NAME).conf
 
 upstart_uninstall:
 	sudo rm -f /etc/init/$(PROJECT_NAME).conf
