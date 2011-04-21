@@ -1,6 +1,6 @@
 NameVirtualHost *:80
 <VirtualHost *:80>
-        ServerName	tweetymaze0.jetienne.com
+        ServerName	tweetymaze.jetienne.com
 	
 	## for the laster pacmaze version	
 	#ServerAlias	tweetymaze.com
