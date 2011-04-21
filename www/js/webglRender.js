@@ -19,6 +19,7 @@ WebyMaze.WebglRender	= function(opts){
 	var ctxInit	= opts.ctxInit		|| console.assert(false);
 
 
+	// read the game config
 	this._config	= WebyMaze.ConfigCli.webglRender;
 console.log("webglRender", this._config);
 
@@ -63,7 +64,8 @@ console.log("webglRender", this._config);
 		})
 	}.bind(this));
 	// init the first state
-	this.cameraRender.changeState('fixedZenith');
+	var firstCameraState	= this._config.firstCameraState;
+	this.cameraRender.changeState(firstCameraState);
 	
 	// init MinimapRender
 	if( this._config.minimapEnabled === true ){

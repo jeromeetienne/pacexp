@@ -6,6 +6,11 @@ if(typeof THREEx.Texture === "undefined")	THREEx.Texture	= {};
  * - depends on a lib excanvas which isnt there
 */
 THREEx.Texture.Smiley	= {
+	clear	: function(canvas){
+		var w	= canvas.width;
+		var ctx	= canvas.getContext( '2d' );
+		clearRect(0, 0, w, w);	
+	},
 	/**
 	 * display an happy smiley on a canvas for texture
 	 *

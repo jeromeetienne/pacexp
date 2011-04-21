@@ -18,6 +18,8 @@ WebyMaze.ConfigCli.ENV		= WebyMaze.ConfigProject.ENV;
 WebyMaze.ConfigCli.sample.webglRender	= {
 	/** playerRotation Determine the type of player control */
 	playerRotation		: 'free',
+	/** firstCameraState the original firstCameraState when the player join */
+	firstCameraState	: 'fixedZenith',
 	//playerRotation: 'grid'
 	/** minimapEnabled  to enable the minimap */
 	minimapEnabled		: true,
@@ -39,6 +41,7 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 
 WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	playerRotation		: 'grid',
+	firstCameraState	: 'fixedZenith',
 	minimapEnabled		: false,
 	showUsernameMenu	: false,
 	showGameIdMenu		: false,
@@ -51,6 +54,7 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	playerRotation		: 'grid',
+	firstCameraState	: 'fixedZenith',
 	minimapEnabled		: false,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
@@ -63,6 +67,7 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	playerRotation		: 'free',
+	firstCameraState	: 'inplayer',
 	minimapEnabled		: false,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,

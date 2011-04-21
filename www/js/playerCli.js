@@ -97,9 +97,11 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function()
 			//new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
-			new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
 			//new THREE.MeshLambertMaterial( { map: this.texture } ),
-			new THREE.MeshBasicMaterial( { map: this.texture } ),
+			//new THREE.MeshBasicMaterial( { map: this.texture } ),
+			new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5
+								, map : this.texture } ),
 		];
 	}else{
 		//var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );
@@ -150,6 +152,10 @@ WebyMaze.PlayerCli.prototype._avatarBuildTexture	= function(img){
 	var avatarW	= w/3;
 	var avatarH	= w/3;
 	var avatarDy	= -w/16;
+	
+	// clear the previous texture
+	ctx.fillStyle = "#FF9900";
+	ctx.fillRect(0, 0, w, w);
 
 	// draw one half
 	ctx.save();
@@ -165,11 +171,12 @@ WebyMaze.PlayerCli.prototype._avatarBuildTexture	= function(img){
 	var textData	= "@"+this.username
 	ctx.save();
 	ctx.translate(w/2, w/2)
-	ctx.font	= "10px Arial";
+	//ctx.font	= "15px Arial";
+	ctx.font	= "bolder 12pt Arial";	
 	var textW	= ctx.measureText(textData).width;
-	ctx.strokeStyle	= "rgb(0,0,0)";
+	ctx.fillStyle	= "rgb(0,0,0)";
 	console.log("measutreText", ctx.measureText(textData));
-	ctx.strokeText(textData, -textW/2, 0);
+	ctx.fillText(textData, -textW/2, avatarDy);
 	ctx.restore();
 
 	// mark this texture as "needsUpdate"
@@ -223,6 +230,12 @@ WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function()
 	var canvas	= document.createElement('canvas');
 	canvas.width	= canvas.height	= canvasW;
 	var texture	= new THREE.Texture(canvas);
+
+	var w		= canvas.width;
+	var ctx		= canvas.getContext( '2d' );
+	// clear the previous texture
+	ctx.fillStyle = "#FF9900";
+	ctx.fillRect(0, 0, w, w);
 
 	THREEx.Texture.Smiley.happy(this.canvas);
 	THREEx.Texture.Smiley.textOnBack(this.canvas, 'Packy');
