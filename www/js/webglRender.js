@@ -122,6 +122,11 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 		this.scoreUIUpdate();
 		this.players[this.urBodyId].dirtyScore    = false;
 	}
+	// handle the energyUiUpdate
+	if( this.players[this.urBodyId].dirtyEnergy ){
+		this.energyUIUpdate();
+		this.players[this.urBodyId].dirtyEnergy    = false;
+	}
 	
 
 	// update MinimapRender
@@ -500,11 +505,19 @@ WebyMaze.WebglRender.prototype.soundFxUiCtor	= function(){
  * This function update the dom with the current score
 */
 WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
-	var score	= this.players[this.urBodyId].score;
+	var value	= this.players[this.urBodyId].score;
 	var containSel	= '#scoreMenuLine';
-	jQuery(containSel+" span.value").text(score)
+	jQuery(containSel+" span.value").text(value)
 }
 
+/**
+ * This function update the dom with the current score
+*/
+WebyMaze.WebglRender.prototype.energyUIUpdate	= function(){
+	var value	= this.players[this.urBodyId].energy;
+	var containSel	= '#energyMenuLine';
+	jQuery(containSel+" span.value").text(value)
+}
 
 
 

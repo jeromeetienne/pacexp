@@ -63,7 +63,7 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	playerRotation		: 'free',
-	minimapEnabled		: true,
+	minimapEnabled		: false,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,

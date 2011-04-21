@@ -8,8 +8,10 @@ WebyMaze.PlayerCli	= function(){
 	// put username/score to null, thus trigger change on next ctxTick
 	this.username	= null;
 	this.score	= null;
+	this.energy	= null;
 	
 	this.dirtyScore	= false;
+	this.dirtyEnergy= false;
 	
 	this._containerCtor();
 }
@@ -24,17 +26,21 @@ WebyMaze.PlayerCli.prototype.destroy	= function(){
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
-	this._container.position.x	= ctxTick.position.x;
-	this._container.position.z	= ctxTick.position.y;
+	this._container.position.x	=  ctxTick.position.x;
+	this._container.position.z	=  ctxTick.position.y;
 	this._container.rotation.y	= -ctxTick.rotation.z;
 
-	if(this.username != ctxTick.username){
+	if(this.username != ctxTick.username ){
 		this.username	= ctxTick.username
 		this._avatarLoad();
 	}
 	if(this.score != ctxTick.score){
 		this.score	= ctxTick.score
 		this.dirtyScore	= true;
+	}
+	if(this.energy != ctxTick.energy){
+		this.energy	= ctxTick.energy;
+		this.dirtyEnergy= true;
 	}
 }
 
