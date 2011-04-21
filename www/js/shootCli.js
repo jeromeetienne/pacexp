@@ -1,10 +1,17 @@
+/** @namespace */
 var WebyMaze	= WebyMaze || {};
 
-WebyMaze.ShootCli	= function(){
+//////////////////////////////////////////////////////////////////////////////////
+//		ctor/dtor							//
+//////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * contructor
+*/
+WebyMaze.ShootCli	= function()
+{
 	// build this._container
-	var bodyW	= 25;
-	
-	
+	var bodyW	= 25;	
 
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
@@ -37,21 +44,27 @@ WebyMaze.ShootCli	= function(){
 	}
 }
 
-WebyMaze.ShootCli.prototype.destroy	= function(){
+/**
+*/
+WebyMaze.ShootCli.prototype.destroy	= function()
+{
 	
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+//		ctor/dtor							//
+//////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.ShootCli.prototype.setCtxTick	= function(ctxTick)
 {
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
 	this._container.rotation.y	= ctxTick.rotation.z;
-
-	//this._light.position.x	= ctxTick.position.x;
-	//this._light.position.z	= 300;
-	//this._light.rotation.y	= ctxTick.rotation.z;
 }
 
+/**
+ * Return the object3d containing this one
+*/
 WebyMaze.ShootCli.prototype.obj3d	= function(){
 	return this._container;
 }

@@ -18,7 +18,6 @@ var WebyMaze	= WebyMaze || {};
 WebyMaze.WebglRender	= function(opts){
 	var ctxInit	= opts.ctxInit		|| console.assert(false);
 
-
 	// read the game config
 	this._config	= WebyMaze.ConfigCli.webglRender;
 console.log("webglRender", this._config);
@@ -33,6 +32,7 @@ console.log("webglRender", this._config);
 	this.enemies	= {};
 	this.shoots	= {};
 	this.pills	= {};
+	this.visualFxs	= {};
 
 	console.log("ctxInit", ctxInit)
 	// init this.mazeCli
@@ -234,9 +234,9 @@ WebyMaze.WebglRender.prototype.tickEventHandler	= function(events)
 		// handle events by type
 		if( event.type === 'playSound' ){
 			this._onPlaySound(event);
+		}else if( event.type === 'showVisualFx' ){
+			this._onShowVisualFx(event);
 		}else console.assert(false);
-
-		
 	}.bind(this));
 }
 
@@ -246,6 +246,32 @@ WebyMaze.WebglRender.prototype._onPlaySound	= function(event)
 	soundRender.soundFxPlay(fxId)	
 }
 
+WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
+{
+	var fxType	= event.data.fxType;
+	var position	= event.data.position;
+	var bodyId	= (Math.random()*99999).toString(36);
+	
+	console.log("fxType", fxType)
+	
+	// create the visualFx	
+	var visualFx	= new WebyMaze.VisualFxImpact({
+		position	: position
+	});
+	visualFx.bind('autodestroy', function(){
+		scene.removeObject( visualFx.obj3d() );
+		visualFx.destroy();
+		delete this.visualFxs[bodyId];
+	}.bind(this))
+
+	// add this visualFxs
+	this.visualFxs[bodyId]	= visualFx;	
+	
+	// add this fx in the to sceneContainer
+	sceneContainer.addChild( visualFx.obj3d() );
+	
+	console.log("bodyId", bodyId)
+}
 //////////////////////////////////////////////////////////////////////////////////
 //		osb user interface stuff					//
 //////////////////////////////////////////////////////////////////////////////////

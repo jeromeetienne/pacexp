@@ -32,7 +32,7 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 
 	if(this.username != ctxTick.username ){
 		this.username	= ctxTick.username
-		this._avatarLoad();
+		this._twitterAvatarLoad();
 	}
 	if(this.score != ctxTick.score){
 		this.score	= ctxTick.score
@@ -172,7 +172,7 @@ WebyMaze.PlayerCli.prototype._avatarBuildTexture	= function(img){
 	ctx.save();
 	ctx.translate(w/2, w/2)
 	//ctx.font	= "15px Arial";
-	ctx.font	= "bolder 12pt Arial";	
+	ctx.font	= "bolder 10pt Arial";	
 	var textW	= ctx.measureText(textData).width;
 	ctx.fillStyle	= "rgb(0,0,0)";
 	console.log("measutreText", ctx.measureText(textData));
@@ -187,7 +187,8 @@ WebyMaze.PlayerCli.prototype._avatarBuildTexture	= function(img){
  * - twitter api got a rate limit of 150req/s ... use it wisely
  *   - maybe cache the avatar url in localStore
 */
-WebyMaze.PlayerCli.prototype._avatarLoad	= function(){
+WebyMaze.PlayerCli.prototype._twitterAvatarLoad	= function()
+{
 	console.log("loadavatar", this.username)
 	// keep default avatar if it is a guest
 	if( this.username.match(/^guest/) )	return;
@@ -226,15 +227,10 @@ WebyMaze.PlayerCli.prototype._avatarLoad	= function(){
 */
 WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function()
 {
-	var canvasW	= 64;
-	var canvas	= document.createElement('canvas');
-	canvas.width	= canvas.height	= canvasW;
-	var texture	= new THREE.Texture(canvas);
-
-	var w		= canvas.width;
-	var ctx		= canvas.getContext( '2d' );
+	var w	= this.canvas.width;
+	var ctx	= this.canvas.getContext( '2d' );
 	// clear the previous texture
-	ctx.fillStyle = "#FF9900";
+	ctx.fillStyle = "#FF99FF";
 	ctx.fillRect(0, 0, w, w);
 
 	THREEx.Texture.Smiley.happy(this.canvas);
@@ -247,7 +243,8 @@ WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function()
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.PlayerCli.prototype.buildHurtTexture	= function(){
+WebyMaze.PlayerCli.prototype.buildHurtTexture	= function()
+{
 	// 
 	THREEx.Texture.Smiley.hurt(this.canvas);
 
