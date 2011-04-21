@@ -4,18 +4,18 @@ NameVirtualHost *:80
 	
         ServerAlias	pacmaze.jetienne.com
 	
-	# for the laster pacmaze version	
-	ServerAlias	pacmaze.com
-	ServerAlias	www.pacmaze.com
-	# redir www.pacmaze.com to pacmaze.com
-	RewriteEngine on
-	RewriteCond %{HTTP_HOST} ^www.pacmaze.com
-	RewriteRule ^(.*)$ http://pacmaze.com$1 [R=permanent,L] 
+	# for the lastest pacmaze version	
+	#ServerAlias	pacmaze.com
+	#ServerAlias	www.pacmaze.com
+	## redir www.pacmaze.com to pacmaze.com
+	#RewriteEngine on
+	#RewriteCond %{HTTP_HOST} ^www.pacmaze.com
+	#RewriteRule ^(.*)$ http://pacmaze.com$1 [R=permanent,L] 
 
 	# jme- apparently this is needed for setting 'expires' header
-	<Directory /home/jerome/public_html/pacmaze1_www_build>
+	<Directory /home/jerome/public_html/pacmaze2_www_build>
 		AllowOverride FileInfo Options Indexes
 	</Directory>
 
-        DocumentRoot	/home/jerome/public_html/pacmaze1_www_build
+        DocumentRoot	/home/jerome/public_html/pacmaze2_www_build
 </VirtualHost>
