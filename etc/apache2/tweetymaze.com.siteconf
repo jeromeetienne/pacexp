@@ -1,0 +1,17 @@
+NameVirtualHost *:80
+<VirtualHost *:80>
+	ServerName	tweetymaze.com
+
+	## redir www.tweetymaze.com to tweetymaze.com
+	ServerAlias	www.tweetymaze.com
+	RewriteEngine on
+	RewriteCond %{HTTP_HOST} ^www.tweetymaze.com
+	RewriteRule ^(.*)$ http://tweetymaze.com$1 [R=permanent,L] 
+
+	# jme- apparently this is needed for setting 'expires' header
+	<Directory /home/jerome/public_html/tweetymaze0_www_build>
+		AllowOverride FileInfo Options Indexes
+	</Directory>
+
+	DocumentRoot	/home/jerome/public_html/tweetymaze0_www_build
+</VirtualHost>

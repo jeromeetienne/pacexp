@@ -1,0 +1,17 @@
+NameVirtualHost *:80
+<VirtualHost *:80>
+	ServerName	pacmaze.com
+
+	## redir www.pacmaze.com to pacmaze.com
+	ServerAlias	www.pacmaze.com
+	RewriteEngine on
+	RewriteCond %{HTTP_HOST} ^www.pacmaze.com
+	RewriteRule ^(.*)$ http://pacmaze.com$1 [R=permanent,L] 
+
+	# jme- apparently this is needed for setting 'expires' header
+	<Directory /home/jerome/public_html/pacmaze3_www_build>
+		AllowOverride FileInfo Options Indexes
+	</Directory>
+
+	DocumentRoot	/home/jerome/public_html/pacmaze3_www_build
+</VirtualHost>

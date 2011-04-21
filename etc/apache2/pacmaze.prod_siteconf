@@ -1,9 +1,7 @@
 NameVirtualHost *:80
 <VirtualHost *:80>
-        ServerName	pacmaze2.jetienne.com
-	
-        ServerAlias	pacmaze.jetienne.com
-	
+        ServerName	pacmaze3.jetienne.com
+
 	# for the lastest pacmaze version	
 	#ServerAlias	pacmaze.com
 	#ServerAlias	www.pacmaze.com
@@ -13,9 +11,9 @@ NameVirtualHost *:80
 	#RewriteRule ^(.*)$ http://pacmaze.com$1 [R=permanent,L] 
 
 	# jme- apparently this is needed for setting 'expires' header
-	<Directory /home/jerome/public_html/pacmaze2_www_build>
+	<Directory /home/jerome/public_html/pacmaze3_www_build>
 		AllowOverride FileInfo Options Indexes
 	</Directory>
 
-        DocumentRoot	/home/jerome/public_html/pacmaze2_www_build
+        DocumentRoot	/home/jerome/public_html/pacmaze3_www_build
 </VirtualHost>

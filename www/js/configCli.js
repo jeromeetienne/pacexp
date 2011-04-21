@@ -136,3 +136,31 @@ WebyMaze.ConfigCli.tweetymaze.dev.scene	= {
 WebyMaze.ConfigCli.scene	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].scene;
 //WebyMaze.ConfigCli.scene	= WebyMaze.ConfigCli['pacmaze']['dev'].scene;
 
+
+//////////////////////////////////////////////////////////////////////////////////
+//		server								//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.ConfigCli.sample.server	= {
+	listenHost	: location.hostname,
+	listenPort	: 8084
+};
+
+WebyMaze.ConfigCli.pacmaze.prod.server	= {
+	listenHost	: location.hostname,
+	listenPort	: 8084
+};
+
+WebyMaze.ConfigCli.pacmaze.dev.server	= {
+	listenHost	: location.hostname,
+	listenPort	: 8084
+};
+
+WebyMaze.ConfigCli.tweetymaze.dev.server	= {
+	listenHost	: location.hostname,
+	listenPort	: 8084
+};
+
+WebyMaze.ConfigCli.server	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].server;
+//WebyMaze.ConfigCli.server	= WebyMaze.ConfigCli['pacmaze']['dev'].server;
+

@@ -50,6 +50,16 @@ jsdoc_clean:
 	rm -rf  doc/jsdoc/*
 
 #################################################################################
+#		jsdoc								#
+#################################################################################
+
+game_switch_pacmaze:
+	ln -sf configProject.pacmaze.js lib/configProject.js 
+
+game_switch_tweetymaze:
+	ln -sf configProject.tweetymaze.js lib/configProject.js 
+
+#################################################################################
 #		Apache2								#
 #################################################################################
 
@@ -98,4 +108,4 @@ deploy:	release_build deployDedixl
 
 deployDedixl:
 	#rsync -avz --rsh=ssh build/ /home/jerome/public_html/pacmaze_www_build
-	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/$(PROJECT_NAME)_www_build
+	rsync -avz --rsh=ssh build/ dedixl:/home/jerome/public_html/$(PROJECT_NAME)$(PROJECT_VERSION)_www_build
