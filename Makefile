@@ -59,6 +59,7 @@ apache2_install_prod: apache2_copy_conf_prod apache2_restart
 
 apache2_restart:
 	sudo /etc/init.d/apache2 stop
+	sudo killall -9 apache2
 	sudo /etc/init.d/apache2 start
 
 apache2_copy_conf_dev:
