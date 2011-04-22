@@ -25,6 +25,7 @@ console.log("webglRender", this._config);
 // TODO put that init else where... like in gameCli init
 // update: not so sure... maybe just a poor class name
 
+
 	this.gameId	= ctxInit.gameId;
 	this.username	= ctxInit.username;
 	this.urBodyId	= ctxInit.urBodyId;
@@ -33,6 +34,8 @@ console.log("webglRender", this._config);
 	this.shoots	= {};
 	this.pills	= {};
 	this.visualFxs	= {};
+
+
 
 	console.log("ctxInit", ctxInit)
 	// init this.mazeCli
@@ -102,7 +105,8 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 //		setCtxTick							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
+WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick)
+{
 	//console.log("ctxTick", ctxTick)
 	this.setCtxTickPlayer(ctxTick);
 	this.setCtxTickEnemy(ctxTick);
@@ -110,6 +114,13 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick){
 	this.setCtxTickPill(ctxTick);
 	
 	this.tickEventHandler(ctxTick.events)
+
+	// do the tick for this.visualFxs
+	Object.keys(this.visualFxs).forEach(function(visualFxId){
+		var visualFx	= this.visualFxs[visualFxId];
+		visualFx.tick();
+	}.bind(this));
+
 
 	// handle the .obj3d() update for enemy
 	Object.keys(this.enemies).forEach(function(enemyId){
@@ -254,24 +265,30 @@ WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 	
 	console.log("fxType", fxType)
 	
-	// create the visualFx	
-	var visualFx	= new WebyMaze.VisualFxImpact({
-		position	: position
-	});
+	// create the visualFx
+	if( fxType === 'impact' ){
+		var visualFx	= new WebyMaze.VisualFxImpact({
+			position	: position
+		});	
+		// add this fx in the to sceneContainer
+		sceneContainer.addChild( visualFx.obj3d() );
+	}else if( fxType == 'emergencyLight' ){
+		var visualFx	= new WebyMaze.VisualFxEmergencyLight({
+			position	: position
+		});
+		//scene.addLight( visualFx.obj3d() );	
+	}else	console.assert(false);
+
 	visualFx.bind('autodestroy', function(){
 		scene.removeObject( visualFx.obj3d() );
 		visualFx.destroy();
 		delete this.visualFxs[bodyId];
 	}.bind(this))
 
-	// add this visualFxs
+	// add this visualFx in this.visualFxs
 	this.visualFxs[bodyId]	= visualFx;	
-	
-	// add this fx in the to sceneContainer
-	sceneContainer.addChild( visualFx.obj3d() );
-	
-	console.log("bodyId", bodyId)
 }
+
 //////////////////////////////////////////////////////////////////////////////////
 //		osb user interface stuff					//
 //////////////////////////////////////////////////////////////////////////////////

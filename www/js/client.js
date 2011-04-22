@@ -29,9 +29,6 @@ var main	= function(){
 	var webGlNeeded	= jQuery.url.param('render') !== 'canvas';
 	var webGlDisable= jQuery.url.param('webGlDisable') ? parseInt(jQuery.url.param('webGlDisable')) : false;
 	if( webGlDisable )	webGlSupport	= false;
-	console.log("webGlDisable", webGlDisable);
-	console.log("webGlSupport", webGlSupport);
-	console.log("webGlNeeded", webGlNeeded);
 	if( webGlNeeded && !webGlSupport ){
 		jQuery('#noWebGLDialog').jqm();
 		jQuery('#noWebGLDialog').jqmShow(); 		
@@ -76,13 +73,13 @@ function init()
 	directionalLight.position.normalize();
 	scene.addLight( directionalLight );
 	
-	// add a pointLight to experiment with it
+	//// add a pointLight to experiment with it
 	var pointLight1	= new THREE.PointLight( 0x4444FF, 10, 1500 );
 	scene.addLight( pointLight1 );	
 	pointLight1.position.x = 0;
 	pointLight1.position.y = 1000;
 	pointLight1.position.z = 0;
-
+	
 	// add a pointLight to experiment with it
 	var pointLight2	= new THREE.PointLight( 0x44FF44, 10, 1500 );
 	scene.addLight( pointLight2 );	
@@ -103,8 +100,6 @@ function init()
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
 	jQuery("#canvasContainer").empty().append( renderer.domElement );
-
-	//container.appendChild( renderer.domElement );
 
 	// append Stats if it is defined
 	if( typeof Stats !== "undefined" && WebyMaze.ConfigCli.client.showStat ){

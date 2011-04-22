@@ -13,52 +13,48 @@ var WebyMaze	= WebyMaze || {};
  * - one to change the opacity
  * - maybe several spheres to give an impression of smoke
 */
-WebyMaze.VisualFxImpact	= function(opts)
+WebyMaze.VisualFxEmergencyLight	= function(opts)
 {
 	var position	= opts.position		|| console.assert(false);
 	this._timeToLive= opts.timeToLive	|| 1*1000;
-	this._bodyW	= opts._bodyW		|| 200;
 
-	// store this._createdAt to honor this._timeToLive
-	this._createdAt	= new Date;
 
-	// build this._container
-	var geometry	= new THREE.Sphere( this._bodyW/2, 16, 8 );
-	var material	= [
-		new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10, opacity : 0.5 } ),
-	]
-	this._container	= new THREE.Mesh(geometry, material);
-	this._container.position.x	= position.x;
-	this._container.position.z	= position.y;
+	// add a pointLight to experiment with it
+	var light	= new THREE.PointLight( 0xFF0000, 10, 1500 );
+	light.position.x = position.x;
+	light.position.y = position.y;
+	light.position.z = position.z;
+
+	this._container	= light;
 }
 
 /**
 */
-WebyMaze.VisualFxImpact.prototype.destroy	= function()
+WebyMaze.VisualFxEmergencyLight.prototype.destroy	= function()
 {
 }
 
 
 // mixin MicroEvent 
-MicroEvent.mixin(WebyMaze.VisualFxImpact);
+MicroEvent.mixin(WebyMaze.VisualFxEmergencyLight);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.VisualFxImpact.prototype.tick	= function()
+WebyMaze.VisualFxEmergencyLight.prototype.tick	= function()
 {
 	// honor this._timeToLive if needed
 	if( this._timeToLive ){
 		var present	= new Date();
 		var age		= present - this._createdAt;
-		if( age > this._timeToLive )	this.trigger('autodestroy');
+		if( age > this._timeToLive )	this.trigger('autodestroy');		
 	}
 }
 
 /**
  * Return the object3d containing this one
 */
-WebyMaze.VisualFxImpact.prototype.obj3d	= function(){
+WebyMaze.VisualFxEmergencyLight.prototype.obj3d	= function(){
 	return this._container;
 }
