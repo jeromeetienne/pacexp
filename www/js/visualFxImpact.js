@@ -38,7 +38,6 @@ WebyMaze.VisualFxImpact.prototype.destroy	= function()
 {
 }
 
-
 // mixin MicroEvent 
 MicroEvent.mixin(WebyMaze.VisualFxImpact);
 

@@ -70,6 +70,11 @@ console.log("message", message)
 	toOpen();
 }
 
+WebyMaze.GameCli.prototype.onNotification	= function(message)
+{
+	console.log("notification", message)
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 //		userInput							//
 //////////////////////////////////////////////////////////////////////////////////
@@ -158,6 +163,8 @@ WebyMaze.GameCli.prototype.socketOnMessage	= function(message){
 		this.onContextTick(message);
 	}else if( message.type === 'gameCompleted' ){
 		this.onGameCompleted(message);
+	}else if( message.type === 'notification' ){
+		this.onNotification(message);
 	}else {
 		console.assert(false, "message type unknown " + message.type);
 	}

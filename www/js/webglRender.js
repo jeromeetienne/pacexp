@@ -85,6 +85,7 @@ console.log("webglRender", this._config);
 	this.soundTrackUiCtor();
 	this.soundFxUiCtor();
 	this.aboutUICtor();
+	this.chatUICtor();
 
 	if( ctxInit.renderInfoFull ){
 		this.setCtxTickPlayer(ctxInit.renderInfoFull);
@@ -499,7 +500,8 @@ WebyMaze.WebglRender.prototype.aboutUICtor	= function(){
 	if( this._config.showAboutDialogOnLaunch )	toOpen();
 }
 
-WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){
+WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function()
+{
 	var buttonSel	= '#soundTrackButton';
 	var menuLineSel	= '#soundTrackMenuLine';
 	
@@ -526,7 +528,8 @@ WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function(){
 	jQuery(buttonSel+" .value").text(gameConfig.soundTrack() === 'true' ? 'On' : 'Off');
 }
 
-WebyMaze.WebglRender.prototype.soundFxUiCtor	= function(){
+WebyMaze.WebglRender.prototype.soundFxUiCtor	= function()
+{
 	var buttonSel	= '#soundFxButton';
 	var menuLineSel	= '#soundFxMenuLine';
 	
@@ -546,10 +549,57 @@ WebyMaze.WebglRender.prototype.soundFxUiCtor	= function(){
 	jQuery(buttonSel+" .value").text(gameConfig.soundFx() === 'true' ? 'On' : 'Off');
 }
 
+
+WebyMaze.WebglRender.prototype.chatUICtor	= function()
+{
+	var dialogSel	= '#chatDialog';
+	var inputSel	= dialogSel+ ' input';
+	// normal callback
+	var toOpen	= function(){
+		jQuery(inputSel).val('')
+		jQuery(dialogSel).jqmShow();
+	}
+	var onHide	= function(hash){
+		// hide the jqm
+		hash.o.remove();hash.w.hide();
+		// get the value from the input
+		var text	= jQuery(inputSel).val();
+		// exit if there is nothing here
+		if( text === '' )	alert('notext')
+		console.log("type "+text);
+		// send the userMessage to the server
+		gameCli.socketSend({
+			type	: "userMessage",
+			data	: {
+				source	: "asifiknew",
+				text	: text
+			}
+		})
+	}
+
+	var onKeyDown	= function(event){
+		if( event.keyCode == "T".charCodeAt(0) ){
+			toOpen();
+			event.stopPropagation();
+		}else if( event.keyCode == 13 ){
+			jQuery(dialogSel).jqmHide();
+		}
+	}
+
+	// init dialogs
+	jQuery(dialogSel).jqm({
+		onHide	: onHide.bind(this)
+	});
+
+	
+	document.addEventListener('keydown', onKeyDown);
+}
+
 /**
  * This function update the dom with the current score
 */
-WebyMaze.WebglRender.prototype.scoreUIUpdate	= function(){
+WebyMaze.WebglRender.prototype.scoreUIUpdate	= function()
+{
 	var value	= this.players[this.urBodyId].score;
 	var containSel	= '#scoreMenuLine';
 	jQuery(containSel+" span.value").text(value)
