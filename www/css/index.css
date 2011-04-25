@@ -13,6 +13,28 @@ body {
 .above3d {
 	z-index		: 200;
 }
+
+/********************************************************************************
+ *		Chat Area
+********************************************************************************/
+
+#pageContainer .chatArea {
+	font-size	: 150%;
+	font-weight	: bold;
+	font-family	: Verdana, Arial, Helvetica, sans-serif;
+
+	color		: #000;
+	text-shadow	: 0 0 0.1em #fff, 0 0 0.2em #ccc;
+}
+
+#pageContainer .chatArea li {
+	list-style-type	: none;
+}
+
+/********************************************************************************
+ *		misc
+********************************************************************************/
+
 .promptDialog  input {
 	font-size	: 1.2em;
 	font-weight	: bold;
@@ -20,6 +42,11 @@ body {
 .promptDialog  {
 	text-align	: center;				
 }
+
+/********************************************************************************
+ *		menuosd
+********************************************************************************/
+
 .menuosd {
 	font-family	: arial;
 	color		: #aaa;
@@ -39,6 +66,7 @@ body {
 .menuosd a:hover {
 	text-decoration	: underline;
 }
+
 #aboutDialog a {
 	color		: #333;
 	font-weight	: bold;
@@ -61,7 +89,7 @@ body {
 	text-shadow	: 0 0 0.1em #fb0, 0 0 0.2em #000;
 }
 .pagetitle a {
-	color	: inherit;
+	color		: inherit;
 	text-decoration	: none;
 }
 .jqmWindow h3 {

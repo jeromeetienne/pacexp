@@ -72,7 +72,16 @@ console.log("message", message)
 
 WebyMaze.GameCli.prototype.onNotification	= function(message)
 {
-	console.log("notification", message)
+	var maxLines	= 4;
+	// only display maxLines lines
+	var nLines	= jQuery('#pageContainer .chatArea ul li').length;
+	jQuery('#pageContainer .chatArea ul li').each(function(index, element){
+		if( nLines - index < maxLines )	return;
+		jQuery(element).remove();
+	});
+	// add current line
+	var text	= '> '+ message.data.text;
+	jQuery('<li>').text(text).appendTo('#pageContainer .chatArea ul').append(element);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

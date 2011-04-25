@@ -132,16 +132,9 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick)
 	}.bind(this));
 	
 	// handle the scoreUiUpdate
-	if( this.players[this.urBodyId].dirtyScore ){
-		this.scoreUIUpdate();
-		this.players[this.urBodyId].dirtyScore    = false;
-	}
+	this.scoreUIUpdate();
 	// handle the energyUiUpdate
-	if( this.players[this.urBodyId].dirtyEnergy ){
-		this.energyUIUpdate();
-		this.players[this.urBodyId].dirtyEnergy    = false;
-	}
-	
+	this.energyUIUpdate();
 
 	// update MinimapRender
 	this._minimapRender && this._minimapRender.update({
@@ -341,7 +334,7 @@ console.log("inputSel", username)
 	// init dialogs
 	jQuery(dialogSel).jqm({	onHide	: onHide });
 	// if buttonSel is clicked, open the dialog
-	jQuery(buttonSel).click(function(){ toOpen(); }.bind(this));
+	jQuery(buttonSel).click(toOpen);
 	// stopPropagation of keys event beyond the modal
 	jQuery(inputSel).bind('keypress', function(event){ event.stopPropagation(); });
 	jQuery(inputSel).bind('keyup'	, function(event){ event.stopPropagation(); });
@@ -405,7 +398,7 @@ WebyMaze.WebglRender.prototype.gameIdUICtor	= function()
 	// init dialogs
 	jQuery(dialogSel).jqm({	onHide	: onHide });
 	// if buttonSel is clicked, open the dialog
-	jQuery(buttonSel).click(function(){ toOpen(); }.bind(this));
+	jQuery(buttonSel).click(toOpen);
 	// stopPropagation of keys event beyond the modal
 	jQuery(inputSel).bind('keypress', function(event){ event.stopPropagation(); });
 	jQuery(inputSel).bind('keyup'	, function(event){ event.stopPropagation(); });
@@ -567,41 +560,46 @@ WebyMaze.WebglRender.prototype.chatUICtor	= function()
 	var toOpen	= function(){
 		jQuery(inputSel).val('')
 		jQuery(dialogSel).jqmShow();
-	}
+	}.bind(this);
 	var onHide	= function(hash){
 		// hide the jqm
 		hash.o.remove();hash.w.hide();
+		// put the focus back... not sure why this is needed FIXME
+		jQuery('#pageContainer').focus();
 		// get the value from the input
-		var text	= jQuery(inputSel).val();
+		var value	= jQuery(inputSel).val();
 		// exit if there is nothing here
-		if( text === '' )	alert('notext')
-		console.log("type "+text);
+		if( value === '' )	return;
+		console.log("type "+value);
 		// send the userMessage to the server
 		gameCli.socketSend({
 			type	: "userMessage",
 			data	: {
 				source	: "asifiknew",
-				text	: text
+				text	: value
 			}
 		})
-	}
-
-	var onKeyDown	= function(event){
-		if( event.keyCode == "T".charCodeAt(0) ){
+	}.bind(this);
+	var onKeyPress	= function(event){
+		if( event.keyCode == "t".charCodeAt(0) && jQuery(dialogSel).is(':visible') === false ){
 			toOpen();
-			event.stopPropagation();
-		}else if( event.keyCode == "\r".charCodeAt(0) ){
-			jQuery(dialogSel).jqmHide();
+			return false;
 		}
-	}
+		return undefined;
+	}.bind(this);
 
 	// init dialogs
-	jQuery(dialogSel).jqm({
-		onHide	: onHide.bind(this)
-	});
-
-	
-	document.addEventListener('keypress', onKeyDown);
+	jQuery(dialogSel).jqm({ onHide	: onHide });
+	jQuery(document).bind('keypress', onKeyPress);
+	// stopPropagation of keys event beyond the modal
+	jQuery(inputSel).bind('keyup'	, function(event){ event.stopPropagation(); });
+	jQuery(inputSel).bind('keydown'	, function(event){ event.stopPropagation(); });
+	// when enter is pressed, the dialog is closed
+	jQuery(inputSel).bind('keypress', function(event){
+		if( event.keyCode == "\r".charCodeAt(0) ){
+			jQuery(dialogSel).jqmHide(); 
+		}
+	}.bind(this));	
 }
 
 /**
@@ -609,7 +607,14 @@ WebyMaze.WebglRender.prototype.chatUICtor	= function()
 */
 WebyMaze.WebglRender.prototype.scoreUIUpdate	= function()
 {
-	var value	= this.players[this.urBodyId].score;
+	// get urPlayer
+	var urPlayer	= this.players[this.urBodyId];
+	// test dirty flag
+	if( urPlayer.dirtyScore !== true )	return;
+	// clear dirty flag
+	urPlayer.dirtyScore	= false;
+	// update the ui
+	var value	= urPlayer.score;
 	var containSel	= '#scoreMenuLine';
 	jQuery(containSel+" span.value").text(value)
 }
@@ -618,12 +623,17 @@ WebyMaze.WebglRender.prototype.scoreUIUpdate	= function()
  * This function update the dom with the current score
 */
 WebyMaze.WebglRender.prototype.energyUIUpdate	= function(){
+	// get urPlayer
+	var urPlayer	= this.players[this.urBodyId];
+	// test dirty flag
+	if( urPlayer.dirtyEnergy !== true )	return;
+	// clear dirty flag
+	urPlayer.dirtyEnergy	= false;
+	// update the ui
 	var value	= this.players[this.urBodyId].energy;
 	var containSel	= '#energyMenuLine';
 	jQuery(containSel+" span.value").text(value)
 }
-
-
 
 
 
