@@ -79,9 +79,36 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 		if( nLines - index < maxLines )	return;
 		jQuery(element).remove();
 	});
+
+	var text	= message.data.text;
+	// sanitize HTML
+	function sanitizeHTML(s){
+		var d = document.createElement('div');
+		d.appendChild(document.createTextNode(s));
+		s = d.innerHTML;
+		s = s.replace(/'/g,"&apos;");
+		s = s.replace(/"/g,"&quot;");
+		return s;
+	}
+	text	= sanitizeHTML(text);
+
+	// make url as <a>
+	var urlRe	= /(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))/g
+	text	= text.replace(urlRe, function(str, p1, p2){
+		return p1+'<a target="_blank" href="'+p2+'">'+p2+'</a>';
+	});
+	
+	// urilification of @twitterusername	
+	var twitterUsernameRe	= /@([a-zA-Z0-9_])+/g;
+	text	= text.replace(twitterUsernameRe, function(str, p1, offset, s){
+		return '<a target="_blank" href="http://twitter.com/'+str.substring(1)+'">'+str+'</a>';
+	});
+
+	// add a prefix	
+	text	= '> '+text;
+
 	// add current line
-	var text	= '> '+ message.data.text;
-	jQuery('<li>').text(text).appendTo('#pageContainer .chatArea ul').append(element);
+	jQuery('<li>').html(text).appendTo('#pageContainer .chatArea ul');
 }
 
 //////////////////////////////////////////////////////////////////////////////////
