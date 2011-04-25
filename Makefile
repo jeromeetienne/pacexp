@@ -5,7 +5,7 @@ PROJECT_NAME=tweetymaze
 PROJECT_VERSION=0
 
 server:
-	node lib/server.js
+	supervisor -w lib lib/server.js
 
 build: release_build jsdoc_build
 
