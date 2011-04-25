@@ -166,9 +166,11 @@ WebyMaze.EnemyCli.prototype._containerCtorEyes	= function()
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	if( isWebGL ){
 		var material	= [
-			new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
+			new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.SmoothShading} ),
 			new THREE.MeshBasicMaterial( { map: THREEx.Texture.Smiley.pupilTexture() } ),
-			//new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
+			////new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading} ),
+			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5
+			//			, map : THREEx.Texture.Smiley.pupilTexture() } ),
 		];
 		var geometry	= new THREE.Sphere( bodyW/8, 16, 8 );
 	}else{

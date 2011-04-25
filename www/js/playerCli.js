@@ -74,7 +74,7 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function()
 		// build the canvas + texture
 		var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
 		var material	= [
-			//new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
+			//new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.FlatShading } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
