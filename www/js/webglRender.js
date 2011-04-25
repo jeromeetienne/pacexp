@@ -309,7 +309,6 @@ WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 		hash.o.remove();hash.w.hide();
 		// get the value from the element
 		var username	= jQuery(inputSel).val();
-console.log("inputSel", username)
 		// if the value is empty, ignore it
 		if( username.length == 0 )		return;
 		// if the value is same as before, ignore it
@@ -450,7 +449,7 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 				right:		'0px'
 			}).appendTo('body')
 		
-			var smallDataUrl	= canvas.toDataURL("image/png");
+			var smallDataUrl	= canvas.toDataURL("image/jpg");
 
 			jQuery.post('http://127.0.0.1:8084/upload', {dataUrl: smallDataUrl}, function(data) {
 				console.log("screenshoot uploaded. returned data:", data)

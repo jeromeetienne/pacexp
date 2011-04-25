@@ -31,6 +31,14 @@ body {
 	list-style-type	: none;
 }
 
+#pageContainer .chatArea a {
+	color		: #333;
+	text-decoration	: none;
+}
+#pageContainer .chatArea a:hover {
+	text-decoration	: underline;
+}
+
 /********************************************************************************
  *		misc
 ********************************************************************************/
@@ -70,8 +78,7 @@ body {
 #aboutDialog a {
 	color		: #333;
 	font-weight	: bold;
-	text-decoration	: none
-	;
+	text-decoration	: none;
 }
 #aboutDialog a:hover {
 	text-decoration	: underline;
