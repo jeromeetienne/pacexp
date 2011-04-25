@@ -474,6 +474,7 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 	}.bind(this));	
 }
 
+
 WebyMaze.WebglRender.prototype.aboutUICtor	= function()
 {
 	var dialogSel	= '#aboutDialog';
@@ -486,15 +487,23 @@ WebyMaze.WebglRender.prototype.aboutUICtor	= function()
 	jQuery(menuLineSel).css('display', 'block');
 
 	// normal callback
-	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}
-	var toClose	= function(){ jQuery(dialogSel).jqmHide();	}
+	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}.bind(this);
+	var onHide	= function(hash){
+		// hide the jqm
+		hash.o.remove();hash.w.hide();
+	}.bind(this);
 
 	// init dialogs
-	jQuery(dialogSel).jqm();
-	// bind some event
-	jQuery(buttonSel).click(toOpen.bind(this));
-	jQuery(dialogSel).bind('keypress', toClose.bind(this));
-	jQuery(dialogSel).click(toClose.bind(this));
+	jQuery(dialogSel).jqm({	onHide	: onHide });
+	// if buttonSel is clicked, open the dialog
+	jQuery(buttonSel).click(toOpen);
+	// when enter is pressed, the dialog is closed
+	jQuery(dialogSel).bind('keypress', function(event){
+		jQuery(dialogSel).jqmHide(); 
+	}.bind(this));	
+	jQuery(dialogSel).click(function(event){
+		jQuery(dialogSel).jqmHide(); 
+	}.bind(this));
 
 	// to make it appear on load
 	if( this._config.showAboutDialogOnLaunch )	toOpen();
@@ -592,7 +601,7 @@ WebyMaze.WebglRender.prototype.chatUICtor	= function()
 	});
 
 	
-	document.addEventListener('keydown', onKeyDown);
+	document.addEventListener('keypress', onKeyDown);
 }
 
 /**
