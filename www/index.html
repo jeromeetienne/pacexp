@@ -87,10 +87,10 @@
 				Energy : <span class="value"></span>
 			</span>
 			<span id="usernameMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="UsernameButton">Username : <span class="value"></span></a>
+				<a href="javascript:void(0)" id="usernameButton">Username : <span class="value"></span></a>
 			</span>
 			<span id="gameIdMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="GameIdButton">Maze : <span class="value"></span></a>
+				<a href="javascript:void(0)" id="gameIdButton">Maze : <span class="value"></span></a>
 			</span>
 			<span id="screenshotMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="ScreenshotButton">Screenshot</a>
@@ -116,9 +116,12 @@
 			by <a href="http://twitter.com/jerome_etienne" target='_blank'>@jerome_etienne</a>
 		</div>
 		<!-- username dialog -->
-		<div id="UsernameDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
+		<div id="usernameDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
 			Your Twitter Username<br/>
 			<input type="text" size=15 name="username" placeholder="twitter username...">
+			<div style='font-size: 60%; float: right;'>
+				<a class='reset' href='javascript:void(0)'>reset</a>
+			</div>
 		</div>
 		<!-- chat dialog -->
 		<div id="chatDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
@@ -126,7 +129,7 @@
 			<input type="text" size=15 name="status" placeholder="twitter username...">
 		</div>
 		<!-- gameId dialog -->
-		<div id="GameIdDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
+		<div id="gameIdDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
 			Name your maze<br/>
 			<input type="text" size=15 name="gameId" placeholder="maze name...">
 		</div>

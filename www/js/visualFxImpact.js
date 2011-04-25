@@ -25,7 +25,8 @@ WebyMaze.VisualFxImpact	= function(opts)
 	// build this._container
 	var geometry	= new THREE.Sphere( this._bodyW/2, 16, 8 );
 	var material	= [
-		new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10, opacity : 0.5 } ),
+		new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading, opacity: 0.4} )
+		//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10, opacity : 0.5 } ),
 	]
 	this._container	= new THREE.Mesh(geometry, material);
 	this._container.position.x	= position.x;

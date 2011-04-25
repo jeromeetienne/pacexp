@@ -13,6 +13,14 @@ WebyMaze.PlayerCli	= function(){
 	this.dirtyScore	= false;
 	this.dirtyEnergy= false;
 	
+
+	// build the canvas + texture
+	this.canvasW	= 256;
+	this.canvas	= document.createElement('canvas');
+	this.canvas.width	= this.canvas.height	= this.canvasW;
+	this.texture	= new THREE.Texture(this.canvas);
+	this._buildTexture();
+	
 	this._containerCtor();
 }
 
@@ -32,7 +40,7 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 
 	if(this.username != ctxTick.username ){
 		this.username	= ctxTick.username
-		this._twitterAvatarLoad();
+		this._buildTexture();
 	}
 	if(this.score != ctxTick.score){
 		this.score	= ctxTick.score
@@ -48,43 +56,14 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 //		container							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.PlayerCli.prototype._canvasCtor	= function(){
-	this.canvas	= document.createElement('canvas');
-	this.canvas.width	= this.canvas.height	= 256;
-	// build the structure
-	this.texture	= new THREE.Texture(this.canvas);
-
-
-this.buildSmileyTexture();
-////this.buildHurtTexture();
-return;
-
-	// load the default avatar
-	var img	= document.getElementById('avatar');	
-	if( img ){
-		this._avatarBuildTexture(img);
-	}else{
-		// create default avatar if not yet done
-		img		= new Image();
-		img.id		= 'avatar';
-		img.style.display='none';
-		img.onload	= function(){
-			this._avatarBuildTexture(img);
-		}.bind(this);
-		img.src		= "images/default_avatar_bigger.png";
-		document.body.appendChild(img);
-	}
-}
-
 WebyMaze.PlayerCli.prototype._containerCtor	= function()
 {
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	// build the texture
-	this._canvasCtor();
+//	this._canvasCtor();
 	// build this._container
 	var bodyW	= 100;
-
 
 	this._container	= new THREE.Object3D();
 
@@ -92,6 +71,7 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function()
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	// set the material depending on renderer capabilities
 	if( isWebGL ){
+		// build the canvas + texture
 		var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );
 		var material	= [
 			//new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.flatShading } ),
@@ -117,12 +97,13 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function()
 			//new THREE.MeshLambertMaterial( { map: this.texture } ),
 		];		
 	}
+
 	var mesh	= new THREE.Mesh( geometry, material );
 	this._container.addChild( mesh );
 	
 	// do the shaddow
 	if( isWebGL ){
-		var mesh		= new THREE.Mesh(
+		var mesh	= new THREE.Mesh(
 			new THREE.Plane( bodyW, bodyW ),
 			new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.5 } )
 		);
@@ -141,10 +122,57 @@ WebyMaze.PlayerCli.prototype.obj3d	= function(){
 //		handle avatar							//
 //////////////////////////////////////////////////////////////////////////////////
 
+WebyMaze.PlayerCli.prototype._buildTexture	= function()
+{
+	var isTwitterName	= this.username && !this.username.match(/^guest/);
+	if( isTwitterName ){
+		this._twitterAvatarLoad();
+	}else{
+		this._buildSmileyTexture();
+	}
+}
+
+/**
+ * - twitter api got a rate limit of 150req/s ... use it wisely
+ *   - maybe cache the avatar url in localStore
+*/
+WebyMaze.PlayerCli.prototype._twitterAvatarLoad	= function()
+{
+	console.log("loadavatar", this.username)
+	// keep default avatar if it is a guest
+	console.assert( this.username.match(/^guest/) === null );
+
+	// 
+	var twitterName	= this.username;
+	var apiUrl	= 'http://twitter.com/users/'+twitterName+'.json?callback=?';
+	jQuery.getJSON(apiUrl, function(data){
+		// here the image from twitter is 48x48 and ends with _normal.png
+		// - it is possible to get a 73x73 with a _bigger.png
+		var imgUrl	= data.profile_image_url;
+		
+		// trick to get larger images
+		// - the end of the base name gives the size of the image
+		// - "_normal" = 48x48 image
+		// - "_bigger" = 73x73 image
+		// - http://a1.twimg.com/profile_images/764871885/yo_normal.jpg
+		// - http://a1.twimg.com/profile_images/764871885/yo_bigger.jpg
+		imgUrl		= imgUrl.replace('_normal', '_bigger');
+		console.log("avatar from", this.username, "is", imgUrl)
+		// load the image
+		var img		= new Image();
+		img.onload	= function(){
+			console.log("image downloaded from", imgUrl)
+			this._buildTwitterAvatarTexture(img);
+		}.bind(this);
+		img.src		= imgUrl;	
+	}.bind(this))	
+}
+
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.PlayerCli.prototype._avatarBuildTexture	= function(img){
+WebyMaze.PlayerCli.prototype._buildTwitterAvatarTexture	= function(img)
+{
 	var canvas	= this.canvas;
 	var w		= canvas.width;
 	var ctx		= canvas.getContext( '2d' );
@@ -183,41 +211,6 @@ WebyMaze.PlayerCli.prototype._avatarBuildTexture	= function(img){
 	this.texture.needsUpdate = true;
 }
 
-/**
- * - twitter api got a rate limit of 150req/s ... use it wisely
- *   - maybe cache the avatar url in localStore
-*/
-WebyMaze.PlayerCli.prototype._twitterAvatarLoad	= function()
-{
-	console.log("loadavatar", this.username)
-	// keep default avatar if it is a guest
-	if( this.username.match(/^guest/) )	return;
-
-	var twitterName	= this.username;
-	var apiUrl	= 'http://twitter.com/users/'+twitterName+'.json?callback=?';
-	jQuery.getJSON(apiUrl, function(data){
-		// here the image from twitter is 48x48 and ends with _normal.png
-		// - it is possible to get a 73x73 with a _bigger.png
-		var imgUrl	= data.profile_image_url;
-		
-		// trick to get larger images
-		// - the end of the base name gives the size of the image
-		// - "_normal" = 48x48 image
-		// - "_bigger" = 73x73 image
-		// - http://a1.twimg.com/profile_images/764871885/yo_normal.jpg
-		// - http://a1.twimg.com/profile_images/764871885/yo_bigger.jpg
-		imgUrl		= imgUrl.replace('_normal', '_bigger');
-
-		console.log("avatar from", this.username, "is", imgUrl)
-		// load the image
-		var img		= new Image();
-		img.onload	= function(){
-			this._avatarBuildTexture(img);
-		}.bind(this);
-		img.src		= imgUrl;	
-	}.bind(this))	
-}
-
 //////////////////////////////////////////////////////////////////////////////////
 //		handle smiley							//
 //////////////////////////////////////////////////////////////////////////////////
@@ -225,7 +218,7 @@ WebyMaze.PlayerCli.prototype._twitterAvatarLoad	= function()
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function()
+WebyMaze.PlayerCli.prototype._buildSmileyTexture	= function()
 {
 	var w	= this.canvas.width;
 	var ctx	= this.canvas.getContext( '2d' );
@@ -243,7 +236,7 @@ WebyMaze.PlayerCli.prototype.buildSmileyTexture	= function()
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.PlayerCli.prototype.buildHurtTexture	= function()
+WebyMaze.PlayerCli.prototype._buildHurtTexture	= function()
 {
 	// 
 	THREEx.Texture.Smiley.hurt(this.canvas);
