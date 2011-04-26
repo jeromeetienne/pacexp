@@ -10,6 +10,7 @@ WebyMaze.ConfigCli	= {
 
 WebyMaze.ConfigCli.PROJECT	= WebyMaze.ConfigProject.PROJECT;
 WebyMaze.ConfigCli.ENV		= WebyMaze.ConfigProject.ENV;
+WebyMaze.ConfigCli.ENV		= 'prod';
 
 //////////////////////////////////////////////////////////////////////////////////
 //		webglRender							//
@@ -65,6 +66,19 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	showAboutDialogOnLaunch	: false
 };
 
+WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
+	playerRotation		: 'free',
+	firstCameraState	: 'inplayer',
+	minimapEnabled		: false,
+	showUsernameMenu	: true,
+	showGameIdMenu		: true,
+	showScreenshotMenu	: true,
+	showSoundTrackMenu	: true,
+	showSoundFxMenu		: true,
+	showAboutMenu		: true,
+	showAboutDialogOnLaunch	: false
+};
+
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
@@ -100,6 +114,10 @@ WebyMaze.ConfigCli.pacmaze.dev.client	= {
 	showStat	: true
 };
 
+WebyMaze.ConfigCli.tweetymaze.prod.client	= {
+	showStat	: true
+};
+
 WebyMaze.ConfigCli.tweetymaze.dev.client	= {
 	showStat	: true
 };
@@ -127,6 +145,12 @@ WebyMaze.ConfigCli.pacmaze.prod.scene	= {
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.scene	= {
+	cameraFov	: 60,
+	cameraNear	: 1,
+	cameraFar	: 2800
+};
+
+WebyMaze.ConfigCli.tweetymaze.prod.scene	= {
 	cameraFov	: 60,
 	cameraNear	: 1,
 	cameraFar	: 2800
@@ -161,6 +185,11 @@ WebyMaze.ConfigCli.pacmaze.dev.server	= {
 	listenPort	: 8084
 };
 
+WebyMaze.ConfigCli.tweetymaze.prod.server	= {
+	listenHost	: location.hostname,
+	listenPort	: 8084
+};
+
 WebyMaze.ConfigCli.tweetymaze.dev.server	= {
 	listenHost	: location.hostname,
 	listenPort	: 8084
@@ -169,3 +198,36 @@ WebyMaze.ConfigCli.tweetymaze.dev.server	= {
 WebyMaze.ConfigCli.server	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].server;
 //WebyMaze.ConfigCli.server	= WebyMaze.ConfigCli['pacmaze']['dev'].server;
 
+//////////////////////////////////////////////////////////////////////////////////
+//		mazeCli								//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.ConfigCli.sample.mazeCli	= {
+	/** wallTextureUrl the url of the texture for wall */
+	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
+	/** groundTextureUrl the url of the texture for ground */
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png'
+};
+
+WebyMaze.ConfigCli.pacmaze.prod.mazeCli	= {
+	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png'
+};
+
+WebyMaze.ConfigCli.pacmaze.dev.mazeCli	= {
+	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png'
+};
+
+WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
+	wallTextureUrl	: 'images/tmp/tex0.jpg',
+	groundTextureUrl: 'images/tmp/EmbossedWall.png'
+};
+
+WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
+	wallTextureUrl	: 'images/tmp/tex0.jpg',
+	groundTextureUrl: 'images/tmp/EmbossedWall.png'
+};
+
+WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].mazeCli;
+//WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli['pacmaze']['dev'].mazeCli;

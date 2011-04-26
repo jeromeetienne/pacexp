@@ -20,7 +20,6 @@ WebyMaze.WebglRender	= function(opts){
 
 	// read the game config
 	this._config	= WebyMaze.ConfigCli.webglRender;
-console.log("webglRender", this._config);
 
 // TODO put that init else where... like in gameCli init
 // update: not so sure... maybe just a poor class name

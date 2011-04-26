@@ -23,6 +23,9 @@ WebyMaze.MazeCli	= function(opts){
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 
+	// read the game config
+	this._config	= WebyMaze.ConfigCli.mazeCli;
+
 	// build Ground based on renderer capabilities
 	//if( isWebGL )	this._buildGroundChessBoard();
 	//else		this._buildGroundSingleColor();
@@ -115,10 +118,11 @@ WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function()
 
 	// build material from color
 	if( isWebGL ){
+		var textureUrl	= this._config.groundTextureUrl;
 		var material	= [
 			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
 			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-							, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } ),
+							, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
 		];
 	}else{
 		var material	= [
@@ -203,9 +207,10 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	// set the material depending on renderer capabilities
 	if( isWebGL ){
+		var textureUrl	= this._config.wallTextureUrl;
 		var material	= [
 			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-							, map: THREE.ImageUtils.loadTexture('images/tmp/BluePaintedTiles.png') } ),
+							, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
 		];
 	}else{
 		var material	= [
