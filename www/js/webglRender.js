@@ -421,15 +421,16 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 	// make the menuLine visible
 	jQuery(menuLineSel).css('display', 'block');
 
-	jQuery(buttonSel).click(function(){
+
+	var doScreenshot	= function(){
 		var dataUrl	= renderer.domElement.toDataURL("image/png");
 
 		/**
-		 * Scale down the image to 340px wide and upload it.
+		 * Scale down the image to 320px wide and upload it.
 		*/
-		var dstWidth	= 640;
+		var dstWidth	= 450;
 		var img 	= new Image();   // Create new Image object
-		img.onload = function(){
+		img.onload	= function(){
 			var srcAspect	= renderer.domElement.width / renderer.domElement.height;
 			console.log("srcAspect", srcAspect)
 			var canvas	= document.createElement('canvas');
@@ -440,8 +441,9 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 			//console.dir(document.body)
-			//document.body.appendChild(canvas);
+
 			
+			// put it on the DOM for debug
 			jQuery(canvas).css({
 				position:	'absolute',
 				top:		'0px',
@@ -449,12 +451,23 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 			}).appendTo('body')
 		
 			var smallDataUrl	= canvas.toDataURL("image/jpg");
-
-			jQuery.post('http://127.0.0.1:8084/upload', {dataUrl: smallDataUrl}, function(data) {
+			// TODO put that in a configCli.js
+			var screenshotUploadUrl	= this._config.screenshotUploadUrl;
+			jQuery.post(screenshotUploadUrl, {dataUrl: smallDataUrl}, function(dataJson){
+				var data	= JSON.parse(dataJson);
 				console.log("screenshoot uploaded. returned data:", data)
-			});
-		}
-		img.src	= dataUrl;
+				// send the userMessage to the server
+				gameCli.socketSend({
+					type	: "userMessage",
+					data	: {
+						createdAt	: Date.now(),
+						srcUsername	: this.username,
+						text		: 'is looking nice in '+data.imgUrl
+					}
+				})
+			}.bind(this));
+		}.bind(this);
+		img.src		= dataUrl;
 
 		// FIXME: toDataUrl doesnt display everything... e.g. fog isnt on the image
 		// - additionnaly this is only about the canvas, not all the OSD on top
@@ -462,6 +475,18 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 		//jQuery.post('http://127.0.0.1:8081/upload', {dataUrl: dataUrl}, function(data) {
 		//	console.log("screenshoot uploaded. returned data:", data)
 		//});
+	}.bind(this)
+
+	
+	// bind buttonSel click
+	jQuery(buttonSel).click(doScreenshot)	
+	// bind 'p' for screenshot
+	jQuery(document).bind('keypress', function(event){
+		if( event.keyCode == "p".charCodeAt(0) ){
+			doScreenshot();
+			return false;
+		}
+		return undefined;
 	}.bind(this));	
 }
 
@@ -573,8 +598,9 @@ WebyMaze.WebglRender.prototype.chatUICtor	= function()
 		gameCli.socketSend({
 			type	: "userMessage",
 			data	: {
-				source	: "asifiknew",
-				text	: value
+				createdAt	: Date.now(),
+				srcUsername	: this.username,
+				text		: value
 			}
 		})
 	}.bind(this);

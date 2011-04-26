@@ -158,6 +158,9 @@ WebyMaze.PlayerCli.prototype._twitterAvatarLoad	= function()
 		// - http://a1.twimg.com/profile_images/764871885/yo_bigger.jpg
 		imgUrl		= imgUrl.replace('_normal', '_bigger');
 		console.log("avatar from", this.username, "is", imgUrl)
+		
+		imgUrl	= "http://localhost/~jerome/webwork/tweetymaze/www/redir?url="+imgUrl;
+		
 		// load the image
 		var img		= new Image();
 		img.onload	= function(){

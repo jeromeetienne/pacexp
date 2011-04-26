@@ -10,7 +10,6 @@ WebyMaze.ConfigCli	= {
 
 WebyMaze.ConfigCli.PROJECT	= WebyMaze.ConfigProject.PROJECT;
 WebyMaze.ConfigCli.ENV		= WebyMaze.ConfigProject.ENV;
-WebyMaze.ConfigCli.ENV		= 'prod';
 
 //////////////////////////////////////////////////////////////////////////////////
 //		webglRender							//
@@ -37,20 +36,23 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	/** showAboutMenu to show the aboutMenuLine */
 	showAboutMenu		: true,
 	/** showAboutDialogOnLaunch to show the aboutDialog when the app launch */
-	showAboutDialogOnLaunch	: true
+	showAboutDialogOnLaunch	: true,
+	/** screenshotUploadUrl the url to which upload the screenshot */
+	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	playerRotation		: 'grid',
 	firstCameraState	: 'fixedZenith',
 	minimapEnabled		: false,
-	showUsernameMenu	: false,
+	showUsernameMenu	: true,
 	showGameIdMenu		: false,
-	showScreenshotMenu	: false,
+	showScreenshotMenu	: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: true
+	showAboutDialogOnLaunch	: true,
+	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"	
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
@@ -63,7 +65,8 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: false
+	showAboutDialogOnLaunch	: false,
+	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
@@ -76,7 +79,8 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: false
+	showAboutDialogOnLaunch	: false,
+	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"	
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
@@ -89,7 +93,8 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: false
+	showAboutDialogOnLaunch	: false,
+	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"
 };
 
 WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].webglRender;
@@ -115,7 +120,7 @@ WebyMaze.ConfigCli.pacmaze.dev.client	= {
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.client	= {
-	showStat	: true
+	showStat	: false
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.client	= {
@@ -206,27 +211,33 @@ WebyMaze.ConfigCli.sample.mazeCli	= {
 	/** wallTextureUrl the url of the texture for wall */
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
 	/** groundTextureUrl the url of the texture for ground */
-	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png'
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
+	/** wallHRatio the height of a wall compared to its width */
+	wallHRatio	: 3/4
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.mazeCli	= {
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
-	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png'
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
+	wallHRatio	: 1/3
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.mazeCli	= {
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
-	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png'
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
+	wallHRatio	: 1/3
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
 	wallTextureUrl	: 'images/tmp/tex0.jpg',
-	groundTextureUrl: 'images/tmp/EmbossedWall.png'
+	groundTextureUrl: 'images/tmp/EmbossedWall.png',
+	wallHRatio	: 2/3
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
 	wallTextureUrl	: 'images/tmp/tex0.jpg',
-	groundTextureUrl: 'images/tmp/EmbossedWall.png'
+	groundTextureUrl: 'images/tmp/EmbossedWall.png',
+	wallHRatio	: 15/3
 };
 
 WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].mazeCli;

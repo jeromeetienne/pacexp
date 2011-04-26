@@ -200,8 +200,9 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function(){
 WebyMaze.MazeCli.prototype._buildWalls	= function()
 {
 	var bodyW	= this.wallW;
+	var wallH	= bodyW * this._config.wallHRatio;
 	//var geometry	= new THREE.Cube( bodyW, bodyW/3, bodyW );
-	var geometry	= new THREE.Cube( bodyW, bodyW/3, bodyW, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
+	var geometry	= new THREE.Cube( bodyW, wallH, bodyW, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
 
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
@@ -225,7 +226,7 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 		
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.position.x = this.map2spaceX(mapX);
-		mesh.position.y = -bodyW/2 + bodyW/3/2 ;
+		mesh.position.y = -bodyW/2 + wallH/2;
 		mesh.position.z = this.map2spaceY(mapY);
 		
 		mesh.matrixAutoUpdate = false;

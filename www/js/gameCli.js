@@ -55,7 +55,6 @@ console.log("message", message)
 	var score	= jQuery("#scoreMenuLine span.value").text()
 	jQuery(dialogSel+" span.score").text(score)
 	
-	
 	// normal callback
 	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}
 	var toClose	= function(){ window.location.reload();		}
@@ -80,7 +79,35 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 		jQuery(element).remove();
 	});
 
-	var text	= message.data.text;
+console.log("data", message.data)
+
+
+	// build the text to display
+	var buildText	= function(data){
+		var text	= data.text;
+		// add a prefix	
+		text	= '> '+text;
+		// add a date if present
+		if( data.createdAt ){
+			var createdAt	= new Date(data.createdAt);	
+			var datePrefix	= 'at ' +createdAt.getHours() + ':' + createdAt.getMinutes() + " ";
+			text	= datePrefix + text;
+		}
+		// add a srcUsername if present
+		if( data.srcUsername ){
+			if( data.srcUsername.match(/^guest/) ){
+				text	= data.srcUsername+' ' + text;
+			}else{
+				text	= '@'+data.srcUsername+' ' + text;
+			}
+		}
+		// return the just-built text
+		return text;
+	}
+	var text	= buildText(message.data);
+
+
+
 	// sanitize HTML
 	function sanitizeHTML(s){
 		var d = document.createElement('div');
@@ -91,6 +118,7 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 		return s;
 	}
 	text	= sanitizeHTML(text);
+
 
 	// make url as <a>
 	var urlRe	= /(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))/g
@@ -103,9 +131,6 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 	text	= text.replace(twitterUsernameRe, function(str, p1, offset, s){
 		return '<a target="_blank" href="http://twitter.com/'+str.substring(1)+'">'+str+'</a>';
 	});
-
-	// add a prefix	
-	text	= '> '+text;
 
 	// add current line
 	jQuery('<li>').html(text).appendTo('#pageContainer .chatArea ul');
