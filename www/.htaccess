@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	
+	RewriteRule ^joe http://jetienne.com [P]
+	
+	RewriteRule ^(/~jerome/webwork/tweetymaze/www/prout)$ test_dual.html [P,L]
+</IfModule>
+
+
+#<IfModule mod_alias.c>
+#	Redirect permanent /~jerome/webwork/tweetymaze/www/prout http://google.com
+#</IfModule>
