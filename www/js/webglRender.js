@@ -480,13 +480,10 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 	
 	// bind buttonSel click
 	jQuery(buttonSel).click(doScreenshot)	
-	// bind 'p' for screenshot
-	jQuery(document).bind('keypress', function(event){
-		if( event.keyCode == "p".charCodeAt(0) ){
-			doScreenshot();
-			return false;
-		}
-		return undefined;
+	// bind global document 'Alt+p' for screenshot
+	jQuery(document).bind('keydown', 'Alt+p', function(event){
+		doScreenshot();
+		return false;
 	}.bind(this));	
 }
 
@@ -604,17 +601,9 @@ WebyMaze.WebglRender.prototype.chatUICtor	= function()
 			}
 		})
 	}.bind(this);
-	var onKeyPress	= function(event){
-		if( event.keyCode == "t".charCodeAt(0) && jQuery(dialogSel).is(':visible') === false ){
-			toOpen();
-			return false;
-		}
-		return undefined;
-	}.bind(this);
 
 	// init dialogs
 	jQuery(dialogSel).jqm({ onHide	: onHide });
-	jQuery(document).bind('keypress', onKeyPress);
 	// stopPropagation of keys event beyond the modal
 	jQuery(inputSel).bind('keyup'	, function(event){ event.stopPropagation(); });
 	jQuery(inputSel).bind('keydown'	, function(event){ event.stopPropagation(); });
@@ -623,6 +612,13 @@ WebyMaze.WebglRender.prototype.chatUICtor	= function()
 		if( event.keyCode == "\r".charCodeAt(0) ){
 			jQuery(dialogSel).jqmHide(); 
 		}
+	}.bind(this));	
+
+	// bind global document 'Alt+p' for screenshot
+	jQuery(document).bind('keydown', 'Alt+t', function(event){
+		if( jQuery(dialogSel).is(':visible') )	return undefined;
+		toOpen();
+		return false;
 	}.bind(this));	
 }
 
