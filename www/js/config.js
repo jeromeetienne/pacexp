@@ -22,7 +22,9 @@ WebyMaze.Config.prototype.destroy	= function(){
 */
 WebyMaze.Config.prototype.username	= function(val)
 {
-	return this._cookieGetSet('username', val);
+	var key	= 'username';
+	if( typeof val === 'undefined' && jQuery.url.param(key) )	return jQuery.url.param(key);
+	return this._cookieGetSet(key, val);
 }
 
 /**
@@ -31,7 +33,9 @@ WebyMaze.Config.prototype.username	= function(val)
 */
 WebyMaze.Config.prototype.soundTrack	= function(val)
 {
-	return this._cookieGetSet('soundTrack', val);
+	var key	= 'soundTrack';
+	if( typeof val === 'undefined' && jQuery.url.param(key) )	return jQuery.url.param(key);
+	return this._cookieGetSet(key, val);
 }
 
 /**
@@ -40,7 +44,9 @@ WebyMaze.Config.prototype.soundTrack	= function(val)
 */
 WebyMaze.Config.prototype.soundFx		= function(val)
 {
-	return this._cookieGetSet('soundFx', val);
+	var key	= 'soundFx';
+	if( typeof val === 'undefined' && jQuery.url.param(key) )	return jQuery.url.param(key);
+	return this._cookieGetSet(key, val);
 }
 
 WebyMaze.Config.prototype._cookieGetSet	= function(key, val)
