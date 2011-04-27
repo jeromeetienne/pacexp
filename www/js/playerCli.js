@@ -80,7 +80,9 @@ WebyMaze.PlayerCli.prototype._containerCtor	= function()
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
 			//new THREE.MeshLambertMaterial( { map: this.texture } ),
 			//new THREE.MeshBasicMaterial( { map: this.texture } ),
-			new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5
+			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5
+			//					, map : this.texture } ),
+			new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999999, specular: 0x000000, shininess: 5
 								, map : this.texture } ),
 		];
 	}else{
@@ -185,7 +187,7 @@ WebyMaze.PlayerCli.prototype._buildTwitterAvatarTexture	= function(img)
 	var avatarDy	= -w/16;
 	
 	// clear the previous texture
-	ctx.fillStyle = "#FF9900";
+	ctx.fillStyle = "#FFFFFF";
 	ctx.fillRect(0, 0, w, w);
 
 	// draw one half

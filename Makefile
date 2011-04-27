@@ -7,7 +7,7 @@ PROJECT_VERSION=0
 server:
 	supervisor -w lib lib/server.js
 
-build: release_build jsdoc_build
+build: release_build
 
 clean: release_clean jsdoc_clean
 
