@@ -1,3 +1,4 @@
+# deps.sh - scripts to install dependancies
 
 # config the module for the http rewrite
 sudo a2enmod rewrite
