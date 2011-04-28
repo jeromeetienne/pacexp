@@ -23,7 +23,7 @@ uninstall: upstart_uninstall
 release_build: release_clean
 	echo "*" > build/.gitignore
 	cp www/webglTest.html build
-	inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
+	inliner http://localhost/~jerome/webwork/tweetymaze1/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
 	cp www/images/favicon.ico build

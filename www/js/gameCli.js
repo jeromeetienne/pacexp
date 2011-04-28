@@ -181,7 +181,9 @@ WebyMaze.GameCli.prototype.userInputDtor	= function(){
 
 WebyMaze.GameCli.prototype.socketCtor	= function(){
 	var listenHost	= WebyMaze.ConfigCli.server.listenHost;
-	var listenPort	= WebyMaze.ConfigCli.server.listenPort;		
+	var listenPort	= WebyMaze.ConfigCli.server.listenPort;
+
+console.log("ConfigCli.server", WebyMaze.ConfigCli.server)
 	
 	// configure the swf for the flash websocket
 	// - NOTE: not sure about this. i dont understand flash 'security'
