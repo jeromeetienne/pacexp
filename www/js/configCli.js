@@ -80,7 +80,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
 	showAboutDialogOnLaunch	: false,
-	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
+	screenshotUploadUrl	: "http://"+location.host+":8085/upload"	
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
@@ -192,7 +192,7 @@ WebyMaze.ConfigCli.pacmaze.dev.server	= {
 
 WebyMaze.ConfigCli.tweetymaze.prod.server	= {
 	listenHost	: location.hostname,
-	listenPort	: 8084
+	listenPort	: 8085
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.server	= {
