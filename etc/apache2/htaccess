@@ -24,3 +24,14 @@
 		ExpiresDefault "access plus 1 year"
 	</filesmatch>
 </ifmodule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+
+# TODO put that in the .site conf
+# - it requires to have hostname during the dev too
+
+	#RewriteMap escape int:escape
+	RewriteCond %{QUERY_STRING}	url=(.*)
+	RewriteRule .*redir$ %1 [P]
+</IfModule>

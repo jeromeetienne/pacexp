@@ -73,7 +73,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
 	minimapEnabled		: false,
-	showUsernameMenu	: false,
+	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
 	showSoundTrackMenu	: true,
