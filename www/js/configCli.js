@@ -38,7 +38,7 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	/** showAboutDialogOnLaunch to show the aboutDialog when the app launch */
 	showAboutDialogOnLaunch	: true,
 	/** screenshotUploadUrl the url to which upload the screenshot */
-	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"
+	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
@@ -52,7 +52,7 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
 	showAboutDialogOnLaunch	: true,
-	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"	
+	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
@@ -66,21 +66,21 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
 	showAboutDialogOnLaunch	: false,
-	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"
+	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
 	minimapEnabled		: false,
-	showUsernameMenu	: true,
+	showUsernameMenu	: false,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
 	showAboutDialogOnLaunch	: false,
-	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"	
+	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
@@ -94,7 +94,7 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
 	showAboutDialogOnLaunch	: false,
-	screenshotUploadUrl	: "http://127.0.0.1:8084/upload"
+	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
 WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].webglRender;
@@ -231,7 +231,7 @@ WebyMaze.ConfigCli.pacmaze.dev.mazeCli	= {
 WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
 	wallTextureUrl	: 'images/tmp/tex0.jpg',
 	groundTextureUrl: 'images/tmp/EmbossedWall.png',
-	wallHRatio	: 2/3
+	wallHRatio	: 15/3
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {

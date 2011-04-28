@@ -161,7 +161,7 @@ WebyMaze.PlayerCli.prototype._twitterAvatarLoad	= function()
 		imgUrl		= imgUrl.replace('_normal', '_bigger');
 		console.log("avatar from", this.username, "is", imgUrl)
 		
-		imgUrl	= "http://localhost/~jerome/webwork/tweetymaze/www/redir?url="+imgUrl;
+		imgUrl	= "redir?url="+imgUrl;
 		
 		// load the image
 		var img		= new Image();

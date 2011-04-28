@@ -2,7 +2,8 @@
 # to automatize repeatitive actions
 
 PROJECT_NAME=tweetymaze
-PROJECT_VERSION=0
+PROJECT_VERSION=1
+PROJECT_LATEST_VERSION=1
 
 server:
 	supervisor -w lib lib/server.js
@@ -22,7 +23,7 @@ uninstall: upstart_uninstall
 release_build: release_clean
 	echo "*" > build/.gitignore
 	cp www/webglTest.html build
-	inliner http://localhost/~jerome/webwork/$(PROJECT_NAME)/www/index.html > build/index.html
+	inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
 	cp www/images/favicon.ico build
@@ -53,6 +54,8 @@ jsdoc_clean:
 #		jsdoc								#
 #################################################################################
 
+# TODO switch that to shorttag.js
+
 game_switch_pacmaze:
 	ln -sf configProject.pacmaze.js lib/configProject.js 
 
@@ -63,20 +66,23 @@ game_switch_tweetymaze:
 #		Apache2								#
 #################################################################################
 
-apache2_install_dev: apache2_copy_conf_dev apache2_restart
+SHORTTAGJS=../shorttag.js/bin/node-shorttag
 
-apache2_install_prod: apache2_copy_conf_prod apache2_restart
+
+apache2_install: apache2_copy_conf apache2_restart
 
 apache2_restart:
 	sudo /etc/init.d/apache2 stop
 	sudo killall -9 apache2
 	sudo /etc/init.d/apache2 start
 
-apache2_copy_conf_dev:
-	sudo ln -fs $(PWD)/etc/apache2/$(PROJECT_NAME).dev_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
-
-apache2_copy_conf_prod:
-	sudo ln -fs $(PWD)/etc/apache2/$(PROJECT_NAME).prod_siteconf /etc/apache2/sites-enabled/$(PROJECT_NAME).conf
+apache2_copy_conf:
+	(echo '<? var PROJECT_NAME="$(PROJECT_NAME)"; ?>' &&				\
+		echo '<? var PROJECT_VERSION="$(PROJECT_VERSION)"; ?>' &&		\
+		echo '<? var PROJECT_LATEST_VERSION="$(PROJECT_LATEST_VERSION)"; ?>' )	\
+		| $(SHORTTAGJS) etc/apache2/template.siteconf				\
+		> /tmp/$(PROJECT_NAME)$(PROJECT_VERSION).conf
+	sudo cp -f /tmp/$(PROJECT_NAME)$(PROJECT_VERSION).conf /etc/apache2/sites-enabled/
 
 #################################################################################
 #		upstart								#
