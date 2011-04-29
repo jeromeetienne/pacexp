@@ -79,8 +79,8 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 		jQuery(element).remove();
 	});
 
+console.log("notify message", message)
 console.log("data", message.data)
-
 
 	// function to padText
 	var padText	= function(number, length){
@@ -91,21 +91,23 @@ console.log("data", message.data)
 	// build the text to display
 	var buildText	= function(data){
 		var text	= data.text;
-		// add a prefix	
-		text	= '> '+text;
-		// add a date if present
-		if( data.createdAt ){
-			var createdAt	= new Date(data.createdAt);	
-			var datePrefix	= 'at ' +createdAt.getHours() + ':' + padText(createdAt.getMinutes(), 2) + " ";
-			text	= datePrefix + text;
-		}
 		// add a srcUsername if present
 		if( data.srcUsername ){
+			// add a prefix	
+			text	= '> '+text;
 			if( data.srcUsername.match(/^guest/) ){
 				text	= data.srcUsername+' ' + text;
 			}else{
 				text	= '@'+data.srcUsername+' ' + text;
 			}
+		}else{
+			text	= '* '+text;			
+		}
+		// add a date if present
+		if( data.createdAt ){
+			var createdAt	= new Date(data.createdAt);	
+			var datePrefix	= '[' +createdAt.getHours() + ':' + padText(createdAt.getMinutes(), 2) + "]";
+			text	= datePrefix + ' ' + text;
 		}
 		// return the just-built text
 		return text;

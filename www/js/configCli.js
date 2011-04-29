@@ -93,7 +93,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
-	minimapEnabled		: false,
+	minimapEnabled		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
@@ -216,6 +216,8 @@ WebyMaze.ConfigCli.server	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyM
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.ConfigCli.sample.mazeCli	= {
+	/** showRoof true if the roof must be shown */
+	showRoof	: true,
 	/** wallTextureUrl the url of the texture for wall */
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
 	/** groundTextureUrl the url of the texture for ground */
@@ -225,30 +227,34 @@ WebyMaze.ConfigCli.sample.mazeCli	= {
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.mazeCli	= {
+	showRoof	: false,
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
 	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
 	wallHRatio	: 1/3
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.mazeCli	= {
+	showRoof	: false,
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
 	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
 	wallHRatio	: 1/3
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
+	showRoof	: true,
 	wallTextureUrl	: 'images/tmp/tex0.jpg',
 	groundTextureUrl: 'images/tmp/EmbossedWall.png',
 	wallHRatio	: 15/3
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
+	showRoof	: true,
 	wallTextureUrl	: 'images/tmp/tex0.jpg',
 	//wallTextureUrl	: 'images/tmp/PaddedOrangeWall.png',
 	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
 	//groundTextureUrl: 'images/tmp/EmbossedWall.png',
 	//groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
-	wallHRatio	: 15/3
+	wallHRatio	: 4/3
 };
 
 WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].mazeCli;
