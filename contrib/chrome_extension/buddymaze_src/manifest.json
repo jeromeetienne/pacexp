@@ -1,0 +1,19 @@
+{
+	"name"		: "Buddymaze",
+	"description"	: "Buddymaze: It is a multi-player first personn shooter. All players are humans. Invite your friends and shoot each other :)",
+	"version"	: "1.0.0",
+	"app"		: {
+		"launch": {
+			"web_url": "http://buddymaze.com"
+		}
+	},
+	"icons"	: {
+		"128": "smiley128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": ["http://twitter.com/*"],
+			"js": ["jquery.min.js", "myscript.js"]
+		}
+	]
+}

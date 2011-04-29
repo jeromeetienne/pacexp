@@ -1,0 +1,13 @@
+{
+	"name"		: "Pacmaze",
+	"description"	: "Pacmaze: a pacman in 3D. It is fun and free",
+	"version"	: "1.0.8",
+	"app"		: {
+		"launch": {
+			"web_url": "http://pacmaze.com"
+		}
+	},
+	"icons"	: {
+		"128": "smiley128.png"
+	}
+}
