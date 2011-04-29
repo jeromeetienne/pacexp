@@ -139,9 +139,37 @@ console.log("data", message.data)
 	text	= text.replace(twitterUsernameRe, function(str, p1, offset, s){
 		return '<a target="_blank" href="http://twitter.com/'+str.substring(1)+'">'+str+'</a>';
 	});
+	
+	var element	= jQuery('<li>').html(text);
+	jQuery(element).appendTo('#pageContainer .chatArea ul');
+
 
 	// add current line
-	jQuery('<li>').html(text).appendTo('#pageContainer .chatArea ul');
+	jQuery('a[href^="http://yfrog.com"]', element).each(function(index, element){
+		// build the tips dom elements
+		var thumbUrl	= jQuery(element).attr('href')+':small';
+		var imgContent	= '<img src="'+thumbUrl+'" alt="screenshot" />';
+		var content	= '';
+		content	+= '<div style="float: right;">'+
+				'<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>'+
+			'</div>';
+		content	+= imgContent;
+		// to preload the thumb
+		(new Image()).src	= thumbUrl;
+		// install the qtip
+		jQuery(element).qtip({
+			content	: content,
+			hide	: { fixed: true, delay: 100 },
+			position: {
+				my	: 'top center',
+				at	: 'bottom center',
+				viewport: jQuery(window) // Attempt to keep it on screen at all times
+			},
+			style	: {
+				classes: 'ui-tooltip-jtools'
+			}		
+		});
+	});
 }
 
 //////////////////////////////////////////////////////////////////////////////////

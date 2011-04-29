@@ -209,6 +209,7 @@ WebyMaze.MazeCli.prototype._buildRoofSingleColor	= function(){
 	// set the material depending on renderer capabilities
 	if( isWebGL ){
 		var material	= [
+			new THREE.MeshLambertMaterial( { color: 0xFFa000, shading: THREE.FlatShading } ),
 			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
 			//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
 			new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
