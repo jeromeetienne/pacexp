@@ -29,6 +29,8 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	showGameIdMenu		: true,
 	/** showScreenshotMenu to show the screenshotMenuLine */
 	showScreenshotMenu	: true,
+	/** showSpeakMenu to show the speakMenuLine */
+	showSpeakMenu		: true,
 	/** showSoundTrackMenu to show the soundTrackMenuLine */
 	showSoundTrackMenu	: true,
 	/** showSoundFxMenu to show the soundFxMenuLine */
@@ -48,6 +50,7 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	showUsernameMenu	: true,
 	showGameIdMenu		: false,
 	showScreenshotMenu	: true,
+	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
@@ -62,6 +65,7 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
+	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
@@ -76,9 +80,9 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	firstCameraState	: 'inplayer',
 	minimapEnabled		: false,
 	showUsernameMenu	: true,
-	
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
+	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
@@ -93,6 +97,7 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
+	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,

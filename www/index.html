@@ -107,7 +107,10 @@
 				<a href="javascript:void(0)" id="gameIdButton">Maze : <span class="value"></span></a>
 			</span>
 			<span id="screenshotMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="ScreenshotButton">Screenshot</a>
+				<a href="javascript:void(0)" id="screenshotButton">Screenshot</a>
+			</span>
+			<span id="speakMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="speakButton">Speak</a>
 			</span>
 			<span id="soundTrackMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
@@ -132,17 +135,17 @@
 				<a class='reset' href='javascript:void(0)'>reset</a>
 			</div>
 		</div>
-		<!-- chat dialog -->
-		<div id="chatDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
-			What do you wanna say ?<br/>
-			<input type="text" size=15 name="status" placeholder="twitter username...">
-		</div>
 		<!-- gameId dialog -->
 		<div id="gameIdDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
 			Name your maze<br/>
 			<input type="text" size=15 name="gameId" placeholder="maze name...">
 		</div>
-		<!-- inlineHelp dialog -->
+		<!-- speak dialog -->
+		<div id="speakDialog" class="promptDialog jqmWindow above3d" style="margin-left: -180px; width: 360px;">
+			What do you wanna say ?<br/>
+			<input type="text" size=24 name="status" placeholder="speak your mind...">
+		</div>
+		<!-- aboutHelp dialog -->
 		<div id="aboutDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
 			<div style="float: right;">
 				<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>

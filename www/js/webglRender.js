@@ -84,7 +84,7 @@ WebyMaze.WebglRender	= function(opts){
 	this.soundTrackUiCtor();
 	this.soundFxUiCtor();
 	this.aboutUICtor();
-	this.chatUICtor();
+	this.speakUICtor();
 
 	if( ctxInit.renderInfoFull ){
 		this.setCtxTickPlayer(ctxInit.renderInfoFull);
@@ -413,7 +413,7 @@ WebyMaze.WebglRender.prototype.gameIdUICtor	= function()
 
 WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 {
-	var buttonSel	= '#ScreenshotButton';
+	var buttonSel	= '#screenshotButton';
 	var menuLineSel	= '#screenshotMenuLine';
 
 	// honore this._config
@@ -488,6 +488,69 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 }
 
 
+
+WebyMaze.WebglRender.prototype.speakUICtor	= function()
+{
+	var dialogSel	= '#speakDialog';
+	var buttonSel	= '#speakButton';
+	var menuLineSel	= '#speakMenuLine';
+	var inputSel	= dialogSel+ ' input';
+
+	// honore this._config
+	if( this._config.showSpeakMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
+
+	// normal callback
+	var toOpen	= function(){
+		// if it is already visible, do nothing
+		if( jQuery(dialogSel).is(':visible') )	return;
+		
+		jQuery(inputSel).val('')
+		jQuery(dialogSel).jqmShow();
+	}.bind(this);
+	var onHide	= function(hash){
+		// hide the jqm
+		hash.o.remove();hash.w.hide();
+		// put the focus back... not sure why this is needed FIXME
+		jQuery('#pageContainer').focus();
+		// get the value from the input
+		var value	= jQuery(inputSel).val();
+		// exit if there is nothing here
+		if( value === '' )	return;
+		console.log("type "+value);
+		// send the userMessage to the server
+		gameCli.socketSend({
+			type	: "userMessage",
+			data	: {
+				createdAt	: Date.now(),
+				srcUsername	: this.username,
+				text		: value
+			}
+		})
+	}.bind(this);
+
+	// init dialogs
+	jQuery(dialogSel).jqm({ onHide	: onHide });
+	// if buttonSel is clicked, open the dialog
+	jQuery(buttonSel).click(toOpen);
+	// stopPropagation of keys event beyond the modal
+	jQuery(inputSel).bind('keyup'	, function(event){ event.stopPropagation(); });
+	jQuery(inputSel).bind('keydown'	, function(event){ event.stopPropagation(); });
+	// when enter is pressed, the dialog is closed
+	jQuery(inputSel).bind('keypress', function(event){
+		if( event.keyCode == "\r".charCodeAt(0) ){
+			jQuery(dialogSel).jqmHide(); 
+		}
+	}.bind(this));	
+
+	// bind global document 'Alt+p' for screenshot
+	jQuery(document).bind('keydown', 'Alt+t', function(event){
+		toOpen();
+		return false;
+	}.bind(this));	
+}
+
 WebyMaze.WebglRender.prototype.aboutUICtor	= function()
 {
 	var dialogSel	= '#aboutDialog';
@@ -500,7 +563,9 @@ WebyMaze.WebglRender.prototype.aboutUICtor	= function()
 	jQuery(menuLineSel).css('display', 'block');
 
 	// normal callback
-	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}.bind(this);
+	var toOpen	= function(){
+		jQuery(dialogSel).jqmShow();
+	}.bind(this);
 	var onHide	= function(hash){
 		// hide the jqm
 		hash.o.remove();hash.w.hide();
@@ -571,56 +636,6 @@ WebyMaze.WebglRender.prototype.soundFxUiCtor	= function()
 	jQuery(buttonSel+" .value").text(gameConfig.soundFx() === 'true' ? 'On' : 'Off');
 }
 
-
-WebyMaze.WebglRender.prototype.chatUICtor	= function()
-{
-	var dialogSel	= '#chatDialog';
-	var inputSel	= dialogSel+ ' input';
-	// normal callback
-	var toOpen	= function(){
-		jQuery(inputSel).val('')
-		jQuery(dialogSel).jqmShow();
-	}.bind(this);
-	var onHide	= function(hash){
-		// hide the jqm
-		hash.o.remove();hash.w.hide();
-		// put the focus back... not sure why this is needed FIXME
-		jQuery('#pageContainer').focus();
-		// get the value from the input
-		var value	= jQuery(inputSel).val();
-		// exit if there is nothing here
-		if( value === '' )	return;
-		console.log("type "+value);
-		// send the userMessage to the server
-		gameCli.socketSend({
-			type	: "userMessage",
-			data	: {
-				createdAt	: Date.now(),
-				srcUsername	: this.username,
-				text		: value
-			}
-		})
-	}.bind(this);
-
-	// init dialogs
-	jQuery(dialogSel).jqm({ onHide	: onHide });
-	// stopPropagation of keys event beyond the modal
-	jQuery(inputSel).bind('keyup'	, function(event){ event.stopPropagation(); });
-	jQuery(inputSel).bind('keydown'	, function(event){ event.stopPropagation(); });
-	// when enter is pressed, the dialog is closed
-	jQuery(inputSel).bind('keypress', function(event){
-		if( event.keyCode == "\r".charCodeAt(0) ){
-			jQuery(dialogSel).jqmHide(); 
-		}
-	}.bind(this));	
-
-	// bind global document 'Alt+p' for screenshot
-	jQuery(document).bind('keydown', 'Alt+t', function(event){
-		if( jQuery(dialogSel).is(':visible') )	return undefined;
-		toOpen();
-		return false;
-	}.bind(this));	
-}
 
 /**
  * This function update the dom with the current score
