@@ -2,8 +2,8 @@
 # to automatize repeatitive actions
 
 PROJECT_NAME=tweetymaze
-PROJECT_VERSION=1
-PROJECT_LATEST_VERSION=1
+PROJECT_VERSION=2
+PROJECT_LATEST_VERSION=2
 
 server:
 	supervisor -w lib lib/server.js

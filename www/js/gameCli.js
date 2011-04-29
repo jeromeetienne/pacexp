@@ -82,6 +82,12 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 console.log("data", message.data)
 
 
+	// function to padText
+	var padText	= function(number, length){
+		var str = '' + number;
+		while( str.length < length )    str = '0' + str;
+		return str;
+	}
 	// build the text to display
 	var buildText	= function(data){
 		var text	= data.text;
@@ -90,7 +96,7 @@ console.log("data", message.data)
 		// add a date if present
 		if( data.createdAt ){
 			var createdAt	= new Date(data.createdAt);	
-			var datePrefix	= 'at ' +createdAt.getHours() + ':' + createdAt.getMinutes() + " ";
+			var datePrefix	= 'at ' +createdAt.getHours() + ':' + padText(createdAt.getMinutes(), 2) + " ";
 			text	= datePrefix + text;
 		}
 		// add a srcUsername if present

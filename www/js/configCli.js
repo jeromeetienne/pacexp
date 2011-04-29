@@ -69,11 +69,14 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
+
+
 WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
 	minimapEnabled		: false,
 	showUsernameMenu	: true,
+	
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
 	showSoundTrackMenu	: true,
@@ -236,7 +239,10 @@ WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
 	wallTextureUrl	: 'images/tmp/tex0.jpg',
-	groundTextureUrl: 'images/tmp/EmbossedWall.png',
+	//wallTextureUrl	: 'images/tmp/PaddedOrangeWall.png',
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
+	//groundTextureUrl: 'images/tmp/EmbossedWall.png',
+	//groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
 	wallHRatio	: 15/3
 };
 

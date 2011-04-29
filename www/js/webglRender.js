@@ -125,9 +125,9 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick)
 	// handle the .obj3d() update for enemy
 	Object.keys(this.enemies).forEach(function(enemyId){
 		var enemy	= this.enemies[enemyId];
-		if( enemy._dirtyObj3d !== true )	return;
+		if( enemy.object3dDirty() !== true )	return;
 		sceneContainer.addChild( enemy.obj3d() );
-		enemy._dirtyObj3d	= false;
+		enemy.object3dDirty(false)
 	}.bind(this));
 	
 	// handle the scoreUiUpdate

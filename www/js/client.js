@@ -72,14 +72,14 @@ function init()
 	directionalLight.position.z = 0.7;
 	directionalLight.position.normalize();
 	scene.addLight( directionalLight );
-	
-	//// add a pointLight to experiment with it
+
+	// add a pointLight to experiment with it
 	var pointLight1	= new THREE.PointLight( 0xaa44aa, 10, 1500 );
 	scene.addLight( pointLight1 );	
 	pointLight1.position.x = 0;
 	pointLight1.position.y = 1000;
 	pointLight1.position.z = 0;
-	
+
 	// add a pointLight to experiment with it
 	var pointLight2	= new THREE.PointLight( 0x44FF44, 10, 1500 );
 	scene.addLight( pointLight2 );	
