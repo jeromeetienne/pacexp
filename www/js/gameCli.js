@@ -148,12 +148,13 @@ console.log("data", message.data)
 	jQuery('a[href^="http://yfrog.com"]', element).each(function(index, element){
 		// build the tips dom elements
 		var thumbUrl	= jQuery(element).attr('href')+':small';
-		var imgContent	= '<img src="'+thumbUrl+'" alt="screenshot" />';
 		var content	= '';
-		content	+= '<div style="float: right;">'+
-				'<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>'+
-			'</div>';
-		content	+= imgContent;
+		content	+= '<div style="position: relative;">';
+		content	+= 	'<div style="bottom: 0px; right: 0px; position: absolute;">'+
+					'<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>'+
+				'</div>';
+		content	+= 	'<img src="'+thumbUrl+'" alt="screenshot" />';
+		content	+= '</div>';
 		// to preload the thumb
 		(new Image()).src	= thumbUrl;
 		// install the qtip

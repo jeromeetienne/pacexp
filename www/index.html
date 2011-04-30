@@ -16,9 +16,6 @@
 
 		<!--<script src="vendor/firebugx.js"></script>-->
 
-<!--		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
--->
-
 		<script src='vendor/jquery/jquery.min.js'></script>
 		<script src='vendor/jquery/jquery.url.js'></script>
 		<script src='vendor/jquery/jquery.cookie.js'></script>
@@ -29,6 +26,11 @@
 
 		<script src='vendor/jquery/qtip2/jquery.qtip.js'></script>
 		<link	href='vendor/jquery/qtip2/jquery.qtip.css'	rel='stylesheet'></link>
+
+<!--		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+-->		<script type="text/javascript" src="js/jquery.twitterButtonLive.js"></script>
+		<link rel="stylesheet" type="text/css" href="js/jquery.twitterButtonLive.css" />
+		
 
 
 		<script type="text/javascript" src="vendor/three.js.new/build/Three.js"></script>
@@ -149,10 +151,11 @@
 			What do you wanna say ?<br/>
 			<input type="text" size=24 name="status" placeholder="speak your mind...">
 		</div>
+
 		<!-- aboutHelp dialog -->
 		<div id="aboutDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
-			<div style="float: right;">
-				<a href="http://twitter.com/share" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" class="twitter-share-button" data-count="none">Tweet</a>
+			<div style='float: right;'>
+				<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>
 			</div>
 			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
 			<p>
