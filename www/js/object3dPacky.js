@@ -6,20 +6,77 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.Object3dPacky	= function(opts)
 {
-	this._username	= opts.username	|| console.assert(false);
-	
+	this._username	= opts.username		|| console.assert(false);
+	this._colorType	= opts.colorType	|| WebyMaze.Object3dPacky.colorTypes.yellow;
+
 	// build the canvas + texture
 	this.canvasW	= 256;
 	this.canvas	= document.createElement('canvas');
 	this.canvas.width	= this.canvas.height	= this.canvasW;
 	this.texture	= new THREE.Texture(this.canvas);
+
 	this._buildTexture();
-	
 	this._containerCtor();	
 }
 
 WebyMaze.Object3dPacky.prototype.destroy	= function(){
 }
+
+
+WebyMaze.Object3dPacky.colorTypes	= {};
+WebyMaze.Object3dPacky.colorTypes.yellow	= {
+	phongAmbient		: 0xffa000,
+	phongColor		: 0x999999,
+	phongSpecular		: 0x000000,
+	phongShininess		: 5,
+	textureTwitterFillStyle	: "#FFFFFF",
+	textureSmileyFillStyle	: "#FF99FF"
+};
+
+WebyMaze.Object3dPacky.colorTypes.red	= {
+	phongAmbient		: 0xDC143C,
+	phongColor		: 0x5500aa,
+	phongSpecular		: 0x555555,
+	phongShininess		: 10,
+	textureTwitterFillStyle	: "#FFFFFF",
+	textureSmileyFillStyle	: "#ff99ff"
+};
+
+WebyMaze.Object3dPacky.colorTypes.pink	= {
+	phongAmbient		: 0xff8080,
+	phongColor		: 0x5500aa,
+	phongSpecular		: 0x555555,
+	phongShininess		: 10,
+	textureTwitterFillStyle	: "#FFFFFF",
+	textureSmileyFillStyle	: "#ff99ff"
+};
+
+WebyMaze.Object3dPacky.colorTypes.orange= {
+	phongAmbient		: 0xff4500,
+	phongColor		: 0x5500aa,
+	phongSpecular		: 0x555555,
+	phongShininess		: 10,
+	textureTwitterFillStyle	: "#FFFFFF",
+	textureSmileyFillStyle	: "#ff99ff"
+};
+
+WebyMaze.Object3dPacky.colorTypes.lightBlue= {
+	phongAmbient		: 0x3DC5CC,
+	phongColor		: 0x5500aa,
+	phongSpecular		: 0x555555,
+	phongShininess		: 10,
+	textureTwitterFillStyle	: "#FFFFFF",
+	textureSmileyFillStyle	: "#ff99ff"
+};
+
+WebyMaze.Object3dPacky.colorTypes.blue= {
+	phongAmbient		: 0x00a0FF,
+	phongColor		: 0x0044aa,
+	phongSpecular		: 0x555555,
+	phongShininess		: 10,
+	textureTwitterFillStyle	: "#FFFFFF",
+	textureSmileyFillStyle	: "#ff99ff"
+};
 
 //////////////////////////////////////////////////////////////////////////////////
 //		container							//
@@ -75,8 +132,21 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 			//new THREE.MeshBasicMaterial( { map: this.texture } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5
 			//					, map : this.texture } ),
-			new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999999, specular: 0x000000, shininess: 5
-								, map : this.texture } ),
+			new THREE.MeshPhongMaterial({
+				ambient		: this._colorType.phongAmbient,
+				color		: this._colorType.phongColor,
+				specular	: this._colorType.phongSpecular,
+				shininess	: this._colorType.phongShininess,
+				map		: this.texture
+			})
+
+			//new THREE.MeshPhongMaterial({
+			//	ambient		: this._colorType.phongAmbient,
+			//	color		: this._colorType.phongColor,
+			//	specular	: this._colorType.phongSpecular,
+			//	shininess	: this._colorType.phongShininess
+			//}),
+			//new THREE.MeshBasicMaterial( { map: this.texture } )
 		];
 	}else{
 		//var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );
@@ -176,7 +246,7 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 	var avatarDy	= -w/16;
 	
 	// clear the previous texture
-	ctx.fillStyle = "#FFFFFF";
+	ctx.fillStyle = this._colorType.textureTwitterFillStyle;
 	ctx.fillRect(0, 0, w, w);
 
 	// draw one half
@@ -218,8 +288,8 @@ WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
 	var w	= this.canvas.width;
 	var ctx	= this.canvas.getContext( '2d' );
 	// clear the previous texture
-	ctx.fillStyle = "#FF99FF";
-	ctx.fillRect(0, 0, w, w);
+	//ctx.fillStyle = this._colorType.textureSmileyFillStyle;
+	//ctx.fillRect(0, 0, w, w);
 
 	THREEx.Texture.Smiley.happy(this.canvas);
 	THREEx.Texture.Smiley.textOnBack(this.canvas, 'Packy');

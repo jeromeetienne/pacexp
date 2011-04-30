@@ -30,7 +30,7 @@ WebyMaze.MazeCli	= function(opts){
 	//if( isWebGL )	this._buildGroundChessBoard();
 	//else		this._buildGroundSingleColor();
 	this._buildGroundChessBoard();
-	this._buildRoofSingleColor();
+	if( this._config.showRoof )	this._buildRoofSingleColor();
 	// build Walls
 	this._buildWalls();
 }
