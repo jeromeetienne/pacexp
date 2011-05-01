@@ -170,6 +170,8 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 			//}),
 			//new THREE.MeshBasicMaterial( { map: this._texture } )
 		];
+		var mesh	= new THREE.Mesh( geometry, material );
+		this._container.addChild( mesh );
 	}else{
 		//var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );
 		//var geometry	= new THREE.Cube( bodyW, bodyW/2, bodyW/2 );
@@ -185,11 +187,11 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
 			//new THREE.MeshLambertMaterial( { map: this._texture } ),
 		];		
+		var mesh	= new THREE.Mesh( geometry, material );
+		mesh.rotation.y	= - 90 * ( Math.PI / 180 );
+		this._container.addChild( mesh );
 	}
 
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.rotation.y	= - 90 * ( Math.PI / 180 );
-	this._container.addChild( mesh );
 	
 	// do the shaddow
 	if( isWebGL ){
