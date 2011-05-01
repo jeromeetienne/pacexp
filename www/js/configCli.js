@@ -114,6 +114,37 @@ console.log("super configcli", WebyMaze.ConfigCli.webglRender);
 //		ui								//
 //////////////////////////////////////////////////////////////////////////////////
 
+WebyMaze.ConfigCli.sample.cameraRender	= {
+	/** cameraStates stats for the camera */
+	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+					'behindPlayer', 'fixedZenith', 'fixedGrazing']
+};
+
+WebyMaze.ConfigCli.pacmaze.prod.cameraRender	= {
+	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+					'behindPlayer', 'fixedZenith', 'fixedGrazing']
+};
+
+WebyMaze.ConfigCli.pacmaze.dev.cameraRender	= {
+	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+					'behindPlayer', 'fixedZenith', 'fixedGrazing']
+};
+
+WebyMaze.ConfigCli.tweetymaze.prod.cameraRender	= {
+	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer']
+};
+
+WebyMaze.ConfigCli.tweetymaze.dev.cameraRender	= {
+	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer']
+};
+
+WebyMaze.ConfigCli.cameraRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].cameraRender;
+//WebyMaze.ConfigCli.cameraRender	= WebyMaze.ConfigCli['pacmaze']['dev'].cameraRender;
+
+//////////////////////////////////////////////////////////////////////////////////
+//		ui								//
+//////////////////////////////////////////////////////////////////////////////////
+
 WebyMaze.ConfigCli.sample.client	= {
 	/** showStat show webgl performance vuemeter or not */
 	showStat	: true,
@@ -254,7 +285,7 @@ WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
 	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
 	//groundTextureUrl: 'images/tmp/EmbossedWall.png',
 	//groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
-	wallHRatio	: 4/3
+	wallHRatio	: 5/3
 };
 
 WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].mazeCli;

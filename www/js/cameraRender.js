@@ -33,8 +33,9 @@ MicroEvent.mixin(WebyMaze.CameraRender);
 /**
  * Define all possible cameraStates
 */
-WebyMaze.CameraRender.CameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
-					'behindPlayer', 'fixedZenith', 'fixedGrazing'];
+//WebyMaze.CameraRender.CameraStates	= ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+//					'behindPlayer', 'fixedZenith', 'fixedGrazing'];
+WebyMaze.CameraRender.CameraStates	= WebyMaze.ConfigCli.cameraRender.cameraStates;
 
 WebyMaze.CameraRender.State2RotationType= {
 	'overPlayer'	: "relative",

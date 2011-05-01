@@ -37,11 +37,10 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	// destroy the socket ... just a trick to free the game
 	this.socketDtor();
 
-console.log("message", message)
+	//console.log("message", message)
 	// determine the dialogSel based on reason
 	var reason	= message.data.reason;
 	var score	= jQuery("#scoreMenuLine span.value").text()
-
 	var dialogSel	= null;
 	var tweetText	= null;
 	if( reason === "noMorePills" ){
@@ -61,14 +60,14 @@ console.log("message", message)
 	jQuery(dialogSel+" div.twitter-share-button").attr('data-text', tweetText);
 	
 	// normal callback
-	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}
-	var toClose	= function(){ window.location.reload();		}
+	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}.bind(this);
+	var toClose	= function(){ window.location.reload();		}.bind(this);
 	
 	// init dialogs
-	jQuery(dialogSel).jqm({ onHide	: toClose.bind(this)});
+	jQuery(dialogSel).jqm({ onHide	: toClose });
 	// bind some event
-	jQuery(dialogSel).bind('keypress', toClose.bind(this));
-	jQuery(dialogSel).click(toClose.bind(this));
+	jQuery(dialogSel).bind('keypress', toClose);
+	jQuery(dialogSel).click(toClose);
 
 	// to make it appear on load
 	toOpen();
