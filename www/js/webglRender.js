@@ -301,7 +301,8 @@ WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 	// normal callback
 	var toOpen	= function(){
 		this.cameraRender.changeState('facePlayer');
-		jQuery(inputSel).val(this.username)
+		if( this.username.charAt(0) !== '@' )	jQuery(inputSel).val(this.username)
+		else	jQuery(inputSel).val(this.username.substring(1));
 		jQuery(dialogSel).jqmShow(); 
 	}.bind(this);
 	var onHide	= function(hash){
@@ -311,8 +312,10 @@ WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 		var username	= jQuery(inputSel).val();
 		// if the value is empty, ignore it
 		if( username.length == 0 )		return;
+		// add a '@' if it isnt a guest
+		if( username.match(/^guest/) === null )	username = '@'+username;		
 		// if the value is same as before, ignore it
-		if( username.length == this.username )	return;
+		if( username == this.username )		return;
 		// notify the server
 		gameCli.socketSend({
 			type	: "changeUsername",
