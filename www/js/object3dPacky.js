@@ -188,7 +188,7 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 
 WebyMaze.Object3dPacky.prototype._buildTexture	= function()
 {
-	var isTwitterName	= this._username && !this._username.match(/^guest/);
+	var isTwitterName	= this._username && this._username.charAt('@') === '@';
 	if( isTwitterName ){
 		this._twitterAvatarLoad();
 	}else{
