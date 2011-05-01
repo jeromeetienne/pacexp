@@ -161,7 +161,7 @@ console.log("data", message.data)
 		// install the qtip
 		jQuery(element).qtip({
 			content	: content,
-			hide	: { fixed: true, delay: 100 },
+			hide	: { fixed: true, delay: 500 },
 			position: {
 				my	: 'top center',
 				at	: 'bottom center',

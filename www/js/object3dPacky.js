@@ -6,8 +6,7 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.Object3dPacky	= function(opts)
 {
-	this._username	= opts.username		|| console.assert(false);
-	this._colorType	= opts.colorType	|| WebyMaze.Object3dPacky.colorTypes.yellow;
+	this._appearance= opts.appearance	|| console.assert(false);
 
 	// build the canvas + texture
 	this.canvasW	= 256;
@@ -88,11 +87,27 @@ WebyMaze.Object3dPacky.colorTypes.blue= {
 /**
  * Getter/Setter for username
 */
-WebyMaze.Object3dPacky.prototype.setUsername	= function(val)
+WebyMaze.Object3dPacky.prototype.setAppearance	= function(appearance)
 {
-	this._username	= val;
-console.log("setUsername", this._username)
+	this._appearance	= appearance;
+console.log("setAppearance", this._appearance)
 	this._buildTexture();
+}
+
+
+WebyMaze.Object3dPacky.prototype._textureType	= function()
+{
+	return this._appearance.match(/^(.*)-(.*)-(.*)/)[1];
+}
+
+WebyMaze.Object3dPacky.prototype._colorStr	= function()
+{
+	return this._appearance.match(/^(.*)-(.*)-(.*)/)[2];
+}
+
+WebyMaze.Object3dPacky.prototype._nameStr	= function()
+{
+	return this._appearance.match(/^(.*)-(.*)-(.*)/)[3];
 }
 
 WebyMaze.Object3dPacky.prototype.object3d	= function()
@@ -113,10 +128,11 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 {
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
-	// build the texture
-//	this._canvasCtor();
 	// build this._container
 	var bodyW	= 100;
+
+	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
+
 
 	this._container	= new THREE.Object3D();
 
@@ -136,10 +152,10 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5
 			//					, map : this.texture } ),
 			new THREE.MeshPhongMaterial({
-				ambient		: this._colorType.phongAmbient,
-				color		: this._colorType.phongColor,
-				specular	: this._colorType.phongSpecular,
-				shininess	: this._colorType.phongShininess,
+				ambient		: colorType.phongAmbient,
+				color		: colorType.phongColor,
+				specular	: colorType.phongSpecular,
+				shininess	: colorType.phongShininess,
 				map		: this.texture
 			})
 
@@ -188,7 +204,8 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 
 WebyMaze.Object3dPacky.prototype._buildTexture	= function()
 {
-	var isTwitterName	= this._username && this._username.charAt('@') === '@';
+	var username		= this._nameStr();
+	var isTwitterName	= username && username.charAt('@') === '@';
 	if( isTwitterName ){
 		this._twitterAvatarLoad();
 	}else{
@@ -202,12 +219,11 @@ WebyMaze.Object3dPacky.prototype._buildTexture	= function()
 */
 WebyMaze.Object3dPacky.prototype._twitterAvatarLoad	= function()
 {
-	console.log("loadavatar", this._username)
-	// keep default avatar if it is a guest
-	console.assert( this._username.match(/^guest/) === null );
+	var username	= this._nameStr();
+	console.log("loadavatar", username)
 
 	// 
-	var twitterName	= this._username;
+	var twitterName	= username;
 	var apiUrl	= 'http://twitter.com/users/'+twitterName+'.json?callback=?';
 	jQuery.getJSON(apiUrl, function(data){
 		// here the image from twitter is 48x48 and ends with _normal.png
@@ -221,7 +237,7 @@ WebyMaze.Object3dPacky.prototype._twitterAvatarLoad	= function()
 		// - http://a1.twimg.com/profile_images/764871885/yo_normal.jpg
 		// - http://a1.twimg.com/profile_images/764871885/yo_bigger.jpg
 		imgUrl		= imgUrl.replace('_normal', '_bigger');
-		console.log("avatar from", this._username, "is", imgUrl)
+		console.log("avatar from", username, "is", imgUrl)
 		
 		imgUrl	= "redir?url="+imgUrl;
 		
@@ -240,6 +256,7 @@ WebyMaze.Object3dPacky.prototype._twitterAvatarLoad	= function()
 */
 WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 {
+	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
 	var canvas	= this.canvas;
 	var w		= canvas.width;
 	var ctx		= canvas.getContext( '2d' );
@@ -249,7 +266,7 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 	var avatarDy	= -w/16;
 	
 	// clear the previous texture
-	ctx.fillStyle = this._colorType.textureTwitterFillStyle;
+	ctx.fillStyle	= colorType.textureTwitterFillStyle;
 	ctx.fillRect(0, 0, w, w);
 
 	// draw one half
@@ -263,7 +280,7 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 	ctx.drawImage(img, -avatarW/2, -avatarH/2, avatarW, avatarH)
 	ctx.restore();
 	
-	var textData	= this._username
+	var textData	= this._nameStr();
 	ctx.save();
 	ctx.translate(w/2, w/2)
 	//ctx.font	= "15px Arial";
@@ -288,14 +305,16 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 */
 WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
 {
-	var w	= this.canvas.width;
-	var ctx	= this.canvas.getContext( '2d' );
+	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
+	var username	= this._nameStr();
+	var w		= this.canvas.width;
+	var ctx		= this.canvas.getContext( '2d' );
 	// clear the previous texture
-	ctx.fillStyle = this._colorType.textureSmileyFillStyle;
+	ctx.fillStyle	= colorType.textureSmileyFillStyle;
 	ctx.fillRect(0, 0, w, w);
 
 	THREEx.Texture.Smiley.happy(this.canvas);
-	THREEx.Texture.Smiley.textOnBack(this.canvas, 'Packy');
+	THREEx.Texture.Smiley.textOnBack(this.canvas, username);
 
 	// mark this texture as "needsUpdate"
 	this.texture.needsUpdate = true;

@@ -14,7 +14,7 @@ WebyMaze.PlayerCli	= function(){
 	this.dirtyEnergy= false;
 
 	this._object3d	= new WebyMaze.Object3dPacky({
-		username	: "guest-9999999"
+		appearance	: "happy-yellow-Packy"
 	});
 }
 
@@ -37,7 +37,7 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 
 	if(this.username != ctxTick.username ){
 		this.username	= ctxTick.username
-		this._object3d.setUsername(this.username);
+		this._object3d.setAppearance('happy-yellow-'+this.username);
 	}
 	if(this.score != ctxTick.score){
 		this.score	= ctxTick.score

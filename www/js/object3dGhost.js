@@ -54,16 +54,15 @@ WebyMaze.Object3dGhost.prototype.dirty	= function(val)
 //////////////////////////////////////////////////////////////////////////////////
 
 
-WebyMaze.Object3dGhost.prototype.textureType	= function()
+WebyMaze.Object3dGhost.prototype._textureType	= function()
 {
 	return this.appearance.match(/^(.*)-(.*)/)[1];
 }
 
-WebyMaze.Object3dGhost.prototype.colorStr	= function()
+WebyMaze.Object3dGhost.prototype._colorStr	= function()
 {
 	return this.appearance.match(/^(.*)-(.*)/)[2];
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
@@ -73,13 +72,13 @@ WebyMaze.Object3dGhost.prototype.colorStr	= function()
 
 WebyMaze.Object3dGhost.prototype._containerCtor	= function()
 {
-	var textureType	= this.textureType();
+	var _textureType	= this._textureType();
 
-	if( textureType == 'happy' ){
+	if( _textureType == 'happy' ){
 		this._containerCtorGhost();
-	}else if( textureType == 'hurt' ){
+	}else if( _textureType == 'hurt' ){
 		this._containerCtorGhost();
-	}else if( textureType == 'eyes' ){
+	}else if( _textureType == 'eyes' ){
 		this._containerCtorEyes();
 	}else console.assert(false, 'unknown appearance '+this.appearance);
 
@@ -88,25 +87,25 @@ WebyMaze.Object3dGhost.prototype._containerCtor	= function()
 
 WebyMaze.Object3dGhost.prototype._containerCtorGhost	= function()
 {
-	var textureType	= this.textureType();
-	var colorStr	= this.colorStr();
-	if( colorStr === 'red' ){
+	var _textureType	= this._textureType();
+	var _colorStr	= this._colorStr();
+	if( _colorStr === 'red' ){
 		var textOnBack	= "Blinky";
 		var color	= 0x5500aa;
 		var ambient	= 0xDC143C;		
-	}else if( colorStr === 'pink' ){
+	}else if( _colorStr === 'pink' ){
 		var textOnBack	= "Pinky";
 		var color	= 0x5500aa;
 		var ambient	= 0xff8080;		
-	}else if( colorStr === 'orange' ){
+	}else if( _colorStr === 'orange' ){
 		var textOnBack	= "Clyde";
 		var color	= 0x5500aa;
 		var ambient	= 0xFF4500;		
-	}else if( colorStr === 'lightblue' ){
+	}else if( _colorStr === 'lightblue' ){
 		var textOnBack	= "Inky";
 		var color	= 0x5500aa;
 		var ambient	= 0x3DC5CC;
-	}else if( colorStr === 'blue' ){
+	}else if( _colorStr === 'blue' ){
 		var color	= 0x0044aa;
 		var ambient	= 0x00a0FF;
 	}else	console.assert(false);
@@ -115,7 +114,7 @@ WebyMaze.Object3dGhost.prototype._containerCtorGhost	= function()
 	this.canvas		= document.createElement('canvas');
 	this.canvas.width	= this.canvas.height	= 256;
 	this.texture		= new THREE.Texture(this.canvas);
-	THREEx.Texture.Smiley[textureType](this.canvas);
+	THREEx.Texture.Smiley[_textureType](this.canvas);
 	if( textOnBack )	THREEx.Texture.Smiley.textOnBack(this.canvas, textOnBack );
 	this.texture.needsUpdate = true;
 

@@ -25,6 +25,11 @@ WebyMaze.VisualFxEmergencyLight	= function(opts)
 	light.position.y = position.y;
 	light.position.z = position.z;
 
+/**
+ * make a pool of pointLight at the begining
+ * - object3d pool ?
+*/
+
 	this._container	= light;
 }
 
