@@ -9,12 +9,15 @@ WebyMaze.Object3dPacky	= function(opts)
 	this._appearance= opts.appearance	|| console.assert(false);
 
 	// build the canvas + texture
-	this.canvasW	= 256;
-	this.canvas	= document.createElement('canvas');
-	this.canvas.width	= this.canvas.height	= this.canvasW;
-	this.texture	= new THREE.Texture(this.canvas);
-
+	this._canvasW	= 256;
+	this._canvas	= document.createElement('canvas');
+	this._canvas.width	= this._canvasW;
+	this._canvas.height	= this._canvasW;
+	this._texture	= new THREE.Texture(this._canvas);
 	this._buildTexture();
+
+
+	this._container	= new THREE.Object3D();
 	this._containerCtor();	
 }
 
@@ -90,6 +93,9 @@ WebyMaze.Object3dPacky.colorTypes.blue= {
 WebyMaze.Object3dPacky.prototype.setAppearance	= function(appearance)
 {
 	this._appearance	= appearance;
+
+	//this._containerCtor();	
+
 console.log("setAppearance", this._appearance)
 	this._buildTexture();
 }
@@ -126,14 +132,12 @@ WebyMaze.Object3dPacky.prototype.dirty		= function(val)
 
 WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 {
-	// determine if renderer is webGl or not
-	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
+	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
 	// build this._container
 	var bodyW	= 100;
-
-	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
 	
-	this._container	= new THREE.Object3D();
+	// this._container MUST have been created
+	console.assert( this._container );
 
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
@@ -146,16 +150,16 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
-			//new THREE.MeshLambertMaterial( { map: this.texture } ),
-			//new THREE.MeshBasicMaterial( { map: this.texture } ),
+			//new THREE.MeshLambertMaterial( { map: this._texture } ),
+			//new THREE.MeshBasicMaterial( { map: this._texture } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5
-			//					, map : this.texture } ),
+			//					, map : this._texture } ),
 			new THREE.MeshPhongMaterial({
 				ambient		: colorType.phongAmbient,
 				color		: colorType.phongColor,
 				specular	: colorType.phongSpecular,
 				shininess	: colorType.phongShininess,
-				map		: this.texture
+				map		: this._texture
 			})
 
 			//new THREE.MeshPhongMaterial({
@@ -164,24 +168,27 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 			//	specular	: this._colorType.phongSpecular,
 			//	shininess	: this._colorType.phongShininess
 			//}),
-			//new THREE.MeshBasicMaterial( { map: this.texture } )
+			//new THREE.MeshBasicMaterial( { map: this._texture } )
 		];
 	}else{
 		//var geometry	= new THREE.Sphere( bodyW/2, 16, 8 );
 		//var geometry	= new THREE.Cube( bodyW, bodyW/2, bodyW/2 );
 		var geometry	= new THREE.Cube( bodyW*0.5, bodyW*0.5, bodyW*0.5, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
+		var geometry	= new THREE.Cylinder( 8, bodyW*0.1, bodyW/3, bodyW/2, 0, bodyW/2);
+
 		var material	= [
 			new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.FlatShading } ),
 			
-			//new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.flatShading } ),
+			//new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.FlatShading } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xaf5000, color: 0xef9000, specular: 0x0088aa, shininess: 5 } ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xffa000, color: 0x999900, specular: 0x000000, shininess: 5 } ),
-			//new THREE.MeshLambertMaterial( { map: this.texture } ),
+			//new THREE.MeshLambertMaterial( { map: this._texture } ),
 		];		
 	}
 
 	var mesh	= new THREE.Mesh( geometry, material );
+	mesh.rotation.y	= - 90 * ( Math.PI / 180 );
 	this._container.addChild( mesh );
 	
 	// do the shaddow
@@ -256,7 +263,7 @@ WebyMaze.Object3dPacky.prototype._twitterAvatarLoad	= function()
 WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 {
 	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
-	var canvas	= this.canvas;
+	var canvas	= this._canvas;
 	var w		= canvas.width;
 	var ctx		= canvas.getContext( '2d' );
 
@@ -291,7 +298,7 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 	ctx.restore();
 
 	// mark this texture as "needsUpdate"
-	this.texture.needsUpdate = true;
+	this._texture.needsUpdate = true;
 }
 
 
@@ -306,17 +313,17 @@ WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
 {
 	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
 	var username	= this._nameStr();
-	var w		= this.canvas.width;
-	var ctx		= this.canvas.getContext( '2d' );
+	var w		= this._canvas.width;
+	var ctx		= this._canvas.getContext( '2d' );
 	// clear the previous texture
 	ctx.fillStyle	= colorType.textureSmileyFillStyle;
 	ctx.fillRect(0, 0, w, w);
 
-	THREEx.Texture.Smiley.happy(this.canvas);
-	THREEx.Texture.Smiley.textOnBack(this.canvas, username);
+	THREEx.Texture.Smiley.happy(this._canvas);
+	THREEx.Texture.Smiley.textOnBack(this._canvas, username);
 
 	// mark this texture as "needsUpdate"
-	this.texture.needsUpdate = true;
+	this._texture.needsUpdate = true;
 }
 
 /**
@@ -325,9 +332,9 @@ WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
 WebyMaze.Object3dPacky.prototype._buildHurtTexture	= function()
 {
 	// 
-	THREEx.Texture.Smiley.hurt(this.canvas);
+	THREEx.Texture.Smiley.hurt(this._canvas);
 
 	// mark this texture as "needsUpdate"
-	this.texture.needsUpdate = true;
+	this._texture.needsUpdate = true;
 }
 

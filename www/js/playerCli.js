@@ -18,8 +18,8 @@ WebyMaze.PlayerCli	= function(){
 	});
 }
 
-WebyMaze.PlayerCli.prototype.destroy	= function(){
-	
+WebyMaze.PlayerCli.prototype.destroy	= function()
+{	
 }
 
 
@@ -28,9 +28,7 @@ WebyMaze.PlayerCli.prototype.destroy	= function(){
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
-	var object3d	= this._container;
-	var object3d	= this._object3d.object3d();
-	
+	var object3d	= this._object3d.object3d();	
 	object3d.position.x	=  ctxTick.position.x;
 	object3d.position.z	=  ctxTick.position.y;
 	object3d.rotation.y	= -ctxTick.rotation.z;

@@ -6,7 +6,8 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.Object3dGhost	= function()
 {
-	this.appearance	= null;
+	this._appearance	= null;
+	this._container		= null;
 }
 
 WebyMaze.Object3dGhost.prototype.destroy	= function(){
@@ -19,15 +20,15 @@ WebyMaze.Object3dGhost.prototype.destroy	= function(){
 
 WebyMaze.Object3dGhost.prototype.getAppearance	= function(appearance)
 {
-	return this.appearance;
+	return this._appearance;
 }
 
 WebyMaze.Object3dGhost.prototype.setAppearance	= function(appearance)
 {
-	if( appearance == this.appearance )	return;
-	console.log("enemey appearance change from ", this.appearance, "to", appearance)
+	if( appearance == this._appearance )	return;
+	console.log("enemey appearance change from ", this._appearance, "to", appearance)
 
-	this.appearance		= appearance;
+	this._appearance	= appearance;
 
 	if( this._container ){
 		console.log("remove the previous _container")
@@ -56,19 +57,17 @@ WebyMaze.Object3dGhost.prototype.dirty	= function(val)
 
 WebyMaze.Object3dGhost.prototype._textureType	= function()
 {
-	return this.appearance.match(/^(.*)-(.*)/)[1];
+	return this._appearance.match(/^(.*)-(.*)/)[1];
 }
 
 WebyMaze.Object3dGhost.prototype._colorStr	= function()
 {
-	return this.appearance.match(/^(.*)-(.*)/)[2];
+	return this._appearance.match(/^(.*)-(.*)/)[2];
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
-
-
 
 WebyMaze.Object3dGhost.prototype._containerCtor	= function()
 {
@@ -80,7 +79,7 @@ WebyMaze.Object3dGhost.prototype._containerCtor	= function()
 		this._containerCtorGhost();
 	}else if( _textureType == 'eyes' ){
 		this._containerCtorEyes();
-	}else console.assert(false, 'unknown appearance '+this.appearance);
+	}else console.assert(false, 'unknown appearance '+this._appearance);
 
 	this._dirtyObj3d	= true;
 }
@@ -121,13 +120,12 @@ WebyMaze.Object3dGhost.prototype._containerCtorGhost	= function()
 	// build this._container
 	var bodyW	= 100;
 
-// TODO lod	
-	this._container	= new THREE.Object3D();
+// TODO lod
+	// create this._container if needed
+	if( this._container === null )	this._container	= new THREE.Object3D();
 
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
-
-
 	// add the Head
 	if( isWebGL ){
 		var geometry	= new THREE.Sphere( bodyW/2, 32, 16 );

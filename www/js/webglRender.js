@@ -121,7 +121,6 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick)
 		visualFx.tick();
 	}.bind(this));
 
-
 	// handle the .obj3d() update for enemy
 	Object.keys(this.enemies).forEach(function(enemyId){
 		var enemy	= this.enemies[enemyId];
@@ -465,8 +464,7 @@ WebyMaze.WebglRender.prototype.screenshotUICtor	= function()
 					type	: "userMessage",
 					data	: {
 						createdAt	: Date.now(),
-						srcUsername	: this.username,
-						text		: 'is looking nice in '+data.imgUrl
+						text		: this.username+' just took this picture ! '+data.imgUrl
 					}
 				})
 			}.bind(this));
