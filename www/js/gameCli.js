@@ -40,20 +40,25 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 console.log("message", message)
 	// determine the dialogSel based on reason
 	var reason	= message.data.reason;
+	var score	= jQuery("#scoreMenuLine span.value").text()
+
 	var dialogSel	= null;
+	var tweetText	= null;
 	if( reason === "noMorePills" ){
 		soundRender.soundFxPlay('win')
 		dialogSel	= '#gameCompletedNoMorePillsDialog';
+		tweetText	= "My pacmaze score is "+score+" !! can you do better ?";
 	}else if( reason === "playerKilled" ){
 		soundRender.soundFxPlay('die')
 		dialogSel	= '#gameCompletedPlayerKilledDialog';
+		tweetText	= "Just had lot of fun with pacmaze. My score is "+score+"! You should check it out!";
 	}else{
 		console.assert(false);
 	}
 
 	// report the score
-	var score	= jQuery("#scoreMenuLine span.value").text()
 	jQuery(dialogSel+" span.score").text(score)
+	jQuery(dialogSel+" div.twitter-share-button").attr('data-text', tweetText);
 	
 	// normal callback
 	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}
@@ -93,13 +98,7 @@ console.log("data", message.data)
 		var text	= data.text;
 		// add a srcUsername if present
 		if( data.srcUsername ){
-			// add a prefix	
-			text	= '> '+text;
-			if( data.srcUsername.match(/^guest/) ){
-				text	= data.srcUsername+' ' + text;
-			}else{
-				text	= '@'+data.srcUsername+' ' + text;
-			}
+			text	= data.srcUsername + ' > ' + text;
 		}else{
 			text	= '* '+text;			
 		}
@@ -144,14 +143,17 @@ console.log("data", message.data)
 	jQuery(element).appendTo('#pageContainer .chatArea ul');
 
 
-	// add current line
+	// if it contains a yfrog.com url, add thumbnails
 	jQuery('a[href^="http://yfrog.com"]', element).each(function(index, element){
 		// build the tips dom elements
-		var thumbUrl	= jQuery(element).attr('href')+':small';
+		var imageUrl	= jQuery(element).attr('href');
+		var thumbUrl	= imageUrl+':small';
+		var projectName	= WebyMaze.ConfigCli.PROJECT;
+		var statusText	= "I playing "+projectName+" at http://" + projectName + ".com :) It is fun and free!! Check it out";
 		var content	= '';
 		content	+= '<div style="position: relative;">';
 		content	+= 	'<div style="bottom: 0px; right: 0px; position: absolute;">'+
-					'<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>'+
+					'<div class="twitter-share-button" data-text="'+statusText+'" data-url="'+imageUrl+'" data-count="none"></div>'+
 				'</div>';
 		content	+= 	'<img src="'+thumbUrl+'" alt="screenshot" />';
 		content	+= '</div>';

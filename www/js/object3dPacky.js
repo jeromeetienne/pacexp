@@ -22,6 +22,9 @@ WebyMaze.Object3dPacky	= function(opts)
 WebyMaze.Object3dPacky.prototype.destroy	= function(){
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+//		colorTypes							//
+//////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.Object3dPacky.colorTypes	= {};
 WebyMaze.Object3dPacky.colorTypes.yellow	= {
@@ -260,7 +263,7 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 	ctx.drawImage(img, -avatarW/2, -avatarH/2, avatarW, avatarH)
 	ctx.restore();
 	
-	var textData	= "@"+this._username
+	var textData	= this._username
 	ctx.save();
 	ctx.translate(w/2, w/2)
 	//ctx.font	= "15px Arial";
@@ -288,8 +291,8 @@ WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
 	var w	= this.canvas.width;
 	var ctx	= this.canvas.getContext( '2d' );
 	// clear the previous texture
-	//ctx.fillStyle = this._colorType.textureSmileyFillStyle;
-	//ctx.fillRect(0, 0, w, w);
+	ctx.fillStyle = this._colorType.textureSmileyFillStyle;
+	ctx.fillRect(0, 0, w, w);
 
 	THREEx.Texture.Smiley.happy(this.canvas);
 	THREEx.Texture.Smiley.textOnBack(this.canvas, 'Packy');

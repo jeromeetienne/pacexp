@@ -97,7 +97,7 @@ WebyMaze.Object3dGhost.prototype._containerCtorGhost	= function()
 	}else if( colorStr === 'pink' ){
 		var textOnBack	= "Pinky";
 		var color	= 0x5500aa;
-		var ambient	= 0xff8080;
+		var ambient	= 0xff8080;		
 	}else if( colorStr === 'orange' ){
 		var textOnBack	= "Clyde";
 		var color	= 0x5500aa;
