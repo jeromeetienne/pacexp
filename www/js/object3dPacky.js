@@ -132,8 +132,7 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 	var bodyW	= 100;
 
 	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
-
-
+	
 	this._container	= new THREE.Object3D();
 
 	// determine if renderer is webGl or not
