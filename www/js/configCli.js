@@ -117,25 +117,31 @@ console.log("super configcli", WebyMaze.ConfigCli.webglRender);
 WebyMaze.ConfigCli.sample.cameraRender	= {
 	/** cameraStates stats for the camera */
 	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
-					'behindPlayer', 'fixedZenith', 'fixedGrazing']
+					'behindPlayer', 'fixedZenith', 'fixedGrazing'],
+	/** tweenDelay	delay between cameraState change */
+	tweenDelay	: 1500
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.cameraRender	= {
 	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
-					'behindPlayer', 'fixedZenith', 'fixedGrazing']
+					'behindPlayer', 'fixedZenith', 'fixedGrazing'],
+	tweenDelay	: 1500
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.cameraRender	= {
 	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
-					'behindPlayer', 'fixedZenith', 'fixedGrazing']
+					'behindPlayer', 'fixedZenith', 'fixedGrazing'],
+	tweenDelay	: 1500
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.cameraRender	= {
-	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer']
+	cameraStates	: ['inplayer', 'facePlayer'],
+	tweenDelay	: 1000
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.cameraRender	= {
-	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer']
+	cameraStates	: ['inplayer', 'facePlayer'],
+	tweenDelay	: 1000
 };
 
 WebyMaze.ConfigCli.cameraRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].cameraRender;

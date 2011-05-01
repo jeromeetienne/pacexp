@@ -16,6 +16,11 @@ WebyMaze.CameraRender	= function(){
 	
 	this.state	= null;
 	
+
+	// read the game config
+	this._config	= WebyMaze.ConfigCli.cameraRender;
+	
+
 	// bind the cameraSwitch keys
 	this.$keydownCallback	= this.onKeyDown.bind(this)
 	document.addEventListener( 'keydown', this.$keydownCallback, false);
@@ -142,7 +147,8 @@ WebyMaze.CameraRender.prototype.changeState	= function(state)
 		var time= dist/spd;
 		// TODO the time must NOT linearly proportional
 		// - dist go from 13000/ 40000/ 900 
-		time	= 1500;
+		time	= 1000;	// TODO tune it at 1000 for buddymaze
+		time	= this._config.tweenDelay;
 		console.log("tween cam dist", dist)
 		this._tween	= new THREEx.TWEEN.Tween(t1).to(t2, time)
 					.easing(TWEEN.Easing.Quadratic.EaseInOut)
