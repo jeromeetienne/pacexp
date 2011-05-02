@@ -15,22 +15,26 @@ var WebyMaze	= WebyMaze || {};
 */
 WebyMaze.VisualFxEmergencyLight	= function(opts)
 {
-	var position	= opts.position		|| console.assert(false);
+	this._rangeX	= opts.rangeX		|| console.assert(false);
+	this._rangeY	= opts.rangeY		|| console.assert(false);
+	this._speedX	= opts.speedX		|| console.assert(false);
+	this._speedY	= opts.speedY		|| console.assert(false);
+	this._speedI	= opts.speedI		|| console.assert(false);
 	this._timeToLive= opts.timeToLive	|| 1*1000;
 
 
 	// add a pointLight to experiment with it
-	var light	= new THREE.PointLight( 0xFF0000, 10, 1500 );
-	light.position.x = position.x;
-	light.position.y = position.y;
-	light.position.z = position.z;
-
+	this._light	= new THREE.PointLight( 0xFFFFFF, 10, 300 );
+	this._light.position.x = 0;
+	this._light.position.y = 50;
+	this._light.position.z = 0;
+	
 /**
  * make a pool of pointLight at the begining
  * - object3d pool ?
 */
 
-	this._container	= light;
+	this._container	= this._light;
 }
 
 /**
@@ -55,6 +59,33 @@ WebyMaze.VisualFxEmergencyLight.prototype.tick	= function()
 		var age		= present - this._createdAt;
 		if( age > this._timeToLive )	this.trigger('autodestroy');		
 	}
+	
+	var t	= Date.now() / 1000 * Math.PI;
+	var dt	= Math.PI/2;
+	dt	= 0;
+	this._light.position.x	= Math.sin(this._speedX*t) * this._rangeX;
+	this._light.position.z	= Math.sin(this._speedY*t+dt) * this._rangeY;
+	
+	//console.log("color", this._light.color);
+	
+	
+
+	//var r	= Math.sin(8*t);
+	//this._light.color.setRGB(c*0.4+0.6, 0.0, 0.0)
+	//this._light.color.setRGB(c*0.5+0.5, 0.0, 0.0)
+
+	var i	= Math.sin(this._speedI*t);
+//console.log("i", i)
+	if( i > 0 ){
+		i	= Math.abs(i)*200;
+		this._light.color.setRGB(1, 0.05, 0.05)
+	}else{
+		i	= Math.abs(i)*200;
+		this._light.color.setRGB(0.05, 0.05, 1.0)
+	}
+
+
+	this._light.intensity	= i;
 }
 
 /**

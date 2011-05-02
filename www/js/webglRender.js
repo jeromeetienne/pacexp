@@ -35,7 +35,6 @@ WebyMaze.WebglRender	= function(opts){
 	this.visualFxs	= {};
 
 
-
 	console.log("ctxInit", ctxInit)
 	// init this.mazeCli
 	this.mazeCli	= new WebyMaze.MazeCli({
@@ -43,6 +42,48 @@ WebyMaze.WebglRender	= function(opts){
 	})
 	// update the global scene with this.mazeCli
 	sceneContainer.addChild( this.mazeCli.obj3d() );
+
+(function(){	
+	var bodyId	= (Math.random()*99999).toString(36);
+	var visualFx	= new WebyMaze.VisualFxEmergencyLight({
+		rangeX	: this.mazeCli.mapW()*100/2,
+		rangeY	: this.mazeCli.mapH()*100/2,
+		speedX	: 0.2,
+		speedY	: 0.8,
+		speedI	: 0.8
+	});
+	scene.addLight( visualFx.obj3d() );
+	// add this visualFx in this.visualFxs
+	this.visualFxs[bodyId]	= visualFx;	
+}.bind(this))();
+
+(function(){	
+	var bodyId	= (Math.random()*99999).toString(36);
+	var visualFx	= new WebyMaze.VisualFxEmergencyLight({
+		rangeX	: this.mazeCli.mapW()*100/2,
+		rangeY	: this.mazeCli.mapH()*100/2,
+		speedX	: 0.6*2,
+		speedY	: -0.3*2,
+		speedI	: 0.8
+	});
+	scene.addLight( visualFx.obj3d() );
+	// add this visualFx in this.visualFxs
+	this.visualFxs[bodyId]	= visualFx;	
+}.bind(this))();
+
+(function(){
+	var bodyId	= (Math.random()*99999).toString(36);
+	var visualFx	= new WebyMaze.VisualFxEmergencyLight({
+		rangeX	: this.mazeCli.mapW()/2*100/2,
+		rangeY	: this.mazeCli.mapH()/2*100/2,
+		speedX	:  0.45,
+		speedY	: -0.35,
+		speedI	: 0.8
+	});
+	scene.addLight( visualFx.obj3d() );
+	// add this visualFx in this.visualFxs
+	this.visualFxs[bodyId]	= visualFx;	
+}.bind(this))();
 
 	// init CameraRender
 	this.cameraRender	= new WebyMaze.CameraRender();
@@ -268,7 +309,7 @@ WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 		var visualFx	= new WebyMaze.VisualFxEmergencyLight({
 			position	: position
 		});
-		//scene.addLight( visualFx.obj3d() );	
+		scene.addLight( visualFx.obj3d() );	
 	}else	console.assert(false);
 
 	visualFx.bind('autodestroy', function(){

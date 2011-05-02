@@ -60,12 +60,10 @@ function init()
 	//scene.fog = new THREE.FogExp2( 0x87CEEB, 0.00025*3 );
 	//scene.fog = new THREE.FogExp2( 0x333, 0.001 );
 
-	//scene.addObject( wmMaze.buildObject3d() );
+	//scene.addLight( new THREE.AmbientLight( 0xAAAAAA ) );
+	scene.addLight( new THREE.AmbientLight( 0x222222 ) );
+
 	//
-	//scene.addObject( wmPlayer.buildObject3d() );
-
-	scene.addLight( new THREE.AmbientLight( 0xAAAAAA ) );
-
 	var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
 	directionalLight.position.x = -0;
 	directionalLight.position.y = 0.3;
@@ -74,18 +72,18 @@ function init()
 	scene.addLight( directionalLight );
 
 	// add a pointLight to experiment with it
-	var pointLight1	= new THREE.PointLight( 0xaa44aa, 10, 1500 );
-	scene.addLight( pointLight1 );	
-	pointLight1.position.x = 0;
-	pointLight1.position.y = 1000;
-	pointLight1.position.z = 0;
+	//var pointLight1	= new THREE.PointLight( 0xaa44aa, 10, 1500 );
+	//scene.addLight( pointLight1 );	
+	//pointLight1.position.x = 0;
+	//pointLight1.position.y = 1000;
+	//pointLight1.position.z = 0;
 
-	// add a pointLight to experiment with it
-	var pointLight2	= new THREE.PointLight( 0x44FF44, 10, 1500 );
-	scene.addLight( pointLight2 );	
-	pointLight2.position.x = 11*100;
-	pointLight2.position.y = 1000;
-	pointLight2.position.z = 11*100;
+	//// add a pointLight to experiment with it
+	//var pointLight2	= new THREE.PointLight( 0x44FF44, 10, 1500 );
+	//scene.addLight( pointLight2 );	
+	//pointLight2.position.x = 11*100;
+	//pointLight2.position.y = 1000;
+	//pointLight2.position.z = 11*100;
 
 	// if url?render=canvas then render in canvas
 	if( jQuery.url.param('render') == 'canvas' ){
