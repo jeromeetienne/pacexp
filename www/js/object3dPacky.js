@@ -65,7 +65,7 @@ WebyMaze.Object3dPacky.colorTypes.orange= {
 	textureSmileyFillStyle	: "#ff99ff"
 };
 
-WebyMaze.Object3dPacky.colorTypes.lightBlue= {
+WebyMaze.Object3dPacky.colorTypes.lightblue= {
 	phongAmbient		: 0x3DC5CC,
 	phongColor		: 0x5500aa,
 	phongSpecular		: 0x555555,
@@ -88,7 +88,7 @@ WebyMaze.Object3dPacky.colorTypes.blue= {
 //////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Getter/Setter for username
+ * Setter for this._appearance
 */
 WebyMaze.Object3dPacky.prototype.setAppearance	= function(appearance)
 {
@@ -100,6 +100,13 @@ console.log("setAppearance", this._appearance)
 	this._buildTexture();
 }
 
+/**
+ * Getter for this._appearance
+*/
+WebyMaze.Object3dPacky.prototype.getAppearance	= function(appearance)
+{
+	return this._appearance;
+}
 
 WebyMaze.Object3dPacky.prototype._textureType	= function()
 {
@@ -314,29 +321,18 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
 {
 	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
+	var textureType	= this._textureType();
 	var username	= this._nameStr();
 	var w		= this._canvas.width;
 	var ctx		= this._canvas.getContext( '2d' );
+console.log("colorStr=",this._colorStr(), "textureType", textureType);
 	// clear the previous texture
 	ctx.fillStyle	= colorType.textureSmileyFillStyle;
 	ctx.fillRect(0, 0, w, w);
 
-	THREEx.Texture.Smiley.happy(this._canvas);
+	THREEx.Texture.Smiley[textureType](this._canvas);
 	THREEx.Texture.Smiley.textOnBack(this._canvas, username);
 
 	// mark this texture as "needsUpdate"
 	this._texture.needsUpdate = true;
 }
-
-/**
- * @param {DOMElement} img the <image> to map on the canvas for the texture
-*/
-WebyMaze.Object3dPacky.prototype._buildHurtTexture	= function()
-{
-	// 
-	THREEx.Texture.Smiley.hurt(this._canvas);
-
-	// mark this texture as "needsUpdate"
-	this._texture.needsUpdate = true;
-}
-

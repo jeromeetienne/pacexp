@@ -6,10 +6,13 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.EnemyCli	= function()
 {
-	this._object3d	= new WebyMaze.Object3dGhost();
-	//this._object3d	= new WebyMaze.Object3dPacky({
-	//	username	: "guest"
-	//});
+	if( false ){
+		this._object3d	= new WebyMaze.Object3dGhost();
+	}else{
+		this._object3d	= new WebyMaze.Object3dPacky({
+			appearance	: "happy-yellow-Packy"
+		});		
+	}
 }
 
 WebyMaze.EnemyCli.prototype.destroy	= function(){
@@ -22,10 +25,18 @@ WebyMaze.EnemyCli.prototype.destroy	= function(){
 
 WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick)
 {
-	if( this._object3d.getAppearance() != ctxTick.appearance ){
-		console.log("enemey appearance change from ", this.appearance, "to", ctxTick.appearance)
-		this._object3d.setAppearance( ctxTick.appearance );
-	}
+	if( this._object3d instanceof WebyMaze.Object3dGhost ){
+		if( this._object3d.getAppearance() != ctxTick.appearance ){
+			console.log("enemey appearance change from ", this._object3d.getAppearance(), "to", ctxTick.appearance)
+			this._object3d.setAppearance( ctxTick.appearance );
+		}
+	}else if( this._object3d instanceof WebyMaze.Object3dPacky ){
+		if( this._object3d.getAppearance() != ctxTick.appearance+"-Packy" ){
+			console.log("enemey appearance change from ", this._object3d.getAppearance(), "to", ctxTick.appearance)
+			this._object3d.setAppearance( ctxTick.appearance+"-Packy" );
+		}
+	}else	console.assert(false);
+
 
 	var object3d	= this._object3d.object3d();
 	object3d.position.x	=  ctxTick.position.x;

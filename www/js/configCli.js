@@ -288,8 +288,8 @@ WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
 	showRoof	: true,
 	wallTextureUrl	: 'images/tmp/tex0.jpg',
 	//wallTextureUrl	: 'images/tmp/PaddedOrangeWall.png',
-	//groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
-	groundTextureUrl: 'images/tmp/EmbossedWall.png',
+	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
+	//groundTextureUrl: 'images/tmp/EmbossedWall.png',
 	//groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
 	wallHRatio	: 5/3
 };
