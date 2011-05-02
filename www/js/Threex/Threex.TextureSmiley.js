@@ -4,6 +4,8 @@ if(typeof THREEx.Texture === "undefined")	THREEx.Texture	= {};
 
 /**
  * - depends on a lib excanvas which isnt there
+ * - to get idea on how to draw
+ * http://www.wpclipart.com/smiley/glossy_smiley/glossy_pink_smileys/glossy_smiley_pink_angry.png.html
 */
 THREEx.Texture.Smiley	= {
 	clear	: function(canvas){
