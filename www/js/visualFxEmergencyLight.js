@@ -24,7 +24,7 @@ WebyMaze.VisualFxEmergencyLight	= function(opts)
 
 
 	// add a pointLight to experiment with it
-	this._light	= new THREE.PointLight( 0xFFFFFF, 10, 300 );
+	this._light	= new THREE.PointLight( 0xFFFFFF, 10, 500);
 	this._light.position.x = 0;
 	this._light.position.y = 50;
 	this._light.position.z = 0;
@@ -77,16 +77,14 @@ WebyMaze.VisualFxEmergencyLight.prototype.tick	= function()
 	var i	= Math.sin(this._speedI*t);
 //console.log("i", i)
 	if( i > 0 ){
-		i	= Math.abs(i)*200;
+		i	= Math.abs(i)*100;
 		this._light.color.setRGB(1, 0.05, 0.05)
 	}else{
-		i	= Math.abs(i)*200;
+		i	= Math.abs(i)*100;
 		this._light.color.setRGB(0.05, 0.05, 1.0)
 	}
-
-
 	this._light.intensity	= i;
-}
+ }
 
 /**
  * Return the object3d containing this one
