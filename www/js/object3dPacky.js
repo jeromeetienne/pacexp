@@ -21,7 +21,8 @@ WebyMaze.Object3dPacky	= function(opts)
 	this._containerCtor();	
 }
 
-WebyMaze.Object3dPacky.prototype.destroy	= function(){
+WebyMaze.Object3dPacky.prototype.destroy	= function()
+{
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -92,11 +93,20 @@ WebyMaze.Object3dPacky.colorTypes.blue= {
 */
 WebyMaze.Object3dPacky.prototype.setAppearance	= function(appearance)
 {
+	if( appearance.match(/^eyes-/) )	appearance	= "hurt-yellow-Ouch!";
+	
+	// if appearance didnt change, do nothing
+	if( appearance === this._appearance )	return;
+
 	this._appearance	= appearance;
 
-	//this._containerCtor();	
+	if( this._container ){
+		console.log("remove the previous _container")
+		// TODO ugly.... FIXME
+		scene.removeObject(this._container)
+	}
+	this._containerCtor();
 
-console.log("setAppearance", this._appearance)
 	this._buildTexture();
 }
 
@@ -130,7 +140,8 @@ WebyMaze.Object3dPacky.prototype.object3d	= function()
 
 WebyMaze.Object3dPacky.prototype.dirty		= function(val)
 {
-	return false;
+	if( typeof val !== 'undefined' )	this._dirtyObj3d	= val;
+	return this._dirtyObj3d;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

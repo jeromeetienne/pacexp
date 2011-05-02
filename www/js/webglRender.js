@@ -113,8 +113,7 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 
 WebyMaze.WebglRender.prototype._visualFxCtor	= function()
 {
-	var visualFxInsert	= function(visualFx)
-	{
+	var visualFxInsert	= function(visualFx){
 		var bodyId	= (Math.random()*99999).toString(36);
 		// add the light to the scene
 		scene.addLight( visualFx.obj3d() );

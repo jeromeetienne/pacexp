@@ -296,3 +296,31 @@ WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
 
 WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].mazeCli;
 //WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli['pacmaze']['dev'].mazeCli;
+
+//////////////////////////////////////////////////////////////////////////////////
+//		enemyCli								//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.ConfigCli.sample.enemyCli	= {
+	/** object3d the type of object3d to visualize  */
+	object3d	: 'ghost'
+};
+
+WebyMaze.ConfigCli.pacmaze.prod.enemyCli	= {
+	object3d	: 'ghost'
+};
+
+WebyMaze.ConfigCli.pacmaze.dev.enemyCli	= {
+	object3d	: 'ghost'
+};
+
+WebyMaze.ConfigCli.tweetymaze.prod.enemyCli	= {
+	object3d	: 'packy'
+};
+
+WebyMaze.ConfigCli.tweetymaze.dev.enemyCli	= {
+	object3d	: 'packy'
+};
+
+WebyMaze.ConfigCli.enemyCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].enemyCli;
+//WebyMaze.ConfigCli.enemyCli	= WebyMaze.ConfigCli['pacmaze']['dev'].enemyCli;

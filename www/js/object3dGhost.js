@@ -8,6 +8,7 @@ WebyMaze.Object3dGhost	= function()
 {
 	this._appearance	= null;
 	this._container		= null;
+	this._dirtyObj3d	= false;
 }
 
 WebyMaze.Object3dGhost.prototype.destroy	= function(){

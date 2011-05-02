@@ -6,13 +6,17 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.EnemyCli	= function()
 {
-	if( false ){
+	// read the game config
+	this._config	= WebyMaze.ConfigCli.enemyCli;
+
+
+	if( this._config.object3d === 'ghost' ){
 		this._object3d	= new WebyMaze.Object3dGhost();
-	}else{
+	}else if( this._config.object3d === 'packy' ){
 		this._object3d	= new WebyMaze.Object3dPacky({
 			appearance	: "happy-yellow-Packy"
 		});		
-	}
+	}else	console.assert(false);
 }
 
 WebyMaze.EnemyCli.prototype.destroy	= function(){
