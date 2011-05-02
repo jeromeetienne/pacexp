@@ -26,6 +26,7 @@ var detailTweetIframeUrl	= function()
 	if( observer )	observer	= '@'+observer;
 	// build iframeUrl
 	var iframeUrl	= urlBase;
+	iframeUrl	= "http://localhost/~jerome/webwork/pacexp/www/";
 	var query	= '';
 	if( observee )	query	+= (query.length?'&':'') + "embedded_observee="+encodeURIComponent(observee);
 	if( observer )	query	+= (query.length?'&':'') + "embedded_observer="+encodeURIComponent(observer);
