@@ -291,7 +291,7 @@ WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
 	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
 	//groundTextureUrl: 'images/tmp/EmbossedWall.png',
 	//groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
-	wallHRatio	: 5/3
+	wallHRatio	: 4/3
 };
 
 WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].mazeCli;
@@ -307,7 +307,7 @@ WebyMaze.ConfigCli.sample.enemyCli	= {
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.enemyCli	= {
-	object3d	: 'ghost'
+	object3d	: 'guost'
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.enemyCli	= {

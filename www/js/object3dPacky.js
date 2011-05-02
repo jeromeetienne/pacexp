@@ -93,10 +93,12 @@ WebyMaze.Object3dPacky.colorTypes.blue= {
 */
 WebyMaze.Object3dPacky.prototype.setAppearance	= function(appearance)
 {
+	console.log("SetAppearance from ", this._appearance, "to", appearance);
 	if( appearance.match(/^eyes-/) )	appearance	= "hurt-yellow-Ouch!";
 	
 	// if appearance didnt change, do nothing
 	if( appearance === this._appearance )	return;
+
 
 	this._appearance	= appearance;
 
@@ -336,7 +338,8 @@ WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
 	var username	= this._nameStr();
 	var w		= this._canvas.width;
 	var ctx		= this._canvas.getContext( '2d' );
-console.log("colorStr=",this._colorStr(), "textureType", textureType);
+	console.log("colorStr",this._colorStr(), "textureType", textureType);
+
 	// clear the previous texture
 	ctx.fillStyle	= colorType.textureSmileyFillStyle;
 	ctx.fillRect(0, 0, w, w);

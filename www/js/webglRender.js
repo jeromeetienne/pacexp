@@ -127,7 +127,7 @@ WebyMaze.WebglRender.prototype._visualFxCtor	= function()
 		}.bind(this))
 	}.bind(this);
 
-if(true){	
+if(false){	
 	visualFxInsert(new WebyMaze.VisualFxAmbientLight({
 		color	: 0xaaaaaa
 	}));
