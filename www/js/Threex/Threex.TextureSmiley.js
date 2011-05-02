@@ -133,6 +133,77 @@ THREEx.Texture.Smiley	= {
 	},
 
 	/**
+	 * display an angry smiley on a canvas for texture
+	*/
+	angry	: function(canvas){
+		var w		= canvas.width;
+		var ctx		= canvas.getContext( '2d' );
+		
+		var eyeDx	= w/16;
+		var eyeDy	= w/10;
+	
+		var eyeW	= w/12;
+		var eyeH	= w/10;
+		
+		var mouthW	= w/12;
+		var mouthDy	= w/10;
+		var mouthRbeg	= 180 * Math.PI / 180;
+		var mouthRend	= 0;
+			
+		ctx.fillStyle = "rgb(0,0,0)";
+		
+		var eyeBrowW	= w/6;
+		var eyeBrowH	= w/20;
+		var eyeBrowDx	= w/16;
+		var eyeBrowDy	= w/5;
+		var eyeBrowRot	= 30*Math.PI/180;
+		
+		// right eyebrow
+		ctx.save();
+		ctx.translate(w/2 - w/2, w/2);
+		ctx.translate(eyeBrowDx, -eyeBrowDy);
+		ctx.rotate(-eyeBrowRot)
+		ctx.fillRect( -eyeBrowW/2, -eyeBrowH/2, eyeBrowW, eyeBrowH);
+		ctx.restore();
+	
+		//// right eyes
+		ctx.save();
+		ctx.translate(w/2 - w/2, w/2);
+		ctx.fillEllipse(eyeDx - eyeW/2, - eyeDy - eyeH/2, eyeW, eyeH);
+		ctx.restore();
+
+		// left eyebrow
+		ctx.save();
+		ctx.translate(w/2 + w/2, w/2);
+		ctx.translate(-eyeBrowDx, -eyeBrowDy);
+		ctx.rotate(+eyeBrowRot)
+		ctx.fillRect( -eyeBrowW/2, -eyeBrowH/2, eyeBrowW, eyeBrowH);
+		ctx.restore();
+	
+		// left eyes
+		ctx.save();
+		ctx.translate(w/2 + w/2, w/2);
+		ctx.fillEllipse(- eyeDx - eyeW/2, - eyeDy - eyeH/2, eyeW, eyeH);
+		ctx.restore();
+		
+		// right part of the mouth
+		ctx.save();
+		ctx.beginPath();
+		ctx.translate(w/2 - w/2, w/2);
+		ctx.arc(0, mouthDy, mouthW, mouthRbeg, mouthRend, false)
+		ctx.fill();
+		ctx.restore();	
+	
+		// left part of the mouth
+		ctx.save();
+		ctx.beginPath();
+		ctx.translate(w/2 + w/2, w/2);
+		ctx.arc(0, mouthDy, mouthW, mouthRbeg, mouthRend, false)
+		ctx.fill();
+		ctx.restore();
+	},
+
+	/**
 	 * display an happy smiley on a canvas for texture
 	 *
 	 * @param {canvasElement} the canvas where we draw
@@ -214,6 +285,10 @@ THREEx.Texture.Smiley	= {
 	},
 	hurtTexture: function( canvasW, mapping, callback ) {
 		var canvasDrawer	= THREEx.Texture.Smiley.hurt;
+		return THREEx.Texture.Smiley._buildTexture( canvasW, mapping, callback, canvasDrawer );
+	},
+	angryTexture: function( canvasW, mapping, callback ) {
+		var canvasDrawer	= THREEx.Texture.Smiley.angry;
 		return THREEx.Texture.Smiley._buildTexture( canvasW, mapping, callback, canvasDrawer );
 	},
 	pupilTexture: function( canvasW, mapping, callback ) {
