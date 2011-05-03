@@ -85,12 +85,14 @@ WebyMaze.LightPool.prototype.borrow	= function(lightClass)
 	var light	= this._pool[i];
 	// remove the light from this._pool
 	this._pool.splice(i,1);
+console.log("borrow ", lightClass, " light", light)
 	// return the light itself
 	return light
 }
 
 WebyMaze.LightPool.prototype.giveback	= function(light)
 {
+console.log("give back light", light)
 	// switch off this light
 	this._switchOff(light);
 	// put the light in the pool

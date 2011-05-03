@@ -47,6 +47,8 @@ WebyMaze.WebglRender	= function(opts){
 	this._lightingRender	= new WebyMaze.LightingRender({
 		mazeCli	: this.mazeCli
 	});
+	var firstLightingState	= this._config.firstLightingState;
+	this._lightingRender.changeState(firstLightingState);
 
 	// init CameraRender
 	this.cameraRender	= new WebyMaze.CameraRender();
@@ -69,7 +71,7 @@ WebyMaze.WebglRender	= function(opts){
 			data	: rotation2ControlType[configRotation][rotationType]
 		})
 	}.bind(this));
-	// init the first state
+	// init this.cameraRender
 	var firstCameraState	= this._config.firstCameraState;
 	this.cameraRender.changeState(firstCameraState);
 	
@@ -246,6 +248,8 @@ WebyMaze.WebglRender.prototype.tickEventHandler	= function(events)
 			this._onPlaySound(event);
 		}else if( event.type === 'showVisualFx' ){
 			this._onShowVisualFx(event);
+		}else if( event.type === 'setLighting' ){
+			this._onSetLighting(event);
 		}else console.assert(false);
 	}.bind(this));
 }
@@ -254,6 +258,12 @@ WebyMaze.WebglRender.prototype._onPlaySound	= function(event)
 {
 	var fxId	 = event.data;
 	soundRender.soundFxPlay(fxId)	
+}
+
+WebyMaze.WebglRender.prototype._onSetLighting	= function(event)
+{
+	var ligthingState	 = event.data;
+	this._lightingRender.changeState(ligthingState);
 }
 
 WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)

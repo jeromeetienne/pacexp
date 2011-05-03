@@ -24,6 +24,8 @@ WebyMaze.AmbientLight	= function(opts)
 */
 WebyMaze.AmbientLight.prototype.destroy	= function()
 {
+	// giveback this._light to this._lightPool
+	this._lightPool.giveback(this._light);	
 }
 
 

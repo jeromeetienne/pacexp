@@ -10,9 +10,11 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.LightingRender	= function(opts)
 {
+	// get variables from parameters
 	this._mazeCli	= opts.mazeCli	|| console.assert(false);
 
 	// init the instance variables
+	this._state	= null;
 	
 	// init this_lightPool
 	this._lightPool	= new WebyMaze.LightPool({
@@ -22,17 +24,20 @@ WebyMaze.LightingRender	= function(opts)
 		nPoint		: 3
 	});
 	this._lights	= [];
-	// init the lighting
-	this._initDay();
-	//this._initEmergency();
 }
 
 WebyMaze.LightingRender.prototype.destroy	= function()
 {
+	this._lightsDtor();
 }
 
+/**
+ * Define all possible LightingStates
+*/
+WebyMaze.CameraRender.LightingStates	= ['day', 'emergency'];
+
 //////////////////////////////////////////////////////////////////////////////////
-//		misc								//
+//		public functions						//
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.LightingRender.prototype.tick	= function()
@@ -42,6 +47,28 @@ WebyMaze.LightingRender.prototype.tick	= function()
 	})
 }
 
+WebyMaze.LightingRender.prototype.changeState	= function(state)
+{
+	// if state is the current one, do nothing
+	if( state === this._state )	return;
+
+	// sanity check - state MUST be in LightingStates
+	console.assert( WebyMaze.CameraRender.LightingStates.indexOf(state) !== -1 );
+	
+	// set the new state
+	this._state	= state;
+	// destroy the old lights
+	this._lightsDtor();
+	// build the new lights
+	if( this._state === 'day' )		this._buildLightingDay();
+	else if( this._state === 'emergency' )	this._buildLightingEmergency();
+	else	console.assert(false);
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//		misc								//
+//////////////////////////////////////////////////////////////////////////////////
+
 WebyMaze.LightingRender.prototype._lightInsert	= function(light)
 {
 	// add this light in this._lights
@@ -49,15 +76,22 @@ WebyMaze.LightingRender.prototype._lightInsert	= function(light)
 	// bind autodestroy
 	light.bind('autodestroy', function(){
 		light.destroy();
-		this._lights.splice(this._lights.indexOf(light), 1);			
+		this._lights.splice(this._lights.indexOf(light), 1);		
 	}.bind(this))	
 }
 
+WebyMaze.LightingRender.prototype._lightsDtor	= function()
+{
+	while( this._lights.length ){
+		var light	= this._lights.shift();
+		light.destroy();		
+	}
+}
 //////////////////////////////////////////////////////////////////////////////////
 //										//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LightingRender.prototype._initDay	= function()
+WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 {
 	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,
@@ -97,7 +131,7 @@ WebyMaze.LightingRender.prototype._initDay	= function()
 	}));
 }
 
-WebyMaze.LightingRender.prototype._initEmergency	= function()
+WebyMaze.LightingRender.prototype._buildLightingEmergency	= function()
 {
 	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,
@@ -136,7 +170,7 @@ WebyMaze.LightingRender.prototype._initEmergency	= function()
 		speedX		:  0.45*3,
 		speedY		: -0.25*3,
 		speedI		: 1.2
-	}));	
+	}));
 }
 
 

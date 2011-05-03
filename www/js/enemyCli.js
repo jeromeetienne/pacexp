@@ -58,9 +58,11 @@ WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick)
 	object3d.rotation.y	= -ctxTick.rotation.z;
 	
 	// attempts to make the ghost bounce
-	var bodyW	= 100;
-	var t		= Date.now() / 1000 * Math.PI;
-	object3d.position.y	= Math.sin(t) * bodyW/2.5 - bodyW/2;
+	if( false ){
+		var bodyW	= 100;
+		var t		= Date.now() / 1000 * Math.PI;
+		object3d.position.y	= Math.sin(t) * bodyW/2.5 - bodyW/2;
+	}
 }
 
 WebyMaze.EnemyCli.prototype.obj3d	= function()
