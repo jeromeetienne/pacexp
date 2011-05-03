@@ -35,7 +35,6 @@ WebyMaze.WebglRender	= function(opts){
 	this.visualFxs	= {};
 
 
-
 	console.log("ctxInit", ctxInit)
 	// init this.mazeCli
 	this.mazeCli	= new WebyMaze.MazeCli({
@@ -44,22 +43,10 @@ WebyMaze.WebglRender	= function(opts){
 	// update the global scene with this.mazeCli
 	sceneContainer.addChild( this.mazeCli.obj3d() );
 
-
-if(false){
-	// init this_lightPool
-	this._lightPool	= new WebyMaze.LightPool({
-		scene		: scene,
-		nAmbient	: 1,
-		nDirectional	: 1,
-		nPoint		: 3
-	});
-	this._visualFxCtor();
-}else{
+	// create this._lightingRender
 	this._lightingRender	= new WebyMaze.LightingRender({
 		mazeCli	: this.mazeCli
 	});
-}
-
 
 	// init CameraRender
 	this.cameraRender	= new WebyMaze.CameraRender();
@@ -116,103 +103,6 @@ if(false){
 */
 WebyMaze.WebglRender.prototype.destroy	= function(){
 	this.mazeCli.destroy();
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-//		osd user interface stuff					//
-//////////////////////////////////////////////////////////////////////////////////
-
-WebyMaze.WebglRender.prototype._visualFxCtor	= function()
-{
-	var visualFxInsert	= function(visualFx){
-		var bodyId	= (Math.random()*99999).toString(36);
-		// add this visualFx in this.visualFxs
-		this.visualFxs[bodyId]	= visualFx;		
-		// bind autodestroy
-		visualFx.bind('autodestroy', function(){
-			visualFx.destroy();
-			delete this.visualFxs[bodyId];
-		}.bind(this))
-	}.bind(this);
-
-if(true){
-	visualFxInsert(new WebyMaze.VisualFxAmbientLight({
-		lightPool	: this._lightPool,
-		color		: 0xaaaaaa
-	}));
-	visualFxInsert(new WebyMaze.VisualFxDirectionalLight({
-		lightPool	: this._lightPool,
-		color		: 0xffffff,
-		intensity	: 0.8,
-		direction	: {
-			x	: 0,
-			y	: 0.3,
-			z	: 0.7
-		}
-	}));
-	visualFxInsert(new WebyMaze.VisualFxPointLight({
-		lightPool	: this._lightPool,
-		color		: 0xaa44aa,
-		intensity	: 10,
-		distance	: 1500,
-		position	: {
-			x	: 0,
-			y	: 1000,
-			z	: 0
-		}
-	}));
-	visualFxInsert(new WebyMaze.VisualFxPointLight({
-		lightPool	: this._lightPool,
-		color		: 0x44FF44,
-		intensity	: 10,
-		distance	: 1500,
-		position	: {
-			x	: 11*100,
-			y	: 1000,
-			z	: 11*100
-		}
-	}));
-}else{
-	visualFxInsert(new WebyMaze.VisualFxAmbientLight({
-		lightPool	: this._lightPool,
-		color		: 0x222222
-	}));
-	visualFxInsert(new WebyMaze.VisualFxDirectionalLight({
-		lightPool	: this._lightPool,
-		color		: 0xffffff,
-		intensity	: 0.8,
-		direction	: {
-			x	: 0,
-			y	: 0.3,
-			z	: 0.7
-		}
-	}));
-	visualFxInsert(new WebyMaze.VisualFxEmergencyLight({
-		lightPool	: this._lightPool,
-		rangeX		: this.mazeCli.mapW()*100/2,
-		rangeY		: this.mazeCli.mapH()*100/2,
-		speedX		: 0.2,
-		speedY		: 0.8,
-		speedI		: 0.8
-	}));
-	visualFxInsert(new WebyMaze.VisualFxEmergencyLight({
-		lightPool	: this._lightPool,
-		rangeX		: this.mazeCli.mapW()*100/2,
-		rangeY		: this.mazeCli.mapH()*100/2,
-		speedX		: 0.6*2,
-		speedY		: -0.3*2,
-		speedI		: 0.8
-	}));
-	visualFxInsert(new WebyMaze.VisualFxEmergencyLight({
-		lightPool	: this._lightPool,
-		rangeX		: this.mazeCli.mapW()/2*100/2,
-		rangeY		: this.mazeCli.mapH()/2*100/2,
-		speedX		:  0.45*3,
-		speedY		: -0.25*3,
-		speedI		: 1.2
-	}));
-}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
