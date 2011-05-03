@@ -8,7 +8,8 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.CameraRender	= function(){
+WebyMaze.CameraRender	= function()
+{
 	// initialize object variables
 	this.state	= null;
 	this._transform	= null;
@@ -20,16 +21,15 @@ WebyMaze.CameraRender	= function(){
 	// read the game config
 	this._config	= WebyMaze.ConfigCli.cameraRender;
 	
-
 	// bind the cameraSwitch keys
-	this.$keydownCallback	= this.onKeyDown.bind(this)
-	document.addEventListener( 'keydown', this.$keydownCallback, false);
+	this._$keydownCallback	= this._onKeyDown.bind(this)
+	document.addEventListener( 'keydown', this._$keydownCallback, false);
 }
 
 WebyMaze.CameraRender.prototype.destroy	= function()
 {
 	// unbind the cameraSwitch keys
-	document.removeEventListener( 'keydown', this.$keydownCallback, false);
+	document.removeEventListener( 'keydown', this._$keydownCallback, false);
 }
 
 // mixin MicroEvent 
@@ -58,7 +58,7 @@ WebyMaze.CameraRender.State2RotationType= {
 //////////////////////////////////////////////////////////////////////////////////
 
 
-WebyMaze.CameraRender.prototype.onKeyDown	= function(domEvent)
+WebyMaze.CameraRender.prototype._onKeyDown	= function(domEvent)
 {
 	var pageUp	= 33;
 	var pageDown	= 34;
@@ -132,11 +132,11 @@ WebyMaze.CameraRender.prototype.changeState	= function(state)
 	}
 	
 	if( !this._transform ){
-		this._transform	= this.transformBuild(this.state);		
+		this._transform	= this._transformBuild(this.state);		
 	}else{
 		// TODO in face the timing will depends on the distance beween the 2
 		var t1	= this._transform;
-		var t2	= this.transformBuild(this.state);
+		var t2	= this._transformBuild(this.state);
 		console.log("t1", JSON.stringify(t1))
 		console.log("t2", JSON.stringify(t2))
 		var dx	= Math.abs(t1.posX - t2.posX);
@@ -167,28 +167,28 @@ WebyMaze.CameraRender.prototype.changeState	= function(state)
 /**
  * return the cameraTransform relative to player position
 */
-WebyMaze.CameraRender.prototype.transformBuild	= function(state){
+WebyMaze.CameraRender.prototype._transformBuild	= function(state){
 	var transform	= null;
 	if( state == "inplayer" ){
-		transform	= this.transformInPlayer();
+		transform	= this._transformInPlayer();
 	}else if( state == 'overPlayer' ){
-		transform	= this.transformOverPlayer();
+		transform	= this._transformOverPlayer();
 	}else if( state == 'fixedZenith' ){
-		transform	= this.transformFixedZenith();
+		transform	= this._transformFixedZenith();
 	}else if( state == 'fixedGrazing' ){
-		transform	= this.transformFixedGrazing();
+		transform	= this._transformFixedGrazing();
 	}else if( state == 'behindPlayer' ){
-		transform	= this.transformBehindPlayer();
+		transform	= this._transformBehindPlayer();
 	}else if( state == 'zenith' ){
-		transform	= this.transformZenith();
+		transform	= this._transformZenith();
 	}else if( state == 'facePlayer' ){
-		transform	= this.transformFacePlayer();
+		transform	= this._transformFacePlayer();
 	}else	console.assert(false);
 	// return the transform
 	return transform;
 }
 
-WebyMaze.CameraRender.prototype.transformBuildRelative	= function(posA, posY, tgtA)
+WebyMaze.CameraRender.prototype._transformBuildRelative	= function(posA, posY, tgtA)
 {
 	var transform	= {};
 	transform.posX	= 0;
@@ -203,40 +203,40 @@ WebyMaze.CameraRender.prototype.transformBuildRelative	= function(posA, posY, tg
 }
 
 
-WebyMaze.CameraRender.prototype.transformInPlayer	= function(targetObj3d)
+WebyMaze.CameraRender.prototype._transformInPlayer	= function(targetObj3d)
 {
 	var deltaBack	= 0;	// TODO if this is != 0, display the player
 	var deltaUp	= 20;
 	var lookFwd	= 200;
-	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
+	return this._transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
 
-WebyMaze.CameraRender.prototype.transformOverPlayer	= function(targetObj3d)
+WebyMaze.CameraRender.prototype._transformOverPlayer	= function(targetObj3d)
 {
 	var deltaBack	= 25;	// TODO if this is != 0, display the player
 	var deltaUp	= 75;
 	var lookFwd	= 200;
-	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
+	return this._transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
 
-WebyMaze.CameraRender.prototype.transformBehindPlayer	= function(targetObj3d)
+WebyMaze.CameraRender.prototype._transformBehindPlayer	= function(targetObj3d)
 {
 	var deltaBack	= 500;
 	var deltaUp	= 300;
 	var lookFwd	= 200;
-	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
+	return this._transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
 
 
-WebyMaze.CameraRender.prototype.transformFacePlayer	= function(targetObj3d)
+WebyMaze.CameraRender.prototype._transformFacePlayer	= function(targetObj3d)
 {
 	var deltaBack	= -200;
 	var deltaUp	= 75;
 	var lookFwd	= 0;
-	return this.transformBuildRelative(-deltaBack, deltaUp, lookFwd);
+	return this._transformBuildRelative(-deltaBack, deltaUp, lookFwd);
 }
 
-WebyMaze.CameraRender.prototype.transformZenith	= function()
+WebyMaze.CameraRender.prototype._transformZenith	= function()
 {
 	var transform	= {};
 	transform.posX	= +0;
@@ -251,7 +251,7 @@ WebyMaze.CameraRender.prototype.transformZenith	= function()
 	return transform;
 }
 
-WebyMaze.CameraRender.prototype.transformFixedZenith	= function()
+WebyMaze.CameraRender.prototype._transformFixedZenith	= function()
 {
 	var transform	= {};
 
@@ -268,7 +268,7 @@ WebyMaze.CameraRender.prototype.transformFixedZenith	= function()
 	return transform;
 }
 
-WebyMaze.CameraRender.prototype.transformFixedGrazing	= function()
+WebyMaze.CameraRender.prototype._transformFixedGrazing	= function()
 {
 	var transform	= {};
 	transform.posX	= +500;

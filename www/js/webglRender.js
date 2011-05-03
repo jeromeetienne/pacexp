@@ -35,13 +35,6 @@ WebyMaze.WebglRender	= function(opts){
 	this.visualFxs	= {};
 
 
-	// init this_lightPool
-	this._lightPool	= new WebyMaze.LightPool({
-		scene		: scene,
-		nAmbient	: 1,
-		nDirectional	: 1,
-		nPoint		: 3
-	});
 
 	console.log("ctxInit", ctxInit)
 	// init this.mazeCli
@@ -52,8 +45,20 @@ WebyMaze.WebglRender	= function(opts){
 	sceneContainer.addChild( this.mazeCli.obj3d() );
 
 
+if(false){
+	// init this_lightPool
+	this._lightPool	= new WebyMaze.LightPool({
+		scene		: scene,
+		nAmbient	: 1,
+		nDirectional	: 1,
+		nPoint		: 3
+	});
 	this._visualFxCtor();
-
+}else{
+	this._lightingRender	= new WebyMaze.LightingRender({
+		mazeCli	: this.mazeCli
+	});
+}
 
 
 	// init CameraRender
@@ -221,7 +226,7 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick)
 	this.setCtxTickEnemy(ctxTick);
 	this.setCtxTickShoot(ctxTick);
 	this.setCtxTickPill(ctxTick);
-	
+
 	this.tickEventHandler(ctxTick.events)
 
 	// do the tick for this.visualFxs
@@ -254,6 +259,9 @@ WebyMaze.WebglRender.prototype.setCtxTick	= function(ctxTick)
 	// update CameraRender	
 	var targetObject3d	= this.players[this.urBodyId].obj3d()
 	this.cameraRender.tick(targetObject3d);
+
+	// update this._lightingRender
+	this._lightingRender.tick();	
 }
 
 
