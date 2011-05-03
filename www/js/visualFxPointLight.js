@@ -19,7 +19,7 @@ WebyMaze.VisualFxPointLight	= function(opts)
 console.log("**********************************")
 //console.dir(this._lightPool.borrow('PointLight'));
 	
-	if( true ){
+	if( false ){
 		this._light	= new THREE.PointLight( this._color, this._intensity, this._distance );
 	}else if( true ){
 		this._light	= new THREE.PointLight();

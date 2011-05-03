@@ -40,7 +40,7 @@ WebyMaze.WebglRender	= function(opts){
 		scene		: scene,
 		nAmbient	: 0,
 		nDirectional	: 0,
-		nPoint		: 0
+		nPoint		: 2
 	});
 
 	console.log("ctxInit", ctxInit)
@@ -128,25 +128,25 @@ WebyMaze.WebglRender.prototype._visualFxCtor	= function()
 		this.visualFxs[bodyId]	= visualFx;		
 		// bind autodestroy
 		visualFx.bind('autodestroy', function(){
-			//scene.removeObject( visualFx.obj3d() );
+			scene.removeObject( visualFx.obj3d() );
 			visualFx.destroy();
 			delete this.visualFxs[bodyId];
 		}.bind(this))
 	}.bind(this);
 
-if(true){	
-	visualFxInsert(new WebyMaze.VisualFxAmbientLight({
-		color	: 0xaaaaaa
-	}));
-	visualFxInsert(new WebyMaze.VisualFxDirectionalLight({
-		color		: 0xffffff,
-		intensity	: 0.8,
-		direction	: {
-			x	: 0,
-			y	: 0.3,
-			z	: 0.7
-		}
-	}));
+if(true){
+	//visualFxInsert(new WebyMaze.VisualFxAmbientLight({
+	//	color	: 0xaaaaaa
+	//}));
+	//visualFxInsert(new WebyMaze.VisualFxDirectionalLight({
+	//	color		: 0xffffff,
+	//	intensity	: 0.8,
+	//	direction	: {
+	//		x	: 0,
+	//		y	: 0.3,
+	//		z	: 0.7
+	//	}
+	//}));
 	visualFxInsert(new WebyMaze.VisualFxPointLight({
 		lightPool	: this._lightPool,
 		color		: 0xaa44aa,
@@ -159,6 +159,7 @@ if(true){
 		}
 	}));
 	visualFxInsert(new WebyMaze.VisualFxPointLight({
+		lightPool	: this._lightPool,
 		color		: 0x44FF44,
 		intensity	: 10,
 		distance	: 1500,
