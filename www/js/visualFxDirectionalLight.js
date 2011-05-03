@@ -8,13 +8,21 @@ var WebyMaze	= WebyMaze || {};
 WebyMaze.VisualFxDirectionalLight	= function(opts)
 {
 	this._direction	= opts.direction	|| console.assert(false);
+	this._lightPool	= opts.lightPool	|| console.assert(false);	
 	this._color	= opts.color		|| 0xffffff;
 	this._intensity	= opts.intensity	|| 1;
 	this._distance	= opts.distance		|| 0;
 	this._timeToLive= opts.timeToLive	|| 0*1000;
 
 	// build the light itself
-	this._light	= new THREE.DirectionalLight( this._color, this._intensity);
+	if( false ){
+		this._light	= new THREE.DirectionalLight( this._color, this._intensity);
+	}else{
+		this._light	= this._lightPool.borrow('DirectionalLight');
+		this._light.color	= new THREE.Color( this._color );
+		this._light.intensity	= this._intensity;
+		this._light.distance	= this._distance;		
+	}
 	this._light.position.x = this._direction.x;
 	this._light.position.y = this._direction.y;
 	this._light.position.z = this._direction.z;

@@ -16,6 +16,8 @@ WebyMaze.LightPool	= function(opts)
 	this._pool	= [];
 	
 	// init the pool
+	for(var i = 0; i < nAmbient; i++)	this._createLight('AmbientLight')
+	for(var i = 0; i < nDirectional; i++)	this._createLight('DirectionalLight')
 	for(var i = 0; i < nPoint; i++)		this._createLight('PointLight')
 }
 

@@ -15,6 +15,7 @@ var WebyMaze	= WebyMaze || {};
 */
 WebyMaze.VisualFxEmergencyLight	= function(opts)
 {
+	this._lightPool	= opts.lightPool	|| console.assert(false);	
 	this._rangeX	= opts.rangeX		|| console.assert(false);
 	this._rangeY	= opts.rangeY		|| console.assert(false);
 	this._speedX	= opts.speedX		|| console.assert(false);
@@ -24,7 +25,12 @@ WebyMaze.VisualFxEmergencyLight	= function(opts)
 
 
 	// add a pointLight to experiment with it
-	this._light	= new THREE.PointLight( 0xFFFFFF, 10, 500);
+	//this._light	= new THREE.PointLight( 0xFFFFFF, 10, 500);
+	this._light	= this._lightPool.borrow('PointLight');
+	this._light.color	= new THREE.Color( 0xffffff );
+	this._light.intensity	= 10;
+	this._light.distance	= 500;
+
 	this._light.position.x = 0;
 	this._light.position.y = 50;
 	this._light.position.z = 0;

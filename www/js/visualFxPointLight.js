@@ -21,7 +21,7 @@ console.log("**********************************")
 	
 	if( false ){
 		this._light	= new THREE.PointLight( this._color, this._intensity, this._distance );
-	}else if( true ){
+	}else if( false ){
 		this._light	= new THREE.PointLight();
 		//this._light	= this._lightPool.borrow('PointLight');
 		this._light.color	= new THREE.Color( this._color );
