@@ -122,19 +122,16 @@ WebyMaze.WebglRender.prototype._visualFxCtor	= function()
 {
 	var visualFxInsert	= function(visualFx){
 		var bodyId	= (Math.random()*99999).toString(36);
-		// add the light to the scene
-//		scene.addLight( visualFx.obj3d() );
 		// add this visualFx in this.visualFxs
 		this.visualFxs[bodyId]	= visualFx;		
 		// bind autodestroy
 		visualFx.bind('autodestroy', function(){
-//			scene.removeObject( visualFx.obj3d() );
 			visualFx.destroy();
 			delete this.visualFxs[bodyId];
 		}.bind(this))
 	}.bind(this);
 
-if(true){
+if(false){
 	visualFxInsert(new WebyMaze.VisualFxAmbientLight({
 		lightPool	: this._lightPool,
 		color		: 0xaaaaaa

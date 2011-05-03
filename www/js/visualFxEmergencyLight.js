@@ -25,8 +25,7 @@ WebyMaze.VisualFxEmergencyLight	= function(opts)
 
 
 	// add a pointLight to experiment with it
-	//this._light	= new THREE.PointLight( 0xFFFFFF, 10, 500);
-	this._light	= this._lightPool.borrow('PointLight');
+	this._light		= this._lightPool.borrow('PointLight');
 	this._light.color	= new THREE.Color( 0xffffff );
 	this._light.intensity	= 10;
 	this._light.distance	= 500;

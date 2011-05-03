@@ -11,14 +11,10 @@ WebyMaze.VisualFxAmbientLight	= function(opts)
 	this._lightPool	= opts.lightPool	|| console.assert(false);
 	this._timeToLive= opts.timeToLive	|| 0*1000;
 
-	// create the light
-	if( false ){
-		this._light	= new THREE.AmbientLight( this._color );		
-	}else{
-		this._light	= this._lightPool.borrow('AmbientLight');
-		this._light.color	= new THREE.Color( this._color );		
-	}
-
+	// build the light itself	
+	this._light	= this._lightPool.borrow('AmbientLight');
+	// set light parameters
+	this._light.color	= new THREE.Color( this._color );		
 
 	// set this._container
 	this._container	= this._light;

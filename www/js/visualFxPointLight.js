@@ -15,28 +15,15 @@ WebyMaze.VisualFxPointLight	= function(opts)
 	this._timeToLive= opts.timeToLive	|| 0*1000;
 	
 	// build the light itself
-
-console.log("**********************************")
-//console.dir(this._lightPool.borrow('PointLight'));
+	this._light	= this._lightPool.borrow('PointLight');
 	
-	if( false ){
-		this._light	= new THREE.PointLight( this._color, this._intensity, this._distance );
-	}else if( false ){
-		this._light	= new THREE.PointLight();
-		//this._light	= this._lightPool.borrow('PointLight');
-		this._light.color	= new THREE.Color( this._color );
-		this._light.intensity	= this._intensity;
-		this._light.distance	= this._distance;
-	}else{
-		this._light	= this._lightPool.borrow('PointLight');
-		this._light.color	= new THREE.Color( this._color );
-		this._light.intensity	= this._intensity;
-		this._light.distance	= this._distance;
-console.dir(this._light)
-	}
-	this._light.position.x = this._position.x;
-	this._light.position.y = this._position.y;
-	this._light.position.z = this._position.z;
+	// set light parameters	
+	this._light.color	= new THREE.Color( this._color );
+	this._light.intensity	= this._intensity;
+	this._light.distance	= this._distance;
+	this._light.position.x	= this._position.x;
+	this._light.position.y	= this._position.y;
+	this._light.position.z	= this._position.z;
 	
 	// set this._container
 	this._container	= this._light;
