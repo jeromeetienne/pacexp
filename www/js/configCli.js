@@ -307,7 +307,7 @@ WebyMaze.ConfigCli.sample.enemyCli	= {
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.enemyCli	= {
-	object3d	: 'guost'
+	object3d	: 'ghost'
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.enemyCli	= {

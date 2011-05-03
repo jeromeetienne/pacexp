@@ -3,12 +3,13 @@ var WebyMaze	= WebyMaze || {};
 
 /**
  * To handle the config
+ * - TODO to rename ConfigStore
  * 
  * @constructor
 */
-WebyMaze.Config	= function(){
+WebyMaze.ConfigStore	= function(){
 }
-WebyMaze.Config.prototype.destroy	= function(){
+WebyMaze.ConfigStore.prototype.destroy	= function(){
 }
 
 
@@ -20,7 +21,7 @@ WebyMaze.Config.prototype.destroy	= function(){
  * getter/setter for username (stored in cookie)
  * @returns {string} the value if val is undefined
 */
-WebyMaze.Config.prototype.username	= function(val)
+WebyMaze.ConfigStore.prototype.username	= function(val)
 {
 	var key	= 'username';
 	if( typeof val === 'undefined' && jQuery.url.param(key) )	return jQuery.url.param(key);
@@ -31,7 +32,7 @@ WebyMaze.Config.prototype.username	= function(val)
  * getter/setter for sound (stored in cookie)
  * @returns {string} the value if val is undefined
 */
-WebyMaze.Config.prototype.soundTrack	= function(val)
+WebyMaze.ConfigStore.prototype.soundTrack	= function(val)
 {
 	var key	= 'soundTrack';
 	if( typeof val === 'undefined' && jQuery.url.param(key) )	return jQuery.url.param(key);
@@ -42,14 +43,14 @@ WebyMaze.Config.prototype.soundTrack	= function(val)
  * getter/setter for sound (stored in cookie)
  * @returns {string} the value if val is undefined
 */
-WebyMaze.Config.prototype.soundFx		= function(val)
+WebyMaze.ConfigStore.prototype.soundFx		= function(val)
 {
 	var key	= 'soundFx';
 	if( typeof val === 'undefined' && jQuery.url.param(key) )	return jQuery.url.param(key);
 	return this._cookieGetSet(key, val);
 }
 
-WebyMaze.Config.prototype._cookieGetSet	= function(key, val)
+WebyMaze.ConfigStore.prototype._cookieGetSet	= function(key, val)
 {
 	if( typeof val === 'undefined' )	return jQuery.cookie(key);
 	// compute the expiration date
@@ -64,7 +65,7 @@ WebyMaze.Config.prototype._cookieGetSet	= function(key, val)
  * getter/setter for sound (stored in location.hash for bookmarkability)
  * @returns {string} the value if val is undefined
 */
-WebyMaze.Config.prototype.gameId	= function(val){
+WebyMaze.ConfigStore.prototype.gameId	= function(val){
 	var set	= function(val){
 		console.assert(typeof val === "string")
 		window.location.hash	= '#'+val;

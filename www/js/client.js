@@ -36,7 +36,7 @@ var main	= function(){
 	}
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
 	gameCli		= new WebyMaze.GameCli();
-	gameConfig	= new WebyMaze.Config();
+	gameConfig	= new WebyMaze.ConfigStore();
 	soundRender	= new WebyMaze.SoundRender({
 		enableTrack	: gameConfig.soundTrack() === "true",
 		enableFx	: gameConfig.soundFx() === "true"
