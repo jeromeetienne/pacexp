@@ -35,6 +35,14 @@ WebyMaze.WebglRender	= function(opts){
 	this.visualFxs	= {};
 
 
+	// init this_lightPool
+	this._lightPool	= new WebyMaze.LightPool({
+		scene		: scene,
+		nAmbient	: 0,
+		nDirectional	: 0,
+		nPoint		: 0
+	});
+
 	console.log("ctxInit", ctxInit)
 	// init this.mazeCli
 	this.mazeCli	= new WebyMaze.MazeCli({
@@ -42,7 +50,6 @@ WebyMaze.WebglRender	= function(opts){
 	})
 	// update the global scene with this.mazeCli
 	sceneContainer.addChild( this.mazeCli.obj3d() );
-
 
 
 	this._visualFxCtor();
@@ -121,13 +128,13 @@ WebyMaze.WebglRender.prototype._visualFxCtor	= function()
 		this.visualFxs[bodyId]	= visualFx;		
 		// bind autodestroy
 		visualFx.bind('autodestroy', function(){
-			scene.removeObject( visualFx.obj3d() );
+			//scene.removeObject( visualFx.obj3d() );
 			visualFx.destroy();
 			delete this.visualFxs[bodyId];
 		}.bind(this))
 	}.bind(this);
 
-if(false){	
+if(true){	
 	visualFxInsert(new WebyMaze.VisualFxAmbientLight({
 		color	: 0xaaaaaa
 	}));
@@ -141,6 +148,7 @@ if(false){
 		}
 	}));
 	visualFxInsert(new WebyMaze.VisualFxPointLight({
+		lightPool	: this._lightPool,
 		color		: 0xaa44aa,
 		intensity	: 10,
 		distance	: 1500,
@@ -360,11 +368,6 @@ WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 		});	
 		// add this fx in the to sceneContainer
 		sceneContainer.addChild( visualFx.obj3d() );
-	}else if( fxType == 'emergencyLight' ){
-		var visualFx	= new WebyMaze.VisualFxEmergencyLight({
-			position	: position
-		});
-		scene.addLight( visualFx.obj3d() );	
 	}else	console.assert(false);
 
 	visualFx.bind('autodestroy', function(){
