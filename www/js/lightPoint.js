@@ -5,30 +5,40 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.VisualFxAmbientLight	= function(opts)
+WebyMaze.LightPoint	= function(opts)
 {
-	this._color	= opts.color		|| console.assert(false);
+	this._position	= opts.position		|| console.assert(false);
 	this._lightPool	= opts.lightPool	|| console.assert(false);
+	this._color	= opts.color		|| 0xffffff;
+	this._intensity	= opts.intensity	|| 1;
+	this._distance	= opts.distance		|| 0;
 	this._timeToLive= opts.timeToLive	|| 0*1000;
-
-	// build the light itself	
-	this._light	= this._lightPool.borrow('AmbientLight');
-	// set light parameters
-	this._light.color	= new THREE.Color( this._color );		
-
+	
+	// build the light itself
+	this._light	= this._lightPool.borrow('PointLight');
+	
+	// set light parameters	
+	this._light.color	= new THREE.Color( this._color );
+	this._light.intensity	= this._intensity;
+	this._light.distance	= this._distance;
+	this._light.position.x	= this._position.x;
+	this._light.position.y	= this._position.y;
+	this._light.position.z	= this._position.z;
+	
 	// set this._container
 	this._container	= this._light;
 }
 
 /**
 */
-WebyMaze.VisualFxAmbientLight.prototype.destroy	= function()
+WebyMaze.LightPoint.prototype.destroy	= function()
 {
+	this._lightPool.giveback(this._light);
 }
 
 
 // mixin MicroEvent 
-MicroEvent.mixin(WebyMaze.VisualFxAmbientLight);
+MicroEvent.mixin(WebyMaze.LightPoint);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
@@ -37,11 +47,11 @@ MicroEvent.mixin(WebyMaze.VisualFxAmbientLight);
 /**
  * Return the object3d containing this one
 */
-WebyMaze.VisualFxAmbientLight.prototype.obj3d	= function(){
+WebyMaze.LightPoint.prototype.obj3d	= function(){
 	return this._container;
 }
 
-WebyMaze.VisualFxAmbientLight.prototype.tick	= function()
+WebyMaze.LightPoint.prototype.tick	= function()
 {
 	// honor this._timeToLive if needed
 	if( this._timeToLive ){

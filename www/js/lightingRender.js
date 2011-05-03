@@ -23,8 +23,8 @@ WebyMaze.LightingRender	= function(opts)
 	});
 	this._lights	= [];
 	// init the lighting
-	//this._initDay();
-	this._initEmergency();
+	this._initDay();
+	//this._initEmergency();
 }
 
 WebyMaze.LightingRender.prototype.destroy	= function()
@@ -59,11 +59,11 @@ WebyMaze.LightingRender.prototype._lightInsert	= function(light)
 
 WebyMaze.LightingRender.prototype._initDay	= function()
 {
-	this._lightInsert(new WebyMaze.VisualFxAmbientLight({
+	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,
 		color		: 0xaaaaaa
 	}));
-	this._lightInsert(new WebyMaze.VisualFxDirectionalLight({
+	this._lightInsert(new WebyMaze.LightDirectional({
 		lightPool	: this._lightPool,
 		color		: 0xffffff,
 		intensity	: 0.8,
@@ -73,7 +73,7 @@ WebyMaze.LightingRender.prototype._initDay	= function()
 			z	: 0.7
 		}
 	}));
-	this._lightInsert(new WebyMaze.VisualFxPointLight({
+	this._lightInsert(new WebyMaze.LightPoint({
 		lightPool	: this._lightPool,
 		color		: 0xaa44aa,
 		intensity	: 10,
@@ -84,7 +84,7 @@ WebyMaze.LightingRender.prototype._initDay	= function()
 			z	: 0
 		}
 	}));
-	this._lightInsert(new WebyMaze.VisualFxPointLight({
+	this._lightInsert(new WebyMaze.LightPoint({
 		lightPool	: this._lightPool,
 		color		: 0x44FF44,
 		intensity	: 10,
@@ -99,11 +99,11 @@ WebyMaze.LightingRender.prototype._initDay	= function()
 
 WebyMaze.LightingRender.prototype._initEmergency	= function()
 {
-	this._lightInsert(new WebyMaze.VisualFxAmbientLight({
+	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,
 		color		: 0x222222
 	}));
-	this._lightInsert(new WebyMaze.VisualFxDirectionalLight({
+	this._lightInsert(new WebyMaze.LightDirectional({
 		lightPool	: this._lightPool,
 		color		: 0xffffff,
 		intensity	: 0.8,
@@ -113,7 +113,7 @@ WebyMaze.LightingRender.prototype._initEmergency	= function()
 			z	: 0.7
 		}
 	}));
-	this._lightInsert(new WebyMaze.VisualFxEmergencyLight({
+	this._lightInsert(new WebyMaze.LightEmergency({
 		lightPool	: this._lightPool,
 		rangeX		: this._mazeCli.mapW()*100/2,
 		rangeY		: this._mazeCli.mapH()*100/2,
@@ -121,7 +121,7 @@ WebyMaze.LightingRender.prototype._initEmergency	= function()
 		speedY		: 0.8,
 		speedI		: 0.8
 	}));
-	this._lightInsert(new WebyMaze.VisualFxEmergencyLight({
+	this._lightInsert(new WebyMaze.LightEmergency({
 		lightPool	: this._lightPool,
 		rangeX		: this._mazeCli.mapW()*100/2,
 		rangeY		: this._mazeCli.mapH()*100/2,
@@ -129,7 +129,7 @@ WebyMaze.LightingRender.prototype._initEmergency	= function()
 		speedY		: -0.3*2,
 		speedI		: 0.8
 	}));
-	this._lightInsert(new WebyMaze.VisualFxEmergencyLight({
+	this._lightInsert(new WebyMaze.LightEmergency({
 		lightPool	: this._lightPool,
 		rangeX		: this._mazeCli.mapW()/2*100/2,
 		rangeY		: this._mazeCli.mapH()/2*100/2,
