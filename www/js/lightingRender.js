@@ -34,7 +34,7 @@ WebyMaze.LightingRender.prototype.destroy	= function()
 /**
  * Define all possible LightingStates
 */
-WebyMaze.CameraRender.LightingStates	= ['day', 'emergency'];
+WebyMaze.CameraRender.LightingStates	= ['day', 'emergency', 'firecamp'];
 
 //////////////////////////////////////////////////////////////////////////////////
 //		public functions						//

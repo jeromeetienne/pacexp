@@ -1,5 +1,6 @@
 var WebyMaze	= WebyMaze || {};
 
+
 WebyMaze.SoundRender	= function(opts){
 	// set the default values if needed
 	opts		= opts	|| {};
@@ -16,7 +17,8 @@ WebyMaze.SoundRender	= function(opts){
 		'win'		: 'sounds/pacman/vcs_90.mp3',
 		'eatPill'	: 'sounds/pacman/eating.short.mp3',
 		'eatEnergizer'	: 'sounds/pacman/eatpill.mp3',
-		'eatGhost'	: 'sounds/pacman/eatghost.mp3'
+		'eatGhost'	: 'sounds/pacman/eatghost.mp3',
+		'siren'		: 'sounds/pacman/siren.mp3'
 	}
 	var soundTrack		= null;
 
@@ -127,3 +129,4 @@ WebyMaze.SoundRender	= function(opts){
 		soundTrackRunning	: soundTrackRunning
 	};
 }
+
