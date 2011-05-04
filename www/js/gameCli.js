@@ -150,12 +150,14 @@ console.log("data", message.data)
 		var projectName	= WebyMaze.ConfigCli.PROJECT;
 		var statusText	= "I playing "+projectName+" at http://" + projectName + ".com :) It is fun and free!! Check it out";
 		var content	= '';
-		content	+= '<div style="position: relative;">';
-		content	+= 	'<div style="bottom: 0px; right: 0px; position: absolute;">'+
-					'<div class="twitter-share-button" data-text="'+statusText+'" data-url="'+imageUrl+'" data-count="none"></div>'+
-				'</div>';
-		content	+= 	'<img src="'+thumbUrl+'" alt="screenshot" />';
-		content	+= '</div>';
+		//content	+= '<div style="position: relative;">';
+		content	+= '<div style="bottom: 0px; right: 0px; position: absolute;" class="twitter-share-button" data-text="'+statusText+'" data-url="'+imageUrl+'" data-count="none"></div>';
+		//content	+= 	'<div style="bottom: 0px; right: 0px; position: absolute;">'+
+		//			'<div class="twitter-share-button" data-text="'+statusText+'" data-url="'+imageUrl+'" data-count="none"></div>'+
+		//		'</div>';
+		content	+= '<img src="'+thumbUrl+'" alt="screenshot" />';
+		content	+= '<div class="bottomRight twitter-share-button" data-text="'+statusText+'" data-url="'+imageUrl+'" data-count="none"></div>';
+		//content	+= '</div>';
 		// to preload the thumb
 		(new Image()).src	= thumbUrl;
 		// install the qtip

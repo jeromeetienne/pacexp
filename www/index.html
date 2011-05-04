@@ -161,9 +161,6 @@
 
 		<!-- aboutHelp dialog -->
 		<div id="aboutDialog" class="jqmWindow above3d">
-			<div style='float: right;'>
-				<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>
-			</div>
 			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
 			<p>
 				You Zare a pacman trapped in a maze!
@@ -177,8 +174,9 @@
 			<p>
 				That's it. Have fun :)
 			</p>
-			<a href="#" class="jqmClose"><em>Close</em></a>
-			<!-- hidden <input> to be able to trigger focus and bind keypress on the dialog -->
+			<div class="topRight twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>
+			<div class="jqmClose button"></div>
+			<!-- hidden input> to be able to trigger focus and bind keypress on the dialog -->
 			<input type="text" style='position: absolute; left: -5000px'>
 		</div>
 		<!-- follow me on twitter --> 
@@ -187,21 +185,19 @@
 		</div>
 		<!-- gameCompletedNoMorePills dialog -->
 		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d">
-			<div style="float: right;">
-				<div data-text="My pacmaze score is $SCORE$! can you do better ?" class="twitter-share-button" data-count="none"></div>
-			</div>
-			Congratulations! you win! Your score is <span class="score"></span>
+			<h3><center><strong>Congratulation!</strong></center></h3>
+			You win! Your score is <span class="score"></span>
 			<br/>
+			<div class="topRight twitter-share-button" data-text="My pacmaze score is $SCORE$! can you do better ?" data-count="none"></div>
 			<a href="#" class="jqmClose"><em>Close</em></a>
 		</div>
 		<!-- gameCompletedNoMorePills dialog -->
 		<div id="gameCompletedPlayerKilledDialog" class="jqmWindow above3d">
-			<div style="float: right;">
-				<div data-text="Just had lot of fun with pacmaze. My score is $SCORE$! You should check it out!" class="twitter-share-button" data-count="none"></div>
-			</div>
+			<h3><center><strong>Game Over</strong></center></h3>
 			Oh you died... Your score was <span class="score"></span>. Try again ?
 			<br/>
-			<a href="#" class="jqmClose"><em>Close</em></a>
+			<div class="topRight twitter-share-button" data-text="Just had lot of fun with pacmaze. My score is $SCORE$! You should check it out!" data-count="none"></div>
+			<div class="jqmClose button"></div>
 			<!-- hidden <input> to be able to trigger focus and bind keypress on the dialog -->
 			<input type="text" style='position: absolute; left: -5000px'/>
 		</div>
@@ -216,7 +212,7 @@
 				Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->
 			</p>
 			<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/9_ZtsK4rU4g" frameborder="0" allowfullscreen></iframe>
-			<a href="#" class="jqmClose"><em>Close</em></a>
+			<div class="jqmClose button"></div>
 		</div>
 		
 		<!-- google analytic snipet -->
