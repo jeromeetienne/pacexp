@@ -147,6 +147,8 @@ WebyMaze.ConfigCli.tweetymaze.prod.cameraRender	= {
 
 WebyMaze.ConfigCli.tweetymaze.dev.cameraRender	= {
 	cameraStates	: ['inplayer', 'facePlayer'],
+	//cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+	//				'behindPlayer', 'fixedZenith', 'fixedGrazing'],
 	tweenDelay	: 1000
 };
 

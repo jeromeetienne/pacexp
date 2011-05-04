@@ -1,20 +1,20 @@
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
-		<title>PacMaze Experiment - Pacmaze1 a pacman in a maze</title>
+		<title>Pacmaze  a pacman in a maze</title>
 		<meta charset="utf-8">
 		<!-- make favicon.ico -->
 		<link rel="shortcut icon" href="images/favicon.ico">
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		
-		<meta name="application-name" content="Pacmaze 1"/>
+		<meta name="application-name" content="Pacmaze"/>
 		<link rel="icon" href="images/logo128.png" sizes="32x32 48x48 64x64 128x128"/>
 	</head>
 	<body>
 		<!-- es5-shim.js to patch missing standard functions - needed for Function.bind() in safari -->
 		<script src='vendor/es5-shim.js'></script>
 
-		<!--<script src="vendor/firebugx.js"></script>-->
+		<script src="vendor/firebugx.js"></script>
 
 		<script src='vendor/jquery/jquery.min.js'></script>
 		<script src='vendor/jquery/jquery.url.js'></script>
@@ -86,7 +86,7 @@
 		</script>
 		
 		<div id="pageContainer" tabindex="100">
-				<div class="above3d pagetitle" style="margin-left: -20%; width: 600px;">
+				<div class="above3d pagetitle">
 					<!--
 					- this title is too large on small embeded iframe
 					- this trick in window.resize make it proportional...
@@ -139,32 +139,34 @@
 			by <a href="http://twitter.com/jerome_etienne" target='_blank'>@jerome_etienne</a>
 		</div>
 		<!-- username dialog -->
-		<div id="usernameDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
+		<div id="usernameDialog" class="promptDialog jqmWindow above3d">
 			Your Twitter Username<br/>
-			<input type="text" size=15 name="username" placeholder="twitter username...">
+			<div>
+				<input type="text" size=15 name="username" placeholder="twitter username...">
+			</div>
 			<div style='font-size: 60%; float: right;'>
 				<a class='reset' href='javascript:void(0)'>reset</a>
 			</div>
 		</div>
 		<!-- gameId dialog -->
-		<div id="gameIdDialog" class="promptDialog jqmWindow above3d" style="margin-left: -120px; width: 240px;">
+		<div id="gameIdDialog" class="promptDialog jqmWindow above3d">
 			Name your maze<br/>
 			<input type="text" size=15 name="gameId" placeholder="maze name...">
 		</div>
 		<!-- speak dialog -->
-		<div id="speakDialog" class="promptDialog jqmWindow above3d" style="margin-left: -180px; width: 360px;">
+		<div id="speakDialog" class="promptDialog jqmWindow above3d">
 			What do you wanna say ?<br/>
 			<input type="text" size=24 name="status" placeholder="speak your mind...">
 		</div>
 
 		<!-- aboutHelp dialog -->
-		<div id="aboutDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
+		<div id="aboutDialog" class="jqmWindow above3d">
 			<div style='float: right;'>
 				<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>
 			</div>
 			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
 			<p>
-				You are a pacman trapped in a maze!
+				You Zare a pacman trapped in a maze!
 			</p>
 			<p>
 				Use <strong>Arrows</strong> to move the player.
@@ -184,7 +186,7 @@
 			<a href="http://www.twitter.com/jerome_etienne" target='_blank'><img style="border: 0;" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
 		</div>
 		<!-- gameCompletedNoMorePills dialog -->
-		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
+		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d">
 			<div style="float: right;">
 				<div data-text="My pacmaze score is $SCORE$! can you do better ?" class="twitter-share-button" data-count="none"></div>
 			</div>
@@ -193,7 +195,7 @@
 			<a href="#" class="jqmClose"><em>Close</em></a>
 		</div>
 		<!-- gameCompletedNoMorePills dialog -->
-		<div id="gameCompletedPlayerKilledDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
+		<div id="gameCompletedPlayerKilledDialog" class="jqmWindow above3d">
 			<div style="float: right;">
 				<div data-text="Just had lot of fun with pacmaze. My score is $SCORE$! You should check it out!" class="twitter-share-button" data-count="none"></div>
 			</div>
@@ -204,7 +206,7 @@
 			<input type="text" style='position: absolute; left: -5000px'/>
 		</div>
 		<!-- gameCompletedNoMorePills dialog -->
-		<div id="noWebGLDialog" class="jqmWindow above3d" style="margin-left: -240px; width: 480px;">
+		<div id="noWebGLDialog" class="jqmWindow above3d">
 			<h3>Ouch no WebGL :(</h3>
 			<p>
 				Sorry, WebGL is not available on your computer and WebGL is needed for this game.

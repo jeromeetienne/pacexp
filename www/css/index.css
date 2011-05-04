@@ -37,6 +37,50 @@ body {
 }
 
 /********************************************************************************
+ *		Dialog
+********************************************************************************/
+
+#pageContainer .pagetitle {
+	margin-left	: -25%;
+	width		: 50%;
+}
+
+#usernameDialog {
+	margin-left	: -120px;
+	width		: 240px;
+}
+
+#gameIdDialog {
+	margin-left	: -120px;
+	width		: 240px;
+}
+
+#speakDialog {
+	margin-left	: -180px;
+	width		: 360px;
+}
+
+#aboutDialog {
+	margin-left	: -30%;
+	width		: 60%;	
+}
+
+#gameCompletedNoMorePillsDialog {
+	margin-left	: -240px;
+	width		: 480px;	
+}
+
+#gameCompletedPlayerKilledDialog {
+	margin-left	: -240px;
+	width		: 480px;
+}
+
+#noWebGLDialog {
+	margin-left	: -240px;
+	width		: 480px;
+}
+
+/********************************************************************************
  *		Chat Area
 ********************************************************************************/
 

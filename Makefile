@@ -32,7 +32,7 @@ release_build: release_clean
 	cp www/images/favicon.ico build
 	cp etc/apache2/htaccess build/.htaccess
 	mkdir -p build/vendor/soundmanager2/swf
-	cp -a www/vendor/soundmanager2/swf/soundmanager2.swf build/vendor/soundmanager2/swf
+	cp -a www/vendor/soundmanager2/swf/*.swf build/vendor/soundmanager2/swf
 	mkdir -p build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	unzip www/vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.zip -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	#echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest

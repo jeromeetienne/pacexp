@@ -181,7 +181,7 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 				shininess	: colorType.phongShininess,
 				map		: this._texture
 			})
-
+			//new THREE.MeshLambertMaterial( { color: 0x999900, shading: THREE.SmoothShading, opacity: 0.5 } ),
 			//new THREE.MeshPhongMaterial({
 			//	ambient		: this._colorType.phongAmbient,
 			//	color		: this._colorType.phongColor,
