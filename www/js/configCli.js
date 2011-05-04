@@ -50,7 +50,7 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	firstCameraState	: 'fixedGrazing',
 	firstLightingState	: 'day',
 	minimapEnabled		: false,
-	showUsernameMenu	: true,
+	showUsernameMenu	: false,
 	showGameIdMenu		: false,
 	showScreenshotMenu	: true,
 	showSpeakMenu		: true,
@@ -58,7 +58,7 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
 	showAboutDialogOnLaunch	: true,
-	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
+	screenshotUploadUrl	: "http://"+location.host+":8085/upload"	
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
@@ -92,7 +92,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	showSoundFxMenu		: true,
 	showAboutMenu		: true,
 	showAboutDialogOnLaunch	: false,
-	screenshotUploadUrl	: "http://"+location.host+":8085/upload"	
+	screenshotUploadUrl	: "http://"+location.host+":8086/upload"	
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
@@ -233,7 +233,7 @@ WebyMaze.ConfigCli.sample.server	= {
 
 WebyMaze.ConfigCli.pacmaze.prod.server	= {
 	listenHost	: location.hostname,
-	listenPort	: 8084
+	listenPort	: 8085
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.server	= {
@@ -243,7 +243,7 @@ WebyMaze.ConfigCli.pacmaze.dev.server	= {
 
 WebyMaze.ConfigCli.tweetymaze.prod.server	= {
 	listenHost	: location.hostname,
-	listenPort	: 8085
+	listenPort	: 8086
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.server	= {

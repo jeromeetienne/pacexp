@@ -44,11 +44,11 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	var dialogSel	= null;
 	var tweetText	= null;
 	if( reason === "noMorePills" ){
-		soundRender.soundFxPlay('win')
+		soundRender.soundFxStart('win')
 		dialogSel	= '#gameCompletedNoMorePillsDialog';
 		tweetText	= "My pacmaze score is "+score+" !! can you do better ?";
 	}else if( reason === "playerKilled" ){
-		soundRender.soundFxPlay('die')
+		soundRender.soundFxStart('die')
 		dialogSel	= '#gameCompletedPlayerKilledDialog';
 		tweetText	= "Just had lot of fun with pacmaze. My score is "+score+"! You should check it out!";
 	}else{

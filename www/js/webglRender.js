@@ -252,20 +252,29 @@ WebyMaze.WebglRender.prototype.tickEventHandler	= function(events)
 	// go thru all events
 	events.forEach(function(event){
 		// handle events by type
-		if( event.type === 'playSound' ){
-			this._onPlaySound(event);
+		if( event.type === 'soundStart' ){
+			this._onSoundStart(event);
+		}else if( event.type === 'soundStop' ){
+			this._onSoundStop(event);
 		}else if( event.type === 'showVisualFx' ){
 			this._onShowVisualFx(event);
 		}else if( event.type === 'setLighting' ){
 			this._onSetLighting(event);
-		}else console.assert(false);
+		}else console.assert(false, "unknown tickEvent", event.type, "event", event);
 	}.bind(this));
 }
 
-WebyMaze.WebglRender.prototype._onPlaySound	= function(event)
+WebyMaze.WebglRender.prototype._onSoundStart	= function(event)
 {
-	var fxId	 = event.data;
-	soundRender.soundFxPlay(fxId)	
+	var fxId	= event.data.fxId;
+	var opts	= event.data.opts;
+	soundRender.soundFxStart(fxId, opts)	
+}
+
+WebyMaze.WebglRender.prototype._onSoundStop	= function(event)
+{
+	var fxId	= event.data.fxId;
+	soundRender.soundFxStop(fxId)	
 }
 
 WebyMaze.WebglRender.prototype._onSetLighting	= function(event)

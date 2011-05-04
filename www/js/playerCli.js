@@ -35,7 +35,8 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
 
 	if(this.username != ctxTick.username ){
 		this.username	= ctxTick.username
-		this._object3d.setAppearance('happy-yellow-'+this.username);
+		
+		this._object3d.setAppearance('happy-yellow-'+(this.username.match(/^guest/)?"Packy": this.username));
 	}
 	if(this.score != ctxTick.score){
 		this.score	= ctxTick.score

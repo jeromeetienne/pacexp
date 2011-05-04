@@ -1,12 +1,15 @@
 #!/usr/bin/make
 # to automatize repeatitive actions
 
-PROJECT_NAME=tweetymaze
-PROJECT_VERSION=2
-PROJECT_LATEST_VERSION=2
+PROJECT_NAME=pacmaze
+PROJECT_VERSION=3
+PROJECT_LATEST_VERSION=3
 
-server:
+server_dev:
 	supervisor -w lib lib/server.js
+
+server_prod:
+	while true; do sleep 1; node lib/server.js; done
 
 build: release_build
 
@@ -23,7 +26,7 @@ uninstall: upstart_uninstall
 release_build: release_clean
 	echo "*" > build/.gitignore
 	cp www/webglTest.html build
-	inliner http://localhost/~jerome/webwork/tweetymaze1/www/index.html > build/index.html
+	inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
 	cp www/images/favicon.ico build
@@ -32,10 +35,10 @@ release_build: release_clean
 	cp -a www/vendor/soundmanager2/swf/soundmanager2.swf build/vendor/soundmanager2/swf
 	mkdir -p build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	unzip www/vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.zip -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
-	echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
-	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
-	echo "\nNETWORK:\n*\n" > build/cache.manifest
-	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	#echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
+	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	#echo "\nNETWORK:\n*\n" > build/cache.manifest
+	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
 
 release_clean:
 	rm -rf build/*

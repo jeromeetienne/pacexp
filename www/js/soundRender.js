@@ -48,18 +48,21 @@ WebyMaze.SoundRender.prototype._soundManagerReady	= function(){
 	// tigger the event
 	this.trigger('ready');
 	// create the sound track
-	if( this._enableTrack )	this._soundTrackStart();
+	if( this._enableTrack )	this.soundTrackStart();
 	// create all soundsFx
-	for(var fxId in this._fxIdToUrl){
+	Object.keys(this._fxIdToUrl).forEach(function(fxId){
 		var url	= this._fxIdToUrl[fxId];
-console.log("init sound", fxId)
+		console.log("soundFx", fxId, " is starting init")
 		this._soundsFx[fxId]	= soundManager.createSound({
 			id	: fxId,
 			volume	: 50,
 			url	: url,
-			autoLoad: true
+			autoLoad: true,
+			onload	: function(success){
+				console.log("soundFx", fxId, "is loaded");
+			}
 		});
-	}
+	}.bind(this));
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +76,7 @@ WebyMaze.SoundRender.prototype.enableFx	= function(val)
 	return this._enableFx = val;			
 }
 
-WebyMaze.SoundRender.prototype.soundFxPlay		= function(fxId, opts)
+WebyMaze.SoundRender.prototype.soundFxStart		= function(fxId, opts)
 {
 	// return now if opts.enabledFx
 	if( this._enableFx === false )	return;
