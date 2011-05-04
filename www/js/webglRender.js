@@ -83,6 +83,14 @@ WebyMaze.WebglRender	= function(opts){
 		sceneContainer.addChild( this._minimapRender.obj3d() );		
 	}
 
+	//soundRender.bind('ready', function(){
+	//	setTimeout(function(){
+	//		soundRender.soundFxPlay("siren", {
+	//			loops	: 999999
+	//		});	
+	//	}, 1*1000)
+	//})
+
 	// TODO put the whole UI stuff in its own class (like camera)
 	this.usernameUICtor();
 	this.gameIdUICtor();
@@ -614,7 +622,7 @@ WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function()
 	// init the button click
 	jQuery(buttonSel).click(function(){
 		var running	= soundRender.soundTrackRunning();
-		console.log("running", soundRender.soundTrackRunning())
+		//console.log("soundTrack running", soundRender.soundTrackRunning())
 		if( running === false ){
 			soundRender.soundTrackStart();
 		}else{

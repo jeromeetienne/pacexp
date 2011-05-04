@@ -1,132 +1,145 @@
 var WebyMaze	= WebyMaze || {};
 
+//////////////////////////////////////////////////////////////////////////////////
+//										//
+//////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.SoundRender	= function(opts){
-	// set the default values if needed
-	opts		= opts	|| {};
-	opts.enableFx	= 'enableFx'	in opts ? opts.enableFx		: false;
-	opts.enableTrack= 'enableTrack'	in opts ? opts.enableTrack	: false;
+WebyMaze.SoundRender	= function(opts)
+{
+	// get parameters from opts
+	this._enableFx		= 'enableFx'	in opts ? opts.enableFx		: false;
+	this._enableTrack	= 'enableTrack'	in opts ? opts.enableTrack	: false;
 
-	//////////////////////////////////////////////////////////////////////////
-	//		class variables						//
-	//////////////////////////////////////////////////////////////////////////
-	// private variables	
-	var soundsFx	= {};
-	var fxIdToUrl	= {
+	// init instance variable
+	this._soundsFx	= {};
+	this._fxIdToUrl	= {
 		'die'		: 'sounds/pacman/die.mp3',
 		'win'		: 'sounds/pacman/vcs_90.mp3',
 		'eatPill'	: 'sounds/pacman/eating.short.mp3',
 		'eatEnergizer'	: 'sounds/pacman/eatpill.mp3',
 		'eatGhost'	: 'sounds/pacman/eatghost.mp3',
-		'siren'		: 'sounds/pacman/siren.mp3'
-	}
-	var soundTrack		= null;
+		'siren'		: 'sounds/pacman/siren.mp3',
+		'opening_sound'	: 'sounds/pacman/opening_song.mp3'
+	};
+	this._soundTrack= null;
 
-	//////////////////////////////////////////////////////////////////////////
-	//		ctor/dtor						//
-	//////////////////////////////////////////////////////////////////////////
-	var ctor	= function(){		
-		soundManager.onready(soundManagerReady);
-	}
-	var dtor	= function(){
-		this.soundTrackDtor();
-		for(var fxId in soundsIdToUrl){
-			if( !soundsFx[fxId] )	continue;
-			soundsFx[fxId].destruct();
-		}
-		soundsFx	= {};
-	}
-	
 
-	/**
-	 * Initialize the soundtrack
-	 *
-	 * - it is looping for ever
-	*/
-	var soundTrackCtor	= function(){
-		// create the sound
-		soundTrack	= soundManager.createSound({
-			id	: 'soundTrack',
-			url	: 'sounds/Hot-Butter-Popcorn.mp3',
-			autoLoad: true,
-			volume	: 100,
-			onload	: function() {
-				soundTrack.play();
-			},
-			onfinish	: function(){
-				soundTrack.play();
-			}
+	// call the contructor
+	soundManager.onready(this._soundManagerReady.bind(this));
+}
+
+WebyMaze.SoundRender.prototype.destroy	= function()
+{
+}
+
+// mixin MicroEvent 
+MicroEvent.mixin(WebyMaze.SoundRender);
+
+//////////////////////////////////////////////////////////////////////////////////
+//										//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.SoundRender.prototype._soundManagerReady	= function(){
+	// check if SM2 successfully loaded..
+	if( !soundManager.supported() ){
+		alert("soundmanager is not supported. no sound")
+		return;
+	}
+	// tigger the event
+	this.trigger('ready');
+	// create the sound track
+	if( this._enableTrack )	this._soundTrackStart();
+	// create all soundsFx
+	for(var fxId in this._fxIdToUrl){
+		var url	= this._fxIdToUrl[fxId];
+console.log("init sound", fxId)
+		this._soundsFx[fxId]	= soundManager.createSound({
+			id	: fxId,
+			volume	: 50,
+			url	: url,
+			autoLoad: true
 		});
 	}
-	var soundTrackDtor	= function(){
-		if( soundTrack ){
-			soundTrack.destruct();
-			soundTrack	= null;			
-		}
-	}
-	var soundTrackRunning	= function(){
-		return soundTrack ? true : false;
-	}
-	var soundTrackStart	= function(){
-		soundTrackDtor();
-		soundTrackCtor();
-	}
-	var soundTrackStop	= function(){
-		soundTrackDtor();
-	}
+}
 
-	//////////////////////////////////////////////////////////////////////////
-	//		Sound							//
-	//////////////////////////////////////////////////////////////////////////	
-	var soundManagerReady	= function(){
-		// check if SM2 successfully loaded..
-		if( !soundManager.supported() ){
-			alert("soundmanager is not supported. no sound")
-			return;
-		}
-		// create the sound track
-		if( opts.enableTrack )	soundTrackStart();
-		// create all soundsFx
-		for(var fxId in fxIdToUrl){
-			var url	= fxIdToUrl[fxId];
-			soundsFx[fxId]	= soundManager.createSound({
-				id	: fxId,
-				volume	: 50,
-				url	: url,
-				autoLoad: true
-			});
-		}
-	}
-	var soundFxPlay		= function(fxId){
-		// return now if opts.enabledFx
-		if( opts.enableFx === false )	return;
-		console.log("soundRender.play() ", fxId);
-		if( !soundsFx[fxId] )	console.log("sound "+fxId+" isnt init");
-		if( !soundsFx[fxId] )	return;
-		soundsFx[fxId].play();
-	}	
+//////////////////////////////////////////////////////////////////////////////////
+//										//
+//////////////////////////////////////////////////////////////////////////////////
 
-	//////////////////////////////////////////////////////////////////////////
-	//		getter/setter for the config				//
-	//////////////////////////////////////////////////////////////////////////
-	
-	var enableFx	= function(val){
-		if( typeof val === 'undefined' )	return opts.enableFx;
-		return opts.enableFx = val;		
-	}
+WebyMaze.SoundRender.prototype.enableFx	= function(val)
+{
+	if( typeof val === 'undefined' )	return this._enableFx;
+	// TODO here stop all the currently playing sound	
+	return this._enableFx = val;			
+}
 
-	//////////////////////////////////////////////////////////////////////////
-	//		run initialisation					//
-	//////////////////////////////////////////////////////////////////////////
-	// call the contructor
-	ctor();
-	// return public properties
-	return {
-		enableFx		: enableFx,
-		soundFxPlay		: soundFxPlay,
-		soundTrackStart		: soundTrackStart,
-		soundTrackStop		: soundTrackStop,
-		soundTrackRunning	: soundTrackRunning
-	};
+WebyMaze.SoundRender.prototype.soundFxPlay		= function(fxId, opts)
+{
+	// return now if opts.enabledFx
+	if( this._enableFx === false )	return;
+	console.log("soundRender.play() ", fxId);
+	// if the sound isnt yet init, do nothing
+	if( !this._soundsFx[fxId] )	console.log("sound "+fxId+" isnt init");
+	if( !this._soundsFx[fxId] )	return;
+	// trigger the soundPlay
+	this._soundsFx[fxId].play(opts);
+}
+
+WebyMaze.SoundRender.prototype.soundFxStop		= function(fxId)
+{
+	// return now if opts.enabledFx
+	if( this._enableFx === false )	return;
+	console.log("soundRender.play() ", fxId);
+	// if the sound isnt yet init, do nothing
+	if( !this._soundsFx[fxId] )	console.log("sound "+fxId+" isnt init");
+	if( !this._soundsFx[fxId] )	return;
+	// stop the sound
+	this._soundsFx[fxId].stop();
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//		soundTrack							//
+//////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Initialize the soundtrack
+ *
+ * - it is looping for ever
+*/
+WebyMaze.SoundRender.prototype._soundTrackCtor	= function(){
+	// create the sound
+	this._soundTrack	= soundManager.createSound({
+		id	: 'soundTrack',
+		url	: 'sounds/Hot-Butter-Popcorn.mp3',
+		autoLoad: true,
+		volume	: 100,
+		onload	: function() {
+			this._soundTrack.play();
+		}.bind(this),
+		onfinish	: function(){
+			this._soundTrack.play();
+		}.bind(this)
+	});
+}
+
+WebyMaze.SoundRender.prototype._soundTrackDtor	= function(){
+	if( this._soundTrack ){
+		this._soundTrack.destruct();
+		this._soundTrack	= null;			
+	}
+}
+
+WebyMaze.SoundRender.prototype.soundTrackRunning	= function(){
+	return this._soundTrack ? true : false;
+}
+
+WebyMaze.SoundRender.prototype.soundTrackStart	= function()
+{
+	this._soundTrackDtor();
+	this._soundTrackCtor();
+}
+
+WebyMaze.SoundRender.prototype.soundTrackStop	= function(){
+	this._soundTrackDtor();
 }
 

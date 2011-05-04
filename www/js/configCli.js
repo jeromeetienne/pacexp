@@ -48,7 +48,7 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	playerRotation		: 'grid',
 	firstCameraState	: 'fixedGrazing',
-	firstLightingState	: 'firecamp',
+	firstLightingState	: 'day',
 	minimapEnabled		: false,
 	showUsernameMenu	: true,
 	showGameIdMenu		: false,
