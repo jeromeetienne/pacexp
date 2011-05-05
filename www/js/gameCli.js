@@ -4,11 +4,14 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.GameCli	= function(opts){
+WebyMaze.GameCli	= function(opts)
+{
 	this.userInputCtor();
 	this.socketCtor();
 }
-WebyMaze.GameCli.prototype.destroy	= function(){
+
+WebyMaze.GameCli.prototype.destroy	= function()
+{
 	this.userInputDtor();	
 	this.socketDtor();
 }
@@ -17,7 +20,8 @@ WebyMaze.GameCli.prototype.destroy	= function(){
 //		message handlers						//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.GameCli.prototype.onContextInit	= function(message){
+WebyMaze.GameCli.prototype.onContextInit	= function(message)
+{
 	// sanity check - this.webglRender MUST NOT exist
 	console.assert(!this.webglRender);
 	// create WebyMaze.WebglRender
@@ -77,8 +81,8 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 {
 	var maxLines	= 4;
 	// only display maxLines lines
-	var nLines	= jQuery('#pageContainer .chatArea ul li').length;
-	jQuery('#pageContainer .chatArea ul li').each(function(index, element){
+	var nLines	= jQuery('#gamePageContainer .chatArea ul li').length;
+	jQuery('#gamePageContainer .chatArea ul li').each(function(index, element){
 		if( nLines - index < maxLines )	return;
 		jQuery(element).remove();
 	});
@@ -139,7 +143,7 @@ console.log("data", message.data)
 	});
 	
 	var element	= jQuery('<li>').html(text);
-	jQuery(element).appendTo('#pageContainer .chatArea ul');
+	jQuery(element).appendTo('#gamePageContainer .chatArea ul');
 
 
 	// if it contains a yfrog.com url, add thumbnails

@@ -14,8 +14,8 @@
 		<!-- es5-shim.js to patch missing standard functions - needed for Function.bind() in safari -->
 		<script src='vendor/es5-shim.js'></script>
 
-		<script src="vendor/firebugx.js"></script>
-
+<!--		<script src="vendor/firebugx.js"></script>
+-->
 		<script src='vendor/jquery/jquery.min.js'></script>
 		<script src='vendor/jquery/jquery.url.js'></script>
 		<script src='vendor/jquery/jquery.cookie.js'></script>
@@ -38,7 +38,14 @@
 		<script type="text/javascript" src="vendor/three.js.new/contrib/RequestAnimationFrame.js"></script>
 		<script type="text/javascript" src="vendor/three.js.new/contrib/Stats.js"></script>
 
+		<!-- To get Socket.io -->
 		<script src="vendor/socket.io-client/socket.io.js"></script>
+
+		<!-- To get Soundmanager -->
+		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
+		<script>soundManager.url = 'vendor/soundmanager2/swf'; // FIXME ? could it be a dataUrl </script>
+		<script>soundManager.debugMode		= false;</script>
+		<script>soundManager.useHTML5Audio	= true;	</script>
 
 		<!-- TODO put excanvas in threex -->
 		<script type="text/javascript" src="vendor/excanvas.js"></script>
@@ -69,38 +76,120 @@
 		<script type="text/javascript" src="js/lightingRender.js"></script>
 		<script type="text/javascript" src="js/minimapRender.js"></script>
 		<script type="text/javascript" src="js/webglRender.js"></script>
+		<script type="text/javascript" src="js/gamePageMain.js"></script>
+		<script type="text/javascript" src="js/landingPageMain.js"></script>
 		
-		<!-- To get Soundmanager -->
-		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
-		<script>soundManager.url = 'vendor/soundmanager2/swf'; // FIXME ? could it be a dataUrl </script>
-		<script>soundManager.debugMode		= false;</script>
-		<script>soundManager.useHTML5Audio	= true;	</script>
-
-	
-		<script src="js/client.js"></script>
-
-
 		<script>
 		"use strict";
-		jQuery(function(){	main();	})
+		//jQuery(function(){	gamePageMain();	})
+		jQuery(function(){
+			var noLandingPage	= jQuery.url.param('noLandingPage') ? true : false;
+			if( noLandingPage ){
+				gamePageMain();				
+			}else{
+				landingPageMain();				
+			}
+		})
 		</script>
+
+<div id="landingPageContainer" tabindex="100" style="display: none;">
+	<div class="above3d pagetitle">
+		<!--
+		- this title is too large on small embeded iframe
+		- this trick in window.resize make it proportional...
+		  jQuery("body").css('font-size', window.innerWidth/80);
+		- not sure if it is a good thing or not
+		-->
+		<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Pacmaze Experiment</a>
+	</div>
+<style type="text/css">
+#landingMainDialog div.button {
+	font-size	: 130%;
+	background	: #aaa;
+	color		: #444;
+	padding		: 15px;
+	border-radius	: 20px;
+	border		: solid;
+	border-width	: 2px;
+	border-color	: #888;
+	text-shadow	: 0px 1px 0px #111;
+}
+#landingMainDialog div.button:hover {
+	background-color	: #666;
+}
+#landingMainDialog div {
+	margin-top	: 1em;
+}
+
+#landingMainDialog div.twitterUsername input {
+	left	: 0px;
+	right	: 0px;
+}
+</style>
+	<div id="landingMainDialog" class="promptDialog jqmWindow">
+		<div class="intro">
+			<h3><center><strong>Welcome !!</strong></center></h3>
+			<p>
+				You are a pacman trapped in a maze!
+			</p>
+			<p>
+				Use <strong>Arrows</strong> to move the player.
+				and <strong>Space</strong> to shoot.
+			</p>
+		</div>
+		<div class="twitterUsername">
+			Your Twitter Username<br/>
+			<input type="text" name="username" placeholder="twitter username...">
+		</div>
+		<div class="button play">
+			Play
+		</div>
+		<div class="button help">
+			Help
+		</div>
+	</div>
+	<div id="landingHelpDialog" class="jqmWindow">
+		<h3><center><strong>Welcome !!</strong></center></h3>
+		<p>
+			You are a pacman trapped in a maze!
+		</p>
+		<p>
+			Use <strong>Arrows</strong> to move the player.
+			and <strong>Space</strong> to shoot.
+		</p>
+		</p>
+		<p>
+			Your Twitter Username<br/>
+			<input type="text" size=15 name="username" placeholder="twitter username...">
+		</p>
+		<p>
+			<a href="javascript:void(0)" class="play">Play</a>
+		</p>
+		<p>
+			<a href="javascript:void(0)" class="help">Help</a>
+		</p>
+	</div>
+</div>
+
+<!-- *****************************************************************************
+			Game Page
+******************************************************************************** -->
 		
-		<div id="pageContainer" tabindex="100">
-				<div class="above3d pagetitle">
-					<!--
-					- this title is too large on small embeded iframe
-					- this trick in window.resize make it proportional...
-					  jQuery("body").css('font-size', window.innerWidth/80);
-					- not sure if it is a good thing or not
-					-->
-					<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Pacmaze Experiment</a>
-				</div>
-				<div id="canvasContainer"></div> 
-				<div class="above3d chatArea" style="position: absolute; bottom: 0px;">
-					<ul>
-						<li></li>
-					</ul>
-				</div>
+<div id="gamePageContainer" tabindex="100" style="display: none">
+		<div class="above3d pagetitle">
+			<!--
+			- this title is too large on small embeded iframe
+			- this trick in window.resize make it proportional...
+			  jQuery("body").css('font-size', window.innerWidth/80);
+			- not sure if it is a good thing or not
+			-->
+			<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Pacmaze Experiment</a>
+		</div>
+		<div id="canvasContainer"></div> 
+		<div class="above3d chatArea" style="position: absolute; bottom: 0px;">
+			<ul>
+				<li></li>
+			</ul>
 		</div>
 
 		<!-- menuosd -->
@@ -118,10 +207,13 @@
 				<a href="javascript:void(0)" id="gameIdButton">Maze : <span class="value"></span></a>
 			</span>
 			<span id="screenshotMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="screenshotButton">Screenshot</a>
+				<a href="javascript:void(0)" id="screenshotButton"><img style="border: 0;" src="images/thenounproject/camera.png" alt='Screenshot'/></a>
 			</span>
 			<span id="speakMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="speakButton">Speak</a>
+				<a href="javascript:void(0)" id="speakButton"><img style="border: 0;" src="images/thenounproject/talk.png" alt='Talk'/></a>
+			</span>
+			<span id="optionsMenuLine" class="line">
+				<a href="javascript:void(0)" id="optionsButton"><img style="border: 0;" src="images/thenounproject/options.png" alt='Options'/></a>
 			</span>
 			<span id="soundTrackMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
@@ -130,7 +222,7 @@
 				<a href="javascript:void(0)" id="soundFxButton">Sound Fx <span class="value">Off</span></a>
 			</span>
 			<span id="aboutMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="aboutButton">About</a>
+				<a href="javascript:void(0)" id="aboutButton"><img style="border: 0;" src="images/thenounproject/help.png" alt='Help'/></a>
 			</span>
 		</div>
 
@@ -163,7 +255,7 @@
 		<div id="aboutDialog" class="jqmWindow above3d">
 			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
 			<p>
-				You Zare a pacman trapped in a maze!
+				You are a pacman trapped in a maze!
 			</p>
 			<p>
 				Use <strong>Arrows</strong> to move the player.
@@ -211,9 +303,10 @@
 				<!--Go <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
 				Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->
 			</p>
-			<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/9_ZtsK4rU4g" frameborder="0" allowfullscreen></iframe>
-			<div class="jqmClose button"></div>
+<!--			<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/9_ZtsK4rU4g" frameborder="0" allowfullscreen></iframe>
+-->			<div class="jqmClose button"></div>
 		</div>
+</div>
 		
 		<!-- google analytic snipet -->
 		<script type="text/javascript">

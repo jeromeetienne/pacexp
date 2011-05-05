@@ -544,7 +544,7 @@ WebyMaze.WebglRender.prototype.speakUICtor	= function()
 		// hide the jqm
 		hash.o.remove();hash.w.hide();
 		// put the focus back... not sure why this is needed FIXME
-		jQuery('#pageContainer').focus();
+		jQuery('#gamePageContainer').focus();
 		// get the value from the input
 		var value	= jQuery(inputSel).val();
 		// exit if there is nothing here

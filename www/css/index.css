@@ -37,6 +37,43 @@ body {
 }
 
 /********************************************************************************
+ *		landingMainDialog
+********************************************************************************/
+
+#landingMainDialog {
+	margin-left	: -240px;
+	width		: 480px;
+}
+
+#landingHelpDialog {
+	margin-left	: -240px;
+	width		: 480px;
+}
+
+#landingMainDialog div.button {
+	font-size	: 130%;
+	background	: #aaa;
+	color		: #444;
+	padding		: 15px;
+	border-radius	: 20px;
+	border		: solid;
+	border-width	: 2px;
+	border-color	: #888;
+	text-shadow	: 0px 1px 0px #111;
+}
+#landingMainDialog div.button:hover {
+	background-color	: #666;
+}
+#landingMainDialog div {
+	margin-top	: 1em;
+}
+
+#landingMainDialog div.twitterUsername input {
+	left	: 0px;
+	right	: 0px;
+}
+
+/********************************************************************************
  *		Dialog
 ********************************************************************************/
 
@@ -63,10 +100,13 @@ div.jqmClose.button {
 	left	: 10px;
 }
 
-#pageContainer .pagetitle {
+.pagetitle {
 	margin-left	: -25%;
 	width		: 50%;
 }
+
+
+
 
 #usernameDialog {
 	margin-left	: -120px;
@@ -107,7 +147,7 @@ div.jqmClose.button {
  *		Chat Area
 ********************************************************************************/
 
-#pageContainer .chatArea {
+#gamePageContainer .chatArea {
 	font-size	: 150%;
 	font-weight	: bold;
 	font-family	: Verdana, Arial, Helvetica, sans-serif;
@@ -116,15 +156,15 @@ div.jqmClose.button {
 	text-shadow	: 0 0 0.1em #fff, 0 0 0.2em #ccc;
 }
 
-#pageContainer .chatArea li {
+#gamePageContainer .chatArea li {
 	list-style-type	: none;
 }
 
-#pageContainer .chatArea a {
+#gamePageContainer .chatArea a {
 	color		: #333;
 	text-decoration	: none;
 }
-#pageContainer .chatArea a:hover {
+#gamePageContainer .chatArea a:hover {
 	text-decoration	: underline;
 }
 

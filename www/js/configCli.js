@@ -114,8 +114,6 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].webglRender;
 //WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli['pacmaze']['dev'].webglRender;
 
-console.log("super configcli", WebyMaze.ConfigCli.webglRender);
-
 //////////////////////////////////////////////////////////////////////////////////
 //		ui								//
 //////////////////////////////////////////////////////////////////////////////////

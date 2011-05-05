@@ -19,7 +19,10 @@ var soundRender	= null;
 var gameCli	= null;
 var gameConfig	= null;
 
-var main	= function(){
+var gamePageMain= function(){
+	jQuery("#gamePageContainer").show();
+	
+	
 	// TODO put back detector
 	try {
 		var webGlSupport	= !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
