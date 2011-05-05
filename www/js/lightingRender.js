@@ -97,6 +97,48 @@ WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 {
 	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,
+		color		: 0xcccccc
+	}));
+	//this._lightInsert(new WebyMaze.LightPoint({
+	//	lightPool	: this._lightPool,
+	//	color		: 0xFF1111,
+	//	intensity	: 20,
+	//	distance	: 500,
+	//	position	: {
+	//		x	: -2*100,
+	//		y	: 100,
+	//		z	:  1*100
+	//	}
+	//}));
+	this._lightInsert(new WebyMaze.LightPoint({
+		lightPool	: this._lightPool,
+		color		: 0x118811,intensity	: 6,
+		color		: 0x881111,intensity	: 20,
+		color		: 0x111188,intensity	: 15,
+		distance	: 500,
+		position	: {
+			x	:  8*100,
+			y	: 100,
+			z	: 13*100
+		}
+	}));
+	//this._lightInsert(new WebyMaze.LightPoint({
+	//	lightPool	: this._lightPool,
+	//	color		: 0xaa44aa,
+	//	intensity	: 5,
+	//	distance	: 800,
+	//	position	: {
+	//		x	: -2*100,
+	//		y	: 500,
+	//		z	: -5*100
+	//	}
+	//}));
+}
+
+WebyMaze.LightingRender.prototype._buildLightingDay0	= function()
+{
+	this._lightInsert(new WebyMaze.AmbientLight({
+		lightPool	: this._lightPool,
 		color		: 0xaaaaaa
 	}));
 	this._lightInsert(new WebyMaze.LightDirectional({

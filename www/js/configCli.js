@@ -147,8 +147,8 @@ WebyMaze.ConfigCli.tweetymaze.prod.cameraRender	= {
 
 WebyMaze.ConfigCli.tweetymaze.dev.cameraRender	= {
 	cameraStates	: ['inplayer', 'facePlayer'],
-	//cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
-	//				'behindPlayer', 'fixedZenith', 'fixedGrazing'],
+	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+					'behindPlayer', 'fixedZenith', 'fixedGrazing'],
 	tweenDelay	: 1000
 };
 
@@ -293,12 +293,18 @@ WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
-	showRoof	: true,
-	wallTextureUrl	: 'images/tmp/tex0.jpg',
-	//wallTextureUrl	: 'images/tmp/PaddedOrangeWall.png',
-	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
+	showRoof	: false,
+	//wallTextureUrl	: 'images/tmp/tex0.jpg',
+	///wallTextureUrl	: 'images/tmp/PaddedOrangeWall.png',
+	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
+	//wallTextureUrl	: 'images/tmp/GraniteWall.png',
+	//goundTextureUrl	: 'images/tmp/tex0.jpg',
+	//groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
 	//groundTextureUrl: 'images/tmp/EmbossedWall.png',
-	//groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
+	groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
+	//groundTextureUrl: 'images/tmp/GraniteWall.png',
+	//groundTextureUrl: 'images/textures/TilesOrnate0010_2_thumbhuge.jpg',
+	//groundTextureUrl: 'images/textures/MarbleGreen0001_39_thumbhuge.jpg',	
 	wallHRatio	: 4/3
 };
 
