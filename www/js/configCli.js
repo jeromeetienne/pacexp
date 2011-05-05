@@ -90,7 +90,7 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
-	firstLightingState	: 'day',
+	firstLightingState	: 'buddy1',
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
@@ -108,7 +108,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
-	firstLightingState	: 'day',
+	firstLightingState	: 'buddy1',
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,

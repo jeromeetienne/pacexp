@@ -63,6 +63,7 @@ WebyMaze.LightingRender.prototype.changeState	= function(state)
 	// build the new lights
 	if( this._state === 'day' )		this._buildLightingDay();
 	else if( this._state === 'emergency' )	this._buildLightingEmergency();
+	else if( this._state === 'buddy1' )	this._buildLightingBuddy1();
 	else if( this._state === 'firecamp' )	this._buildLightingFirecamp();
 	else	console.assert(false);
 }
@@ -93,7 +94,7 @@ WebyMaze.LightingRender.prototype._lightsDtor	= function()
 //										//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LightingRender.prototype._buildLightingDay1	= function()
+WebyMaze.LightingRender.prototype._buildLightingBuddy1	= function()
 {
 	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,

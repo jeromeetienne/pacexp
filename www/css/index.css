@@ -166,8 +166,11 @@ div.jqmClose.button {
 	font-weight	: bold;
 	font-family	: Verdana, Arial, Helvetica, sans-serif;
 
-	color		: #000;
+/*	color		: #000;
 	text-shadow	: 0 0 0.1em #fff, 0 0 0.2em #ccc;
+*/
+	color		: #FFF;
+	text-shadow	: 0 0 0.1em #000, 0 0 0.2em #333;
 }
 
 #gamePageContainer .chatArea li {
@@ -227,7 +230,8 @@ div.jqmClose.button {
 
 #energyMenuLine .value,
 #scoreMenuLine .value {
-	color		: #fff;
+	color		: #f00;
+	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
 }
 
 #energyMenuLine {
