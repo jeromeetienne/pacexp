@@ -65,7 +65,9 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	
 	// normal callback
 	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}.bind(this);
-	var toClose	= function(){ window.location.reload();		}.bind(this);
+	var toClose	= function(){
+		window.location.href	= location.origin + location.pathname + "?landingPageBypass=1";
+	}.bind(this);
 	
 	// init dialogs
 	jQuery(dialogSel).jqm({ onHide	: toClose });

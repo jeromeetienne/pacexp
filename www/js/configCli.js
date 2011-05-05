@@ -25,6 +25,10 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	//playerRotation: 'grid'
 	/** minimapEnabled  to enable the minimap */
 	minimapEnabled		: true,
+	/** showScoreMenu to show the scoreMenuLine */
+	showScoreMenu		: true,
+	/** showEnergyMenu to show the energyMenuLine */
+	showEnergyMenu		: true,
 	/** showUsernameMenu to show the usernameMenuLine */
 	showUsernameMenu	: true,
 	/** showGameIdMenu to show the gameIdMenuLine */
@@ -50,6 +54,8 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	firstCameraState	: 'fixedGrazing',
 	firstLightingState	: 'day',
 	minimapEnabled		: false,
+	showScoreMenu		: true,
+	showEnergyMenu		: false,
 	showUsernameMenu	: false,
 	showGameIdMenu		: false,
 	showScreenshotMenu	: true,
@@ -66,6 +72,8 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	firstCameraState	: 'fixedZenith',
 	firstLightingState	: 'day',
 	minimapEnabled		: false,
+	showScoreMenu		: true,
+	showEnergyMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
@@ -84,6 +92,8 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	firstCameraState	: 'inplayer',
 	firstLightingState	: 'day',
 	minimapEnabled		: false,
+	showScoreMenu		: true,
+	showEnergyMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
@@ -100,6 +110,8 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	firstCameraState	: 'inplayer',
 	firstLightingState	: 'day',
 	minimapEnabled		: false,
+	showScoreMenu		: true,
+	showEnergyMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,

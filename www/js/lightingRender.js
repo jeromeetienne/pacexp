@@ -93,7 +93,7 @@ WebyMaze.LightingRender.prototype._lightsDtor	= function()
 //										//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LightingRender.prototype._buildLightingDay	= function()
+WebyMaze.LightingRender.prototype._buildLightingDay1	= function()
 {
 	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,
@@ -135,7 +135,7 @@ WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 	//}));
 }
 
-WebyMaze.LightingRender.prototype._buildLightingDay0	= function()
+WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 {
 	this._lightInsert(new WebyMaze.AmbientLight({
 		lightPool	: this._lightPool,

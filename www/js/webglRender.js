@@ -92,6 +92,8 @@ WebyMaze.WebglRender	= function(opts){
 	//})
 
 	// TODO put the whole UI stuff in its own class (like camera)
+	this.scoreUICtor();
+	this.energyUICtor();
 	this.usernameUICtor();
 	this.gameIdUICtor();
 	this.screenshotUICtor();
@@ -314,6 +316,24 @@ WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 //////////////////////////////////////////////////////////////////////////////////
 //		osd user interface stuff					//
 //////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.WebglRender.prototype.scoreUICtor	= function()
+{
+	var menuLineSel	= '#scoreMenuLine';
+	// honore this._config
+	if( this._config.showScoreMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
+}
+
+WebyMaze.WebglRender.prototype.energyUICtor	= function()
+{
+	var menuLineSel	= '#energyMenuLine';
+	// honore this._config
+	if( this._config.showEnergyMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
+}
 
 WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
 	var dialogSel	= '#usernameDialog';
@@ -698,7 +718,7 @@ WebyMaze.WebglRender.prototype.energyUIUpdate	= function(){
 	// update the ui
 	var value	= this.players[this.urBodyId].energy;
 	var containSel	= '#energyMenuLine';
-	jQuery(containSel+" span.value").text(value)
+	jQuery(containSel+" span.value").text(value+'%')
 }
 
 

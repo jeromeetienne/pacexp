@@ -90,6 +90,10 @@ div.twitter-share-button.bottomRight {
 	right	: 0px;
 }
 
+/********************************************************************************
+ *		Dialog
+********************************************************************************/
+
 div.jqmClose.button {
 	width	: 22px;
 	height	: 22px;
@@ -107,6 +111,16 @@ div.jqmClose.button {
 
 
 
+.menuosd .line img {
+	padding			: 8px;
+	
+}
+
+.menuosd .line img:hover {
+	background-color	: #444;
+	opacity			: 0.9;
+	border-radius		: 0.5em;
+}
 
 #usernameDialog {
 	margin-left	: -120px;
@@ -203,6 +217,24 @@ div.jqmClose.button {
 .menuosd a:hover {
 	text-decoration	: underline;
 }
+
+
+#energyMenuLine,
+#scoreMenuLine {
+	font-size	: 350%;	
+	color		: #fff;
+}
+
+#energyMenuLine .value,
+#scoreMenuLine .value {
+	color		: #fff;
+}
+
+#energyMenuLine {
+	
+}
+
+
 
 #aboutDialog a {
 	color		: #333;

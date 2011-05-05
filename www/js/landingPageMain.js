@@ -26,9 +26,7 @@ console.log("username=", configStore.username())
 
 	
 	// init dialogs
-	jQuery(dialogSel).jqm({
-		overlay	: 0
-	});
+	jQuery(dialogSel).jqm({	overlay	: 0 });
 
 	jQuery(dialogSel+' div.button.play').click(function(){
 		// get username from <input>

@@ -83,8 +83,8 @@
 		"use strict";
 		//jQuery(function(){	gamePageMain();	})
 		jQuery(function(){
-			var noLandingPage	= jQuery.url.param('noLandingPage') ? true : false;
-			if( noLandingPage ){
+			var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
+			if( landingPageBypass ){
 				gamePageMain();				
 			}else{
 				landingPageMain();				
@@ -100,32 +100,8 @@
 		  jQuery("body").css('font-size', window.innerWidth/80);
 		- not sure if it is a good thing or not
 		-->
-		<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Pacmaze Experiment</a>
+		<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Buddymaze</a>
 	</div>
-<style type="text/css">
-#landingMainDialog div.button {
-	font-size	: 130%;
-	background	: #aaa;
-	color		: #444;
-	padding		: 15px;
-	border-radius	: 20px;
-	border		: solid;
-	border-width	: 2px;
-	border-color	: #888;
-	text-shadow	: 0px 1px 0px #111;
-}
-#landingMainDialog div.button:hover {
-	background-color	: #666;
-}
-#landingMainDialog div {
-	margin-top	: 1em;
-}
-
-#landingMainDialog div.twitterUsername input {
-	left	: 0px;
-	right	: 0px;
-}
-</style>
 	<div id="landingMainDialog" class="promptDialog jqmWindow">
 		<div class="intro">
 			<h3><center><strong>Welcome !!</strong></center></h3>
@@ -144,8 +120,11 @@
 		<div class="button play">
 			Play
 		</div>
-		<div class="button help">
-			Help
+		<div class="button tutorial">
+			Tutorial
+		</div>
+		<div class="button about">
+			About
 		</div>
 	</div>
 	<div id="landingHelpDialog" class="jqmWindow">
@@ -168,6 +147,9 @@
 		<p>
 			<a href="javascript:void(0)" class="help">Help</a>
 		</p>
+		<p>
+			<a href="javascript:void(0)" class="help">About</a>
+		</p>
 	</div>
 </div>
 
@@ -176,15 +158,6 @@
 ******************************************************************************** -->
 		
 <div id="gamePageContainer" tabindex="100" style="display: none">
-		<div class="above3d pagetitle">
-			<!--
-			- this title is too large on small embeded iframe
-			- this trick in window.resize make it proportional...
-			  jQuery("body").css('font-size', window.innerWidth/80);
-			- not sure if it is a good thing or not
-			-->
-			<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Pacmaze Experiment</a>
-		</div>
 		<div id="canvasContainer"></div> 
 		<div class="above3d chatArea" style="position: absolute; bottom: 0px;">
 			<ul>
@@ -192,28 +165,19 @@
 			</ul>
 		</div>
 
-		<!-- menuosd -->
+		<!-- menuosd left -->
 		<div style="position: absolute; top:10px; left:10px;" class="above3d menuosd">
-			<span id="scoreMenuLine" class="line">
-				Score : <span class="value"></span>
-			</span>
-			<span id="energyMenuLine" class="line">
+			<span id="energyMenuLine" class="line" style="display: none">
 				Energy : <span class="value"></span>
 			</span>
-			<span id="usernameMenuLine" class="line" style="display: none">
+			<span id="scoreMenuLine" class="line" style="display: none">
+				Score&nbsp;&nbsp;&nbsp;: <span class="value"></span>
+			</span>
+<!--			<span id="usernameMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="usernameButton">Username : <span class="value"></span></a>
 			</span>
 			<span id="gameIdMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="gameIdButton">Maze : <span class="value"></span></a>
-			</span>
-			<span id="screenshotMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="screenshotButton"><img style="border: 0;" src="images/thenounproject/camera.png" alt='Screenshot'/></a>
-			</span>
-			<span id="speakMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="speakButton"><img style="border: 0;" src="images/thenounproject/talk.png" alt='Talk'/></a>
-			</span>
-			<span id="optionsMenuLine" class="line">
-				<a href="javascript:void(0)" id="optionsButton"><img style="border: 0;" src="images/thenounproject/options.png" alt='Options'/></a>
 			</span>
 			<span id="soundTrackMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
@@ -221,14 +185,28 @@
 			<span id="soundFxMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="soundFxButton">Sound Fx <span class="value">Off</span></a>
 			</span>
+-->		</div>
+		<!-- menuosd right -->
+		<div style="position: absolute; top:10px; right:10px; text-align: right;" class="above3d menuosd">
 			<span id="aboutMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="aboutButton"><img style="border: 0;" src="images/thenounproject/help.png" alt='Help'/></a>
+				<a href="javascript:void(0)" id="aboutButton" title="Display Help"><img style="border: 0;" src="images/thenounproject/help.png" alt='Help'/></a>
+			</span>
+			<span id="optionsMenuLine" class="line">
+				<a href="javascript:void(0)" id="optionsButton" title="Setup options"><img style="border: 0;" src="images/thenounproject/options.png" alt='Options'/></a>
+			</span>
+			<span id="screenshotMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="screenshotButton" title="Take a screenshot. alt+p"><img style="border: 0;" src="images/thenounproject/camera.png" alt='Screenshot'/></a>
+			</span>
+			<span id="speakMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="speakButton" title="Speak to others. alt+t"><img style="border: 0;" src="images/thenounproject/talk.png" alt='Talk'/></a>
 			</span>
 		</div>
 
 
+		<!-- attribution -->
 		<div style="position: absolute; bottom:10px; right:10px;" class="above3d menuosd">
 			by <a href="http://twitter.com/jerome_etienne" target='_blank'>@jerome_etienne</a>
+			<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none" style="display: inline-block;"></div>
 		</div>
 		<!-- username dialog -->
 		<div id="usernameDialog" class="promptDialog jqmWindow above3d">
@@ -249,6 +227,9 @@
 		<div id="speakDialog" class="promptDialog jqmWindow above3d">
 			What do you wanna say ?<br/>
 			<input type="text" size=24 name="status" placeholder="speak your mind...">
+			<div style='font-size: 60%; float: right; font-weight: bold;'>
+				Keyboard Shortcut: Alt + t
+			</div>
 		</div>
 
 		<!-- aboutHelp dialog -->
@@ -272,9 +253,9 @@
 			<input type="text" style='position: absolute; left: -5000px'>
 		</div>
 		<!-- follow me on twitter --> 
-		<div style="position: absolute; top: 10px; right: 10px;" class="above3d menuosd followmetwitter">
+		<!-- <div style="position: absolute; top: 10px; right: 10px;" class="above3d menuosd followmetwitter">
 			<a href="http://www.twitter.com/jerome_etienne" target='_blank'><img style="border: 0;" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
-		</div>
+		</div>-->
 		<!-- gameCompletedNoMorePills dialog -->
 		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d">
 			<h3><center><strong>Congratulation!</strong></center></h3>
