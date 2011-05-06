@@ -188,10 +188,10 @@
 -->		</div>
 		<!-- menuosd right -->
 		<div style="position: absolute; top:10px; right:10px; text-align: right;" class="above3d menuosd">
-			<span id="aboutMenuLine" class="line" style="display: none">
-				<a href="javascript:void(0)" id="aboutButton" title="Display Help"><img style="border: 0;" src="images/thenounproject/help.png" alt='Help'/></a>
+			<span id="helpMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="helpButton" title="Display Help"><img style="border: 0;" src="images/thenounproject/help.png" alt='Help'/></a>
 			</span>
-			<span id="optionsMenuLine" class="line">
+			<span id="optionsMenuLine" class="line" style="display: none">
 				<a href="javascript:void(0)" id="optionsButton" title="Setup options"><img style="border: 0;" src="images/thenounproject/options.png" alt='Options'/></a>
 			</span>
 			<span id="screenshotMenuLine" class="line" style="display: none">
@@ -208,6 +208,7 @@
 			by <a href="http://twitter.com/jerome_etienne" target='_blank'>@jerome_etienne</a>
 			<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none" style="display: inline-block;"></div>
 		</div>
+
 		<!-- username dialog -->
 		<div id="usernameDialog" class="promptDialog jqmWindow above3d">
 			Your Twitter Username<br/>
@@ -223,6 +224,28 @@
 			Name your maze<br/>
 			<input type="text" size=15 name="gameId" placeholder="maze name...">
 		</div>
+		<!-- options dialog -->
+		<div id="optionsDialog" class="promptDialog jqmWindow above3d">
+			<h3><center><strong>Options</strong></center></h3>
+			Your Twitter Username<br/>
+			<div>
+				<input type="text" size=15 name="username" placeholder="twitter username...">
+			</div>
+			<div style='font-size: 60%; text-align: right;'>
+				<a class='usernameReset' href='javascript:void(0)'>reset</a>
+			</div>
+			Name your maze<br/>
+			<input type="text" size=15 name="gameId" placeholder="maze name...">
+			<hr/>
+			<h3><center>Sound</center></h3>
+			<span id="soundTrackMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="soundTrackButton">Sound Track <span class="value">Off</span></a>
+			</span>
+			<span id="soundFxMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="soundFxButton">Sound Fx <span class="value">Off</span></a>
+			</span>
+			<div class="jqmClose button"></div>
+		</div>
 		<!-- speak dialog -->
 		<div id="speakDialog" class="promptDialog jqmWindow above3d">
 			What do you wanna say ?<br/>
@@ -232,8 +255,8 @@
 			</div>
 		</div>
 
-		<!-- aboutHelp dialog -->
-		<div id="aboutDialog" class="jqmWindow above3d">
+		<!-- helpHelp dialog -->
+		<div id="helpDialog" class="jqmWindow above3d">
 			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
 			<p>
 				You are a pacman trapped in a maze!
@@ -279,7 +302,7 @@
 			<h3>Ouch no WebGL :(</h3>
 			<p>
 				Sorry, WebGL is not available on your computer and WebGL is needed for this game.
-				You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more about Pacmaze</a>
+				You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more help Pacmaze</a>
 				or look at a video of the game.
 				<!--Go <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
 				Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->

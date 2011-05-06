@@ -29,6 +29,8 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	showScoreMenu		: true,
 	/** showEnergyMenu to show the energyMenuLine */
 	showEnergyMenu		: true,
+	/** showOptionsMenu to show the optionsMenuLine */
+	showOptionsMenu		: true,
 	/** showUsernameMenu to show the usernameMenuLine */
 	showUsernameMenu	: true,
 	/** showGameIdMenu to show the gameIdMenuLine */
@@ -41,10 +43,8 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	showSoundTrackMenu	: true,
 	/** showSoundFxMenu to show the soundFxMenuLine */
 	showSoundFxMenu		: true,
-	/** showAboutMenu to show the aboutMenuLine */
-	showAboutMenu		: true,
-	/** showAboutDialogOnLaunch to show the aboutDialog when the app launch */
-	showAboutDialogOnLaunch	: true,
+	/** showHelpMenu to show the aboutMenuLine */
+	showHelpMenu		: true,
 	/** screenshotUploadUrl the url to which upload the screenshot */
 	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
@@ -56,14 +56,14 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: false,
+	showOptionsMenu		: true,
 	showUsernameMenu	: false,
 	showGameIdMenu		: false,
 	showScreenshotMenu	: true,
 	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
-	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: true,
+	showHelpMenu		: true,
 	screenshotUploadUrl	: "http://"+location.host+":8086/upload"	
 };
 
@@ -74,14 +74,14 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
+	showOptionsMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
 	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
-	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: false,
+	showHelpMenu		: true,
 	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
@@ -94,14 +94,14 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
+	showOptionsMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
 	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
-	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: false,
+	showHelpMenu		: true,
 	screenshotUploadUrl	: "http://"+location.host+":8087/upload"	
 };
 
@@ -112,14 +112,14 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
+	showOptionsMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
 	showScreenshotMenu	: true,
 	showSpeakMenu		: true,
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
-	showAboutMenu		: true,
-	showAboutDialogOnLaunch	: false,
+	showHelpMenu		: true,
 	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
 };
 
@@ -157,8 +157,8 @@ WebyMaze.ConfigCli.tweetymaze.prod.cameraRender	= {
 
 WebyMaze.ConfigCli.tweetymaze.dev.cameraRender	= {
 	cameraStates	: ['inplayer', 'facePlayer'],
-	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
-					'behindPlayer', 'fixedZenith', 'fixedGrazing'],
+	//cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
+	//				'behindPlayer', 'fixedZenith', 'fixedGrazing'],
 	tweenDelay	: 1000
 };
 

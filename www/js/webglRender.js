@@ -94,12 +94,13 @@ WebyMaze.WebglRender	= function(opts){
 	// TODO put the whole UI stuff in its own class (like camera)
 	this.scoreUICtor();
 	this.energyUICtor();
+	this.optionsUICtor();
 	this.usernameUICtor();
 	this.gameIdUICtor();
 	this.screenshotUICtor();
 	this.soundTrackUiCtor();
 	this.soundFxUiCtor();
-	this.aboutUICtor();
+	this.helpUICtor();
 	this.speakUICtor();
 
 	if( ctxInit.renderInfoFull ){
@@ -335,7 +336,103 @@ WebyMaze.WebglRender.prototype.energyUICtor	= function()
 	jQuery(menuLineSel).css('display', 'block');
 }
 
-WebyMaze.WebglRender.prototype.usernameUICtor	= function(){
+WebyMaze.WebglRender.prototype.optionsUICtor	= function()
+{
+	var dialogSel	= '#optionsDialog';
+	var buttonSel	= '#optionsButton';
+	var menuLineSel	= '#optionsMenuLine';
+	// honore this._config
+	if( this._config.showOptionsMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
+
+
+	// normal callback
+	var toOpen	= function(){
+		usernameFill();
+		gameIdFill();
+		jQuery(dialogSel).jqmShow();
+	}.bind(this);
+	var onHide	= function(hash){
+		// hide the jqm
+		hash.o.remove();hash.w.hide();
+		// handle change
+		usernameChange();
+		gameIdChange();
+	}.bind(this);
+
+	// init dialogs
+	jQuery(dialogSel).jqm({	onHide	: onHide });
+	// if buttonSel is clicked, open the dialog
+	jQuery(buttonSel).click(toOpen);
+
+
+	// handle the username
+	var usernameInputSel	= dialogSel + ' input[name=username]';
+	var usernameFill	= function(){
+		if( this.username.charAt(0) !== '@' )	jQuery(usernameInputSel).val(this.username)
+		else	jQuery(usernameInputSel).val(this.username.substring(1));
+	}.bind(this)
+	var usernameChange	= function(){
+		// get the value from the element
+		var username	= jQuery(usernameInputSel).val();
+		// if the value is empty, ignore it
+		if( username.length == 0 )		return;
+		// add a '@' if it isnt a guest
+		if( username.match(/^guest/) === null )	username = '@'+username;		
+		// if the value is same as before, ignore it
+		if( username == this.username )		return;
+		// notify the server
+		gameCli.socketSend({
+			type	: "changeUsername",
+			data	: username
+		});
+		// update local var
+		this.username	= username;
+		// change the gameConfig
+		gameConfig.username(username);
+	}.bind(this);
+	// handle the reset button - usernameDialog specific
+	jQuery(dialogSel+" a.usernameReset").click(function(){
+		jQuery(usernameInputSel).val('guest');
+		jQuery(dialogSel).jqmHide();
+	});
+
+	// handle the gameId
+	var gameInputSel	= dialogSel + ' input[name=gameId]';
+	var gameIdFill	= function(){
+		jQuery(gameInputSel).val(this.gameId);
+	}.bind(this);
+	var gameIdChange= function(hash){
+		// get the value from the element
+		var gameId	= jQuery(gameInputSel).val();
+		// if the value is empty, ignore it
+		if( gameId.length == 0 )	return;
+		// if the value is same as before, ignore it
+		if( gameId == this.gameId )	return;
+		// change the gameConfig
+		gameConfig.gameId(gameId);		
+		// refresh UI
+		uiRefresh();
+		// reload the page to init new game...
+		// FIXME this is dirty
+		window.location.reload();
+	}.bind(this);
+
+	// stopPropagation of keys event beyond the modal
+	jQuery(dialogSel).bind('keypress'	, function(event){ event.stopPropagation(); });
+	jQuery(dialogSel).bind('keyup'		, function(event){ event.stopPropagation(); });
+	jQuery(dialogSel).bind('keydown'	, function(event){ event.stopPropagation(); });
+	// when enter is pressed, the dialog is closed
+	jQuery(dialogSel).bind('keypress', function(event){
+		if( event.keyCode == "\r".charCodeAt(0) ){
+			jQuery(dialogSel).jqmHide(); 
+		}
+	}.bind(this));
+}
+
+WebyMaze.WebglRender.prototype.usernameUICtor	= function()
+{
 	var dialogSel	= '#usernameDialog';
 	var inputSel	= dialogSel + ' input[name=username]';
 	var buttonSel	= '#usernameButton';
@@ -602,14 +699,14 @@ WebyMaze.WebglRender.prototype.speakUICtor	= function()
 	}.bind(this));	
 }
 
-WebyMaze.WebglRender.prototype.aboutUICtor	= function()
+WebyMaze.WebglRender.prototype.helpUICtor	= function()
 {
-	var dialogSel	= '#aboutDialog';
-	var buttonSel	= '#aboutButton';
-	var menuLineSel	= '#aboutMenuLine';
+	var dialogSel	= '#helpDialog';
+	var buttonSel	= '#helpButton';
+	var menuLineSel	= '#helpMenuLine';
 
 	// honore this._config
-	if( this._config.showAboutMenu !== true )	return;
+	if( this._config.showHelpMenu !== true )	return;
 	// make the menuLine visible
 	jQuery(menuLineSel).css('display', 'block');
 
@@ -633,9 +730,6 @@ WebyMaze.WebglRender.prototype.aboutUICtor	= function()
 	jQuery(dialogSel).click(function(event){
 		jQuery(dialogSel).jqmHide(); 
 	}.bind(this));
-
-	// to make it appear on load
-	if( this._config.showAboutDialogOnLaunch )	toOpen();
 }
 
 WebyMaze.WebglRender.prototype.soundTrackUiCtor	= function()

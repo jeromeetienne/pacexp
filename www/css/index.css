@@ -137,9 +137,9 @@ div.jqmClose.button {
 	width		: 360px;
 }
 
-#aboutDialog {
-	margin-left	: -30%;
-	width		: 60%;	
+#helpDialog {
+	margin-left	: -20%;
+	width		: 40%;	
 }
 
 #gameCompletedNoMorePillsDialog {
@@ -155,6 +155,30 @@ div.jqmClose.button {
 #noWebGLDialog {
 	margin-left	: -240px;
 	width		: 480px;
+}
+
+#optionsDialog {
+	margin-left	: -120px;
+	width		: 240px;
+	text-align	: left;
+}
+
+#optionsDialog span.line {
+	font-weight	: bold;
+}
+#optionsDialog .value {
+	color		: #888;
+}
+
+#optionsDialog .value {
+	color		: #888;
+}
+#optionsDialog a {
+	color		: #333;
+	text-decoration	: none;
+}
+#optionsDialog a:hover {
+	text-decoration	: underline;
 }
 
 /********************************************************************************
@@ -240,12 +264,12 @@ div.jqmClose.button {
 
 
 
-#aboutDialog a {
+#helpDialog a {
 	color		: #333;
 	font-weight	: bold;
 	text-decoration	: none;
 }
-#aboutDialog a:hover {
+#helpDialog a:hover {
 	text-decoration	: underline;
 }
 .pagetitle {
