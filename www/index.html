@@ -1,9 +1,327 @@
 <!DOCTYPE HTML>
-<html>
-	<head></head>
-	
+<html lang="en">
+	<head>
+		<title>Pacmaze  a pacman in a maze</title>
+		<meta charset="utf-8">
+		<!-- make favicon.ico -->
+		<link rel="shortcut icon" href="images/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		
+		<meta name="application-name" content="Pacmaze"/>
+		<link rel="icon" href="images/logo128.png" sizes="32x32 48x48 64x64 128x128"/>
+	</head>
 	<body>
+		<!-- es5-shim.js to patch missing standard functions - needed for Function.bind() in safari -->
+		<script src='vendor/es5-shim.js'></script>
+
+<!--		<script src="vendor/firebugx.js"></script>
+-->
+		<script src='vendor/jquery/jquery.min.js'></script>
+		<script src='vendor/jquery/jquery.url.js'></script>
+		<script src='vendor/jquery/jquery.cookie.js'></script>
+		<script src='vendor/jquery/jquery.labelify.js'></script>
+		<script src="vendor/jquery/jquery.hotkeys.js"></script>
+		<script src='vendor/jquery/jqModal.js'></script>
+		<link	href='vendor/jquery/jqModal.css'	rel='stylesheet'></link>
+
+		<script src='vendor/jquery/qtip2/jquery.qtip.js'></script>
+		<link	href='vendor/jquery/qtip2/jquery.qtip.css'	rel='stylesheet'></link>
+
+<!--		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+-->		<script type="text/javascript" src="js/jquery.twitterButtonLive.js"></script>
+		<link rel="stylesheet" type="text/css" href="js/jquery.twitterButtonLive.css" />
+		
+
+
+		<script type="text/javascript" src="vendor/three.js.new/build/Three.js"></script>
+		<script type="text/javascript" src="vendor/three.js.new/contrib/Detector.js"></script>
+		<script type="text/javascript" src="vendor/three.js.new/contrib/RequestAnimationFrame.js"></script>
+		<script type="text/javascript" src="vendor/three.js.new/contrib/Stats.js"></script>
+
+		<!-- To get Socket.io -->
+		<script src="vendor/socket.io-client/socket.io.js"></script>
+
+		<!-- To get Soundmanager -->
+		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
+		<script>soundManager.url = 'vendor/soundmanager2/swf'; // FIXME ? could it be a dataUrl </script>
+		<script>soundManager.debugMode		= false;</script>
+		<script>soundManager.useHTML5Audio	= true;	</script>
+
+		<!-- TODO put excanvas in threex -->
+		<script type="text/javascript" src="vendor/excanvas.js"></script>
+		<script type="text/javascript" src="js/Threex/Threex.WindowResize.js"></script>
+		<script type="text/javascript" src="js/Threex/Threex.TextureSmiley.js"></script>
+		<script type="text/javascript" src="js/Threex/Threex.Tween.js"></script>
+
+		<script type="text/javascript" src="js/microevent.js"></script>
+		<script type="text/javascript" src="../lib/configProject.js"></script>
+		<script type="text/javascript" src="js/object3dPacky.js"></script>
+		<script type="text/javascript" src="js/object3dGhost.js"></script>
+		<script type="text/javascript" src="js/configCli.js"></script>
+		<script type="text/javascript" src="js/gameCli.js"></script>
+		<script type="text/javascript" src="js/configStore.js"></script>
+		<script type="text/javascript" src="js/mazeCli.js"></script>
+		<script type="text/javascript" src="js/playerCli.js"></script>
+		<script type="text/javascript" src="js/enemyCli.js"></script>
+		<script type="text/javascript" src="js/shootCli.js"></script>
+		<script type="text/javascript" src="js/pillCli.js"></script>
+		<script type="text/javascript" src="js/visualFxImpact.js"></script>
+		<script type="text/javascript" src="js/lightPool.js"></script>
+		<script type="text/javascript" src="js/lightEmergency.js"></script>
+		<script type="text/javascript" src="js/lightAmbient.js"></script>
+		<script type="text/javascript" src="js/lightDirectional.js"></script>
+		<script type="text/javascript" src="js/lightPoint.js"></script>
+		<script type="text/javascript" src="js/soundRender.js"></script>
+		<script type="text/javascript" src="js/cameraRender.js"></script>
+		<script type="text/javascript" src="js/lightingRender.js"></script>
+		<script type="text/javascript" src="js/minimapRender.js"></script>
+		<script type="text/javascript" src="js/webglRender.js"></script>
+		<script type="text/javascript" src="js/gamePageMain.js"></script>
+		<script type="text/javascript" src="js/landingPageMain.js"></script>
+		
 		<script>
+		"use strict";
+		//jQuery(function(){	gamePageMain();	})
+		jQuery(function(){
+			console.log("wow")
+			var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
+			if( landingPageBypass ){
+				gamePageMain();
+			}else{
+				var page	= new WebyMaze.LandingPage();
+			}
+		})
 		</script>
+
+<div id="landingPageContainer" tabindex="100" style="display: none;">
+	<div class="above3d pagetitle">
+		<!--
+		- this title is too large on small embeded iframe
+		- this trick in window.resize make it proportional...
+		  jQuery("body").css('font-size', window.innerWidth/80);
+		- not sure if it is a good thing or not
+		-->
+		<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Buddymaze</a>
+	</div>
+	<div id="landingMainDialog" class="promptDialog jqmWindow">
+		<div class="intro">
+			<h3><center><strong>Welcome !!</strong></center></h3>
+			<p>
+				You are a pacman trapped in a maze!
+			</p>
+			<p>
+				Use <strong>Arrows</strong> to move the player.
+				and <strong>Space</strong> to shoot.
+			</p>
+		</div>
+		<div class="twitterUsername">
+			Your Twitter Username<br/>
+			<input type="text" name="username" placeholder="twitter username...">
+			<div style='font-size: 60%; text-align: right;'>
+				<a class='usernameReset' href='javascript:void(0)'>reset</a>
+			</div>
+		</div>
+		<div class="button play">
+			Play
+		</div>
+		<div class="button tutorial">
+			Tutorial
+		</div>
+		<div class="button about">
+			About
+		</div>
+	</div>
+	<div id="landingTutorialDialog" class="promptDialog jqmWindow">
+		<h3><center><strong>Tutorial</strong></center></h3>
+		The goal is to kill all others players ans to avoid their shoots.
+		Use arrows to move the player. Use space to shoot.
+		<!-- <h3>Camera</h3>
+		The default postion camera is inside the player.
+		Press C to change the camera postion and see you as your ennemies see you!
+		Press C again to come back to the initial postion.
+		-->
+		<h3>Username</h3>
+		In the option menu, enter your twittername to personalize your player.
+		Your yellow smiley have the face of your twitter avatar!
+		You can play with no twitter avatar. You will have a face of happy smiley
+
+		<h3>Talk</h3>
+		Use the talk icon to chat with others players. 
+		Your conversation is displayed in the left bottom of the screen. 
+		You are automatically notified if a player joins or is killed. 
+
+		<h3>Screenshot</h3>
+		Maybe you want to share your exploits with your friends. Use the screenshot icon to snap a picture. 
+		The URL of your screenshot is displayed in the chat. 
+		Put the mouse on the url to get a preview of your picture.
+		Tweet it immediately or save it. 
+
+		<h3>Score and energy</h3>
+		You win points when you shoot an ennemy.
+		You win points when you kill an ennemy.
+		You loose your energy when you are shooted.Tweet your score!
+		
+		<div class="jqmClose button"></div>
+	</div>
+	<div id="landingAboutDialog" class="promptDialog jqmWindow">
+		<h3><center><strong>About</strong></center></h3>
+		Pacmaze is a pacman in 3D WebGL.
+		It is the first game of the <a href="http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html">pacmaze experiment</a>.
+		I published several versions of the game. This is the most recent. 
+		<div class="jqmClose button"></div>
+	</div>
+</div>
+
+<!-- *****************************************************************************
+			Game Page
+******************************************************************************** -->
+		
+<div id="gamePageContainer" tabindex="100" style="display: none">
+		<div id="canvasContainer"></div> 
+		<div class="above3d chatArea" style="position: absolute; bottom: 0px;">
+			<ul>
+				<li></li>
+			</ul>
+		</div>
+
+		<!-- menuosd left -->
+		<div style="position: absolute; top:10px; left:10px;" class="above3d menuosd">
+			<span id="energyMenuLine" class="line" style="display: none">
+				Energy : <span class="value"></span>
+			</span>
+			<span id="scoreMenuLine" class="line" style="display: none">
+				Score&nbsp;&nbsp;&nbsp;: <span class="value"></span>
+			</span>
+		</div>
+		<!-- menuosd right -->
+		<div style="position: absolute; top:10px; right:10px; text-align: right;" class="above3d menuosd">
+			<span id="helpMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="helpButton" title="Display Help"><img style="border: 0;" src="images/thenounproject/help.png" alt='Help'/></a>
+			</span>
+			<span id="optionsMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="optionsButton" title="Setup options"><img style="border: 0;" src="images/thenounproject/options.png" alt='Options'/></a>
+			</span>
+			<span id="screenshotMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="screenshotButton" title="Take a screenshot. alt+p"><img style="border: 0;" src="images/thenounproject/camera.png" alt='Screenshot'/></a>
+			</span>
+			<span id="speakMenuLine" class="line" style="display: none">
+				<a href="javascript:void(0)" id="speakButton" title="Speak to others. alt+t"><img style="border: 0;" src="images/thenounproject/talk.png" alt='Talk'/></a>
+			</span>
+		</div>
+
+
+		<!-- attribution -->
+		<div style="position: absolute; bottom:10px; right:10px;" class="above3d menuosd">
+			by <a href="http://twitter.com/jerome_etienne" target='_blank'>@jerome_etienne</a>
+			<div class="twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none" style="display: inline-block;"></div>
+		</div>
+		<!-- options dialog -->
+		<div id="optionsDialog" class="promptDialog jqmWindow above3d">
+			<h3><center><strong>Options</strong></center></h3>
+			<span id="soundTrackMenuLine" class="line" style="display: none">
+				<a id="soundTrackButton" title="To have a sound track or not" href="javascript:void(0)" >Sound Track <span class="value">Off</span></a>
+			</span>
+			<span id="soundFxMenuLine" class="line" style="display: none">
+				<a id="soundFxButton"title="To have a sound effects or not" href="javascript:void(0)">Sound Effects <span class="value">Off</span></a>
+			</span>
+			<hr/>
+			<div id="usernameMenuLine" style="display: none">
+				Your Twitter Username<br/>
+				<div>
+					<input type="text" size=15 name="username" placeholder="twitter username...">
+				</div>
+				<div style='font-size: 60%; text-align: right;'>
+					<a class='usernameReset' href='javascript:void(0)'>reset</a>
+				</div>
+			</div>
+			<div id="gameIdMenuLine" style="display: none">
+				Name your maze<br/>
+				<input type="text" size=15 name="gameId" placeholder="maze name...">
+			</div>
+			<div class="jqmClose button"></div>
+		</div>
+		<!-- speak dialog -->
+		<div id="speakDialog" class="promptDialog jqmWindow above3d">
+			What do you wanna say ?<br/>
+			<input type="text" size=24 name="status" placeholder="speak your mind...">
+			<div style='font-size: 60%; float: right; font-weight: bold;'>
+				Keyboard Shortcut: Alt + t
+			</div>
+		</div>
+
+		<!-- helpHelp dialog -->
+		<div id="helpDialog" class="jqmWindow above3d">
+			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
+			<p>
+				You are a pacman trapped in a maze!
+			</p>
+			<p>
+				Use <strong>Arrows</strong> to move the player.
+			</p>
+			<p>
+				Use <strong>pageUp pageDown</strong> to move the camera.
+			</p>
+			<p>
+				That's it. Have fun :)
+			</p>
+			<div class="topRight twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>
+			<div class="jqmClose button"></div>
+			<!-- hidden input> to be able to trigger focus and bind keypress on the dialog -->
+			<input type="text" style='position: absolute; left: -5000px'>
+		</div>
+		<!-- follow me on twitter --> 
+		<!-- <div style="position: absolute; top: 10px; right: 10px;" class="above3d menuosd followmetwitter">
+			<a href="http://www.twitter.com/jerome_etienne" target='_blank'><img style="border: 0;" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
+		</div>-->
+		<!-- gameCompletedNoMorePills dialog -->
+		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d">
+			<h3><center><strong>Congratulation!</strong></center></h3>
+			You win! Your score is <span class="score"></span>
+			<br/>
+			<div class="topRight twitter-share-button" data-text="My pacmaze score is $SCORE$! can you do better ?" data-count="none"></div>
+			<div class="jqmClose button"></div>
+		</div>
+		<!-- gameCompletedNoMorePills dialog -->
+		<div id="gameCompletedPlayerKilledDialog" class="jqmWindow above3d">
+			<h3><center><strong>Game Over</strong></center></h3>
+			Oh you died... Your score was <span class="score"></span>. Try again ?
+			<br/>
+			<div class="topRight twitter-share-button" data-text="Just had lot of fun with pacmaze. My score is $SCORE$! You should check it out!" data-count="none"></div>
+			<div class="jqmClose button"></div>
+			<!-- hidden <input> to be able to trigger focus and bind keypress on the dialog -->
+			<input type="text" style='position: absolute; left: -5000px'/>
+		</div>
+		<!-- gameCompletedNoMorePills dialog -->
+		<div id="noWebGLDialog" class="jqmWindow above3d">
+			<h3>Ouch no WebGL :(</h3>
+			<p>
+				Sorry, WebGL is not available on your computer and WebGL is needed for this game.
+				You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more help Pacmaze</a>
+				or look at a video of the game.
+				<!--Go <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
+				Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->
+			</p>
+			<!-- iframe pacmaze video -->
+			<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/D05ePAiHZb4" frameborder="0" allowfullscreen></iframe>
+			-->
+			<!-- iframe buddymaze video -->
+			<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/B3KeOZFvW6c" frameborder="0" allowfullscreen></iframe>
+			-->
+			<div class="jqmClose button"></div>
+		</div>
+</div>
+		
+		<!-- google analytic snipet -->
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-4037844-17']);
+			_gaq.push(['_trackPageview']); 
+			(function() {
+			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+
 	</body>
 </html>
