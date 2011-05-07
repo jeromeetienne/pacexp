@@ -297,9 +297,9 @@ WebyMaze.ConfigCli.pacmaze.dev.mazeCli	= {
 
 WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
 	showRoof	: true,
-	wallTextureUrl	: 'images/tmp/tex0.jpg',
-	groundTextureUrl: 'images/tmp/EmbossedWall.png',
-	wallHRatio	: 15/3
+	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
+	groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
+	wallHRatio	: 4/3
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
