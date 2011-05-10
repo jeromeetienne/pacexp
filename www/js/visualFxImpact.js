@@ -38,8 +38,20 @@ WebyMaze.VisualFxImpact	= function(opts)
 	}
 
 	this._container	= new THREE.Mesh(geometry, material);
-	this._container.position.x	= position.x;
-	this._container.position.z	= position.y;
+	if( 'x' in position ){
+		this._container.position.x	= position.x;
+		this._container.position.z	= position.y;
+	}else{
+		var enemyId	= position.bodyId;
+		var enemy	= enemies[enemyId];
+		var postTickCb	= function(){
+			this._container.position.x	= enemy.obj3d().position.x;
+			this._container.position.z	= enemy.obj3d().position.z;			
+		}.bind(this);
+		console.log("enemy", enemy.obj3d().position)
+		enemy.bind("postTick", postTickCb);
+		postTickCb();
+	}
 }
 
 /**
