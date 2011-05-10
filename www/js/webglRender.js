@@ -116,6 +116,11 @@ WebyMaze.WebglRender.prototype.destroy	= function(){
 	this.mazeCli.destroy();
 }
 
+WebyMaze.WebglRender.prototype.getEnemies	= function()
+{
+	return this.enemies;
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 //		setCtxTick							//
 //////////////////////////////////////////////////////////////////////////////////
@@ -294,7 +299,7 @@ WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 	// create the visualFx
 	if( fxType === 'impact' ){
 		var visualFx	= new WebyMaze.VisualFxImpact({
-			enemies		: this.enemies,
+			webglRender	: this,
 			position	: event.data.position,
 			timeToLive	: event.data.timeToLive
 		});	

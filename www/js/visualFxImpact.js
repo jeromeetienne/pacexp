@@ -16,7 +16,7 @@ var WebyMaze	= WebyMaze || {};
 WebyMaze.VisualFxImpact	= function(opts)
 {
 	var position	= opts.position		|| console.assert(false);
-	var enemies	= opts.enemies		|| console.assert(false);
+	var webglRender	= opts.webglRender	|| console.assert(false);
 	this._timeToLive= opts.timeToLive	|| 1*1000;
 	this._bodyW	= opts._bodyW		|| 200;
 
@@ -43,14 +43,13 @@ WebyMaze.VisualFxImpact	= function(opts)
 		this._container.position.z	= position.y;
 	}else{
 		var enemyId	= position.bodyId;
-		var enemy	= enemies[enemyId];
-		var postTickCb	= function(){
+		var enemy	= webglRender.getEnemies()[enemyId];
+		this._$postTickCb	= function(){
 			this._container.position.x	= enemy.obj3d().position.x;
 			this._container.position.z	= enemy.obj3d().position.z;			
 		}.bind(this);
-		console.log("enemy", enemy.obj3d().position)
-		enemy.bind("postTick", postTickCb);
-		postTickCb();
+		enemy.bind("postTick", this._$postTickCb);
+		this._$postTickCb();
 	}
 }
 
@@ -58,6 +57,7 @@ WebyMaze.VisualFxImpact	= function(opts)
 */
 WebyMaze.VisualFxImpact.prototype.destroy	= function()
 {
+	// TODO dehook
 }
 
 // mixin MicroEvent 

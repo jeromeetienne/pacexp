@@ -33,6 +33,7 @@ WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 	var mesh	= new THREE.Sprite({
 		//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
 		map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
+		blending		: THREE.AdditiveBlending,
 		useScreenCoordinates	: false
 	});
 
