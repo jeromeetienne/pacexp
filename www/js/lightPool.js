@@ -75,6 +75,7 @@ WebyMaze.LightPool.prototype.borrow	= function(lightClass)
 {
 	// get the class constructor
 	var constructor	= THREE[lightClass];
+	console.assert(constructor, "lightClass "+lightClass+" is invalid!")
 	// try to find a light of this class
 	var light	= null;
 	for( var i = 0; i < this._pool.length; i++){

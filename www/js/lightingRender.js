@@ -96,11 +96,11 @@ WebyMaze.LightingRender.prototype._lightsDtor	= function()
 
 WebyMaze.LightingRender.prototype._buildLightingBuddy1	= function()
 {
-	this._lightInsert(new WebyMaze.AmbientLight({
+	this._lightInsert(new WebyMaze.VisualFxLightAmbient({
 		lightPool	: this._lightPool,
 		color		: 0xcccccc
 	}));
-	//this._lightInsert(new WebyMaze.LightPoint({
+	//this._lightInsert(new WebyMaze.VisualFxLightPoint({
 	//	lightPool	: this._lightPool,
 	//	color		: 0xFF1111,
 	//	intensity	: 20,
@@ -111,7 +111,7 @@ WebyMaze.LightingRender.prototype._buildLightingBuddy1	= function()
 	//		z	:  1*100
 	//	}
 	//}));
-	this._lightInsert(new WebyMaze.LightPoint({
+	this._lightInsert(new WebyMaze.VisualFxLightPoint({
 		lightPool	: this._lightPool,
 		color		: 0x118811,intensity	: 6,
 		color		: 0x881111,intensity	: 20,
@@ -123,7 +123,7 @@ WebyMaze.LightingRender.prototype._buildLightingBuddy1	= function()
 			z	: 13*100
 		}
 	}));
-	//this._lightInsert(new WebyMaze.LightPoint({
+	//this._lightInsert(new WebyMaze.VisualFxLightPoint({
 	//	lightPool	: this._lightPool,
 	//	color		: 0xaa44aa,
 	//	intensity	: 5,
@@ -138,11 +138,11 @@ WebyMaze.LightingRender.prototype._buildLightingBuddy1	= function()
 
 WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 {
-	this._lightInsert(new WebyMaze.AmbientLight({
+	this._lightInsert(new WebyMaze.VisualFxLightAmbient({
 		lightPool	: this._lightPool,
 		color		: 0xaaaaaa
 	}));
-	this._lightInsert(new WebyMaze.LightDirectional({
+	this._lightInsert(new WebyMaze.VisualFxLightDirectional({
 		lightPool	: this._lightPool,
 		color		: 0xffffff,
 		intensity	: 0.8,
@@ -152,7 +152,7 @@ WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 			z	: 0.7
 		}
 	}));
-	this._lightInsert(new WebyMaze.LightPoint({
+	this._lightInsert(new WebyMaze.VisualFxLightPoint({
 		lightPool	: this._lightPool,
 		color		: 0xaa44aa,
 		intensity	: 10,
@@ -163,7 +163,7 @@ WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 			z	: 0
 		}
 	}));
-	this._lightInsert(new WebyMaze.LightPoint({
+	this._lightInsert(new WebyMaze.VisualFxLightPoint({
 		lightPool	: this._lightPool,
 		color		: 0x44FF44,
 		intensity	: 10,
@@ -178,11 +178,11 @@ WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 
 WebyMaze.LightingRender.prototype._buildLightingEmergency	= function()
 {
-	this._lightInsert(new WebyMaze.AmbientLight({
+	this._lightInsert(new WebyMaze.VisualFxLightAmbient({
 		lightPool	: this._lightPool,
 		color		: 0x222222
 	}));
-	this._lightInsert(new WebyMaze.LightDirectional({
+	this._lightInsert(new WebyMaze.VisualFxLightDirectional({
 		lightPool	: this._lightPool,
 		color		: 0xffffff,
 		intensity	: 0.8,
@@ -192,7 +192,7 @@ WebyMaze.LightingRender.prototype._buildLightingEmergency	= function()
 			z	: 0.7
 		}
 	}));
-	this._lightInsert(new WebyMaze.LightEmergency({
+	this._lightInsert(new WebyMaze.VisualFxLightEmergency({
 		lightPool	: this._lightPool,
 		rangeX		: this._mazeCli.mapW()*100/2,
 		rangeY		: this._mazeCli.mapH()*100/2,
@@ -200,7 +200,7 @@ WebyMaze.LightingRender.prototype._buildLightingEmergency	= function()
 		speedY		: 0.8,
 		speedI		: 0.8
 	}));
-	this._lightInsert(new WebyMaze.LightEmergency({
+	this._lightInsert(new WebyMaze.VisualFxLightEmergency({
 		lightPool	: this._lightPool,
 		rangeX		: this._mazeCli.mapW()*100/2,
 		rangeY		: this._mazeCli.mapH()*100/2,
@@ -208,7 +208,7 @@ WebyMaze.LightingRender.prototype._buildLightingEmergency	= function()
 		speedY		: -0.3*2,
 		speedI		: 0.8
 	}));
-	this._lightInsert(new WebyMaze.LightEmergency({
+	this._lightInsert(new WebyMaze.VisualFxLightEmergency({
 		lightPool	: this._lightPool,
 		rangeX		: this._mazeCli.mapW()/2*100/2,
 		rangeY		: this._mazeCli.mapH()/2*100/2,
@@ -221,7 +221,7 @@ WebyMaze.LightingRender.prototype._buildLightingEmergency	= function()
 
 WebyMaze.LightingRender.prototype._buildLightingFirecamp	= function()
 {
-	this._lightInsert(new WebyMaze.LightDirectional({
+	this._lightInsert(new WebyMaze.VisualFxLightDirectional({
 		lightPool	: this._lightPool,
 		color		: 0xff,
 		intensity	: 1.5,
@@ -231,7 +231,7 @@ WebyMaze.LightingRender.prototype._buildLightingFirecamp	= function()
 			z	: -0.7
 		}
 	}));
-	this._lightInsert(new WebyMaze.LightPoint({
+	this._lightInsert(new WebyMaze.VisualFxLightPoint({
 		lightPool	: this._lightPool,
 		color		: 0xaa4444,
 		intensity	: 10,
@@ -242,7 +242,7 @@ WebyMaze.LightingRender.prototype._buildLightingFirecamp	= function()
 			z	:  3*100
 		}
 	}));
-	this._lightInsert(new WebyMaze.LightPoint({
+	this._lightInsert(new WebyMaze.VisualFxLightPoint({
 		lightPool	: this._lightPool,
 		color		: 0x44aaaa,
 		intensity	: 5,
@@ -253,7 +253,7 @@ WebyMaze.LightingRender.prototype._buildLightingFirecamp	= function()
 			z	:  1*100
 		}
 	}));
-	this._lightInsert(new WebyMaze.LightPoint({
+	this._lightInsert(new WebyMaze.VisualFxLightPoint({
 		lightPool	: this._lightPool,
 		color		: 0xaaaa44,
 		intensity	: 3,

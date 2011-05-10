@@ -13,7 +13,7 @@ var WebyMaze	= WebyMaze || {};
  * - one to change the opacity
  * - maybe several spheres to give an impression of smoke
 */
-WebyMaze.LightEmergency	= function(opts)
+WebyMaze.VisualFxLightEmergency	= function(opts)
 {
 	this._lightPool	= opts.lightPool	|| console.assert(false);	
 	this._rangeX	= opts.rangeX		|| console.assert(false);
@@ -44,7 +44,7 @@ WebyMaze.LightEmergency	= function(opts)
 
 /**
 */
-WebyMaze.LightEmergency.prototype.destroy	= function()
+WebyMaze.VisualFxLightEmergency.prototype.destroy	= function()
 {
 	// giveback this._light to this._lightPool
 	this._lightPool.giveback(this._light);
@@ -52,13 +52,13 @@ WebyMaze.LightEmergency.prototype.destroy	= function()
 
 
 // mixin MicroEvent 
-MicroEvent.mixin(WebyMaze.LightEmergency);
+MicroEvent.mixin(WebyMaze.VisualFxLightEmergency);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LightEmergency.prototype.tick	= function()
+WebyMaze.VisualFxLightEmergency.prototype.tick	= function()
 {
 	// honor this._timeToLive if needed
 	if( this._timeToLive ){
@@ -96,6 +96,6 @@ WebyMaze.LightEmergency.prototype.tick	= function()
 /**
  * Return the object3d containing this one
 */
-WebyMaze.LightEmergency.prototype.obj3d	= function(){
+WebyMaze.VisualFxLightEmergency.prototype.obj3d	= function(){
 	return this._container;
 }

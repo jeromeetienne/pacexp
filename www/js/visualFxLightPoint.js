@@ -5,10 +5,10 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LightPoint	= function(opts)
+WebyMaze.VisualFxLightPoint	= function(opts)
 {
-	this._position	= opts.position		|| console.assert(false);
 	this._lightPool	= opts.lightPool	|| console.assert(false);
+	this._position	= opts.position		|| console.assert(false);
 	this._color	= opts.color		|| 0xffffff;
 	this._intensity	= opts.intensity	|| 1;
 	this._distance	= opts.distance		|| 0;
@@ -31,7 +31,7 @@ WebyMaze.LightPoint	= function(opts)
 
 /**
 */
-WebyMaze.LightPoint.prototype.destroy	= function()
+WebyMaze.VisualFxLightPoint.prototype.destroy	= function()
 {
 	// giveback this._light to this._lightPool
 	this._lightPool.giveback(this._light);
@@ -39,7 +39,7 @@ WebyMaze.LightPoint.prototype.destroy	= function()
 
 
 // mixin MicroEvent 
-MicroEvent.mixin(WebyMaze.LightPoint);
+MicroEvent.mixin(WebyMaze.VisualFxLightPoint);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
@@ -48,11 +48,11 @@ MicroEvent.mixin(WebyMaze.LightPoint);
 /**
  * Return the object3d containing this one
 */
-WebyMaze.LightPoint.prototype.obj3d	= function(){
+WebyMaze.VisualFxLightPoint.prototype.obj3d	= function(){
 	return this._container;
 }
 
-WebyMaze.LightPoint.prototype.tick	= function()
+WebyMaze.VisualFxLightPoint.prototype.tick	= function()
 {
 	// honor this._timeToLive if needed
 	if( this._timeToLive ){

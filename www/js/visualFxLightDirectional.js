@@ -5,7 +5,7 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LightDirectional	= function(opts)
+WebyMaze.VisualFxLightDirectional	= function(opts)
 {
 	this._direction	= opts.direction	|| console.assert(false);
 	this._lightPool	= opts.lightPool	|| console.assert(false);	
@@ -16,7 +16,7 @@ WebyMaze.LightDirectional	= function(opts)
 
 	// build the light itself
 	this._light	= this._lightPool.borrow('DirectionalLight');
-	
+
 	// set light parameters
 	this._light.color	= new THREE.Color( this._color );
 	this._light.intensity	= this._intensity;
@@ -32,7 +32,7 @@ WebyMaze.LightDirectional	= function(opts)
 
 /**
 */
-WebyMaze.LightDirectional.prototype.destroy	= function()
+WebyMaze.VisualFxLightDirectional.prototype.destroy	= function()
 {
 	// giveback this._light to this._lightPool
 	this._lightPool.giveback(this._light);
@@ -40,7 +40,7 @@ WebyMaze.LightDirectional.prototype.destroy	= function()
 
 
 // mixin MicroEvent 
-MicroEvent.mixin(WebyMaze.LightDirectional);
+MicroEvent.mixin(WebyMaze.VisualFxLightDirectional);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
@@ -49,11 +49,11 @@ MicroEvent.mixin(WebyMaze.LightDirectional);
 /**
  * Return the object3d containing this one
 */
-WebyMaze.LightDirectional.prototype.obj3d	= function(){
+WebyMaze.VisualFxLightDirectional.prototype.obj3d	= function(){
 	return this._container;
 }
 
-WebyMaze.LightDirectional.prototype.tick	= function()
+WebyMaze.VisualFxLightDirectional.prototype.tick	= function()
 {
 	// honor this._timeToLive if needed
 	if( this._timeToLive ){

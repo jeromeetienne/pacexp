@@ -5,7 +5,7 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.AmbientLight	= function(opts)
+WebyMaze.VisualFxLightAmbient	= function(opts)
 {
 	this._color	= opts.color		|| console.assert(false);
 	this._lightPool	= opts.lightPool	|| console.assert(false);
@@ -22,7 +22,7 @@ WebyMaze.AmbientLight	= function(opts)
 
 /**
 */
-WebyMaze.AmbientLight.prototype.destroy	= function()
+WebyMaze.VisualFxLightAmbient.prototype.destroy	= function()
 {
 	// giveback this._light to this._lightPool
 	this._lightPool.giveback(this._light);	
@@ -30,7 +30,7 @@ WebyMaze.AmbientLight.prototype.destroy	= function()
 
 
 // mixin MicroEvent 
-MicroEvent.mixin(WebyMaze.AmbientLight);
+MicroEvent.mixin(WebyMaze.VisualFxLightAmbient);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
@@ -39,11 +39,11 @@ MicroEvent.mixin(WebyMaze.AmbientLight);
 /**
  * Return the object3d containing this one
 */
-WebyMaze.AmbientLight.prototype.obj3d	= function(){
+WebyMaze.VisualFxLightAmbient.prototype.obj3d	= function(){
 	return this._container;
 }
 
-WebyMaze.AmbientLight.prototype.tick	= function()
+WebyMaze.VisualFxLightAmbient.prototype.tick	= function()
 {
 	// honor this._timeToLive if needed
 	if( this._timeToLive ){
