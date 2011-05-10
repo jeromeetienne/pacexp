@@ -26,7 +26,8 @@ uninstall: upstart_uninstall
 release_build: release_clean
 	echo "*" > build/.gitignore
 	cp www/webglTest.html build
-	inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
+	#inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
+	inliner http://localhost/~jerome/webwork/pacexp/www/test_inliner.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
 	cp www/images/favicon.ico build
@@ -34,6 +35,7 @@ release_build: release_clean
 	mkdir -p build/vendor/soundmanager2/swf
 	cp -a www/vendor/soundmanager2/swf/*.swf build/vendor/soundmanager2/swf
 	mkdir -p build/vendor/socket.io-client/lib/vendor/web-socket-js/
+	cp www/vendor/socket.io-client/lib/vendor/web-socket-js/*.swf -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	unzip www/vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.zip -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	#echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
 	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
