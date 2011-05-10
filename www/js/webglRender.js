@@ -291,7 +291,8 @@ WebyMaze.WebglRender.prototype._onSetLighting	= function(event)
 
 WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 {
-	var fxType	= event.data.fxType;
+	var fxType	= event.data.type;
+	var fxData	= event.data.data;
 	var bodyId	= (Math.random()*99999).toString(36);
 	
 	console.log("fxType", fxType)
@@ -300,9 +301,18 @@ WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 	if( fxType === 'impact' ){
 		var visualFx	= new WebyMaze.VisualFxImpact({
 			webglRender	: this,
-			position	: event.data.position,
-			timeToLive	: event.data.timeToLive
+			position	: fxData.position,
+			timeToLive	: fxData.timeToLive
 		});	
+		// add this fx in the to sceneContainer
+		sceneContainer.addChild( visualFx.obj3d() );
+	}else if( fxType === 'caption' ){
+		var visualFx	= new WebyMaze.VisualFxCaption({
+			webglRender	: this,
+			position	: fxData.position,
+			textData	: fxData.textData,
+			timeToLive	: fxData.timeToLive
+		});
 		// add this fx in the to sceneContainer
 		sceneContainer.addChild( visualFx.obj3d() );
 	}else	console.assert(false);

@@ -13,12 +13,12 @@ var WebyMaze	= WebyMaze || {};
  * - one to change the opacity
  * - maybe several spheres to give an impression of smoke
 */
-WebyMaze.VisualFxImpact	= function(opts)
+WebyMaze.VisualFxCaption	= function(opts)
 {
-	var position	= opts.position		|| console.assert(false);
 	var webglRender	= opts.webglRender	|| console.assert(false);
-	this._timeToLive= opts.timeToLive	|| 1*1000;
-	this._bodyW	= opts._bodyW		|| 200;
+	var position	= opts.position		|| console.assert(false);
+	var textData	= opts.textData		|| console.assert(false);
+	this._timeToLive= opts.timeToLive	|| 2*1000;
 
 	// store this._createdAt to honor this._timeToLive
 	this._createdAt	= new Date;
@@ -27,17 +27,19 @@ WebyMaze.VisualFxImpact	= function(opts)
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	if( isWebGL ){
-		var geometry	= new THREE.Sphere( this._bodyW/2, 32, 16 );
-		var material	= [
-			new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading, opacity: 0.3} )
-			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10, opacity : 0.5 } ),
-		]
+		this._container	= new THREE.Sprite({
+			map			: THREEx.Texture.Caption.textTexture(textData, 256),
+			//map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
+			//blending		: THREE.AdditiveBlending,
+			useScreenCoordinates	: false
+		});
+		this._container.scale.set( 1, -1, 0.50 );
 	}else{
 		var geometry	= new THREE.Cube( this._bodyW/3, this._bodyW/3, this._bodyW/3, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
 		var material	= new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.FlatShading, opacity: 0.3 } );
+		this._container	= new THREE.Mesh(geometry, material);
 	}
 
-	this._container	= new THREE.Mesh(geometry, material);
 	if( 'x' in position ){
 		this._container.position.x	= position.x;
 		this._container.position.z	= position.y;
@@ -46,6 +48,7 @@ WebyMaze.VisualFxImpact	= function(opts)
 		var enemy	= webglRender.getEnemies()[enemyId];
 		this._$postTickCb	= function(){
 			this._container.position.x	= enemy.obj3d().position.x;
+			this._container.position.y	= 75;
 			this._container.position.z	= enemy.obj3d().position.z;			
 		}.bind(this);
 		enemy.bind("postTick", this._$postTickCb);
@@ -55,19 +58,19 @@ WebyMaze.VisualFxImpact	= function(opts)
 
 /**
 */
-WebyMaze.VisualFxImpact.prototype.destroy	= function()
+WebyMaze.VisualFxCaption.prototype.destroy	= function()
 {
 	// TODO dehook
 }
 
 // mixin MicroEvent 
-MicroEvent.mixin(WebyMaze.VisualFxImpact);
+MicroEvent.mixin(WebyMaze.VisualFxCaption);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.VisualFxImpact.prototype.tick	= function()
+WebyMaze.VisualFxCaption.prototype.tick	= function()
 {
 	// honor this._timeToLive if needed
 	if( this._timeToLive ){
@@ -80,6 +83,6 @@ WebyMaze.VisualFxImpact.prototype.tick	= function()
 /**
  * Return the object3d containing this one
 */
-WebyMaze.VisualFxImpact.prototype.obj3d	= function(){
+WebyMaze.VisualFxCaption.prototype.obj3d	= function(){
 	return this._container;
 }
