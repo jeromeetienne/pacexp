@@ -287,7 +287,6 @@ WebyMaze.WebglRender.prototype._onSetLighting	= function(event)
 WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 {
 	var fxType	= event.data.fxType;
-	var position	= event.data.position;
 	var bodyId	= (Math.random()*99999).toString(36);
 	
 	console.log("fxType", fxType)
@@ -295,7 +294,9 @@ WebyMaze.WebglRender.prototype._onShowVisualFx	= function(event)
 	// create the visualFx
 	if( fxType === 'impact' ){
 		var visualFx	= new WebyMaze.VisualFxImpact({
-			position	: position
+			enemies		: this.enemies,
+			position	: event.data.position,
+			timeToLive	: event.data.timeToLive
 		});	
 		// add this fx in the to sceneContainer
 		sceneContainer.addChild( visualFx.obj3d() );

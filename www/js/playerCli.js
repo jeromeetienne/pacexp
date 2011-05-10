@@ -13,6 +13,9 @@ WebyMaze.PlayerCli	= function(){
 	this.dirtyScore	= false;
 	this.dirtyEnergy= false;
 
+	// read the game config
+	this._config	= WebyMaze.ConfigCli.playerCli;
+
 	this._object3d	= new WebyMaze.Object3dPacky({
 		appearance	: "happy-yellow-Packy"
 	});
@@ -28,15 +31,17 @@ WebyMaze.PlayerCli.prototype.destroy	= function()
 //////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
-	var object3d	= this._object3d.object3d();	
+	var object3d		= this._object3d.object3d();	
 	object3d.position.x	=  ctxTick.position.x;
 	object3d.position.z	=  ctxTick.position.y;
 	object3d.rotation.y	= -ctxTick.rotation.z;
+	//console.log("playerCli container", object3d)
 
 	if(this.username != ctxTick.username ){
 		this.username	= ctxTick.username
-		
-		this._object3d.setAppearance('happy-yellow-'+(this.username.match(/^guest/)?"Packy": this.username));
+		var appearanceName	= this.username.match(/^guest/) ? "Packy" : this.username;
+		if( this._config.forcedAppearanceName )		appearanceName = this._config.forcedAppearanceName;
+		this._object3d.setAppearance('happy-yellow-' + appearanceName );
 	}
 	if(this.score != ctxTick.score){
 		this.score	= ctxTick.score

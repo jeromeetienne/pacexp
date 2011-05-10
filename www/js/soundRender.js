@@ -52,14 +52,14 @@ WebyMaze.SoundRender.prototype._soundManagerReady	= function(){
 	// create all soundsFx
 	Object.keys(this._fxIdToUrl).forEach(function(fxId){
 		var url	= this._fxIdToUrl[fxId];
-		console.log("soundFx", fxId, " is starting init")
+		//console.log("soundFx", fxId, " is starting init")
 		this._soundsFx[fxId]	= soundManager.createSound({
 			id	: fxId,
 			volume	: 50,
 			url	: url,
 			autoLoad: true,
 			onload	: function(success){
-				console.log("soundFx", fxId, "is loaded");
+				//console.log("soundFx", fxId, "is loaded");
 			}
 		});
 	}.bind(this));

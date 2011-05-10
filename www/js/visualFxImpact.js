@@ -16,6 +16,7 @@ var WebyMaze	= WebyMaze || {};
 WebyMaze.VisualFxImpact	= function(opts)
 {
 	var position	= opts.position		|| console.assert(false);
+	var enemies	= opts.enemies		|| console.assert(false);
 	this._timeToLive= opts.timeToLive	|| 1*1000;
 	this._bodyW	= opts._bodyW		|| 200;
 
@@ -28,13 +29,14 @@ WebyMaze.VisualFxImpact	= function(opts)
 	if( isWebGL ){
 		var geometry	= new THREE.Sphere( this._bodyW/2, 32, 16 );
 		var material	= [
-			new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading, opacity: 0.3} )
-			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10, opacity : 0.5 } ),
+			//new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.SmoothShading, opacity: 0.3} )
+			new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10, opacity : 0.5 } ),
 		]
 	}else{
 		var geometry	= new THREE.Cube( this._bodyW/3, this._bodyW/3, this._bodyW/3, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
 		var material	= new THREE.MeshLambertMaterial( { color: 0xFFFFFF, shading: THREE.FlatShading, opacity: 0.3 } );
 	}
+
 	this._container	= new THREE.Mesh(geometry, material);
 	this._container.position.x	= position.x;
 	this._container.position.z	= position.y;

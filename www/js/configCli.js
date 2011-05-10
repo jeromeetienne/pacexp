@@ -303,7 +303,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
-	showRoof	: false,
+	showRoof	: true,
 	//wallTextureUrl	: 'images/tmp/tex0.jpg',
 	///wallTextureUrl	: 'images/tmp/PaddedOrangeWall.png',
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
@@ -348,3 +348,59 @@ WebyMaze.ConfigCli.tweetymaze.dev.enemyCli	= {
 
 WebyMaze.ConfigCli.enemyCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].enemyCli;
 //WebyMaze.ConfigCli.enemyCli	= WebyMaze.ConfigCli['pacmaze']['dev'].enemyCli;
+
+//////////////////////////////////////////////////////////////////////////////////
+//		landingPage							//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.ConfigCli.sample.landingPage	= {
+	/** showUsername show usernamer or not */
+	showUsername	: true
+};
+
+WebyMaze.ConfigCli.pacmaze.prod.landingPage	= {
+	showUsername	: false
+};
+
+WebyMaze.ConfigCli.pacmaze.dev.landingPage	= {
+	showUsername	: false
+};
+
+WebyMaze.ConfigCli.tweetymaze.prod.landingPage	= {
+	showUsername	: true
+};
+
+WebyMaze.ConfigCli.tweetymaze.dev.landingPage	= {
+	showUsername	: true
+};
+
+WebyMaze.ConfigCli.landingPage	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].landingPage;
+//WebyMaze.ConfigCli.landingPage	= WebyMaze.ConfigCli['pacmaze']['dev'].landingPage;
+
+//////////////////////////////////////////////////////////////////////////////////
+//		playerCli							//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.ConfigCli.sample.playerCli	= {
+	/** forcedAppearanceName force the AppearanceName */
+	forcedAppearanceName	: null
+};
+
+WebyMaze.ConfigCli.pacmaze.prod.playerCli	= {
+	forcedAppearanceName	: "Packy"
+};
+
+WebyMaze.ConfigCli.pacmaze.dev.playerCli	= {
+	forcedAppearanceName	: "Packy"
+};
+
+WebyMaze.ConfigCli.tweetymaze.prod.playerCli	= {
+	forcedAppearanceName	: null
+};
+
+WebyMaze.ConfigCli.tweetymaze.dev.playerCli	= {
+	forcedAppearanceName	: null
+};
+
+WebyMaze.ConfigCli.playerCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].playerCli;
+//WebyMaze.ConfigCli.playerCli	= WebyMaze.ConfigCli['pacmaze']['dev'].playerCli;

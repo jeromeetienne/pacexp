@@ -22,6 +22,11 @@ WebyMaze.EnemyCli	= function()
 WebyMaze.EnemyCli.prototype.destroy	= function(){
 }
 
+
+// mixin MicroEvent 
+MicroEvent.mixin(WebyMaze.EnemyCli);
+
+
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +68,9 @@ WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick)
 		var t		= Date.now() / 1000 * Math.PI;
 		object3d.position.y	= Math.sin(t) * bodyW/2.5 - bodyW/2;
 	}
+	
+	// honor postTick event
+	this.trigger('postTick');
 }
 
 WebyMaze.EnemyCli.prototype.obj3d	= function()
