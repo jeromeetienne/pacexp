@@ -41,6 +41,32 @@ body {
 }
 
 /********************************************************************************
+ *		landingPageContainer
+********************************************************************************/
+
+#landingPageContainer .jqmWindow {
+	background	: #000;
+	color		: #fff;
+
+	font-weight	: bolder;
+
+	border		: solid;
+	border-width	: 5px;
+	border-color	: #FFF;
+}
+
+#landingPageContainer .pagetitle {
+	font-size	: 400%;
+	color		: white;
+	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
+}
+
+#landingPageContainer .jqmWindow strong {
+	color		: #f00;
+	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
+}
+
+/********************************************************************************
  *		landingMainDialog
 ********************************************************************************/
 
@@ -49,19 +75,26 @@ body {
 	width		: 30%;
 }
 
+
 #landingMainDialog div.button {
-	font-size	: 130%;
-	background	: #aaa;
-	color		: #444;
-	padding		: 15px;
+	font-size	: 300%;
+
+	color		: #f00;
+	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
+	
 	border-radius	: 20px;
 	border		: solid;
-	border-width	: 2px;
-	border-color	: #888;
-	text-shadow	: 0px 1px 0px #111;
+	border-width	: 5px;
+	border-color	: #FFF;
+
+	padding		: 10px;
+	margin-top	: 20px;
 }
 #landingMainDialog div.button:hover {
-	background-color	: #666;
+	border-color	: red;
+	color		: white;
+	text-shadow	: 0 0 0.2em #aaa, 0 0 0.4em #888, 0 0 1em #666;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 30%, from(white), to(red), color-stop(0,white));
 }
 #landingMainDialog div {
 	margin-top	: 1em;
