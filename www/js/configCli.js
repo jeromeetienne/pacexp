@@ -69,11 +69,11 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	playerRotation		: 'grid',
-	firstCameraState	: 'fixedZenith',
-	firstLightingState	: 'day',
+	firstCameraState	: 'fixedGrazing',
+	firstLightingState	: 'firecamp',
 	minimapEnabled		: false,
 	showScoreMenu		: true,
-	showEnergyMenu		: true,
+	showEnergyMenu		: false,
 	showOptionsMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
@@ -139,8 +139,7 @@ WebyMaze.ConfigCli.sample.cameraRender	= {
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.cameraRender	= {
-	cameraStates	: ['overPlayer', 'inplayer', 'facePlayer', 'zenith',
-					'behindPlayer', 'fixedZenith', 'fixedGrazing'],
+	cameraStates	: ['fixedZenith', 'fixedGrazing'],
 	tweenDelay	: 1500
 };
 
