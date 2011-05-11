@@ -1,100 +1,178 @@
+<?
+	// this version fails due to require
+	var project = require('/home/jerome/webwork/pacexp/lib/configProject.js');
+	var PROJECT_NAME		= PROJECT_NAME		|| project.PROJECT;
+	var PROJECT_VERSION		= PROJECT_VERSION	|| project.VERSION;
+	var PROJECT_ENV			= PROJECT_ENV		|| project.ENV;
+	var PROJECT_LATEST_VERSION	= PROJECT_LATEST_VERSION|| project.LATEST_VERSION;
+?>
+
+<?
+// if you ever want to hardcode
+if( false ){
+	PROJECT_NAME		= "buddymaze";
+	PROJECT_VERSION		= "4";
+	PROJECT_ENV		= "prod";
+	PROJECT_LATEST_VERSION	= "4";
+}
+?>
+
+<!-- declare some helpers -->
+<?
+	var loadJavascript	= function(src){
+		_buffer	+= "<script src='"+ src + "' type='text/javascript'></script>\n";
+	}
+	var loadCss		= function(href){
+		_buffer	+= "<link href='"+href+"'rel='stylesheet' type='text/css' />\n";
+	}
+	var imageUrl		= function(href){
+		return href;
+	}
+?>
+
+<!-- sanity check - all variable MUST be declared -->
+<? console.assert(PROJECT_NAME, "PROJECT_NAME must be defined") ?>
+<? console.assert(PROJECT_VERSION, "PROJECT_VERSION must be defined") ?>
+<? console.assert(PROJECT_ENV, "PROJECT_ENV must be defined") ?>
+<? console.assert(PROJECT_LATEST_VERSION, "PROJECT_LATEST_VERSION must be defined") ?>
+
+
+<!-- **************************************************************************** -->
+<!-- *			actual page						* -->
+<!-- **************************************************************************** -->
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
-		<title>Pacmaze  a pacman in a maze</title>
+		<? if( PROJECT_NAME == "pacmaze" ){ ?>
+			<title>Pacmaze a packy in a maze</title>
+		<? }else if( PROJECT_NAME == "tweetymaze" ){ ?>
+			<title>Buddymaze shoot at everybody, invite your friends for fun</title>
+		<? }else console.assert(false, "PROJECT_NAME "+PROJECT_NAME+" is invalid");	?>
 		<meta charset="utf-8">
 		<!-- make favicon.ico -->
 		<link rel="shortcut icon" href="images/favicon.ico">
-		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		
 		<meta name="application-name" content="Pacmaze"/>
-		<link rel="icon" href="images/logo128.png" sizes="32x32 48x48 64x64 128x128"/>
+		<link rel="icon" href="<?= imageUrl('images/logo128.png') ?>" sizes="32x32 48x48 64x64 128x128"/>
 	</head>
 	<body>
-		<!-- es5-shim.js to patch missing standard functions - needed for Function.bind() in safari -->
-		<script src='vendor/es5-shim.js'></script>
+	<?
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- main css -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadCss("css/index.css");
 
-<!--		<script src="vendor/firebugx.js"></script>
--->
-		<script src='vendor/jquery/jquery.min.js'></script>
-		<script src='vendor/jquery/jquery.url.js'></script>
-		<script src='vendor/jquery/jquery.cookie.js'></script>
-		<script src='vendor/jquery/jquery.labelify.js'></script>
-		<script src="vendor/jquery/jquery.hotkeys.js"></script>
-		<script src='vendor/jquery/jqModal.js'></script>
-		<link	href='vendor/jquery/jqModal.css'	rel='stylesheet'></link>
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- es5-shim.js to patch missing standard functions - needed for Function.bind() in safari -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript('vendor/es5-shim.js');
 
-		<script src='vendor/jquery/qtip2/jquery.qtip.js'></script>
-		<link	href='vendor/jquery/qtip2/jquery.qtip.css'	rel='stylesheet'></link>
+		if( PROJECT_ENV === 'prod' ){
+			_buffer += "\n<!-- ********************************** -->\n";
+			_buffer += "<!-- include firebugx only in prod in case console.* got forgotten -->";
+			_buffer += "\n<!-- ********************************** -->\n";
+			loadJavascript("vendor/firebugx.js");
+		}
 
-<!--		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
--->		<script type="text/javascript" src="js/jquery.twitterButtonLive.js"></script>
-		<link rel="stylesheet" type="text/css" href="js/jquery.twitterButtonLive.css" />
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- include jQuery stuff -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript('vendor/jquery/jquery.min.js');
+		loadJavascript('vendor/jquery/jquery.url.js');
+		loadJavascript('vendor/jquery/jquery.cookie.js');
+		loadJavascript('vendor/jquery/jquery.hotkeys.js');
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- jquery.jqModal for all the popups -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript('vendor/jquery/jqModal.js');
+		loadCss('vendor/jquery/jqModal.css');
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- jquery.qtip for yfrog tips -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript('vendor/jquery/qtip2/jquery.qtip.js');
+		loadCss('vendor/jquery/qtip2/jquery.qtip.css');
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- handle twitter button -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		//loadJavascript('http://platform.twitter.com/widgets.js');
+		loadJavascript('js/jquery.twitterButtonLive.js');
+		loadCss('js/jquery.twitterButtonLive.css');
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- To get Three.js -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript("vendor/three.js.new/build/Three.js");
+		loadJavascript("vendor/three.js.new/contrib/Detector.js");
+		loadJavascript("vendor/three.js.new/contrib/RequestAnimationFrame.js");
+		loadJavascript("vendor/three.js.new/contrib/Stats.js");
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- To get socket.io.js -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript("vendor/socket.io-client/socket.io.js");
+		loadJavascript("./js/configSocketio.js");
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- To get soundmanager2 -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript("vendor/soundmanager2/script/soundmanager2.js");
+		loadJavascript("./js/configSoundmanager2.js");
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- To get Threex stuff -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		// TODO put excanvas in threex
+		loadJavascript("vendor/excanvas.js");
+		loadJavascript("js/Threex/Threex.WindowResize.js");
+		loadJavascript("js/Threex/Threex.TextureSmiley.js");
+		loadJavascript("js/Threex/Threex.TextureCaption.js");
+		loadJavascript("js/Threex/Threex.Tween.js");
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- micro framework -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript("js/microevent.js");
+
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- local source -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript("../lib/configProject.js");
+		loadJavascript("js/object3dPacky.js");
+		loadJavascript("js/object3dGhost.js");
+		loadJavascript("js/configCli.js");
+		loadJavascript("js/gameCli.js");
+		loadJavascript("js/configStore.js");
+		loadJavascript("js/mazeCli.js");
+		loadJavascript("js/playerCli.js");
+		loadJavascript("js/enemyCli.js");
+		loadJavascript("js/shootCli.js");
+		loadJavascript("js/pillCli.js");
+		loadJavascript("js/lightPool.js");
+		loadJavascript("js/visualFxImpact.js");
+		loadJavascript("js/visualFxCaption.js");
+		loadJavascript("js/visualFxLightEmergency.js");
+		loadJavascript("js/visualFxLightAmbient.js");
+		loadJavascript("js/visualFxLightDirectional.js");
+		loadJavascript("js/visualFxLightPoint.js");
+		loadJavascript("js/soundRender.js");
+		loadJavascript("js/cameraRender.js");
+		loadJavascript("js/lightingRender.js");
+		loadJavascript("js/minimapRender.js");
+		loadJavascript("js/webglRender.js");
+		loadJavascript("js/gamePageMain.js");
+		loadJavascript("js/landingPageMain.js");
+		loadJavascript("js/pageMain.js");
+
+	?>
+
+
+<!-- *****************************************************************************
+			Landing Page
+******************************************************************************** -->
 		
-
-
-		<script type="text/javascript" src="vendor/three.js.new/build/Three.js"></script>
-		<script type="text/javascript" src="vendor/three.js.new/contrib/Detector.js"></script>
-		<script type="text/javascript" src="vendor/three.js.new/contrib/RequestAnimationFrame.js"></script>
-		<script type="text/javascript" src="vendor/three.js.new/contrib/Stats.js"></script>
-
-		<!-- To get Socket.io -->
-		<script src="vendor/socket.io-client/socket.io.js"></script>
-
-		<!-- To get Soundmanager -->
-		<script src="vendor/soundmanager2/script/soundmanager2.js"></script>
-		<script>soundManager.url = 'vendor/soundmanager2/swf'; // FIXME ? could it be a dataUrl </script>
-		<script>soundManager.debugMode		= false;</script>
-		<script>soundManager.useHTML5Audio	= true;	</script>
-
-		<!-- TODO put excanvas in threex -->
-		<script type="text/javascript" src="vendor/excanvas.js"></script>
-		<script type="text/javascript" src="js/Threex/Threex.WindowResize.js"></script>
-		<script type="text/javascript" src="js/Threex/Threex.TextureSmiley.js"></script>
-		<script type="text/javascript" src="js/Threex/Threex.TextureCaption.js"></script>
-		<script type="text/javascript" src="js/Threex/Threex.Tween.js"></script>
-
-		<script type="text/javascript" src="js/microevent.js"></script>
-		<script type="text/javascript" src="../lib/configProject.js"></script>
-		<script type="text/javascript" src="js/object3dPacky.js"></script>
-		<script type="text/javascript" src="js/object3dGhost.js"></script>
-		<script type="text/javascript" src="js/configCli.js"></script>
-		<script type="text/javascript" src="js/gameCli.js"></script>
-		<script type="text/javascript" src="js/configStore.js"></script>
-		<script type="text/javascript" src="js/mazeCli.js"></script>
-		<script type="text/javascript" src="js/playerCli.js"></script>
-		<script type="text/javascript" src="js/enemyCli.js"></script>
-		<script type="text/javascript" src="js/shootCli.js"></script>
-		<script type="text/javascript" src="js/pillCli.js"></script>
-		<script type="text/javascript" src="js/lightPool.js"></script>
-		<script type="text/javascript" src="js/visualFxImpact.js"></script>
-		<script type="text/javascript" src="js/visualFxCaption.js"></script>
-		<script type="text/javascript" src="js/visualFxLightEmergency.js"></script>
-		<script type="text/javascript" src="js/visualFxLightAmbient.js"></script>
-		<script type="text/javascript" src="js/visualFxLightDirectional.js"></script>
-		<script type="text/javascript" src="js/visualFxLightPoint.js"></script>
-		<script type="text/javascript" src="js/soundRender.js"></script>
-		<script type="text/javascript" src="js/cameraRender.js"></script>
-		<script type="text/javascript" src="js/lightingRender.js"></script>
-		<script type="text/javascript" src="js/minimapRender.js"></script>
-		<script type="text/javascript" src="js/webglRender.js"></script>
-		<script type="text/javascript" src="js/gamePageMain.js"></script>
-		<script type="text/javascript" src="js/landingPageMain.js"></script>
-		
-		<script>
-		"use strict";
-		//jQuery(function(){	gamePageMain();	})
-		jQuery(function(){
-			console.log("wow")
-			var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
-			if( landingPageBypass ){
-				gamePageMain();
-			}else{
-				var page	= new WebyMaze.LandingPage();
-			}
-		})
-		</script>
-
 <div id="landingPageContainer" tabindex="100" style="display: none;">
 	<div class="above3d pagetitle">
 		<!--
@@ -324,6 +402,5 @@
 			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		</script>
-
 	</body>
 </html>

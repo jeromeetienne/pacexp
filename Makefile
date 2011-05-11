@@ -2,8 +2,12 @@
 # to automatize repeatitive actions
 
 PROJECT_NAME=pacmaze
+PROJECT_ENV=dev
 PROJECT_VERSION=3
 PROJECT_LATEST_VERSION=3
+
+SHORTTAGJS=../shorttag.js/bin/node-shorttag
+
 
 server_dev:
 	supervisor -w lib lib/server.js
@@ -23,11 +27,10 @@ uninstall: upstart_uninstall
 #		release								#
 #################################################################################
 
-release_build: release_clean
+release_build: release_clean build/index.html
 	echo "*" > build/.gitignore
 	cp www/webglTest.html build
 	#inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
-	inliner http://localhost/~jerome/webwork/pacexp/www/test_inliner.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build
 	cp www/images/favicon.ico build
@@ -44,6 +47,17 @@ release_build: release_clean
 
 release_clean:
 	rm -rf build/*
+
+build/index.html: www/index_prod.html
+	inliner http://localhost/~jerome/webwork/pacexp/www/index_prod.html > build/index.html
+
+index_build:
+	echo "<? PROJECT_ENV = 'dev';  ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_dev.html
+	echo "<? PROJECT_ENV = 'prod'; ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_prod.html
+
+index_build_monitor:
+	while true; do inotifywait -e modify,create www/index_tmpl.html; make index_build; done
+	
 
 #################################################################################
 #		jsdoc								#
@@ -70,8 +84,6 @@ game_switch_tweetymaze:
 #################################################################################
 #		Apache2								#
 #################################################################################
-
-SHORTTAGJS=../shorttag.js/bin/node-shorttag
 
 
 apache2_install: apache2_copy_conf apache2_restart

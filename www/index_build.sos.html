@@ -1,0 +1,44 @@
+<?
+/*	var project = require('../lib/configProject.js'); */
+?>
+
+<?
+var PROJECT_NAME		= "buddymaze";
+var PROJECT_VERSION		= "4";
+var PROJECT_ENV			= "prod";
+var PROJECT_LATEST_VERSION	= "4";
+?>
+
+<? console.assert(PROJECT_NAME) ?>
+<? console.assert(PROJECT_VERSION) ?>
+<? console.assert(PROJECT_ENV) ?>
+<? console.assert(PROJECT_LATEST_VERSION) ?>
+
+
+<? if( PROJECT_ENV === 'dev' ){ ?>
+<? }else if( PROJECT_ENV === 'prod' ){ ?>
+<? console.assert(false, "PROJECT_ENV "+PROJECT_ENV+" is invalid");	?>
+
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<? if( PROJECT_NAME == "pacmaze" ){ ?>
+			<title>Pacmaze a packy in a maze</title>
+		<? }else if( PROJECT_NAME == "tweetymaze" ){ ?>
+			<title>Buddymaze shoot at everybody, invite your friends for fun</title>
+		<? } ?>
+		<meta charset="utf-8">
+		<!-- make favicon.ico -->
+		<link rel="shortcut icon" href="images/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		
+		<meta name="application-name" content="Pacmaze"/>
+		<link rel="icon" href="images/logo128.png" sizes="32x32 48x48 64x64 128x128"/>
+	</head>
+	<body>
+		<? if( PROJECT_ENV === 'dev' ){		?>
+		<? }else if( PROJECT_ENV === 'prod' ){	?>
+		<? }else console.assert(false, "PROJECT_ENV "+PROJECT_ENV+" is invalid");	?>
+
+	</body>
+</html>

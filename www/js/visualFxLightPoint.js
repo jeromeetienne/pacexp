@@ -21,6 +21,7 @@ WebyMaze.VisualFxLightPoint	= function(opts)
 	this._light.color	= new THREE.Color( this._color );
 	this._light.intensity	= this._intensity;
 	this._light.distance	= this._distance;
+	
 	this._light.position.x	= this._position.x;
 	this._light.position.y	= this._position.y;
 	this._light.position.z	= this._position.z;
