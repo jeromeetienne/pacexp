@@ -1,11 +1,10 @@
 "use strict";
 //jQuery(function(){	gamePageMain();	})
 jQuery(function(){
-	console.log("wow")
 	var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
 	if( landingPageBypass ){
-		gamePageMain();
+		pageGameMain();
 	}else{
-		var page	= new WebyMaze.LandingPage();
+		var page	= new WebyMaze.PageLanding();
 	}
 })

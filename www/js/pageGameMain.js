@@ -19,7 +19,7 @@ var soundRender	= null;
 var gameCli	= null;
 var gameConfig	= null;
 
-var gamePageMain= function(){
+var pageGameMain= function(){
 	jQuery("#gamePageContainer").show();
 	
 	

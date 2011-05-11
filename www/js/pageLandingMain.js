@@ -5,7 +5,7 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LandingPage	= function(opts)
+WebyMaze.PageLanding	= function(opts)
 {
 	this._configStore	= new WebyMaze.ConfigStore();
 	this._pageSel		= "#landingPageContainer";
@@ -21,7 +21,7 @@ WebyMaze.LandingPage	= function(opts)
 	this._aboutDialogCtor();
 }
 
-WebyMaze.LandingPage.prototype.destroy	= function()
+WebyMaze.PageLanding.prototype.destroy	= function()
 {
 	this._configStore.destroy();
 }
@@ -31,18 +31,18 @@ WebyMaze.LandingPage.prototype.destroy	= function()
 //		misc								//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.LandingPage.prototype._gotoGame	= function()
+WebyMaze.PageLanding.prototype._gotoGame	= function()
 {
 	// show pageContainer
 	var pageSel	= "#landingPageContainer";
 	jQuery(pageSel).hide();
 
-	gamePageMain();
+	pageGameMain();
 }
 
 /**
 */
-WebyMaze.LandingPage.prototype._mainDialogCtor	= function()
+WebyMaze.PageLanding.prototype._mainDialogCtor	= function()
 {
 	// init the username part
 	this._mainDialogUsernameCtor();
@@ -75,7 +75,7 @@ WebyMaze.LandingPage.prototype._mainDialogCtor	= function()
 
 /**
 */
-WebyMaze.LandingPage.prototype._mainDialogUsernameCtor	= function()
+WebyMaze.PageLanding.prototype._mainDialogUsernameCtor	= function()
 {
 	var dialogSel	= "#landingMainDialog";
 	var inputSel	= dialogSel+" input[name='username']";
@@ -108,7 +108,7 @@ WebyMaze.LandingPage.prototype._mainDialogUsernameCtor	= function()
 }
 /**
 */
-WebyMaze.LandingPage.prototype._mainDialogUsernameSubmitCtor	= function()
+WebyMaze.PageLanding.prototype._mainDialogUsernameSubmitCtor	= function()
 {
 	var dialogSel	= "#landingMainDialog";
 	var inputSel	= dialogSel+" input[name='username']";
@@ -125,7 +125,7 @@ WebyMaze.LandingPage.prototype._mainDialogUsernameSubmitCtor	= function()
 
 /**
 */
-WebyMaze.LandingPage.prototype._tutorialDialogCtor	= function()
+WebyMaze.PageLanding.prototype._tutorialDialogCtor	= function()
 {
 	var dialogSel	= '#landingTutorialDialog';
 	var buttonSel	= this._pageSel+' .button.tutorial';
@@ -137,7 +137,7 @@ WebyMaze.LandingPage.prototype._tutorialDialogCtor	= function()
 	});	
 }
 
-WebyMaze.LandingPage.prototype._aboutDialogCtor	= function()
+WebyMaze.PageLanding.prototype._aboutDialogCtor	= function()
 {
 	var dialogSel	= '#landingAboutDialog';
 	var buttonSel	= this._pageSel+' .button.about';
