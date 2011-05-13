@@ -15,7 +15,7 @@ WebyMaze.PageLanding	= function(opts)
 	
 	// show pageContainer
 	jQuery(this._pageSel).show();	
-	
+
 	if( this._noWebglDialogMustDisplay() ){
 		this._noWebglDialogCtor();
 		//alert("mustNoWebglDialog")

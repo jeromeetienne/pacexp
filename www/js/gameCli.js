@@ -6,14 +6,16 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.GameCli	= function(opts)
 {
-	this.userInputCtor();
-	this.socketCtor();
+	this._userInputKeyCtor();
+	//this._userInputTouchCtor();
+	this._socketCtor();
 }
 
 WebyMaze.GameCli.prototype.destroy	= function()
 {
-	this.userInputDtor();	
-	this.socketDtor();
+	this._userInputKeyDtor();	
+	//this._userInputTouchDtor();
+	this._socketDtor();
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +41,7 @@ WebyMaze.GameCli.prototype.onContextTick	= function(message){
 WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 {
 	// destroy the socket ... just a trick to free the game
-	this.socketDtor();
+	this._socketDtor();
 
 	//console.log("message", message)
 	// determine the dialogSel based on reason
@@ -183,12 +185,12 @@ console.log("data", message.data)
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-//		userInput							//
+//		userInputTouch							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.GameCli.prototype.userInputCtor	= function(){
-	this.move	= {};
-	var send	= function(key, val){
+WebyMaze.GameCli.prototype._userInputKeyCtor	= function()
+{
+	var sendEvent	= function(key, val){
 		this.socketSend({
 			type	: "userInput",
 			data	: {
@@ -200,32 +202,88 @@ WebyMaze.GameCli.prototype.userInputCtor	= function(){
 	var setMove	= function(event, value){
 		// https://developer.mozilla.org/en/DOM/Event/UIEvent/KeyEvent
 		switch( event.keyCode ) {
-			case " ".charCodeAt(0):	send('shoot', value);		break;
+			case " ".charCodeAt(0):	sendEvent('shoot', value);	break;
 			case "Z".charCodeAt(0):
 			case "W".charCodeAt(0):
-			case 38: /*up*/		send('keyForward', value);	break;
+			case 38: /*up*/		sendEvent('keyForward', value);	break;
 			case "Q".charCodeAt(0):
 			case "A".charCodeAt(0):
-			case 37: /*left*/	send('keyLeft', value);	break;		
+			case 37: /*left*/	sendEvent('keyLeft', value);	break;		
 			case "S".charCodeAt(0):
-			case 40: /*down*/	send('keyBackward', value);	break;
+			case 40: /*down*/	sendEvent('keyBackward', value);break;
 			case "D".charCodeAt(0):
-			case 39: /*right*/	send('keyRight', value);	break;
+			case 39: /*right*/	sendEvent('keyRight', value);	break;
 		}
 	}
-	
-	document.addEventListener( 'keydown'	, function(e){setMove(e, true);}	, false );
-	document.addEventListener( 'keyup'	, function(e){setMove(e, false);}	, false );
+	this._$onKeyDown	= function(event){ setMove(event, true);	}.bind(this);
+	this._$onKeyUp		= function(event){ setMove(event, false);	}.bind(this);
+	document.addEventListener( 'keydown'	, this._$onKeyDown	, false );
+	document.addEventListener( 'keyup'	, this._$onKeyUp	, false );
 }
-WebyMaze.GameCli.prototype.userInputDtor	= function(){
-	console.assert(false, "not yet implemented. do it with a this.$userInputKeydownCallback")
+WebyMaze.GameCli.prototype._userInputKeyDtor	= function()
+{
+	document.removeEventListener( 'keydown'	, this._$onKeyDown	, false );
+	document.removeEventListener( 'keyup'	, this._$onKeyUp	, false );
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+//		userInputTouch							//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.GameCli.prototype._userInputTouchCtor	= function()
+{
+	var sendEvent	= function(key, val){
+		console.log("key", key, "val", val)
+		this.socketSend({
+			type	: "userInput",
+			data	: {
+				key	: key,
+				val	: val
+			}
+		});
+	}.bind(this);
+	var setMove	= function(event, value){
+		console.log("event", event, value)
+		//alert('prout')
+		var unitX	= event.clientX / window.innerWidth	- 0.5;
+		var unitY	= event.clientY / window.innerHeight	- 0.5;
+		//alert("touch event " + event.type + " touches: " + JSON.stringify(event.touches));
+		//alert("event.clientX"+ event.clientX)
+		//alert("event.offsetX"+ event.offsetX)
+		//alert("event.x"+ event.x)
+		//alert("innerWidth"+ window.innerWidth)
+		//alert("unitX "+ unitX+" unitY="+ unitY)
+		
+		if( unitX < 0 && Math.abs(unitX) > Math.abs(unitY) )	sendEvent('keyLeft'	, value);
+		if( unitX > 0 && Math.abs(unitX) > Math.abs(unitY) )	sendEvent('keyRight'	, value);
+		if( unitY < 0 && Math.abs(unitX) < Math.abs(unitY) )	sendEvent('keyForward'	, value);
+		if( unitY > 0 && Math.abs(unitX) < Math.abs(unitY) )	sendEvent('keyBackward'	, value);
+		//if( unitY < 0 && unitX > unitY )	sendEvent('keyUp'	, value);
+		//if( unitY > 0 && unitX < unitY )	sendEvent('keyDown'	, value);
+	}
+	this._$onTouchStart	= function(event){setMove(event, true)	}.bind(this);
+	this._$onTouchEnd	= function(event){setMove(event, false)	}.bind(this);
+	document.addEventListener( 'mousedown'	, this._$onTouchStart	, false );
+	document.addEventListener( 'mouseup'	, this._$onTouchEnd	, false );
+	// TODO i tried to do actual touchevent but i cant find the coordinates
+	//jQuery("body").bind("touchstart", this._$onTouchStart);
+	//document.addEventListener( 'touchstart'	, this._$onTouchStart	, false );
+	//document.addEventListener( 'touchend'	, this._$onTouchEnd	, false );
+}
+WebyMaze.GameCli.prototype._userInputTouchDtor	= function()
+{
+	document.removeEventListener( 'mousedown'	, this._$onTouchStart	, false );
+	document.removeEventListener( 'mouseup'		, this._$onTouchEnd	, false );
+	//document.removeEventListener( 'touchdown'	, this._$onTouchStart	, false );
+	//document.removeEventListener( 'touchend'	, this._$onTouchEnd	, false );
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //		socket								//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.GameCli.prototype.socketCtor	= function(){
+WebyMaze.GameCli.prototype._socketCtor	= function(){
 	var listenHost	= WebyMaze.ConfigCli.server.listenHost;
 	var listenPort	= WebyMaze.ConfigCli.server.listenPort;
 
@@ -235,17 +293,17 @@ WebyMaze.GameCli.prototype.socketCtor	= function(){
 	});
 	this._sockio.connect();
 
-	this._sockio.on('connect', function(){		this.socketOnConnect();		}.bind(this)) 
-	this._sockio.on('connect_failed', function(){	this.socketOnError()		}.bind(this)) 
-	this._sockio.on('message', function(message){	this.socketOnMessage(message)	}.bind(this)) 
-	this._sockio.on('disconnect', function(){	this.socketOnClose();		}.bind(this))
+	this._sockio.on('connect', function(){		this._socketOnConnect();		}.bind(this)) 
+	this._sockio.on('connect_failed', function(){	this._socketOnError()		}.bind(this)) 
+	this._sockio.on('message', function(message){	this._socketOnMessage(message)	}.bind(this)) 
+	this._sockio.on('disconnect', function(){	this._socketOnClose();		}.bind(this))
 }
 
-WebyMaze.GameCli.prototype.socketDtor	= function(){
+WebyMaze.GameCli.prototype._socketDtor	= function(){
 	this._sockio.disconnect();
 }
 
-WebyMaze.GameCli.prototype.socketOnConnect	= function(){
+WebyMaze.GameCli.prototype._socketOnConnect	= function(){
 	console.log("onConnect", this._sockio)
 	this.socketSend({
 		type	: "gameReq",
@@ -256,7 +314,7 @@ WebyMaze.GameCli.prototype.socketOnConnect	= function(){
 	});
 }
 
-WebyMaze.GameCli.prototype.socketOnMessage	= function(message){
+WebyMaze.GameCli.prototype._socketOnMessage	= function(message){
 	//console.log("onMessage", JSON.stringify(message));
 	if( message.type === 'contextInit' ){
 		this.onContextInit(message);
@@ -271,11 +329,11 @@ WebyMaze.GameCli.prototype.socketOnMessage	= function(message){
 	}
 }
 
-WebyMaze.GameCli.prototype.socketOnError	= function(){
+WebyMaze.GameCli.prototype._socketOnError	= function(){
 	console.log("onConnect")
 }
 
-WebyMaze.GameCli.prototype.socketOnClose	= function(){
+WebyMaze.GameCli.prototype._socketOnClose	= function(){
 	console.log("onClose")
 }
 

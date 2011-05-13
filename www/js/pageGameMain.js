@@ -42,7 +42,7 @@ WebyMaze.PageGame.prototype._init	= function()
 	scene = new THREE.Scene();
 	sceneContainer = new THREE.Object3D();
 	scene.addObject(sceneContainer)
-
+	      
 	scene.fog = new THREE.Fog(0x000000, 1, 3000);
 	//scene.fog = new THREE.FogExp2( 0x000000, 0.00025*3 );
 	//scene.fog = new THREE.FogExp2( 0x87CEEB, 0.00025*3 );
