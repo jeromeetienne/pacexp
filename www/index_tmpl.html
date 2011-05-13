@@ -250,6 +250,24 @@ if( false ){
 		I published several versions of the game. This is the most recent. 
 		<div class="jqmClose button"></div>
 	</div>
+	<!-- noWebGLDialog dialog -->
+	<div id="noWebGLDialog" class="jqmWindow above3d">
+		<h3>Ouch no WebGL :(</h3>
+		<p>
+			Sorry, WebGL is not available on your computer and WebGL is needed for this game.
+			You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more help Pacmaze</a>
+			or look at a video of the game.
+			<!--Go <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
+			Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->
+		</p>
+		<!-- iframe pacmaze video -->
+		<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/D05ePAiHZb4" frameborder="0" allowfullscreen></iframe>
+		-->
+		<!-- iframe buddymaze video -->
+		<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/B3KeOZFvW6c" frameborder="0" allowfullscreen></iframe>
+		-->
+		<div class="jqmClose button"></div>
+	</div>
 </div>
 
 <!-- *****************************************************************************
@@ -329,7 +347,7 @@ if( false ){
 			</div>
 		</div>
 
-		<!-- helpHelp dialog -->
+		<!-- helpDialog -->
 		<div id="helpDialog" class="jqmWindow above3d">
 			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
 			<p>
@@ -370,24 +388,6 @@ if( false ){
 			<div class="jqmClose button"></div>
 			<!-- hidden <input> to be able to trigger focus and bind keypress on the dialog -->
 			<input type="text" style='position: absolute; left: -5000px'/>
-		</div>
-		<!-- gameCompletedNoMorePills dialog -->
-		<div id="noWebGLDialog" class="jqmWindow above3d">
-			<h3>Ouch no WebGL :(</h3>
-			<p>
-				Sorry, WebGL is not available on your computer and WebGL is needed for this game.
-				You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more help Pacmaze</a>
-				or look at a video of the game.
-				<!--Go <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
-				Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->
-			</p>
-			<!-- iframe pacmaze video -->
-			<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/D05ePAiHZb4" frameborder="0" allowfullscreen></iframe>
-			-->
-			<!-- iframe buddymaze video -->
-			<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/B3KeOZFvW6c" frameborder="0" allowfullscreen></iframe>
-			-->
-			<div class="jqmClose button"></div>
 		</div>
 </div>
 		

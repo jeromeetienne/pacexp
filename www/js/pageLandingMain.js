@@ -16,9 +16,14 @@ WebyMaze.PageLanding	= function(opts)
 	// show pageContainer
 	jQuery(this._pageSel).show();	
 	
-	this._mainDialogCtor();
-	this._tutorialDialogCtor();
-	this._aboutDialogCtor();
+	if( this._noWebglDialogMustDisplay() ){
+		this._noWebglDialogCtor();
+		//alert("mustNoWebglDialog")
+	}else{ 
+		this._mainDialogCtor();
+		this._tutorialDialogCtor();
+		this._aboutDialogCtor();
+	}
 }
 
 WebyMaze.PageLanding.prototype.destroy	= function()
@@ -39,6 +44,44 @@ WebyMaze.PageLanding.prototype._gotoGame	= function()
 
 	pageGameMain();
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+//		noWebglDialog							//
+//////////////////////////////////////////////////////////////////////////////////
+
+
+WebyMaze.PageLanding.prototype._noWebglDialogMustDisplay	= function()
+{
+	// test if webgl is needed
+	var webGlNeeded	= jQuery.url.param('render') !== 'canvas';
+	// test if webgl is supported
+	try {
+		var webglSupport	= !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
+	}catch(e){
+		var webglSupport	= false;
+	}
+	// test if webgl is explicitly disabled
+	var webGlDisable= jQuery.url.param('webglDisable') ? parseInt(jQuery.url.param('webglDisable')) : false;
+
+	// if webGl is not needed, return false
+	if( webGlNeeded === false )	return false;
+	// if webgl has been explicitly disabled, return true
+	if( webGlDisable )		return true;
+	// if webgl is supported return false
+	if( webglSupport )		return false;
+	// if all tests failed, return true
+	return true;
+}
+
+WebyMaze.PageLanding.prototype._noWebglDialogCtor	= function()
+{
+	jQuery('#noWebGLDialog').jqm();
+	jQuery('#noWebGLDialog').jqmShow();	
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//		misc								//
+//////////////////////////////////////////////////////////////////////////////////
 
 /**
 */

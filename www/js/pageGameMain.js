@@ -22,21 +22,6 @@ var gameConfig	= null;
 var pageGameMain= function(){
 	jQuery("#gamePageContainer").show();
 	
-	
-	// TODO put back detector
-	try {
-		var webGlSupport	= !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
-	}catch(e){
-		var webGlSupport	= false;
-	}
-	var webGlNeeded	= jQuery.url.param('render') !== 'canvas';
-	var webGlDisable= jQuery.url.param('webGlDisable') ? parseInt(jQuery.url.param('webGlDisable')) : false;
-	if( webGlDisable )	webGlSupport	= false;
-	if( webGlNeeded && !webGlSupport ){
-		jQuery('#noWebGLDialog').jqm();
-		jQuery('#noWebGLDialog').jqmShow(); 		
-		return;
-	}
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
 	gameCli		= new WebyMaze.GameCli();
 	gameConfig	= new WebyMaze.ConfigStore();
