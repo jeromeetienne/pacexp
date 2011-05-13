@@ -75,8 +75,9 @@ WebyMaze.PageLanding.prototype._noWebglDialogMustDisplay	= function()
 
 WebyMaze.PageLanding.prototype._noWebglDialogCtor	= function()
 {
-	jQuery('#noWebGLDialog').jqm();
-	jQuery('#noWebGLDialog').jqmShow();	
+	var dialogSel	= "#noWebglDialog";
+	jQuery(dialogSel).jqm();
+	jQuery(dialogSel).jqmShow();	
 }
 
 //////////////////////////////////////////////////////////////////////////////////

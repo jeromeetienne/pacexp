@@ -29,7 +29,6 @@ uninstall: upstart_uninstall
 
 release_build: release_clean build/index.html
 	echo "*" > build/.gitignore
-	cp www/webglTest.html build
 	#inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
 	cp -a www/sounds build
 	cp -a www/images build

@@ -36,6 +36,7 @@ if( false ){
 <? console.assert(PROJECT_ENV, "PROJECT_ENV must be defined") ?>
 <? console.assert(PROJECT_LATEST_VERSION, "PROJECT_LATEST_VERSION must be defined") ?>
 
+<? var PROJECT_NAME_CAMEL = PROJECT_NAME.charAt(0).toUpperCase() + PROJECT_NAME.substring(1); ?>
 
 <!-- **************************************************************************** -->
 <!-- *			actual page						* -->
@@ -51,8 +52,9 @@ if( false ){
 		<meta charset="utf-8">
 		<!-- make favicon.ico -->
 		<link rel="shortcut icon" href="images/favicon.ico">
-		
-		<meta name="application-name" content="Pacmaze"/>
+
+		<meta name="application-name" content="<?= PROJECT_NAME_CAMEL ?>"/>
+
 		<link rel="icon" href="<?= imageUrl('images/logo128.png') ?>" sizes="32x32 48x48 64x64 128x128"/>
 	</head>
 	<body>
@@ -175,13 +177,11 @@ if( false ){
 		
 <div id="landingPageContainer" tabindex="100" style="display: none;">
 	<div class="above3d pagetitle">
-		<!--
-		- this title is too large on small embeded iframe
-		- this trick in window.resize make it proportional...
-		  jQuery("body").css('font-size', window.innerWidth/80);
-		- not sure if it is a good thing or not
-		-->
-		<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'>Buddymaze</a>
+		<? if( PROJECT_NAME == "pacmaze" ){ ?>
+			<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'><?= PROJECT_NAME_CAMEL ?></a>
+		<? }else if( PROJECT_NAME == "tweetymaze" ){ ?>
+			<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'><?= PROJECT_NAME_CAMEL ?></a>
+		<? }else console.assert(false, "PROJECT_NAME "+PROJECT_NAME+" is invalid");	?>
 	</div>
 	<div id="landingMainDialog" class="promptDialog jqmWindow">
 		<div class="intro">
@@ -250,22 +250,22 @@ if( false ){
 		I published several versions of the game. This is the most recent. 
 		<div class="jqmClose button"></div>
 	</div>
-	<!-- noWebGLDialog dialog -->
-	<div id="noWebGLDialog" class="jqmWindow above3d">
+	<!-- noWebglDialog dialog -->
+	<div id="noWebglDialog" class="jqmWindow above3d">
 		<h3>Ouch no WebGL :(</h3>
 		<p>
-			Sorry, WebGL is not available on your computer and WebGL is needed for this game.
-			You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more help Pacmaze</a>
+			Sorry, WebGL is not available on your computer.
+			You can read <a href='http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html' target='_blank'>more help on Pacmaze</a>
 			or look at a video of the game.
+			You may try to <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
 			<!--Go <a href='http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>get a WebGL Implementation</a>.
 			Or try <a href='?render=canvas'>super experimental/ugly canvas version</a>?-->
 		</p>
-		<!-- iframe pacmaze video -->
-		<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/D05ePAiHZb4" frameborder="0" allowfullscreen></iframe>
-		-->
-		<!-- iframe buddymaze video -->
-		<!--<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/B3KeOZFvW6c" frameborder="0" allowfullscreen></iframe>
-		-->
+		<? if( PROJECT_NAME === "pacmaze" && PROJECT_ENV == "prod" ){ ?>
+			<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/D05ePAiHZb4" frameborder="0" allowfullscreen></iframe>
+		<? }else if( PROJECT_NAME === "tweetymaze" && PROJECT_ENV == "prod" ){ ?>
+			<iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/B3KeOZFvW6c" frameborder="0" allowfullscreen></iframe>
+		<? } ?>
 		<div class="jqmClose button"></div>
 	</div>
 </div>

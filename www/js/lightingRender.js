@@ -1,5 +1,21 @@
 /**
- * Render camera
+ * Lighting render
+ *
+ * * TODO refactor this
+ * * no need to be special, what about converting this in a visualFx
+ *   * thus reuse all the visualFx code
+ *   * in fact give the ability to make one visualFx out of several
+ *     * like object3d in three.js
+ *     * so visualFx is in fact a WebyMaze.object3d
+ *     * enemy and player are object3d too
+ *     * they all use the same arch
+ *     * MUCH better
+ *   * imply the use of classes... jresig one ?
+ *     * issue with the .prototype model
+ *     * joose ?
+ *     * stuff ala three.js ?
+ *       * undersdand it and make another micro framework ?
+ *       * seems a good one. press + personnal reuse
 */
 
 var WebyMaze	= WebyMaze || {};
