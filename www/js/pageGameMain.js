@@ -1,8 +1,6 @@
 /**
  * TODO Global var... to remove
 */
-var container, stats;
-
 var camera, scene, renderer;
 
 var sceneContainer;
@@ -17,7 +15,11 @@ var gameConfig	= null;
 
 WebyMaze.PageGame	= function()
 {
+	// show the page
 	jQuery("#gamePageContainer").show();
+	
+	this._stats	= null;
+	this._container	= null;
 	
 	gameCli		= new WebyMaze.GameCli();
 	gameConfig	= new WebyMaze.ConfigStore();
@@ -26,12 +28,31 @@ WebyMaze.PageGame	= function()
 		enableFx	: gameConfig.soundFx() === "true"
 	});
 	this._init();
-	animate();	
+	this._animate();	
 }
 
 WebyMaze.PageGame.prototype.destroy	= function()
 {
+	if( gameCli ){
+		gameCli.destroy();
+		gameCli	= null;
+	}
+	if( gameConfig){
+		gameConfig.destroy();
+		gameConfig	= null;
+	}
+	if( soundRender ){
+		soundRender.destroy();
+		soundRender	= null;
+	}
+	// TODO stop animate stuff
+	// http://dvcs.w3.org/hg/webperf/raw-file/tip/specs/RequestAnimationFrame/Overview.html#the-WindowAnimationTiming-interface
+	// "void cancelRequestAnimationFrame(in long handle);"
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+//										//
+//////////////////////////////////////////////////////////////////////////////////
 
 WebyMaze.PageGame.prototype._init	= function()
 {
@@ -58,18 +79,18 @@ WebyMaze.PageGame.prototype._init	= function()
 	renderer.sortObjects = false;
 
 	// append the renderer to the DOM
-	container = document.createElement( 'div' );
-	document.body.appendChild( container );
+	this._container = document.createElement( 'div' );
+	document.body.appendChild( this._container );
 	jQuery("#canvasContainer").empty().append( renderer.domElement );
 
 	// append Stats if it is defined
 	if( typeof Stats !== "undefined" && WebyMaze.ConfigCli.client.showStat ){
-		stats = new Stats();
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.bottom	= '40px';
-		stats.domElement.style.right	= '0';
-		stats.domElement.style.zIndex	= 100;
-		container.appendChild( stats.domElement );
+		this._stats = new Stats();
+		this._stats.domElement.style.position = 'absolute';
+		this._stats.domElement.style.bottom	= '40px';
+		this._stats.domElement.style.right	= '0';
+		this._stats.domElement.style.zIndex	= 100;
+		this._container.appendChild( this._stats.domElement );
 	}
 
 	// THREEx.WindowResize will handle renderer/camera reinit on window resize
@@ -77,18 +98,19 @@ WebyMaze.PageGame.prototype._init	= function()
 }
 
 
-
-function animate() {
-	requestAnimationFrame( animate );
+WebyMaze.PageGame.prototype._animate	= function()
+{
+	requestAnimationFrame( this._animate.bind(this) );
 	// do the rendering
-	render();
+	this._render();
 	// update THREEx.TWEEN
 	THREEx.TWEEN.update();
 	// update stats
-	if( stats )	stats.update();
+	if( this._stats )	this._stats.update();
 }
 
-function render() {
+WebyMaze.PageGame.prototype._render	= function()
+{
 	renderer.render( scene, camera );
 }
 
