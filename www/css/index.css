@@ -44,10 +44,11 @@ body {
  *		landingPageContainer
 ********************************************************************************/
 
-#landingPageContainer .pagetitle {
+#landingPageContainer .pagetitle
+{
 	font-size	: 400%;
-	color		: white;
-	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
+	color		: #f00;
+	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;	
 }
 
 /********************************************************************************
@@ -239,9 +240,6 @@ div.jqmClose.button {
 	font-weight	: bold;
 	font-family	: Verdana, Arial, Helvetica, sans-serif;
 
-/*	color		: #000;
-	text-shadow	: 0 0 0.1em #fff, 0 0 0.2em #ccc;
-*/
 	color		: #FFF;
 	text-shadow	: 0 0 0.1em #000, 0 0 0.2em #333;
 }

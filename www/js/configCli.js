@@ -31,8 +31,6 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	showEnergyMenu		: true,
 	/** showOptionsMenu to show the optionsMenuLine */
 	showOptionsMenu		: true,
-	/** showUsernameMenu to show the usernameMenuLine */
-	showUsernameMenu	: true,
 	/** showGameIdMenu to show the gameIdMenuLine */
 	showGameIdMenu		: true,
 	/** showScreenshotMenu to show the screenshotMenuLine */
