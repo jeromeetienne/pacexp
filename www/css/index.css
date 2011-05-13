@@ -44,7 +44,19 @@ body {
  *		landingPageContainer
 ********************************************************************************/
 
-#landingPageContainer .jqmWindow {
+#landingPageContainer .pagetitle {
+	font-size	: 400%;
+	color		: white;
+	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
+}
+
+/********************************************************************************
+ *		.jqmWindow
+********************************************************************************/
+
+#landingPageContainer	.jqmWindow,
+#gamePageContainer	.jqmWindow
+{
 	background	: #000;
 	color		: #fff;
 
@@ -55,15 +67,27 @@ body {
 	border-color	: #FFF;
 }
 
-#landingPageContainer .pagetitle {
-	font-size	: 400%;
-	color		: white;
+#landingPageContainer	.jqmWindow strong,
+#gamePageContainer	.jqmWindow strong
+{
+	color		: #f00;
 	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
 }
 
-#landingPageContainer .jqmWindow strong {
+.jqmWindow h3
+{
+	text-align	: center;
 	color		: #f00;
 	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
+}
+
+.jqmWindow a {
+	color		: #fff;
+	text-decoration	: none;
+	text-shadow	: 0 0 0.2em #f88, 0 0 1em #f444;
+}
+.jqmWindow a:hover {
+	text-decoration	: underline;
 }
 
 /********************************************************************************
@@ -206,24 +230,6 @@ div.jqmClose.button {
 	text-align	: left;
 }
 
-#optionsDialog span.line {
-	font-weight	: bold;
-}
-#optionsDialog .value {
-	color		: #888;
-}
-
-#optionsDialog .value {
-	color		: #888;
-}
-#optionsDialog a {
-	color		: #333;
-	text-decoration	: none;
-}
-#optionsDialog a:hover {
-	text-decoration	: underline;
-}
-
 /********************************************************************************
  *		Chat Area
 ********************************************************************************/
@@ -245,7 +251,8 @@ div.jqmClose.button {
 }
 
 #gamePageContainer .chatArea a {
-	color		: #333;
+	color		: #F00;
+	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
 	text-decoration	: none;
 }
 #gamePageContainer .chatArea a:hover {
@@ -330,7 +337,4 @@ div.jqmClose.button {
 .pagetitle a {
 	color		: inherit;
 	text-decoration	: none;
-}
-.jqmWindow h3 {
-	text-align	: center;
 }

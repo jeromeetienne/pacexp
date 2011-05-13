@@ -185,7 +185,7 @@ if( false ){
 	</div>
 	<div id="landingMainDialog" class="promptDialog jqmWindow">
 		<div class="intro">
-			<h3><center><strong>Welcome !!</strong></center></h3>
+			<h3>Welcome !!</h3>
 			<p>
 				You are a pacman trapped in a maze!
 			</p>
@@ -212,7 +212,7 @@ if( false ){
 		</div>
 	</div>
 	<div id="landingTutorialDialog" class="promptDialog jqmWindow">
-		<h3><center><strong>Tutorial</strong></center></h3>
+		<h3>Tutorial</h3>
 		The goal is to kill all others players ans to avoid their shoots.
 		Use arrows to move the player. Use space to shoot.
 		<!-- <h3>Camera</h3>
@@ -244,7 +244,7 @@ if( false ){
 		<div class="jqmClose button"></div>
 	</div>
 	<div id="landingAboutDialog" class="promptDialog jqmWindow">
-		<h3><center><strong>About</strong></center></h3>
+		<h3>About</h3>
 		Pacmaze is a pacman in 3D WebGL.
 		It is the first game of the <a href="http://notes.jetienne.com/2011/04/13/pacmaze-v1-release.html">pacmaze experiment</a>.
 		I published several versions of the game. This is the most recent. 
@@ -315,7 +315,7 @@ if( false ){
 		</div>
 		<!-- options dialog -->
 		<div id="optionsDialog" class="promptDialog jqmWindow above3d">
-			<h3><center><strong>Options</strong></center></h3>
+			<h3>Options</h3>
 			<span id="soundTrackMenuLine" class="line" style="display: none">
 				<a id="soundTrackButton" title="To have a sound track or not" href="javascript:void(0)" >Sound Track <span class="value">Off</span></a>
 			</span>
@@ -340,7 +340,7 @@ if( false ){
 		</div>
 		<!-- speak dialog -->
 		<div id="speakDialog" class="promptDialog jqmWindow above3d">
-			What do you wanna say ?<br/>
+			<h3>What do you wanna say ?</h3>
 			<input type="text" size=24 name="status" placeholder="speak your mind...">
 			<div style='font-size: 60%; float: right; font-weight: bold;'>
 				Keyboard Shortcut: Alt + t
@@ -349,19 +349,27 @@ if( false ){
 
 		<!-- helpDialog -->
 		<div id="helpDialog" class="jqmWindow above3d">
-			<h3><center><strong>Welcome in Pacmaze</strong></center></h3>
-			<p>
-				You are a pacman trapped in a maze!
-			</p>
-			<p>
-				Use <strong>Arrows</strong> to move the player.
-			</p>
-			<p>
-				Use <strong>pageUp pageDown</strong> to move the camera.
-			</p>
-			<p>
-				That's it. Have fun :)
-			</p>
+			<? if( PROJECT_NAME == "pacmaze" ){ ?>
+				<h3>Welcome in <?= PROJECT_NAME_CAMEL ?></h3>
+				<p>
+					You are a pacman trapped in a maze!
+				</p>
+				<p>
+					Use <strong>Arrows</strong> to move the player.
+				</p>
+				<p>
+					Use <strong>pageUp pageDown</strong> to move the camera.
+				</p>
+				<p>
+					That's it. Have fun :)
+				</p>
+			<? }else if( PROJECT_NAME == "tweetymaze" ){ ?>
+				<h3>Welcome in <?= PROJECT_NAME_CAMEL ?></h3>
+				<p>
+					TODO to write
+				</p>
+			<? }else console.assert(false, "PROJECT_NAME "+PROJECT_NAME+" is invalid");	?>
+			
 			<div class="topRight twitter-share-button" data-text="Pacmaze is really fun!! Pacman in 3D ? crazy! Check it out!!" data-count="none"></div>
 			<div class="jqmClose button"></div>
 			<!-- hidden input> to be able to trigger focus and bind keypress on the dialog -->
@@ -373,7 +381,7 @@ if( false ){
 		</div>-->
 		<!-- gameCompletedNoMorePills dialog -->
 		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d">
-			<h3><center><strong>Congratulation!</strong></center></h3>
+			<h3>Congratulation!</h3>
 			You win! Your score is <span class="score"></span>
 			<br/>
 			<div class="topRight twitter-share-button" data-text="My pacmaze score is $SCORE$! can you do better ?" data-count="none"></div>

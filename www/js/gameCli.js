@@ -163,7 +163,7 @@ console.log("data", message.data)
 		//content	+= 	'<div style="bottom: 0px; right: 0px; position: absolute;">'+
 		//			'<div class="twitter-share-button" data-text="'+statusText+'" data-url="'+imageUrl+'" data-count="none"></div>'+
 		//		'</div>';
-		content	+= '<img src="'+thumbUrl+'" alt="screenshot" />';
+		content	+= '<a href="'+imageUrl+'" target="_blank"><img src="'+thumbUrl+'" alt="screenshot" /></a>';
 		content	+= '<div class="bottomRight twitter-share-button" data-text="'+statusText+'" data-url="'+imageUrl+'" data-count="none"></div>';
 		//content	+= '</div>';
 		// to preload the thumb
