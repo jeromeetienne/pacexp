@@ -1,5 +1,5 @@
 /**
- * Global var... to remove
+ * TODO Global var... to remove
 */
 var container, stats;
 
@@ -7,33 +7,33 @@ var camera, scene, renderer;
 
 var sceneContainer;
 
-var mouseX = 0, mouseY = 0;
-
-var clientX	= null;
-var clientY	= null;
-
-var windowHalfX = window.innerWidth / 2;
-var windowHalfY	= window.innerHeight / 2;
-
 var soundRender	= null;
 var gameCli	= null;
 var gameConfig	= null;
 
-var pageGameMain= function(){
+//////////////////////////////////////////////////////////////////////////////////
+//		ctor/dtor							//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.PageGame	= function()
+{
 	jQuery("#gamePageContainer").show();
 	
-	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
 	gameCli		= new WebyMaze.GameCli();
 	gameConfig	= new WebyMaze.ConfigStore();
 	soundRender	= new WebyMaze.SoundRender({
 		enableTrack	: gameConfig.soundTrack() === "true",
 		enableFx	: gameConfig.soundFx() === "true"
 	});
-	init();
-	animate();
+	this._init();
+	animate();	
 }
 
-function init()
+WebyMaze.PageGame.prototype.destroy	= function()
+{
+}
+
+WebyMaze.PageGame.prototype._init	= function()
 {
 	var configScene	= WebyMaze.ConfigCli.scene;
 	//camera = new THREE.Camera(60, window.innerWidth / window.innerHeight, 1, 2800 );
@@ -76,18 +76,15 @@ function init()
 	new THREEx.WindowResize(renderer, camera);
 }
 
-function onDocumentMouseMove(event) {
-clientX	= event.clientX;
-clientY	= event.clientY;
-	mouseX = event.clientX - windowHalfX;
-	mouseY = event.clientY - windowHalfY;
-}
 
 
 function animate() {
 	requestAnimationFrame( animate );
+	// do the rendering
 	render();
+	// update THREEx.TWEEN
 	THREEx.TWEEN.update();
+	// update stats
 	if( stats )	stats.update();
 }
 

@@ -78,7 +78,21 @@ game_switch_pacmaze:
 	ln -sf configProject.pacmaze.js lib/configProject.js 
 
 game_switch_tweetymaze:
-	ln -sf configProject.tweetymaze.js lib/configProject.js 
+	ln -sf configProject.tweetymaze.js lib/configProject.js
+	
+	
+#################################################################################
+#		brequire							#
+#################################################################################
+
+brequire_build:
+	brequire lib www/brequired
+
+brequire_clean:
+	rm -f www/brequired/*.js
+
+brequire_monitor: brequire_build
+	(while inotifywait -r -e modify,attrib,create lib ; do make brequire_build; done)
 
 #################################################################################
 #		Apache2								#

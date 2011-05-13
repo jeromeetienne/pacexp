@@ -3,8 +3,8 @@
 jQuery(function(){
 	var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
 	if( landingPageBypass ){
-		pageGameMain();
+		new WebyMaze.PageGame();
 	}else{
-		var page	= new WebyMaze.PageLanding();
+		new WebyMaze.PageLanding();
 	}
 })

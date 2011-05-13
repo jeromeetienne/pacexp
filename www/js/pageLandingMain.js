@@ -7,8 +7,8 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.PageLanding	= function(opts)
 {
-	this._configStore	= new WebyMaze.ConfigStore();
 	this._pageSel		= "#landingPageContainer";
+	this._configStore	= new WebyMaze.ConfigStore();
 
 	// read the game config
 	this._config	= WebyMaze.ConfigCli.landingPage;
@@ -29,8 +29,8 @@ WebyMaze.PageLanding	= function(opts)
 WebyMaze.PageLanding.prototype.destroy	= function()
 {
 	this._configStore.destroy();
+	jQuery(this._pageSel).hide();	
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
@@ -38,11 +38,8 @@ WebyMaze.PageLanding.prototype.destroy	= function()
 
 WebyMaze.PageLanding.prototype._gotoGame	= function()
 {
-	// show pageContainer
-	var pageSel	= "#landingPageContainer";
-	jQuery(pageSel).hide();
-
-	pageGameMain();
+	jQuery(this._pageSel).hide();	
+	new WebyMaze.PageGame();
 }
 
 //////////////////////////////////////////////////////////////////////////////////
