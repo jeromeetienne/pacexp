@@ -168,6 +168,11 @@ if( false ){
 		loadJavascript("js/pageLandingMain.js");
 		loadJavascript("js/pageMain.js");
 
+		_buffer += "\n<!-- ********************************** -->\n";
+		_buffer += "<!-- server source -->";
+		_buffer += "\n<!-- ********************************** -->\n";
+		loadJavascript("vendor/brequire.js");
+		loadJavascript("brequired/server.js");
 	?>
 
 
