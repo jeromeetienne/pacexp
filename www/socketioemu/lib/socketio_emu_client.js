@@ -40,12 +40,9 @@ io.Socket.prototype.connect	= function(callback)
 	console.assert(currentServer, "no server is listening");
 
 	// trigger the 'connection' event in currentServer
-console.log("currentServer", currentServer)
 	currentServer.trigger('connection', new io.BoundSocket());
 	
 	setTimeout(function(){
-		console.log("00000000000")
-		console.dir(this)
 		// mark the socket as connected
 		this.connected	= true;
 		// notify the caller of "connect"
@@ -53,6 +50,23 @@ console.log("currentServer", currentServer)
 		// notify local callback
 		if( callback )	callback()
 	}.bind(this), 0)
+}
+
+io.Socket.prototype.disconnect	= function()
+{
+	// get currentServer
+	var currentServer	= io._global.currentServer;
+	// sanity check - currentServer MUST be set
+	console.assert(currentServer, "no server is listening");
+
+	// trigger the 'disconnect' event in currentServer
+	currentServer.trigger('disconnect');
+	
+	// mark this socket as not connected
+	this.connected	= false;
+	// store it to io._global
+	console.assert( io._global.currentClient, "io._currentClient must be set...");
+	io._global.currentClient	= null;
 }
 
 /**
