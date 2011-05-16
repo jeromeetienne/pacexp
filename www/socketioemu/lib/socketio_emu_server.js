@@ -54,13 +54,7 @@ MicroEvent.mixin(io.ListeningSocket);
 */
 io.BoundSocket	= function()
 {
-if( typeof ndebug === "undefined" )	ndebug = 2;
-ndebug--;
-if( ndebug === 0 ){
-	console.log("*********** creating BoundSocket");
-	console.assert(false);
-}
-
+	this.sessionId	= "socketioEmuSessionId_42";
 	// store it to io._global
 	console.assert( !io._global.currentBound, "io._currentBound is already set...");
 	io._global.currentBound	= this;
@@ -93,7 +87,7 @@ io.BoundSocket.prototype.removeListener	= function(event, callback)
 */
 io.BoundSocket.prototype.send	= function(message)
 {
-	console.log("server send", message)
+	//console.log("server send", message)
 	// get currentClient
 	var currentClient	= io._global.currentClient;
 	// sanity check - currentClient MUST be set

@@ -68,7 +68,7 @@ if( false ){
 		loadJavascript("js/microevent.js");
 
 		var SERVERINBROWSER	= PROJECT_NAME === 'pacmaze' ? true : false;
-		SERVERINBROWSER		= false;
+		//SERVERINBROWSER		= false;
 
 		if( SERVERINBROWSER ){
 			_buffer += "\n<!-- ********************************** -->\n";
@@ -86,6 +86,10 @@ if( false ){
 			loadJavascript("brequired/configSrv.js");
 			loadJavascript("brequired/enemySrv.js");
 			loadJavascript("brequired/gameSrv.js");
+			loadJavascript("brequired/mapUtils.js");
+			loadJavascript("brequired/mapUtils2.js");
+			loadJavascript("brequired/mapUtilsTests.js");
+			loadJavascript("brequired/mapUtils2Tests.js");
 			loadJavascript("brequired/mazeSrv.js");
 			loadJavascript("brequired/microevent.js");
 			loadJavascript("brequired/node-yfrog.js");
@@ -97,6 +101,7 @@ if( false ){
 			loadJavascript("brequired/serverStatic.js");
 			loadJavascript("brequired/serverUpload.js");
 			loadJavascript("brequired/shootSrv.js");
+			loadJavascript("brequired/tileMap.js");
 			loadJavascript("brequired/tween.js");
 			echoJavascript("require('./serverMain');");
 		}

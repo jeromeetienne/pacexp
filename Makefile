@@ -54,7 +54,7 @@ index_build:
 	echo "<? PROJECT_ENV = 'dev';  ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_dev.html
 	echo "<? PROJECT_ENV = 'prod'; ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_prod.html
 
-index_build_monitor:
+index_build_monitor: index_build
 	while true; do inotifywait -e modify,create www/index_tmpl.html; make index_build; done
 	
 
