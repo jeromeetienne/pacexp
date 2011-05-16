@@ -67,7 +67,10 @@ if( false ){
 		_buffer += "\n<!-- ********************************** -->\n";
 		loadJavascript("js/microevent.js");
 
-		if( PROJECT_NAME === 'pacmaze' ){
+		var SERVERINBROWSER	= PROJECT_NAME === 'pacmaze' ? true : false;
+		SERVERINBROWSER		= false;
+
+		if( SERVERINBROWSER ){
 			_buffer += "\n<!-- ********************************** -->\n";
 			_buffer += "<!-- server source for single player game -->";
 			_buffer += "\n<!-- ********************************** -->\n";
@@ -153,7 +156,7 @@ if( false ){
 		_buffer += "\n<!-- ********************************** -->\n";
 		_buffer += "<!-- To get socket.io.js -->";
 		_buffer += "\n<!-- ********************************** -->\n";
-		if( PROJECT_NAME !== 'pacmaze' ){
+		if( SERVERINBROWSER === false ){
 			loadJavascript("vendor/socket.io-client/socket.io.js");
 			loadJavascript("./js/configSocketio.js");
 		}
