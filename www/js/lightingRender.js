@@ -156,7 +156,7 @@ WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 {
 	this._lightInsert(new WebyMaze.VisualFxLightAmbient({
 		lightPool	: this._lightPool,
-		color		: 0xaaaaaa
+		color		: 0x888888
 	}));
 	this._lightInsert(new WebyMaze.VisualFxLightDirectional({
 		lightPool	: this._lightPool,
@@ -194,10 +194,10 @@ WebyMaze.LightingRender.prototype._buildLightingDay	= function()
 
 WebyMaze.LightingRender.prototype._buildLightingEmergency	= function()
 {
-	this._lightInsert(new WebyMaze.VisualFxLightAmbient({
-		lightPool	: this._lightPool,
-		color		: 0x222222
-	}));
+	//this._lightInsert(new WebyMaze.VisualFxLightAmbient({
+	//	lightPool	: this._lightPool,
+	//	color		: 0x222222
+	//}));
 	this._lightInsert(new WebyMaze.VisualFxLightDirectional({
 		lightPool	: this._lightPool,
 		color		: 0xffffff,
@@ -239,8 +239,8 @@ WebyMaze.LightingRender.prototype._buildLightingFirecamp	= function()
 {
 	this._lightInsert(new WebyMaze.VisualFxLightDirectional({
 		lightPool	: this._lightPool,
-		color		: 0xff,
-		intensity	: 1.5,
+		color		: 0x0000cc,
+		intensity	: 1,
 		direction	: {
 			x	: 0,
 			y	: 0*0.3,

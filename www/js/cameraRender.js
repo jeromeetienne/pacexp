@@ -272,7 +272,7 @@ WebyMaze.CameraRender.prototype._transformFixedGrazing	= function()
 {
 	var transform	= {};
 	transform.posX	= +500;
-	transform.posY	= +200;
+	transform.posY	= +150;
 	transform.posZ	= -250;
 	transform.posA	= 0;
 	transform.tgtX	= +100;

@@ -16,8 +16,8 @@ WebyMaze.PillCli.prototype.destroy	= function(){
 
 WebyMaze.PillCli.prototype.setCtxTick	= function(ctxTick){
 	this.pillType			= ctxTick.pillType;
-	if( !this._container )	this._containerCtor();
-	//if( !this._container )	this._containerSpriteCtor();
+	//if( !this._container )	this._containerCtor();
+	if( !this._container )	this._containerSpriteCtor();
 
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
@@ -30,16 +30,22 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 
 WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 {
-	var mesh	= new THREE.Sprite({
-		//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
-		map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
-		blending		: THREE.AdditiveBlending,
-		useScreenCoordinates	: false
-	});
 
 	if( this.pillType == 'white' ){
+		var mesh	= new THREE.Sprite({
+			//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
+			map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
+			blending		: THREE.AdditiveBlending,
+			useScreenCoordinates	: false
+		});
 		mesh.scale.set( 0.4, 0.4, 1.0 );
 	}else if( this.pillType == 'red' ){
+		var mesh	= new THREE.Sprite({
+			//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
+			map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare1.png'),
+			blending		: THREE.AdditiveBlending,
+			useScreenCoordinates	: false
+		});
 		mesh.scale.set( 0.6, 0.6, 1.0 );
 	}else {
 		console.assert(false);

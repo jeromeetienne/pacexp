@@ -122,9 +122,9 @@ WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function()
 		var textureUrl	= this._config.groundTextureUrl;
 		var material	= [
 			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
-			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-							, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
-			//new THREE.MeshLambertMaterial( {color: 0x228B22, shading: THREE.SmoothShading} ),
+			//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+			//				, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+			new THREE.MeshLambertMaterial( {color: 0x228B22, shading: THREE.SmoothShading} ),
 		];
 	}else{
 		var material	= [
@@ -263,11 +263,11 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 	if( isWebGL ){
 		var textureUrl	= this._config.wallTextureUrl;
 		var material	= [
-			//new THREE.MeshLambertMaterial( {color: 0x6666aa, shading: THREE.Shading} ),
 			//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10 } )
 			//new THREE.MeshBasicMaterial( { color: 0xcccccc } )
-			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-							, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+			new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading} ),
+			//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+			//				, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
 		];
 	}else{
 		var material	= [
