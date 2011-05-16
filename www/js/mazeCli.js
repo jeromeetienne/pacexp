@@ -120,12 +120,18 @@ WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function()
 	// build material from color
 	if( isWebGL ){
 		var textureUrl	= this._config.groundTextureUrl;
-		var material	= [
-			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
-			//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-			//				, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
-			new THREE.MeshLambertMaterial( {color: 0x228B22, shading: THREE.SmoothShading} ),
-		];
+		if( textureUrl ){
+			var material	= [
+				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
+				new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+								, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+				//new THREE.MeshLambertMaterial( {color: 0x228B22, shading: THREE.SmoothShading} ),
+			];
+		}else{
+			var material	= [
+				new THREE.MeshLambertMaterial( {color: 0x22cc22, shading: THREE.SmoothShading} ),
+			];
+		}
 	}else{
 		var material	= [
 			new THREE.MeshLambertMaterial( {color: 0x228B22, shading: THREE.FlatShading} ),
@@ -254,21 +260,33 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 {
 	var bodyW	= this.wallW;
 	var wallH	= bodyW * this._config.wallHRatio;
+	var wallShape	= this._config.wallShape;
 	//var geometry	= new THREE.Cube( bodyW, bodyW/3, bodyW );
-	var geometry	= new THREE.Cube( bodyW, wallH, bodyW, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );
+	if( wallShape === 'cube' ){
+		var geometry	= new THREE.Cube( bodyW, wallH, bodyW, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );		
+	}else if( wallShape === 'pyramid' ){
+		//THREE.Cylinder = function ( numSegs, topRad, botRad, height, topOffset, botOffset ) {
+		var geometry	= new THREE.Cylinder( 4, 0, bodyW/Math.sqrt(2), bodyW/3, 0, bodyW/2);		
+	}else	console.assert(false, "wallShape "+wallShape+" is invalid");
 
 	// determine if renderer is webGl or not
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	// set the material depending on renderer capabilities
 	if( isWebGL ){
 		var textureUrl	= this._config.wallTextureUrl;
-		var material	= [
-			//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10 } )
-			//new THREE.MeshBasicMaterial( { color: 0xcccccc } )
-			new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading} ),
-			//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-			//				, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
-		];
+		if( textureUrl ){
+			var material	= [
+				//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10 } )
+				//new THREE.MeshBasicMaterial( { color: 0xcccccc } )
+				//new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading} ),
+				new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+								, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+			];			
+		}else{
+			var material	= [
+				new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading} ),
+			];			
+		}
 	}else{
 		var material	= [
 			new THREE.MeshLambertMaterial( { color: 0x0088aa, shading: THREE.FlatShading } ),
@@ -284,6 +302,13 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 		mesh.position.x = this.map2spaceX(mapX);
 		mesh.position.y = -bodyW/2 + wallH/2;
 		mesh.position.z = this.map2spaceY(mapY);
+		
+		if( wallShape === 'cube' ){
+		}else if( wallShape === 'pyramid' ){
+			mesh.rotation.x	= 90 * ( Math.PI / 180 );
+			mesh.rotation.z	= 45 * ( Math.PI / 180 );
+		}else	console.assert(false, "wallShape "+wallShape+" is invalid");
+
 		
 		mesh.matrixAutoUpdate = false;
 		mesh.updateMatrix();

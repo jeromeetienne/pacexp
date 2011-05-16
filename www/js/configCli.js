@@ -275,28 +275,35 @@ WebyMaze.ConfigCli.sample.mazeCli	= {
 	/** groundTextureUrl the url of the texture for ground */
 	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
 	/** wallHRatio the height of a wall compared to its width */
-	wallHRatio	: 3/4
+	wallHRatio	: 3/4,
+	/** wallShape determine the shape of the wall */
+	wallShape	: "cube"
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.mazeCli	= {
 	showRoof	: false,
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
 	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
-	wallHRatio	: 1/3
+	wallHRatio	: 1/3,
+	wallShape	: "cube"
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.mazeCli	= {
 	showRoof	: false,
-	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
-	groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
-	wallHRatio	: 1/3
+	//wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
+	//groundTextureUrl: 'images/tmp/PaddedOrangeWall.png',
+	wallTextureUrl	: null,
+	groundTextureUrl: null,
+	wallHRatio	: 1/3,
+	wallShape	: "pyramid"
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.mazeCli	= {
 	showRoof	: true,
 	wallTextureUrl	: 'images/tmp/BluePaintedTiles.png',
 	groundTextureUrl: 'images/tmp/BluePaintedTiles.png',
-	wallHRatio	: 4/3
+	wallHRatio	: 4/3,
+	wallShape	: "cube"
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
@@ -312,7 +319,8 @@ WebyMaze.ConfigCli.tweetymaze.dev.mazeCli	= {
 	//groundTextureUrl: 'images/tmp/GraniteWall.png',
 	//groundTextureUrl: 'images/textures/TilesOrnate0010_2_thumbhuge.jpg',
 	//groundTextureUrl: 'images/textures/MarbleGreen0001_39_thumbhuge.jpg',	
-	wallHRatio	: 4/3
+	wallHRatio	: 4/3,
+	wallShape	: "cube"
 };
 
 WebyMaze.ConfigCli.mazeCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].mazeCli;
