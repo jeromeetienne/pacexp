@@ -18,6 +18,7 @@ io.listen	= function(server, options)
 */
 io.ListeningSocket	= function()
 {
+	console.log("creating io.ListeningSocket")
 	// store it to io._global
 	console.assert( !io._global.currentServer, "io._currentServer is already set...");
 	io._global.currentServer	= this;
@@ -30,6 +31,15 @@ io.ListeningSocket.prototype.on	= function(event, callback)
 {
 	// forward to MicroEvent
 	this.bind(event, callback)
+}
+
+/**
+ * Bind events
+*/
+io.ListeningSocket.prototype.removeListener	= function(event, callback)
+{
+	// forward to MicroEvent
+	this.unbind(event, callback)
 }
 
 // mixin MicroEvent in this object
@@ -67,6 +77,16 @@ io.BoundSocket.prototype.on	= function(event, callback)
 	// forward to MicroEvent
 	this.bind(event, callback)
 }
+
+/**
+ * Bind events
+*/
+io.BoundSocket.prototype.removeListener	= function(event, callback)
+{
+	// forward to MicroEvent
+	this.unbind(event, callback)
+}
+
 
 /**
  * Send a message to the other end

@@ -291,12 +291,13 @@ WebyMaze.GameCli.prototype._socketCtor	= function(){
 	this._sockio	= new io.Socket(listenHost, {
 		port	: listenPort
 	});
-	this._sockio.connect();
 
-	this._sockio.on('connect', function(){		this._socketOnConnect();		}.bind(this)) 
+	this._sockio.on('connect', function(){		this._socketOnConnect();	}.bind(this)) 
 	this._sockio.on('connect_failed', function(){	this._socketOnError()		}.bind(this)) 
 	this._sockio.on('message', function(message){	this._socketOnMessage(message)	}.bind(this)) 
 	this._sockio.on('disconnect', function(){	this._socketOnClose();		}.bind(this))
+
+	this._sockio.connect();
 }
 
 WebyMaze.GameCli.prototype._socketDtor	= function(){

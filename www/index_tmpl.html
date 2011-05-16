@@ -68,14 +68,12 @@ if( false ){
 		loadJavascript("js/microevent.js");
 
 		if( PROJECT_NAME === 'pacmaze' ){
-
 			_buffer += "\n<!-- ********************************** -->\n";
 			_buffer += "<!-- server source for single player game -->";
 			_buffer += "\n<!-- ********************************** -->\n";
 			loadJavascript("./socketioemu/lib/socketio_emu_core.js");
 			loadJavascript("./socketioemu/lib/socketio_emu_client.js");
 			loadJavascript("./socketioemu/lib/socketio_emu_server.js");
-
 
 			loadJavascript("vendor/brequire.js");
 			loadJavascript("brequired/angleSync.js");
@@ -155,8 +153,10 @@ if( false ){
 		_buffer += "\n<!-- ********************************** -->\n";
 		_buffer += "<!-- To get socket.io.js -->";
 		_buffer += "\n<!-- ********************************** -->\n";
-		loadJavascript("vendor/socket.io-client/socket.io.js");
-		loadJavascript("./js/configSocketio.js");
+		if( PROJECT_NAME !== 'pacmaze' ){
+			loadJavascript("vendor/socket.io-client/socket.io.js");
+			loadJavascript("./js/configSocketio.js");
+		}
 
 		_buffer += "\n<!-- ********************************** -->\n";
 		_buffer += "<!-- To get soundmanager2 -->";

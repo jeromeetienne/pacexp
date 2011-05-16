@@ -8,6 +8,8 @@ io.Socket	= function(host, opts)
 {
 	// host and opts are ignored
 	console.log("Socket ctor");
+	// init this.connected
+	this.connected	= false;
 	// store it to io._global
 	console.assert( !io._global.currentClient, "io._currentClient is already set...");
 	io._global.currentClient	= this;
@@ -21,6 +23,7 @@ MicroEvent.mixin(io.Socket);
 */
 io.Socket.prototype.on	= function(event, callback)
 {
+	console.log("io.Socket.on", event)
 	// forward to MicroEvent
 	this.bind(event, callback)	
 }
@@ -36,11 +39,18 @@ io.Socket.prototype.connect	= function(callback)
 	// sanity check - currentServer MUST be set
 	console.assert(currentServer, "no server is listening");
 
-	// trigger the 'connection' event in currentServer	
+	// trigger the 'connection' event in currentServer
+console.log("currentServer", currentServer)
 	currentServer.trigger('connection', new io.BoundSocket());
 	
 	setTimeout(function(){
+		console.log("00000000000")
+		console.dir(this)
+		// mark the socket as connected
+		this.connected	= true;
+		// notify the caller of "connect"
 		this.trigger('connect');
+		// notify local callback
 		if( callback )	callback()
 	}.bind(this), 0)
 }
