@@ -83,3 +83,7 @@ io.BoundSocket.prototype.send	= function(message)
 }
 
 
+// export in common js
+if( typeof module !== "undefined" && ('exports' in module)){
+	module.exports	= io
+}

@@ -10,7 +10,7 @@ SHORTTAGJS=../shorttag.js/bin/node-shorttag
 
 
 server_dev:
-	supervisor -w lib lib/server.js
+	supervisor -w lib lib/serverMain.js
 
 server_prod:
 	while true; do sleep 1; node lib/server.js; done
