@@ -2,6 +2,11 @@
 
 This is a socket.io emulation on the browser side only.
 The goal is to reuse client/server code i got.
+
+# TODO
+* make the server run in a worker...
+  * thus serverinbrowser is no more slower than the serverinserver
+
 ------------------------------------------------------
 
 * only a single connection

@@ -13,10 +13,13 @@ WebyMaze.GameCli	= function(opts)
 
 WebyMaze.GameCli.prototype.destroy	= function()
 {
-	this._userInputKeyDtor();	
+	this._userInputKeyDtor();
 	//this._userInputTouchDtor();
 	this._socketDtor();
 }
+
+// mixin MicroEvent 
+MicroEvent.mixin(WebyMaze.GameCli);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		message handlers						//
@@ -67,12 +70,16 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	
 	// normal callback
 	var toOpen	= function(){ jQuery(dialogSel).jqmShow();	}.bind(this);
-	var toClose	= function(){
-		window.location.href	= location.protocol+'//'+ location.hostname + location.pathname + "?landingPageBypass=1";
+	var toClose	= function(){ jQuery(dialogSel).jqmHide();	}.bind(this);
+	var onHide	= function(hash){
+		// hide the jqm
+		hash.o.remove();hash.w.hide();
+		// trigger 'autodestroy' event
+		this.trigger('autodestroy');
 	}.bind(this);
 	
 	// init dialogs
-	jQuery(dialogSel).jqm({ onHide	: toClose });
+	jQuery(dialogSel).jqm({ onHide	: onHide });
 	// bind some event
 	jQuery(dialogSel).bind('keypress', toClose);
 	jQuery(dialogSel).click(toClose);

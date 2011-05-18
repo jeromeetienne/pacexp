@@ -68,6 +68,7 @@ if( false ){
 		loadJavascript("js/microevent.js");
 
 		var SERVERINBROWSER	= PROJECT_NAME === 'pacmaze' ? true : false;
+		// SERVERINBROWSER disabled for now
 		//SERVERINBROWSER		= false;
 
 		if( SERVERINBROWSER ){
@@ -116,7 +117,7 @@ if( false ){
 		_buffer += "\n<!-- ********************************** -->\n";
 		loadJavascript('vendor/es5-shim.js');
 
-		if( PROJECT_ENV === 'prod' || true ){
+		if( PROJECT_ENV === 'prod' ){
 			_buffer += "\n<!-- ********************************** -->\n";
 			_buffer += "<!-- include firebugx only in prod in case console.* got forgotten -->";
 			_buffer += "\n<!-- ********************************** -->\n";

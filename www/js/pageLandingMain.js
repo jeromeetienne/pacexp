@@ -28,9 +28,14 @@ WebyMaze.PageLanding	= function(opts)
 
 WebyMaze.PageLanding.prototype.destroy	= function()
 {
-	this._configStore.destroy();
 	jQuery(this._pageSel).hide();	
+
+	this._configStore.destroy();
+	this._configStore	= null;
 }
+
+// mixin MicroEvent 
+MicroEvent.mixin(WebyMaze.PageLanding);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		misc								//
@@ -38,8 +43,7 @@ WebyMaze.PageLanding.prototype.destroy	= function()
 
 WebyMaze.PageLanding.prototype._gotoGame	= function()
 {
-	jQuery(this._pageSel).hide();	
-	new WebyMaze.PageGame();
+	this.trigger('autodestroy')
 }
 
 //////////////////////////////////////////////////////////////////////////////////

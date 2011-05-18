@@ -266,7 +266,7 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 		var geometry	= new THREE.Cube( bodyW, wallH, bodyW, 1, 1, 1, [], 0, { px: true, nx: true, py: true, ny: false, pz: true, nz: true } );		
 	}else if( wallShape === 'pyramid' ){
 		//THREE.Cylinder = function ( numSegs, topRad, botRad, height, topOffset, botOffset ) {
-		var geometry	= new THREE.Cylinder( 4, 0, bodyW/Math.sqrt(2), bodyW/3, 0, bodyW/2);		
+		var geometry	= new THREE.Cylinder( 4, 0, bodyW/Math.sqrt(2), wallH, 0, bodyW/2);		
 	}else	console.assert(false, "wallShape "+wallShape+" is invalid");
 
 	// determine if renderer is webGl or not
@@ -300,11 +300,12 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 		
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.position.x = this.map2spaceX(mapX);
-		mesh.position.y = -bodyW/2 + wallH/2;
 		mesh.position.z = this.map2spaceY(mapY);
 		
 		if( wallShape === 'cube' ){
+			mesh.position.y = -bodyW/2 + wallH/2;
 		}else if( wallShape === 'pyramid' ){
+			mesh.position.y = -bodyW/2 + wallH/2;
 			mesh.rotation.x	= 90 * ( Math.PI / 180 );
 			mesh.rotation.z	= 45 * ( Math.PI / 180 );
 		}else	console.assert(false, "wallShape "+wallShape+" is invalid");

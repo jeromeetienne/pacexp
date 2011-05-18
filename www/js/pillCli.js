@@ -52,6 +52,7 @@ WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 	}
 
 	this._container	= new THREE.Object3D();
+	mesh.position.y	= -25/2;
 	this._container.addChild(mesh)
 }
 

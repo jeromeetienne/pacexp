@@ -18,16 +18,24 @@ WebyMaze.PageGame	= function()
 	// show the page
 	jQuery("#gamePageContainer").show();
 	
-	this._stats	= null;
-	this._container	= null;
+	this._stats		= null;
+	this._container		= null;
+	this._requestAnimId	= null;
 	
 	gameCli		= new WebyMaze.GameCli();
+	gameCli.bind('autodestroy', function(){
+		console.log("autodestroy", this)
+		
+		this.trigger('autodestroy');
+		console.log("autodestroyed done")
+	}.bind(this))
 	gameConfig	= new WebyMaze.ConfigStore();
 	soundRender	= new WebyMaze.SoundRender({
 		enableTrack	: gameConfig.soundTrack() === "true",
 		enableFx	: gameConfig.soundFx() === "true"
 	});
 	this._init();
+
 	this._animate();	
 }
 
@@ -45,10 +53,14 @@ WebyMaze.PageGame.prototype.destroy	= function()
 		soundRender.destroy();
 		soundRender	= null;
 	}
-	// TODO stop animate stuff
-	// http://dvcs.w3.org/hg/webperf/raw-file/tip/specs/RequestAnimationFrame/Overview.html#the-WindowAnimationTiming-interface
-	// "void cancelRequestAnimationFrame(in long handle);"
+	// stop animate stuff
+	if( this._requestAnimId )	cancelRequestAnimationFrame(this._requestAnimId);
+	// hide the page
+	jQuery("#gamePageContainer").hide();
 }
+
+// mixin MicroEvent 
+MicroEvent.mixin(WebyMaze.PageGame);
 
 //////////////////////////////////////////////////////////////////////////////////
 //										//
@@ -100,17 +112,17 @@ WebyMaze.PageGame.prototype._init	= function()
 
 WebyMaze.PageGame.prototype._animate	= function()
 {
-	requestAnimationFrame( this._animate.bind(this) );
+	this._requestAnimId	= requestAnimationFrame( this._animate.bind(this) );
 	// do the rendering
 	this._render();
 	// update THREEx.TWEEN
 	THREEx.TWEEN.update();
-	// update stats
-	if( this._stats )	this._stats.update();
 }
 
 WebyMaze.PageGame.prototype._render	= function()
 {
 	renderer.render( scene, camera );
+	// update stats
+	if( this._stats )	this._stats.update();
 }
 
