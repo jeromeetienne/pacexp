@@ -1,0 +1,20 @@
+# socket.io emulator
+
+This is a socket.io emulation on the browser side only.
+The goal is to reuse client/server code i got.
+
+# TODO
+* make the server run in a worker...
+  * thus serverinbrowser is no more slower than the serverinserver
+
+------------------------------------------------------
+
+* only a single connection
+  * dont over engineer it
+* be compatible with socket.io apion client and server
+* how to test it ?
+  * outside of pacmaze itself
+  * should i make a separate node-socketio-emu ?
+    * why not after all
+    * would help make it cleaner
+* socketio
