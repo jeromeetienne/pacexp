@@ -7,7 +7,7 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.PageSurgame	= function()
 {
-	this._playerLives	= 1;
+	this._playerLives	= 3;
 	this._playerScore	= 0;
 	this._levelIdx		= 0;
 	this._pageGameCtor({
@@ -34,7 +34,7 @@ WebyMaze.PageSurgame.prototype._pageGameRestart	= function()
 	console.log("here relaunch", this._playerLives)
 	this._pageGameDtor();
 
-	if( true ){
+	if( false ){
 		// old version which reload the page
 		window.location.href	= location.protocol+'//'+ location.hostname + location.pathname + "?landingPageBypass=1";		
 	}else{
@@ -58,7 +58,7 @@ WebyMaze.PageSurgame.prototype._pageGameCtor	= function()
 		// update the score
 		this._playerScore	= parseInt(gameOutput.score, 10);
 		// handle the result
-		if( gameOutput.result === 'win' || true ){
+		if( gameOutput.result === 'win' ){
 			this._levelIdx	+= 1;
 			this._pageGameRestart();
 		}else if( gameOutput.result === 'loss' ){

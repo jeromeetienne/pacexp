@@ -364,7 +364,10 @@ WebyMaze.WebglRender.prototype.lifeUICtor	= function()
 	
 	// display the life 
 	var playerLives	= this._roundInitCtx.playerLives;
-	jQuery(menuLineSel+" span.value").text(playerLives)
+	jQuery(menuLineSel).empty();
+	for(var i = 0; i < playerLives; i++){
+		jQuery('<img>').attr('src', 'images/logo128.png').appendTo(menuLineSel)
+	}
 }
 
 WebyMaze.WebglRender.prototype.optionsUICtor	= function()

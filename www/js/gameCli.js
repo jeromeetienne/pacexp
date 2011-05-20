@@ -9,6 +9,10 @@ WebyMaze.GameCli	= function(opts)
 	// get parameters from options	
 	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
 
+
+	// clear the .chatArea
+	jQuery('#gamePageContainer .chatArea').empty().append( jQuery('<ul></ul>') );
+
 	// build subparts
 	this._userInputKeyCtor();
 	//this._userInputTouchCtor();

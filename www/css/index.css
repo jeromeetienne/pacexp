@@ -301,6 +301,13 @@ div.jqmClose.button {
 	color		: #fff;
 }
 
+#energyMenuLine	img,
+#lifeMenuLine	img,
+#scoreMenuLine	img {
+	width	: 48px;
+	height	: 48px;
+}
+
 #energyMenuLine .value,
 #lifeMenuLine .value,
 #scoreMenuLine .value {
