@@ -34,7 +34,7 @@ WebyMaze.PageSurgame.prototype._pageGameRestart	= function()
 	console.log("here relaunch", this._playerLives)
 	this._pageGameDtor();
 
-	if( false ){
+	if( true ){
 		// old version which reload the page
 		window.location.href	= location.protocol+'//'+ location.hostname + location.pathname + "?landingPageBypass=1";		
 	}else{
