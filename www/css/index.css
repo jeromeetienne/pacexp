@@ -295,19 +295,17 @@ div.jqmClose.button {
 
 
 #energyMenuLine,
+#lifeMenuLine,
 #scoreMenuLine {
 	font-size	: 350%;	
 	color		: #fff;
 }
 
 #energyMenuLine .value,
+#lifeMenuLine .value,
 #scoreMenuLine .value {
 	color		: #f00;
 	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
-}
-
-#energyMenuLine {
-	
 }
 
 

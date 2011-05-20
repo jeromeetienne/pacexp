@@ -29,6 +29,8 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	showScoreMenu		: true,
 	/** showEnergyMenu to show the energyMenuLine */
 	showEnergyMenu		: true,
+	/** showLifeMenu to show the lifeMenuLine */
+	showLifeMenu		: true,
 	/** showOptionsMenu to show the optionsMenuLine */
 	showOptionsMenu		: true,
 	/** showGameIdMenu to show the gameIdMenuLine */
@@ -54,6 +56,7 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: false,
+	showLifeMenu		: true,
 	showOptionsMenu		: true,
 	showUsernameMenu	: false,
 	showGameIdMenu		: false,
@@ -72,6 +75,7 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: false,
+	showLifeMenu		: true,
 	showOptionsMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
@@ -92,6 +96,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
+	showLifeMenu		: true,
 	showOptionsMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,
@@ -110,6 +115,7 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
+	showLifeMenu		: true,
 	showOptionsMenu		: true,
 	showUsernameMenu	: true,
 	showGameIdMenu		: true,

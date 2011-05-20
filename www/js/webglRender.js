@@ -94,6 +94,7 @@ WebyMaze.WebglRender	= function(opts){
 	// TODO put the whole UI stuff in its own class (like camera)
 	this.scoreUICtor();
 	this.energyUICtor();
+	this.lifeUICtor();
 	this.optionsUICtor();
 	this.screenshotUICtor();
 	this.soundTrackUiCtor();
@@ -348,6 +349,17 @@ WebyMaze.WebglRender.prototype.energyUICtor	= function()
 	if( this._config.showEnergyMenu !== true )	return;
 	// make the menuLine visible
 	jQuery(menuLineSel).css('display', 'block');
+}
+
+WebyMaze.WebglRender.prototype.lifeUICtor	= function()
+{
+	var menuLineSel	= '#lifeMenuLine';
+	// honore this._config
+	if( this._config.showLifeMenu !== true )	return;
+	// make the menuLine visible
+	jQuery(menuLineSel).css('display', 'block');
+	
+	jQuery(menuLineSel+" span.value").text('3')	
 }
 
 WebyMaze.WebglRender.prototype.optionsUICtor	= function()
@@ -706,26 +718,6 @@ WebyMaze.WebglRender.prototype.energyUIUpdate	= function(){
 	var containSel	= '#energyMenuLine';
 	jQuery(containSel+" span.value").text(value+'%')
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
