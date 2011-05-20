@@ -1,15 +1,13 @@
 "use strict";
-//jQuery(function(){	gamePageMain();	})
-
 
 WebyMaze.PageMain	= function()
 {
-	this._pageGame		= null;
 	this._pageLanding	= null;
+	this._pageSurGame	= null;
 
 	var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
 	if( landingPageBypass ){
-		this._pageGameCtor();
+		this._pageSurgameCtor();
 	}else{
 		this._pageLandingCtor();
 	}
@@ -17,21 +15,20 @@ WebyMaze.PageMain	= function()
 
 WebyMaze.PageMain.prototype.destroy	= function()
 {
-	if( this._pageGame )	this._pageGameDtor();
+	if( this._pageSurgame )	this._pageSurgameDtor();
 	if( this._pageLanding )	this._pageLandingDtor();
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////
-//		pageGame							//
+//		pageSurgame							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.PageMain.prototype._pageGameCtor	= function()
+WebyMaze.PageMain.prototype._pageSurgameCtor	= function()
 {
-	console.assert(!this._pageGame, "pageGame MUST NOT be instanciated")
-	this._pageGame	= new WebyMaze.PageGame();
-	this._pageGame.bind('autodestroy', function(){
-		this._pageGameDtor();
+	console.assert(!this._pageSurgame, "pageSurgame MUST NOT be instanciated")
+	this._pageSurgame	= new WebyMaze.PageSurgame();
+	this._pageSurgame.bind('autodestroy', function(){
+		this._pageSurgameDtor();
 		if( true ){
 			// old version which reload the page
 			window.location.href	= location.protocol+'//'+ location.hostname + location.pathname + "?landingPageBypass=1";		
@@ -40,15 +37,14 @@ WebyMaze.PageMain.prototype._pageGameCtor	= function()
 			this._pageLandingCtor();			
 		}
 	}.bind(this));
-	console.log("pageGame built", this._pageGame);
+	console.log("pageSurgame built", this._pageSurgame);
 }
-WebyMaze.PageMain.prototype._pageGameDtor	= function()
+WebyMaze.PageMain.prototype._pageSurgameDtor	= function()
 {
-	console.assert( this._pageGame, "pageGame MUST be instanciated")
-	this._pageGame.destroy();
-	this._pageGame	= null;
+	console.assert( this._pageSurgame, "pageSurgame MUST be instanciated")
+	this._pageSurgame.destroy();
+	this._pageSurgame	= null;
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -62,7 +58,7 @@ WebyMaze.PageMain.prototype._pageLandingCtor	= function()
 	this._pageLanding.bind('autodestroy', function(){
 		console.log("autodestroy _pageLanding")
 		this._pageLandingDtor();
-		this._pageGameCtor();
+		this._pageSurgameCtor();
 		console.log("autodestroy _pageLanding done")
 	}.bind(this));
 	console.log("pageLanding built", this._pageLanding);
