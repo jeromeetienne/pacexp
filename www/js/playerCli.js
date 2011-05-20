@@ -30,7 +30,8 @@ WebyMaze.PlayerCli.prototype.destroy	= function()
 //		tick stuff							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick){
+WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick)
+{
 	var object3d		= this._object3d.object3d();	
 	object3d.position.x	=  ctxTick.position.x;
 	object3d.position.z	=  ctxTick.position.y;

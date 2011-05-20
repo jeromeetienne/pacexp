@@ -13,8 +13,10 @@ var gameConfig	= null;
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.PageGame	= function()
+WebyMaze.PageGame	= function(opts)
 {
+	// get parameters from options	
+	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
 	// show the page
 	jQuery("#gamePageContainer").show();
 	
@@ -22,7 +24,9 @@ WebyMaze.PageGame	= function()
 	this._container		= null;
 	this._requestAnimId	= null;
 	
-	gameCli		= new WebyMaze.GameCli();
+	gameCli		= new WebyMaze.GameCli({
+		roundInitCtx	: this._roundInitCtx
+	});
 	gameCli.bind('autodestroy', function(){
 		console.log("autodestroy", this)
 		

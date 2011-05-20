@@ -16,8 +16,11 @@ var WebyMaze	= WebyMaze || {};
  * @constructor
 */
 WebyMaze.WebglRender	= function(opts){
-	var ctxInit	= opts.ctxInit		|| console.assert(false);
+	// get info from parameters
+	var ctxInit		= opts.ctxInit		|| console.assert(false);
+	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
 
+console.log("ROUND ROUND", this._roundInitCtx);
 	// read the game config
 	this._config	= WebyMaze.ConfigCli.webglRender;
 
@@ -359,7 +362,9 @@ WebyMaze.WebglRender.prototype.lifeUICtor	= function()
 	// make the menuLine visible
 	jQuery(menuLineSel).css('display', 'block');
 	
-	jQuery(menuLineSel+" span.value").text('3')	
+	// display the life 
+	var playerLives	= this._roundInitCtx.playerLives;
+	jQuery(menuLineSel+" span.value").text(playerLives)
 }
 
 WebyMaze.WebglRender.prototype.optionsUICtor	= function()

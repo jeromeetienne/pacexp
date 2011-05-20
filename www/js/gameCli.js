@@ -6,6 +6,10 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.GameCli	= function(opts)
 {
+	// get parameters from options	
+	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
+
+	// build subparts
 	this._userInputKeyCtor();
 	//this._userInputTouchCtor();
 	this._socketCtor();
@@ -27,18 +31,19 @@ MicroEvent.mixin(WebyMaze.GameCli);
 
 WebyMaze.GameCli.prototype.onContextInit	= function(message)
 {
-	// sanity check - this.webglRender MUST NOT exist
-	console.assert(!this.webglRender);
+	// sanity check - this._webglRender MUST NOT exist
+	console.assert(!this._webglRender);
 	// create WebyMaze.WebglRender
-	this.webglRender	= new WebyMaze.WebglRender({
-		ctxInit	: message.data
+	this._webglRender	= new WebyMaze.WebglRender({
+		roundInitCtx	: this._roundInitCtx,
+		ctxInit		: message.data
 	})
 }
 WebyMaze.GameCli.prototype.onContextTick	= function(message){
-	// sanity check - this.webglRender MUST exist
-	console.assert(this.webglRender);
+	// sanity check - this._webglRender MUST exist
+	console.assert(this._webglRender);
 	// update WebyMaze.WebglRender
-	this.webglRender.setCtxTick(message.data);
+	this._webglRender.setCtxTick(message.data);
 }
 
 WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
@@ -316,6 +321,8 @@ WebyMaze.GameCli.prototype._socketOnConnect	= function(){
 	this.socketSend({
 		type	: "gameReq",
 		data	: {
+			playerScore	: this._roundInitCtx.playerScore,
+			levelIdx	: this._roundInitCtx.levelIdx,
 			gameId		: gameConfig.gameId(),
 			username	: gameConfig.username()
 		}

@@ -7,7 +7,8 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.PageSurgame	= function()
 {
-	this._playerLives	= 3;
+	this._playerLives	= 18;
+	this._playerScore	= 4242;
 	this._levelIdx		= 0;
 	this._pageGameCtor({
 		playerLives	: this._playerLives,
@@ -31,7 +32,13 @@ MicroEvent.mixin(WebyMaze.PageSurgame);
 WebyMaze.PageSurgame.prototype._pageGameCtor	= function()
 {
 	console.assert(!this._pageGame, "pageGame MUST NOT be instanciated")
-	this._pageGame	= new WebyMaze.PageGame();
+	this._pageGame	= new WebyMaze.PageGame({
+		roundInitCtx	: {
+			playerLives	: this._playerLives,
+			playerScore	: this._playerScore,
+			levelIdx	: this._levelIdx
+		}
+	});
 	this._pageGame.bind('autodestroy', function(){
 		console.log("pageSurgame received autodestroy")
 		this.trigger('autodestroy', function(){
