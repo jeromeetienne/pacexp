@@ -13,6 +13,7 @@
 
 		<script language="javascript">
 			var socketioWorker = new Worker("main_server.js");
+			consoleWorker.bind(socketioWorker);
 		</script>
 
 		<script src="../lib/socketioClient.js"></script>

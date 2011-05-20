@@ -13,3 +13,16 @@ consoleWorker.filterEvent	= function(event){
 	console[data.type].apply(console, data.data);
 	return true;
 }
+consoleWorker.bind	= function(worker){
+	worker.addEventListener('message', function(event){
+		//console.log("consoleWorker.bind():", event.data, event)
+		if( consoleWorker.filterEvent(event) ){
+			// failed attempts to get message parsing less intrusive
+			//console.log("stopped event2")
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
+		}
+		return undefined;
+	}.bind(this), false);
+}

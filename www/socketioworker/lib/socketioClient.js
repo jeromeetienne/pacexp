@@ -24,11 +24,10 @@ io.Socket	= function(host, opts)
 	console.assert(socketioWorker, "no server is listening");
 
 	io._worker.addEventListener('message', function(event){
-		// consoleWorker filter event
-		if( consoleWorker.filterEvent(event) )	return;
-
 		var eventType	= event.data.type;
 		var eventData	= event.data.data;
+		// ignore consoleWorker messages
+		if( eventType === '_consoleWorker' )	return;
 		// notify local function
 		var methodName	= "_on" + eventType.substr(0,1).toUpperCase() + eventType.substr(1);
 		console.log("********* io.socket methodName", methodName)
@@ -36,7 +35,7 @@ io.Socket	= function(host, opts)
 		
 		
 		console.log("received from socketioWorker event", event.data)		
-	}.bind(this));
+	}.bind(this), false);
 	io._worker.addEventListener('error', function(error){
 		console.log("Worker error: " + error.message + "\n");
 	}.bind(this));
