@@ -57,17 +57,30 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	var score	= jQuery("#scoreMenuLine span.value").text()
 	var dialogSel	= null;
 	var tweetText	= null;
+	var gameResult	= null;
+	// TODO change those reason... put that in a gameResult win/loss
 	if( reason === "noMorePills" ){
-		soundRender.soundFxStart('win')
 		dialogSel	= '#gameCompletedNoMorePillsDialog';
 		tweetText	= "My pacmaze score is "+score+" !! can you do better ?";
+		gameResult	= "win";
 	}else if( reason === "playerKilled" ){
-		soundRender.soundFxStart('die')
 		dialogSel	= '#gameCompletedPlayerKilledDialog';
 		tweetText	= "Just had lot of fun with pacmaze. My score is "+score+"! You should check it out!";
+		gameResult	= "loss";
 	}else{
 		console.assert(false);
 	}
+
+	// play the sound based on the gameResult
+	if( gameResult === "win" )	soundRender.soundFxStart('win');
+	else if( gameResult === "loss")	soundRender.soundFxStart('die')
+	else	console.assert(false, "gameResult is invalid : "+gameResult);
+	
+	// build the gameOutput to be notified in "autodestroy"
+	var gameOutput	= {
+		score	: score,
+		result	: gameResult
+	};
 
 	// report the score
 	jQuery(dialogSel+" span.score").text(score)
@@ -80,7 +93,7 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 		// hide the jqm
 		hash.o.remove();hash.w.hide();
 		// trigger 'autodestroy' event
-		this.trigger('autodestroy');
+		this.trigger('autodestroy', gameOutput);
 	}.bind(this);
 	
 	// init dialogs

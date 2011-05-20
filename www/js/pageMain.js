@@ -31,7 +31,7 @@ WebyMaze.PageMain.prototype._pageSurgameCtor	= function()
 		this._pageSurgameDtor();
 		if( true ){
 			// old version which reload the page
-			window.location.href	= location.protocol+'//'+ location.hostname + location.pathname + "?landingPageBypass=1";		
+			window.location.href	= location.href;
 		}else{
 			// new version which remain here
 			this._pageLandingCtor();			

@@ -27,12 +27,19 @@ WebyMaze.PageGame	= function(opts)
 	gameCli		= new WebyMaze.GameCli({
 		roundInitCtx	: this._roundInitCtx
 	});
-	gameCli.bind('autodestroy', function(){
-		console.log("autodestroy", this)
-		
-		this.trigger('autodestroy');
-		console.log("autodestroyed done")
+	// forward 'autodestroy' event
+	['autodestroy'].forEach(function(event){
+		gameCli.bind(event, function(){
+			console.log(event, "received", this, this.trigger, arguments);
+
+			var args	= Array.prototype.slice.call(arguments);
+			args.unshift(event);
+			this.trigger.apply(this, args)
+
+			console.log("event", event, "done")
+		}.bind(this))
 	}.bind(this))
+	
 	gameConfig	= new WebyMaze.ConfigStore();
 	soundRender	= new WebyMaze.SoundRender({
 		enableTrack	: gameConfig.soundTrack() === "true",
