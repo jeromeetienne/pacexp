@@ -11,7 +11,11 @@ WebyMaze.PageSurgame	= function()
 	this._playerScore	= 0;
 	this._levelIdx		= 0;
 
-	this._restartByReload	= true;
+/**
+ * TODO rename all the _restartByReload stuff, the cookie name, and the url var too
+*/
+
+	this._restartByReload	= false;
 
 	if( this._restartByReload ){
 		var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
