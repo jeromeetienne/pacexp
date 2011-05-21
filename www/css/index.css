@@ -75,6 +75,10 @@ body {
 	text-shadow	: 0 0 0.2em #F88, 0 0 1em #F00;
 }
 
+.jqmWindow .button {
+	text-align	: center;
+}
+
 .jqmWindow h3
 {
 	text-align	: center;

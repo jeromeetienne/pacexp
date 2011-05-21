@@ -71,9 +71,7 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 		dialogSel	= '#gameCompletedPlayerKilledDialog';
 		tweetText	= "Just had lot of fun with pacmaze. My score is "+score+"! You should check it out!";
 		gameResult	= "loss";
-	}else{
-		console.assert(false);
-	}
+	}else	console.assert(false, "invalid reason "+reason);
 
 	// play the sound based on the gameResult
 	if( gameResult === "win" )	soundRender.soundFxStart('win');
@@ -119,9 +117,6 @@ WebyMaze.GameCli.prototype.onNotification	= function(message)
 		if( nLines - index < maxLines )	return;
 		jQuery(element).remove();
 	});
-
-console.log("notify message", message)
-console.log("data", message.data)
 
 	// function to padText
 	var padText	= function(number, length){

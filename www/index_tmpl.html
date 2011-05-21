@@ -228,7 +228,7 @@ if( false ){
 			<a href="http://notes.jetienne.com/2011/04/20/pacmaze-v2-even-more-WebGL-in-pacman.html" target='_blank'><?= PROJECT_NAME_CAMEL ?></a>
 		<? }else console.assert(false, "PROJECT_NAME "+PROJECT_NAME+" is invalid");	?>
 	</div>
-	<div id="landingMainDialog" class="promptDialog jqmWindow">
+	<div id="landingMainDialog" class="jqmWindow">
 		<div class="intro">
 			<h3>Welcome !!</h3>
 			<p>
@@ -236,7 +236,9 @@ if( false ){
 			</p>
 			<p>
 				Use <strong>Arrows</strong> to move the player.
-				and <strong>Space</strong> to shoot.
+			</p>
+			<p>
+				Use <strong>pageUp</strong>/<strong>pageDown</strong> to move the camera.
 			</p>
 		</div>
 		<div class="twitterUsername" style="display: none;">
@@ -435,6 +437,8 @@ if( false ){
 			<br/>
 			<div class="topRight twitter-share-button" data-text="My pacmaze score is $SCORE$! can you do better ?" data-count="none"></div>
 			<div class="jqmClose button"></div>
+			<!-- hidden input> to be able to trigger focus and bind keypress on the dialog -->
+			<input type="text" style='position: absolute; left: -5000px'>
 		</div>
 		<!-- gameCompletedNoMorePills dialog -->
 		<div id="gameCompletedPlayerKilledDialog" class="jqmWindow above3d">
