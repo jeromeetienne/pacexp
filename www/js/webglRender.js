@@ -51,7 +51,6 @@ console.log("ROUND ROUND", this._roundInitCtx);
 	this._lightingRender	= new WebyMaze.LightingRender({
 		mazeCli	: this.mazeCli
 	});
-	var firstLightingState	= this._config.firstLightingState;
 	this._lightingRender.changeState(ctxInit.mapLightingDfl);
 
 	// init CameraRender

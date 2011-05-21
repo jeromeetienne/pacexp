@@ -20,8 +20,6 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 	playerRotation		: 'free',
 	/** firstCameraState the original CameraState when the player join */
 	firstCameraState	: 'fixedZenith',
-	/** firstLightingState the original LightingState when the player join */
-	firstLightingState	: 'day',
 	//playerRotation: 'grid'
 	/** minimapEnabled  to enable the minimap */
 	minimapEnabled		: true,
@@ -52,7 +50,6 @@ WebyMaze.ConfigCli.sample.webglRender	= {
 WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 	playerRotation		: 'grid',
 	firstCameraState	: 'fixedGrazing',
-	firstLightingState	: 'firecamp',
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: false,
@@ -71,7 +68,6 @@ WebyMaze.ConfigCli.pacmaze.prod.webglRender	= {
 WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 	playerRotation		: 'grid',
 	firstCameraState	: 'fixedGrazing',
-	firstLightingState	: 'firecamp',
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: false,
@@ -92,7 +88,6 @@ WebyMaze.ConfigCli.pacmaze.dev.webglRender	= {
 WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
-	firstLightingState	: 'buddy1',
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
@@ -111,7 +106,6 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	playerRotation		: 'free',
 	firstCameraState	: 'inplayer',
-	firstLightingState	: 'buddy1',
 	minimapEnabled		: false,
 	showScoreMenu		: true,
 	showEnergyMenu		: true,
