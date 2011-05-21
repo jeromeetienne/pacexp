@@ -54,30 +54,8 @@ console.log("ROUND ROUND", this._roundInitCtx);
 	this._lightingRender.changeState(firstLightingState);
 
 	// init CameraRender
-	this.cameraRender	= new WebyMaze.CameraRender();
-	this.cameraRender.bind('stateChange', function(newState, oldState){
-		console.log("newState", newState, "oldState", oldState)
-		var rotationType	= WebyMaze.CameraRender.State2RotationType[newState];
-		var configRotation	= this._config.playerRotation;
-		var rotation2ControlType= {
-			'grid'	: {
-				"absolute"	: 'cardinalAbsolute',
-				"relative"	: 'guidedRelative'				
-			},
-			'free'	: {				
-				"absolute"	: 'freeRelative',
-				"relative"	: 'freeRelative'
-			}
-		};
-		gameCli.socketSend({
-			type	: 'setControlType',
-			data	: rotation2ControlType[configRotation][rotationType]
-		})
-	}.bind(this));
-	// init this.cameraRender
-	var firstCameraState	= this._config.firstCameraState;
-	this.cameraRender.changeState(firstCameraState);
-	
+	this._cameraRenderCtor();
+
 	// init MinimapRender
 	if( this._config.minimapEnabled === true ){
 		this._minimapRender	= new WebyMaze.MinimapRender({
@@ -85,14 +63,6 @@ console.log("ROUND ROUND", this._roundInitCtx);
 		});
 		sceneContainer.addChild( this._minimapRender.obj3d() );		
 	}
-
-	//soundRender.bind('ready', function(){
-	//	setTimeout(function(){
-	//		soundRender.soundFxPlay("siren", {
-	//			loops	: 999999
-	//		});	
-	//	}, 1*1000)
-	//})
 
 	// TODO put the whole UI stuff in its own class (like camera)
 	this.scoreUICtor();
@@ -116,7 +86,9 @@ console.log("ROUND ROUND", this._roundInitCtx);
 /**
  * destructor
 */
-WebyMaze.WebglRender.prototype.destroy	= function(){
+WebyMaze.WebglRender.prototype.destroy	= function()
+{
+	this._cameraRenderDtor();
 	this.mazeCli.destroy();
 }
 
@@ -124,6 +96,42 @@ WebyMaze.WebglRender.prototype.getEnemies	= function()
 {
 	return this.enemies;
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+//		cameraRender stuff						//
+//////////////////////////////////////////////////////////////////////////////////
+
+WebyMaze.WebglRender.prototype._cameraRenderCtor	= function()
+{
+	this.cameraRender	= new WebyMaze.CameraRender();
+	this.cameraRender.bind('stateChange', function(newState, oldState){
+		console.log("newState", newState, "oldState", oldState)
+		var rotationType	= WebyMaze.CameraRender.State2RotationType[newState];
+		var configRotation	= this._config.playerRotation;
+		var rotation2ControlType= {
+			'grid'	: {
+				"absolute"	: 'cardinalAbsolute',
+				"relative"	: 'guidedRelative'				
+			},
+			'free'	: {				
+				"absolute"	: 'freeRelative',
+				"relative"	: 'freeRelative'
+			}
+		};
+		gameCli.socketSend({
+			type	: 'setControlType',
+			data	: rotation2ControlType[configRotation][rotationType]
+		})
+	}.bind(this));
+	// init this.cameraRender
+	var firstCameraState	= this._config.firstCameraState;
+	this.cameraRender.changeState(firstCameraState);	
+}
+WebyMaze.WebglRender.prototype._cameraRenderDtor	= function()
+{
+	
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //		setCtxTick							//
