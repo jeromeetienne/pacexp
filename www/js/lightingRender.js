@@ -69,7 +69,7 @@ WebyMaze.LightingRender.prototype.changeState	= function(state)
 	if( state === this._state )	return;
 
 	// sanity check - state MUST be in LightingStates
-	console.assert( WebyMaze.CameraRender.LightingStates.indexOf(state) !== -1 );
+	console.assert( WebyMaze.CameraRender.LightingStates.indexOf(state) !== -1, "invalid lighting state "+state );
 	
 	// set the new state
 	this._state	= state;

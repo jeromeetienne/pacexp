@@ -15,7 +15,8 @@ var WebyMaze	= WebyMaze || {};
  * 
  * @constructor
 */
-WebyMaze.WebglRender	= function(opts){
+WebyMaze.WebglRender	= function(opts)
+{
 	// get info from parameters
 	var ctxInit		= opts.ctxInit		|| console.assert(false);
 	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
@@ -51,7 +52,7 @@ console.log("ROUND ROUND", this._roundInitCtx);
 		mazeCli	: this.mazeCli
 	});
 	var firstLightingState	= this._config.firstLightingState;
-	this._lightingRender.changeState(firstLightingState);
+	this._lightingRender.changeState(ctxInit.mapLightingDfl);
 
 	// init CameraRender
 	this._cameraRenderCtor();
@@ -129,7 +130,8 @@ WebyMaze.WebglRender.prototype._cameraRenderCtor	= function()
 }
 WebyMaze.WebglRender.prototype._cameraRenderDtor	= function()
 {
-	
+	this.cameraRender.destroy();
+	this.cameraRender	= null;
 }
 
 
