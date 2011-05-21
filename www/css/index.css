@@ -293,6 +293,14 @@ div.jqmClose.button {
 	text-decoration	: underline;
 }
 
+#attributionMenuLine {
+	color		: #fff;
+	font-size	: 120%;
+}
+#attributionMenuLine a {
+	color		: #fff;
+}
+
 
 #energyMenuLine,
 #lifeMenuLine,
