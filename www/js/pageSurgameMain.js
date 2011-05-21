@@ -10,10 +10,28 @@ WebyMaze.PageSurgame	= function()
 	this._playerLives	= 3;
 	this._playerScore	= 0;
 	this._levelIdx		= 0;
+
+	this._restartByReload	= true;
+
+	if( this._restartByReload ){
+		var landingPageBypass	= jQuery.url.param('landingPageBypass') ? true : false;
+		if( landingPageBypass ){
+			// sanity check - roundInitCtx MUST be present
+			console.assert(jQuery.cookie('closeByReload'));
+			// read param from store
+			var roundInitCtxStr	= jQuery.cookie('closeByReload');
+			this._setRoundInitCtx(JSON.parse(roundInitCtxStr));
+		}else{
+			// reset param in store
+			jQuery.cookie('closeByReload', JSON.stringify(this._getRoundInitCtx()));
+		}
+	}
+
+
 	this._pageGameCtor({
 		playerLives	: this._playerLives,
 		levelIdx	: this._levelIdx		
-	});
+	});	
 }
 
 WebyMaze.PageSurgame.prototype.destroy	= function()
@@ -29,28 +47,48 @@ MicroEvent.mixin(WebyMaze.PageSurgame);
 //		pageGame							//
 //////////////////////////////////////////////////////////////////////////////////
 
+WebyMaze.PageSurgame.prototype._getRoundInitCtx	= function()
+{
+	var roundInitCtx	= {
+		playerLives	: this._playerLives,
+		playerScore	: this._playerScore,
+		levelIdx	: this._levelIdx
+	};
+	return roundInitCtx;
+}
+
+WebyMaze.PageSurgame.prototype._setRoundInitCtx	= function(roundInitCtx)
+{
+	this._playerLives	= roundInitCtx.playerLives;
+	this._playerScore	= roundInitCtx.playerScore;
+	this._levelIdx		= roundInitCtx.levelIdx;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//		pageGame							//
+//////////////////////////////////////////////////////////////////////////////////
+
 WebyMaze.PageSurgame.prototype._pageGameRestart	= function()
 {
 	console.log("here relaunch", this._playerLives)
 	this._pageGameDtor();
 
-	if( false ){
-		// old version which reload the page
+	if( this._restartByReload ){
+		// write roundInitCtx in cookie/ - to be reread after pageReload
+		jQuery.cookie('closeByReload', JSON.stringify(this._getRoundInitCtx()));
+		// actually reload the page
 		window.location.href	= location.protocol+'//'+ location.hostname + location.pathname + "?landingPageBypass=1";		
 	}else{
 		// new version which remain here
 		this._pageGameCtor();			
 	}
 }
+
 WebyMaze.PageSurgame.prototype._pageGameCtor	= function()
 {
 	console.assert(!this._pageGame, "pageGame MUST NOT be instanciated")
 	this._pageGame	= new WebyMaze.PageGame({
-		roundInitCtx	: {
-			playerLives	: this._playerLives,
-			playerScore	: this._playerScore,
-			levelIdx	: this._levelIdx
-		}
+		roundInitCtx	: this._getRoundInitCtx()
 	});
 	// forward 'autodestroy' event
 	this._pageGame.bind("autodestroy", function(gameOutput){

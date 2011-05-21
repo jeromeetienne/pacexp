@@ -17,7 +17,11 @@ WebyMaze.PillCli.prototype.destroy	= function(){
 WebyMaze.PillCli.prototype.setCtxTick	= function(ctxTick){
 	this.pillType			= ctxTick.pillType;
 	//if( !this._container )	this._containerCtor();
-	if( !this._container )	this._containerSpriteCtor();
+	if( !this._container ){
+		if( this.pillType == 'white' ){		this._containerSpriteCtor();
+		}else if( this.pillType == 'red' ){	this._containerCtor();
+		}else	console.assert(false, "invalid pillType "+this.pillType);
+	}
 
 	this._container.position.x	= ctxTick.position.x;
 	this._container.position.z	= ctxTick.position.y;
