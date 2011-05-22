@@ -27,13 +27,16 @@ WebyMaze.MazeCli	= function(opts){
 	this._config	= WebyMaze.ConfigCli.mazeCli;
 
 	// build Ground
+	this._buildGroundSingleColor0();
 	//this._buildGroundSingleColor();
-	this._buildGroundChessBoard();
+	//this._buildGroundChessBoard();
+
 	// build roof if needed
 	if( this._config.showRoof ){
 		this._buildRoofSingleColor();
 		//this._buildRoofChessBoard();
 	}
+
 	// build Walls
 	this._buildWalls();
 }
@@ -113,6 +116,56 @@ WebyMaze.MazeCli.prototype.space2mapY	= function(spaceY)
 //		Ground Building							//
 //////////////////////////////////////////////////////////////////////////////////
 
+WebyMaze.MazeCli.prototype._buildGroundSingleColor0	= function()
+{
+	var bodyW	= this.wallW;
+	var mazeH	= this.map.length;
+	var mazeW	= this.map[0].length;
+
+	var geometry	= new THREE.Plane2(mazeW*bodyW, mazeH*bodyW, mazeW, mazeH);
+
+
+	// determine if renderer is webGl or not
+	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
+	// set the material depending on renderer capabilities
+	if( isWebGL ){
+		var material	= [
+			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
+			//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
+			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+							, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } ),
+			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
+			//new THREE.MeshNormalMaterial( ),
+			//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x1111FF, shininess: 3 } ),
+	
+			//new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/textures/TilesOrnate0082_2_thumbhuge.jpg'), opacity: 0.8 } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),		
+		];
+	}else{
+		var material	= [
+			//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
+			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
+			new THREE.MeshNormalMaterial( ),
+			new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+			//new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/textures/TilesOrnate0082_2_thumbhuge.jpg'), opacity: 0.8 } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),		
+		];
+	}
+	
+
+	var mesh = new THREE.Mesh( geometry, material );
+	mesh.position.x = -((mazeW+1)%2)* bodyW/2;
+	mesh.position.y	= -bodyW/2;
+	mesh.position.z = -((mazeH+1)%2)* bodyW/2;
+	mesh.rotation.x	= -90*Math.PI/180;
+	
+	mesh.matrixAutoUpdate = false;
+	mesh.updateMatrix();
+
+	this._container.addChild( mesh );
+}
+
 WebyMaze.MazeCli.prototype._buildGroundChessBoard	= function()
 {
 	var bodyW	= this.wallW;
@@ -173,7 +226,9 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function()
 		var material	= [
 			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
 			//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
-			new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
+			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+							, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } ),
+			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
 			//new THREE.MeshNormalMaterial( ),
 			//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
 			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x1111FF, shininess: 3 } ),
@@ -204,6 +259,7 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor	= function()
 
 	this._container.addChild( mesh );
 }
+
 
 WebyMaze.MazeCli.prototype._buildRoofChessBoard	= function()
 {

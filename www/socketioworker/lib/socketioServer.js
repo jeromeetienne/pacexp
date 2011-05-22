@@ -34,6 +34,9 @@ io.listen	= function(server, options)
 		}else if( eventType === 'message' ){
 			console.assert(io._boundSocket, "no bound socket");
 			io._boundSocket._onMessage(eventData);			
+		}else if( eventType === 'disconnect' ){
+			console.assert(io._boundSocket, "no bound socket");
+			io._boundSocket._onDisconnect(eventData);		
 		}else	console.assert(false, 'eventType '+eventType+' isnt handled')
 	}, false);
 
@@ -99,6 +102,14 @@ MicroEvent.mixin(io.ListeningSocket);
 io.BoundSocket	= function()
 {
 	this.sessionId	= "socketioEmuSessionId_42";
+	// add the .connection.destroy() ugly function to disconnect	
+	this.connection	= {
+		destroy	: function(){
+			// TODO i should warn the client side
+			console.assert( io._boundSocket, "io._boundSocket is NOT set...");
+			io._boundSocket	= null;
+		}
+	}
 	// set io._boundSocket	
 	console.assert(io._boundSocket === null, "panic io._boundSocket already set");
 	io._boundSocket	= this;
@@ -111,6 +122,16 @@ io.BoundSocket.prototype._onMessage	= function(eventData)
 {
 	console.log("BoundSocket._onMe2ssage", eventData)
 	this.trigger('message', eventData);
+}
+
+io.BoundSocket.prototype._onDisconnect	= function(eventData)
+{
+	console.log("BoundSocket._onDisconnect", eventData)
+	// notify the caller with "disconnected"
+	io._postMessage({
+		type	: 'disconnected'
+	});
+	this.trigger('disconnect', eventData);
 }
 
 /**
@@ -131,6 +152,11 @@ io.BoundSocket.prototype.removeListener	= function(event, callback)
 	this.unbind(event, callback)
 }
 
+io.BoundSocket.prototype.removeAllListeners	= function(event)
+{
+	// TODO fixme ugly stuff to put directly in the microevent
+	this._events[event]	= {};
+}
 
 /**
  * Send a message to the other end

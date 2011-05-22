@@ -53,7 +53,13 @@ io.Socket.prototype._onConnected	= function()
 	// mark the socket as connected
 	this.connected	= true;
 	// notify the caller of "connect"
-	this.trigger('connect');	
+	this.trigger('connect');
+}
+
+io.Socket.prototype._onDisconnected	= function()
+{
+	// mark the socket as disconnected
+	this.connected	= false;
 }
 
 io.Socket.prototype._onMessage	= function(eventData)
@@ -78,9 +84,10 @@ io.Socket.prototype.on	= function(event, callback)
 io.Socket.prototype.connect	= function()
 {
 	//console.log("client trying to connect")
-	// sanity check - socketioWorker MUST be set
-	console.assert(socketioWorker, "no server is listening");
 
+	// sanity check - io._worker MUST be set
+	console.assert(io._worker, "no server is listening");
+	// notify io._worker
 	io._postMessage({
 		type	: 'connect'
 	});
@@ -88,19 +95,12 @@ io.Socket.prototype.connect	= function()
 
 io.Socket.prototype.disconnect	= function()
 {
-	// get currentServer
-	var currentServer	= io._global.currentServer;
-	// sanity check - currentServer MUST be set
-	console.assert(currentServer, "no server is listening");
-
-	// trigger the 'disconnect' event in currentServer
-	currentServer.trigger('disconnect');
-	
-	// mark this socket as not connected
-	this.connected	= false;
-	// store it to io._global
-	console.assert( io._global.currentClient, "io._currentClient must be set...");
-	io._global.currentClient	= null;
+	// sanity check - io._worker MUST be set
+	console.assert(io._worker, "no server is listening");
+	// notify io._worker
+	io._postMessage({
+		type	: 'disconnect'
+	});
 }
 
 /**
