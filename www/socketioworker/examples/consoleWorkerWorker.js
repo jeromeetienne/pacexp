@@ -6,6 +6,7 @@
 	for(var i = 0; i < names.length; ++i){
 		(function(name){
 			console[name]	= function(){
+				return;
 				self.postMessage({
 					type	: "_consoleWorker",
 					data	: {

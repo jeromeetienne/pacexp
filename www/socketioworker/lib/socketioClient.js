@@ -1,7 +1,7 @@
 /** @namespace */
 var io	= io || {};
 /** worker object */
-io._worker	= socketioWorker;
+io._worker	= null;
 /**
  * Delay the postMessage with a timer to avoid any sync operation
  * - network operation are async, dont change the logic
@@ -20,8 +20,11 @@ io.Socket	= function(host, opts)
 	// init this.connected
 	this.connected	= false;
 
-	// sanity check - socketioWorker MUST be set
-	console.assert(socketioWorker, "no server is listening");
+	// set io._worker
+	io._worker	= socketioWorker;
+	
+	// sanity check - io._worker MUST be set
+	console.assert(io._worker, "no server is listening");
 
 	io._worker.addEventListener('message', function(event){
 		var eventType	= event.data.type;
@@ -30,11 +33,11 @@ io.Socket	= function(host, opts)
 		if( eventType === '_consoleWorker' )	return;
 		// notify local function
 		var methodName	= "_on" + eventType.substr(0,1).toUpperCase() + eventType.substr(1);
-		console.log("********* io.socket methodName", methodName)
+		//console.log("********* io.socket methodName", methodName)
 		if( methodName in this )	this[methodName](eventData);
 		
 		
-		console.log("received from socketioWorker event", event.data)		
+		//console.log("received from socketioWorker event", event.data)		
 	}.bind(this), false);
 	io._worker.addEventListener('error', function(error){
 		console.log("Worker error: " + error.message + "\n");
@@ -64,7 +67,7 @@ io.Socket.prototype._onMessage	= function(eventData)
 */
 io.Socket.prototype.on	= function(event, callback)
 {
-	console.log("io.Socket.on", event)
+	//console.log("io.Socket.on", event)
 	// forward to MicroEvent
 	this.bind(event, callback)	
 }
@@ -74,7 +77,7 @@ io.Socket.prototype.on	= function(event, callback)
 */
 io.Socket.prototype.connect	= function()
 {
-	console.log("client trying to connect")
+	//console.log("client trying to connect")
 	// sanity check - socketioWorker MUST be set
 	console.assert(socketioWorker, "no server is listening");
 
@@ -105,7 +108,7 @@ io.Socket.prototype.disconnect	= function()
 */
 io.Socket.prototype.send	= function(message)
 {
-	console.log("client send ", message)
+	//console.log("client send ", message)
 	// sanity check - socketioWorker MUST be set
 	console.assert(socketioWorker, "no server is listening");
 

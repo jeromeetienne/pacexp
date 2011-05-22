@@ -3,20 +3,11 @@ importScripts('../vendor/microevent.js');
 importScripts('../lib/socketioServer.js');
 
 // import all the server
+
 //importScripts('../../vendor/brequire.js');
 //importScripts('../../brequired/server.js');
 //importScripts('../../brequired/gameSrv.js');
 //require('./server')
-
-//var objWorker	= this;
-//
-//objWorker.addEventListener('message', function(event){
-//	var eventType	= event.data.type;
-//	var eventData	= event.data.data;
-//	console.log("wow");	console.assert(false,"wupaqbaba")
-//	objWorker.postMessage(event.data);
-//}, false);
-//
 
 
 var socketio	= io.listen();

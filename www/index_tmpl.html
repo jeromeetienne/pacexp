@@ -69,44 +69,56 @@ if( false ){
 
 		var SERVERINBROWSER	= PROJECT_NAME === 'pacmaze' ? true : false;
 		// SERVERINBROWSER disabled for now
-		//SERVERINBROWSER		= false;
+		// SERVERINBROWSER		= false;
 
 		if( SERVERINBROWSER ){
 			_buffer += "\n<!-- ********************************** -->\n";
 			_buffer += "<!-- server source for single player game -->";
 			_buffer += "\n<!-- ********************************** -->\n";
+			var brequiredFiles	= [];
+			brequiredFiles.push("brequired/angleSync.js");
+			brequiredFiles.push("brequired/angleUtils.js");
+			brequiredFiles.push("brequired/collisionUtils.js");
+			brequiredFiles.push("brequired/configProject.js");
+			brequiredFiles.push("brequired/configSrv.js");
+			brequiredFiles.push("brequired/enemySrv.js");
+			brequiredFiles.push("brequired/gameSrv.js");
+			brequiredFiles.push("brequired/levelConfig0.js");
+			brequiredFiles.push("brequired/levelConfig1.js");
+			brequiredFiles.push("brequired/levelConfig2.js");
+			brequiredFiles.push("brequired/mapUtils.js");
+			brequiredFiles.push("brequired/mapUtils2.js");
+			brequiredFiles.push("brequired/mapUtilsTests.js");
+			brequiredFiles.push("brequired/mapUtils2Tests.js");
+			brequiredFiles.push("brequired/mazeSrv.js");
+			brequiredFiles.push("brequired/microevent.js");
+			brequiredFiles.push("brequired/node-yfrog.js");
+			brequiredFiles.push("brequired/pillSrv.js");
+			brequiredFiles.push("brequired/playerSrv.js");
+			brequiredFiles.push("brequired/serverExpress.js");
+			brequiredFiles.push("brequired/serverMain.js");
+			brequiredFiles.push("brequired/serverProxy.js");
+			brequiredFiles.push("brequired/serverStatic.js");
+			brequiredFiles.push("brequired/serverUpload.js");
+			brequiredFiles.push("brequired/shootSrv.js");
+			brequiredFiles.push("brequired/tileMap.js");
+			brequiredFiles.push("brequired/tween.js");
+		}
+		if( SERVERINBROWSER ){
+			loadJavascript("./socketioworker/examples/consoleWorkerPage.js");
+			loadJavascript("./socketioworker/lib/socketioClient.js");
+			echoJavascript("var socketioWorker = new Worker('./socketioworker/tmp/main.js');");
+			echoJavascript("consoleWorker.bind(socketioWorker);");
+		}else if( SERVERINBROWSER ){
 			loadJavascript("./socketioemu/lib/socketio_emu_core.js");
 			loadJavascript("./socketioemu/lib/socketio_emu_client.js");
 			loadJavascript("./socketioemu/lib/socketio_emu_server.js");
 
 			loadJavascript("vendor/brequire.js");
-			loadJavascript("brequired/angleSync.js");
-			loadJavascript("brequired/angleUtils.js");
-			loadJavascript("brequired/collisionUtils.js");
-			loadJavascript("brequired/configProject.js");
-			loadJavascript("brequired/configSrv.js");
-			loadJavascript("brequired/enemySrv.js");
-			loadJavascript("brequired/gameSrv.js");
-			loadJavascript("brequired/levelConfig0.js");
-			loadJavascript("brequired/levelConfig1.js");
-			loadJavascript("brequired/levelConfig2.js");
-			loadJavascript("brequired/mapUtils.js");
-			loadJavascript("brequired/mapUtils2.js");
-			loadJavascript("brequired/mapUtilsTests.js");
-			loadJavascript("brequired/mapUtils2Tests.js");
-			loadJavascript("brequired/mazeSrv.js");
-			loadJavascript("brequired/microevent.js");
-			loadJavascript("brequired/node-yfrog.js");
-			loadJavascript("brequired/pillSrv.js");
-			loadJavascript("brequired/playerSrv.js");
-			loadJavascript("brequired/serverExpress.js");
-			loadJavascript("brequired/serverMain.js");
-			loadJavascript("brequired/serverProxy.js");
-			loadJavascript("brequired/serverStatic.js");
-			loadJavascript("brequired/serverUpload.js");
-			loadJavascript("brequired/shootSrv.js");
-			loadJavascript("brequired/tileMap.js");
-			loadJavascript("brequired/tween.js");
+			
+			brequiredFiles.forEach(function(src){
+				loadJavascript(src);
+			})
 			echoJavascript("require('./serverMain');");
 		}
 

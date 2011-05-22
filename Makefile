@@ -17,7 +17,7 @@ server_prod:
 
 build: release_build
 
-clean: release_clean jsdoc_clean
+clean: release_clean jsdoc_clean brequire_clean
 
 install: upstart_install
 

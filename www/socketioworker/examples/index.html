@@ -7,16 +7,17 @@
 		<!-- this is a good toy "consoleWorker.js makes console.* API availble in WebWorker" -->
 		<!-- parisjs -->
 
-		<script src="./consoleWorkerPage.js"></script>
 		<script src="../vendor/microevent.js"></script>
+
+		<script src="./consoleWorkerPage.js"></script>
 		<script src="../lib/socketioServer.js"></script>
+		<script src="../lib/socketioClient.js"></script>
 
 		<script language="javascript">
 			var socketioWorker = new Worker("main_server.js");
 			consoleWorker.bind(socketioWorker);
 		</script>
 
-		<script src="../lib/socketioClient.js"></script>
 		<script src="./main_client.js"></script>
 	</body>
 </html>
