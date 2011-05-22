@@ -31,8 +31,8 @@ WebyMaze.MazeCli	= function(opts){
 	this._buildGroundChessBoard();
 	// build roof if needed
 	if( this._config.showRoof ){
-		//this._buildRoofSingleColor();
-		this._buildRoofChessBoard();
+		this._buildRoofSingleColor();
+		//this._buildRoofChessBoard();
 	}
 	// build Walls
 	this._buildWalls();

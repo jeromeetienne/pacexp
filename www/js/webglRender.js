@@ -21,7 +21,6 @@ WebyMaze.WebglRender	= function(opts)
 	var ctxInit		= opts.ctxInit		|| console.assert(false);
 	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
 
-console.log("ROUND ROUND", this._roundInitCtx);
 	// read the game config
 	this._config	= WebyMaze.ConfigCli.webglRender;
 

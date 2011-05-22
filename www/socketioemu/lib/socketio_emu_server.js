@@ -55,6 +55,15 @@ MicroEvent.mixin(io.ListeningSocket);
 io.BoundSocket	= function()
 {
 	this.sessionId	= "socketioEmuSessionId_42";
+
+	// add the .connection.destroy() ugly function to disconnect	
+	this.connection	= {
+		destroy	: function(){
+			// TODO i should warn the client side
+			console.assert( io._global.currentBound, "io._currentBound is NOT set...");
+			io._global.currentBound	= null;
+		}
+	}
 	// store it to io._global
 	console.assert( !io._global.currentBound, "io._currentBound is already set...");
 	io._global.currentBound	= this;
@@ -79,6 +88,12 @@ io.BoundSocket.prototype.removeListener	= function(event, callback)
 {
 	// forward to MicroEvent
 	this.unbind(event, callback)
+}
+
+io.BoundSocket.prototype.removeAllListeners	= function(event)
+{
+	// TODO fixme ugly stuff to put directly in the microevent
+	this._events[event]	= {};
 }
 
 

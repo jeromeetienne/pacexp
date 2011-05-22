@@ -214,14 +214,12 @@ div.jqmClose.button {
 	width		: 40%;	
 }
 
-#gameCompletedNoMorePillsDialog {
-	margin-left	: -240px;
-	width		: 480px;	
-}
-
-#gameCompletedPlayerKilledDialog {
-	margin-left	: -240px;
-	width		: 480px;
+#gameCompletedWinDialog,
+#gameCompletedEndOfPackyDialog,
+#gameCompletedEndOfGameDialog
+{
+	margin-left	: -15%;
+	width		: 30%;
 }
 
 #noWebglDialog {

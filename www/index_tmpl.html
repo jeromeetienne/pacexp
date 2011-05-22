@@ -69,7 +69,7 @@ if( false ){
 
 		var SERVERINBROWSER	= PROJECT_NAME === 'pacmaze' ? true : false;
 		// SERVERINBROWSER disabled for now
-		SERVERINBROWSER		= false;
+		//SERVERINBROWSER		= false;
 
 		if( SERVERINBROWSER ){
 			_buffer += "\n<!-- ********************************** -->\n";
@@ -87,6 +87,9 @@ if( false ){
 			loadJavascript("brequired/configSrv.js");
 			loadJavascript("brequired/enemySrv.js");
 			loadJavascript("brequired/gameSrv.js");
+			loadJavascript("brequired/levelConfig0.js");
+			loadJavascript("brequired/levelConfig1.js");
+			loadJavascript("brequired/levelConfig2.js");
 			loadJavascript("brequired/mapUtils.js");
 			loadJavascript("brequired/mapUtils2.js");
 			loadJavascript("brequired/mapUtilsTests.js");
@@ -430,8 +433,8 @@ if( false ){
 		<!-- <div style="position: absolute; top: 10px; right: 10px;" class="above3d menuosd followmetwitter">
 			<a href="http://www.twitter.com/jerome_etienne" target='_blank'><img style="border: 0;" src="http://twitter-badges.s3.amazonaws.com/follow_me-c.png" alt="Follow jerome_etienne on Twitter"/></a>
 		</div>-->
-		<!-- gameCompletedNoMorePills dialog -->
-		<div id="gameCompletedNoMorePillsDialog" class="jqmWindow above3d">
+		<!-- gameCompletedWin dialog -->
+		<div id="gameCompletedWinDialog" class="jqmWindow above3d">
 			<h3>Congratulation!</h3>
 			You win! Your score is <span class="score"></span>
 			<br/>
@@ -440,8 +443,22 @@ if( false ){
 			<!-- hidden input> to be able to trigger focus and bind keypress on the dialog -->
 			<input type="text" style='position: absolute; left: -5000px'>
 		</div>
-		<!-- gameCompletedNoMorePills dialog -->
-		<div id="gameCompletedPlayerKilledDialog" class="jqmWindow above3d">
+		<!-- gameCompletedEndOfPacky dialog -->
+		<div id="gameCompletedEndOfPackyDialog" class="jqmWindow above3d">
+			<h3>oh! too bad</h3>
+			<p>
+				Oh you died... You still have <span class="lives"></span> tho.
+			</p>
+			<p>
+				Press any key to play again
+			</p>
+			<div class="topRight twitter-share-button" data-text="Just had lot of fun with pacmaze. My score is $SCORE$! You should check it out!" data-count="none"></div>
+			<div class="jqmClose button"></div>
+			<!-- hidden <input> to be able to trigger focus and bind keypress on the dialog -->
+			<input type="text" style='position: absolute; left: -5000px'/>
+		</div>
+		<!-- gameCompletedEndOfGame dialog -->
+		<div id="gameCompletedEndOfGameDialog" class="jqmWindow above3d">
 			<h3><center><strong>Game Over</strong></center></h3>
 			Oh you died... Your score was <span class="score"></span>. Try again ?
 			<br/>

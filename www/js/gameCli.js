@@ -33,7 +33,7 @@ MicroEvent.mixin(WebyMaze.GameCli);
 //		message handlers						//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.GameCli.prototype.onContextInit	= function(message)
+WebyMaze.GameCli.prototype._onContextInit	= function(message)
 {
 	// sanity check - this._webglRender MUST NOT exist
 	console.assert(!this._webglRender);
@@ -43,15 +43,16 @@ WebyMaze.GameCli.prototype.onContextInit	= function(message)
 		ctxInit		: message.data
 	})
 }
-WebyMaze.GameCli.prototype.onContextTick	= function(message){
+WebyMaze.GameCli.prototype._onContextTick	= function(message){
 	// sanity check - this._webglRender MUST exist
 	console.assert(this._webglRender);
 	// update WebyMaze.WebglRender
 	this._webglRender.setCtxTick(message.data);
 }
 
-WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
+WebyMaze.GameCli.prototype._onGameCompleted	= function(message)
 {
+	var playerLives	= this._roundInitCtx.playerLives;
 	// destroy the socket ... just a trick to free the game
 	this._socketDtor();
 
@@ -62,13 +63,18 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	var dialogSel	= null;
 	var tweetText	= null;
 	var gameResult	= null;
+
 	// TODO change those reason... put that in a gameResult win/loss
 	if( reason === "noMorePills" ){
-		dialogSel	= '#gameCompletedNoMorePillsDialog';
+		dialogSel	= '#gameCompletedWinDialog';
 		tweetText	= "My pacmaze score is "+score+" !! can you do better ?";
 		gameResult	= "win";
+	}else if( reason === "playerKilled" && playerLives > 0 ){
+		dialogSel	= '#gameCompletedEndOfPackyDialog';
+		tweetText	= "Just had lot of fun with pacmaze. My score is "+score+"! You should check it out!";
+		gameResult	= "loss";
 	}else if( reason === "playerKilled" ){
-		dialogSel	= '#gameCompletedPlayerKilledDialog';
+		dialogSel	= '#gameCompletedEndOfGameDialog';
 		tweetText	= "Just had lot of fun with pacmaze. My score is "+score+"! You should check it out!";
 		gameResult	= "loss";
 	}else	console.assert(false, "invalid reason "+reason);
@@ -86,6 +92,7 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 
 	// report the score
 	jQuery(dialogSel+" span.score").text(score)
+	jQuery(dialogSel+" span.lives").text(playerLives+ (playerLives > 1 ? ' lives' : ' life'));
 	jQuery(dialogSel+" div.twitter-share-button").attr('data-text', tweetText);
 	
 	// normal callback
@@ -108,7 +115,7 @@ WebyMaze.GameCli.prototype.onGameCompleted	= function(message)
 	toOpen();
 }
 
-WebyMaze.GameCli.prototype.onNotification	= function(message)
+WebyMaze.GameCli.prototype._onNotification	= function(message)
 {
 	var maxLines	= 4;
 	// only display maxLines lines
@@ -307,7 +314,8 @@ WebyMaze.GameCli.prototype._userInputTouchDtor	= function()
 //		socket								//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.GameCli.prototype._socketCtor	= function(){
+WebyMaze.GameCli.prototype._socketCtor	= function()
+{
 	var listenHost	= WebyMaze.ConfigCli.server.listenHost;
 	var listenPort	= WebyMaze.ConfigCli.server.listenPort;
 
@@ -344,13 +352,13 @@ WebyMaze.GameCli.prototype._socketOnConnect	= function(){
 WebyMaze.GameCli.prototype._socketOnMessage	= function(message){
 	//console.log("onMessage", JSON.stringify(message));
 	if( message.type === 'contextInit' ){
-		this.onContextInit(message);
+		this._onContextInit(message);
 	}else if( message.type === 'contextTick' ){
-		this.onContextTick(message);
+		this._onContextTick(message);
 	}else if( message.type === 'gameCompleted' ){
-		this.onGameCompleted(message);
+		this._onGameCompleted(message);
 	}else if( message.type === 'notification' ){
-		this.onNotification(message);
+		this._onNotification(message);
 	}else {
 		console.assert(false, "message type unknown " + message.type);
 	}
