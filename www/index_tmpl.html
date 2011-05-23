@@ -169,10 +169,9 @@ if( false ){
 		_buffer += "\n<!-- ********************************** -->\n";
 		_buffer += "<!-- To get Three.js -->";
 		_buffer += "\n<!-- ********************************** -->\n";
-		loadJavascript("vendor/three.js.new/build/Three.js");
-		loadJavascript("vendor/three.js.new/contrib/Detector.js");
-		loadJavascript("vendor/three.js.new/contrib/RequestAnimationFrame.js");
-		loadJavascript("vendor/three.js.new/contrib/Stats.js");
+		loadJavascript("vendor/three.js/build/Three.js");
+		loadJavascript("vendor/three.js/examples/js/Detector.js");
+		loadJavascript("vendor/three.js/examples/js/Stats.js");
 
 		_buffer += "\n<!-- ********************************** -->\n";
 		_buffer += "<!-- To get socket.io.js -->";
@@ -198,6 +197,7 @@ if( false ){
 		loadJavascript("js/Threex/Threex.TextureCaption.js");
 		loadJavascript("js/Threex/Threex.Tween.js");
 		loadJavascript("js/Threex/Threex.Geometry.Plane2.js");
+		loadJavascript("js/Threex/Threex.requestAnimationFrame.js");
 
 		_buffer += "\n<!-- ********************************** -->\n";
 		_buffer += "<!-- local source -->";
