@@ -65,7 +65,7 @@ WebyMaze.GameCli.prototype._onGameCompleted	= function(message)
 	var gameResult	= null;
 
 	// TODO change those reason... put that in a gameResult win/loss
-	if( reason === "noMorePills" || true ){
+	if( reason === "noMorePills" ){
 		dialogSel	= '#gameCompletedWinDialog';
 		tweetText	= "My pacmaze score is "+score+" !! can you do better ?";
 		gameResult	= "win";
