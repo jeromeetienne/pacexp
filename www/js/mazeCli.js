@@ -33,7 +33,8 @@ WebyMaze.MazeCli	= function(opts){
 
 	// build roof if needed
 	if( this._config.showRoof ){
-		this._buildRoofSingleColor();
+		this._buildRoofSingleColor0();
+		//this._buildRoofSingleColor();
 		//this._buildRoofChessBoard();
 	}
 
@@ -129,19 +130,26 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor0	= function()
 	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
 	// set the material depending on renderer capabilities
 	if( isWebGL ){
-		var material	= [
-			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
-			//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
-			new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-							, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } ),
-			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
-			//new THREE.MeshNormalMaterial( ),
-			//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
-			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x1111FF, shininess: 3 } ),
-	
-			//new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/textures/TilesOrnate0082_2_thumbhuge.jpg'), opacity: 0.8 } ),
-			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),		
-		];
+		var textureUrl	= this._config.groundTextureUrl;
+		if( textureUrl ){
+			var material	= [
+				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
+				//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
+				new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+								, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
+				//new THREE.MeshNormalMaterial( ),
+				//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+				//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x1111FF, shininess: 3 } ),
+		
+				//new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/textures/TilesOrnate0082_2_thumbhuge.jpg'), opacity: 0.8 } ),
+				//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),		
+			];
+		}else{
+			var material	= [
+				new THREE.MeshLambertMaterial( {color: 0x22cc22, shading: THREE.SmoothShading} ),
+			];
+		}
 	}else{
 		var material	= [
 			//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
@@ -304,6 +312,64 @@ WebyMaze.MazeCli.prototype._buildRoofChessBoard	= function()
 
 		this._container.addChild( mesh );
 	}.bind(this))
+}
+
+WebyMaze.MazeCli.prototype._buildRoofSingleColor0	= function()
+{
+	var bodyW	= this.wallW;
+	var wallH	= bodyW * this._config.wallHRatio;
+	var mazeH	= this.map.length;
+	var mazeW	= this.map[0].length;
+
+	var geometry	= new THREEx.Geometry.Plane2(mazeW*bodyW, mazeH*bodyW, mazeW, mazeH);
+
+
+	// determine if renderer is webGl or not
+	var isWebGL	= renderer instanceof THREE.WebGLRenderer;
+	// set the material depending on renderer capabilities
+	if( isWebGL ){
+		var textureUrl	= this._config.groundTextureUrl;
+		if( textureUrl ){
+			var material	= [
+				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
+				//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
+				new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+								, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
+				//new THREE.MeshNormalMaterial( ),
+				//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+				//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x1111FF, shininess: 3 } ),
+		
+				//new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/textures/TilesOrnate0082_2_thumbhuge.jpg'), opacity: 0.8 } ),
+				//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),		
+			];
+		}else{
+			var material	= [
+				new THREE.MeshLambertMaterial( {color: 0x22cc22, shading: THREE.SmoothShading} ),
+			];
+		}
+	}else{
+		var material	= [
+			//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
+			//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
+			new THREE.MeshNormalMaterial( ),
+			new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
+			//new THREE.MeshLambertMaterial( { map: ImageUtils.loadTexture('images/textures/TilesOrnate0082_2_thumbhuge.jpg'), opacity: 0.8 } ),
+			//new THREE.MeshPhongMaterial( { ambient: 0x0088aa, color: 0xff5500, specular: 0x555555, shininess: 10 } ),		
+		];
+	}
+	
+
+	var mesh = new THREE.Mesh( geometry, material );
+	mesh.position.x = -((mazeW+1)%2)* bodyW/2;
+	mesh.position.y = -bodyW/2 + wallH;
+	mesh.position.z = -((mazeH+1)%2)* bodyW/2;
+	mesh.rotation.x	=  90*Math.PI/180;
+	
+	mesh.matrixAutoUpdate = false;
+	mesh.updateMatrix();
+
+	this._container.addChild( mesh );
 }
 
 WebyMaze.MazeCli.prototype._buildRoofSingleColor	= function()

@@ -130,9 +130,9 @@ body {
 }
 
 #landingMainDialog div.twitterUsername input {
-	left	: 0px;
+/*	left	: 0px;
 	right	: 0px;
-}
+*/}
 
 
 #landingTutorialDialog {
@@ -263,7 +263,7 @@ div.jqmClose.button {
  *		misc
 ********************************************************************************/
 
-.promptDialog  input {
+.jqmWindow  input {
 	font-size	: 1.2em;
 	font-weight	: bold;
 }
