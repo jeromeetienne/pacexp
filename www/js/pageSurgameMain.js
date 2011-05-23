@@ -74,7 +74,7 @@ WebyMaze.PageSurgame.prototype._setRoundInitCtx	= function(roundInitCtx)
 
 WebyMaze.PageSurgame.prototype._pageGameRestart	= function()
 {
-	console.log("here relaunch", this._playerLives)
+	console.log("here relaunch lives", this._playerLives, "levelIdx", this._levelIdx)
 	this._pageGameDtor();
 
 	if( this._restartByReload ){

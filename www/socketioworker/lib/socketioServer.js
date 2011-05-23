@@ -32,9 +32,11 @@ io.listen	= function(server, options)
 			console.assert(io._listeningSocket, "no listening socket");
 			io._listeningSocket._onConnect(eventData);
 		}else if( eventType === 'message' ){
+			if(!io._boundSocket)	return;
 			console.assert(io._boundSocket, "no bound socket");
 			io._boundSocket._onMessage(eventData);			
 		}else if( eventType === 'disconnect' ){
+			if(!io._boundSocket)	return;
 			console.assert(io._boundSocket, "no bound socket");
 			io._boundSocket._onDisconnect(eventData);		
 		}else	console.assert(false, 'eventType '+eventType+' isnt handled')
@@ -127,10 +129,6 @@ io.BoundSocket.prototype._onMessage	= function(eventData)
 io.BoundSocket.prototype._onDisconnect	= function(eventData)
 {
 	console.log("BoundSocket._onDisconnect", eventData)
-	// notify the caller with "disconnected"
-	io._postMessage({
-		type	: 'disconnected'
-	});
 	this.trigger('disconnect', eventData);
 }
 

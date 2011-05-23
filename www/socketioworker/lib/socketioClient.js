@@ -26,7 +26,7 @@ io.Socket	= function(host, opts)
 	// sanity check - io._worker MUST be set
 	console.assert(io._worker, "no server is listening");
 
-	io._worker.addEventListener('message', function(event){
+	this._$onWorkerMessage	= function(event){
 		var eventType	= event.data.type;
 		var eventData	= event.data.data;
 		// ignore consoleWorker messages
@@ -35,17 +35,26 @@ io.Socket	= function(host, opts)
 		var methodName	= "_on" + eventType.substr(0,1).toUpperCase() + eventType.substr(1);
 		//console.log("********* io.socket methodName", methodName)
 		if( methodName in this )	this[methodName](eventData);
-		
-		
 		//console.log("received from socketioWorker event", event.data)		
-	}.bind(this), false);
-	io._worker.addEventListener('error', function(error){
+	}.bind(this);
+	this._$onWorkerError	= function(error){
 		console.log("Worker error: " + error.message + "\n");
-	}.bind(this));
+	}.bind(this);
+	io._worker.addEventListener('message'	, this._$onWorkerMessage, false);
+	io._worker.addEventListener('error'	, this._$onWorkerError	, false);
 }
 
 // mixin MicroEvent in this object
 MicroEvent.mixin(io.Socket);
+
+io.Socket.prototype.destroy	= function()
+{
+	console.log("io.Socket.destroy")
+	io._worker.removeEventListener('message', this._$onWorkerMessage, false);
+	this._$onWorkerMessage	= null;
+	io._worker.removeEventListener('error'	, this._$onWorkerError	, false);
+	this._$onWorkerError	= null;
+}
 
 
 io.Socket.prototype._onConnected	= function()
@@ -54,12 +63,6 @@ io.Socket.prototype._onConnected	= function()
 	this.connected	= true;
 	// notify the caller of "connect"
 	this.trigger('connect');
-}
-
-io.Socket.prototype._onDisconnected	= function()
-{
-	// mark the socket as disconnected
-	this.connected	= false;
 }
 
 io.Socket.prototype._onMessage	= function(eventData)
@@ -95,8 +98,13 @@ io.Socket.prototype.connect	= function()
 
 io.Socket.prototype.disconnect	= function()
 {
+	//console.log("io.Socket.Disconnect*****************************" )
 	// sanity check - io._worker MUST be set
 	console.assert(io._worker, "no server is listening");
+	// mark the socket as disconnected
+	this.connected	= false;
+	// destroy this object
+	this.destroy();
 	// notify io._worker
 	io._postMessage({
 		type	: 'disconnect'
