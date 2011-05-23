@@ -1,9 +1,13 @@
+// NOTE: this match THREE namespace on purpose
+if(typeof THREEx === "undefined")		var THREEx	= {};
+if(typeof THREEx.Geometry === "undefined")	THREEx.Geometry	= {};
+
 /**
  * @author mr.doob / http://mrdoob.com/
  * based on http://papervision3d.googlecode.com/svn/trunk/as3/trunk/src/org/papervision3d/objects/primitives/Plane2.as
  */
 
-THREE.Plane2 = function ( width, height, segmentsWidth, segmentsHeight ) {
+THREEx.Geometry.Plane2 = function ( width, height, segmentsWidth, segmentsHeight ) {
 
 	THREE.Geometry.call( this );
 
@@ -61,5 +65,5 @@ THREE.Plane2 = function ( width, height, segmentsWidth, segmentsHeight ) {
 
 };
 
-THREE.Plane2.prototype = new THREE.Geometry();
-THREE.Plane2.prototype.constructor = THREE.Plane2;
+THREEx.Geometry.Plane2.prototype = new THREE.Geometry();
+THREEx.Geometry.Plane2.prototype.constructor = THREEx.Geometry.Plane2;

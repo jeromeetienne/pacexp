@@ -7,6 +7,7 @@
 		(function(name){
 			console[name]	= function(){
 				return;
+				//if( name === "log" )	return;
 				self.postMessage({
 					type	: "_consoleWorker",
 					data	: {

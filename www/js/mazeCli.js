@@ -122,7 +122,7 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor0	= function()
 	var mazeH	= this.map.length;
 	var mazeW	= this.map[0].length;
 
-	var geometry	= new THREE.Plane2(mazeW*bodyW, mazeH*bodyW, mazeW, mazeH);
+	var geometry	= new THREEx.Geometry.Plane2(mazeW*bodyW, mazeH*bodyW, mazeW, mazeH);
 
 
 	// determine if renderer is webGl or not
