@@ -32,7 +32,7 @@ brequiredFiles.push("brequired/tween.js");
 
 
 // import all the server
-if( false ){
+if( true ){
 	importScripts('../examples/consoleWorkerWorker.js');
 	importScripts('../vendor/microevent.js');
 	importScripts('../lib/socketioServer.js');
