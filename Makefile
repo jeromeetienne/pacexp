@@ -13,7 +13,7 @@ server_dev:
 	supervisor -w lib lib/serverMain.js
 
 server_prod:
-	while true; do sleep 1; node lib/server.js; done
+	while true; do sleep 1; node lib/serverMain.js; done
 
 build: release_build
 
