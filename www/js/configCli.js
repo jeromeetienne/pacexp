@@ -100,7 +100,7 @@ WebyMaze.ConfigCli.tweetymaze.prod.webglRender	= {
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showHelpMenu		: true,
-	screenshotUploadUrl	: "http://"+location.host+":8087/upload"	
+	screenshotUploadUrl	: "http://"+location.host+":8088/upload"	
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
@@ -118,7 +118,7 @@ WebyMaze.ConfigCli.tweetymaze.dev.webglRender	= {
 	showSoundTrackMenu	: true,
 	showSoundFxMenu		: true,
 	showHelpMenu		: true,
-	screenshotUploadUrl	: "http://"+location.host+":8084/upload"	
+	screenshotUploadUrl	: "http://"+location.host+":8088/upload"	
 };
 
 WebyMaze.ConfigCli.webglRender	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].webglRender;
@@ -252,12 +252,12 @@ WebyMaze.ConfigCli.pacmaze.dev.server	= {
 
 WebyMaze.ConfigCli.tweetymaze.prod.server	= {
 	listenHost	: location.hostname,
-	listenPort	: 8087
+	listenPort	: 8088
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.server	= {
 	listenHost	: location.hostname,
-	listenPort	: 8084
+	listenPort	: 8088
 };
 
 WebyMaze.ConfigCli.server	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].server;
