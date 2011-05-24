@@ -1,10 +1,10 @@
 #!/usr/bin/make
 # to automatize repeatitive actions
 
-PROJECT_NAME=pacmaze
-PROJECT_ENV=dev
-PROJECT_VERSION=4
-PROJECT_LATEST_VERSION=4
+PROJECT_NAME=tweetymaze
+PROJECT_ENV=prod
+PROJECT_VERSION=2
+PROJECT_LATEST_VERSION=2
 
 SHORTTAGJS=../shorttag.js/bin/node-shorttag
 
