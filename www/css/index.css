@@ -105,6 +105,13 @@ body {
 }
 
 
+@media screen and (max-width: 640px) {
+	#landingMainDialog {
+		margin-left	: -30%;
+		width		: 60%;
+	}
+}
+
 #landingMainDialog div.button {
 	font-size	: 300%;
 
@@ -267,6 +274,7 @@ div.jqmClose.button {
 	font-size	: 1.2em;
 	font-weight	: bold;
 }
+
 .promptDialog  {
 	text-align	: center;				
 }
@@ -316,6 +324,15 @@ div.jqmClose.button {
 #scoreMenuLine	img {
 	width	: 48px;
 	height	: 48px;
+}
+
+@media screen and (max-width: 640px) {
+	#energyMenuLine	img,
+	#lifeMenuLine	img,
+	#scoreMenuLine	img {
+		width	: 32px;
+		height	: 32px;
+	}
 }
 
 #energyMenuLine .value,

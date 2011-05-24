@@ -3,8 +3,8 @@
 
 PROJECT_NAME=pacmaze
 PROJECT_ENV=dev
-PROJECT_VERSION=3
-PROJECT_LATEST_VERSION=3
+PROJECT_VERSION=4
+PROJECT_LATEST_VERSION=4
 
 SHORTTAGJS=../shorttag.js/bin/node-shorttag
 
@@ -27,7 +27,7 @@ uninstall: upstart_uninstall
 #		release								#
 #################################################################################
 
-release_build: release_clean build/index.html
+release_build: release_clean build/index.html worker_build
 	echo "*" > build/.gitignore
 	#inliner http://localhost/~jerome/webwork/pacexp/www/index.html > build/index.html
 	cp -a www/sounds build
@@ -56,7 +56,18 @@ index_build:
 
 index_build_monitor: index_build
 	while true; do inotifywait -e modify,create www/index_tmpl.html; make index_build; done
-	
+
+worker_build:
+	echo > build/worker_build.js
+	cat www/socketioworker/vendor/microevent.js		>> build/worker_build.js
+	cat www/socketioworker/lib/socketioServer.js		>> build/worker_build.js
+	cat www/vendor/brequire.js				>> build/worker_build.js
+	cat www/socketioworker/examples/consoleWorkerWorker.js	>> build/worker_build.js
+	cat www/brequired/*.js					>> build/worker_build.js
+	mkdir -p build/socketioworker/tmp/
+	cp www/socketioworker/tmp/main.js build/socketioworker/tmp/
+	uglifyjs build/worker_build.js > build/worker_build.min.js
+
 
 #################################################################################
 #		jsdoc								#

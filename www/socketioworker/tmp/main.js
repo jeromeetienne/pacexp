@@ -1,11 +1,3 @@
-importScripts('../examples/consoleWorkerWorker.js');
-importScripts('../vendor/microevent.js');
-importScripts('../lib/socketioServer.js');
-
-// import all the server
-
-
-importScripts('../../vendor/brequire.js');
 
 var brequiredFiles	= [];
 brequiredFiles.push("brequired/angleSync.js");
@@ -37,10 +29,22 @@ brequiredFiles.push("brequired/tileMap.js");
 brequiredFiles.push("brequired/tween.js");
 
 
-brequiredFiles.forEach(function(src){
-	//loadJavascript(src);
-	importScripts('../../'+src);
-})
+
+
+// import all the server
+if( false ){
+	importScripts('../examples/consoleWorkerWorker.js');
+	importScripts('../vendor/microevent.js');
+	importScripts('../lib/socketioServer.js');
+	importScripts('../../vendor/brequire.js');
+	brequiredFiles.forEach(function(src){
+		//loadJavascript(src);
+		importScripts('../../'+src);
+	})	
+}else{
+	importScripts('../../worker_build.min.js');	
+}
+
 
 require('./serverMain');
 console.log("sduperblaa")
