@@ -19,13 +19,15 @@ NameVirtualHost *:80
 	<? } /* endif */ ?>
 	
 	
-	# hack to get something at http://buddymaze.com without rebranding yet
-	ServerAlias	buddymaze.com
-	ServerAlias	www.buddymaze.com
-	# redir www.pacmaze.com to pacmaze.com
-	RewriteEngine on
-	RewriteCond %{HTTP_HOST} ^www.buddymaze.com
-	RewriteRule ^(.*)$ http://buddymaze.com$1 [R=permanent,L]
+	<? if( PROJECT_VERSION === PROJECT_LATEST_VERSION && PROJECT_NAME === 'tweetymaze' ){ ?>
+		# hack to get something at http://buddymaze.com without rebranding yet
+		ServerAlias	buddymaze.com
+		ServerAlias	www.buddymaze.com
+		# redir www.pacmaze.com to pacmaze.com
+		RewriteEngine on
+		RewriteCond %{HTTP_HOST} ^www.buddymaze.com
+		RewriteRule ^(.*)$ http://buddymaze.com$1 [R=permanent,L]
+	<? } /* endif */ ?>
 
 	# jme- apparently this is needed for setting 'expires' header
 	<Directory /home/jerome/public_html/<?= PROJECT_NAMEVERS ?>_www_build>
