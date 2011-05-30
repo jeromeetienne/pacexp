@@ -39,10 +39,10 @@ release_build: release_clean build/index.html worker_build
 	mkdir -p build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	cp www/vendor/socket.io-client/lib/vendor/web-socket-js/*.swf -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	unzip www/vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.zip -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
-	#echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
-	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
-	#echo "\nNETWORK:\n*\n" > build/cache.manifest
-	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
+	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	echo "\nNETWORK:\n*\n" >> build/cache.manifest
+	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
 
 release_clean:
 	rm -rf build/*
@@ -50,12 +50,8 @@ release_clean:
 build/index.html: www/index_prod.html
 	inliner http://localhost/~jerome/webwork/pacexp/www/index_prod.html > build/index.html
 
-index_build:
-	echo "<? PROJECT_ENV = 'dev';  ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_dev.html
-	echo "<? PROJECT_ENV = 'prod'; ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_prod.html
-
-index_build_monitor: index_build
-	while true; do inotifywait -e modify,create www/index_tmpl.html; make index_build; done
+build_monitor: build
+	while true; do inotifywait -e modify,create www; make build; done
 
 worker_build:
 	echo > build/worker_build.js
@@ -68,6 +64,16 @@ worker_build:
 	cp www/socketioworker/tmp/main.js build/socketioworker/tmp/
 	uglifyjs build/worker_build.js > build/worker_build.min.js
 
+www/index_dev.html: www/index_tmpl.html
+	echo "<? PROJECT_ENV = 'dev';  ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_dev.html
+
+www/index_prod.html: www/index_tmpl.html
+	echo "<? PROJECT_ENV = 'prod'; ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_prod.html
+
+index_build:	www/index_dev.html www/index_prod.html
+
+index_build_monitor: 
+	while true; do inotifywait -e modify,create www/index_tmpl.html; make index_build; done
 
 #################################################################################
 #		jsdoc								#

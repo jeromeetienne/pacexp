@@ -126,12 +126,15 @@ body {
 	padding		: 10px;
 	margin-top	: 20px;
 }
+
 #landingMainDialog div.button:hover {
 	border-color	: red;
 	color		: white;
 	text-shadow	: 0 0 0.2em #aaa, 0 0 0.4em #888, 0 0 1em #666;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 30%, from(white), to(red), color-stop(0,white));
-}
+/*	background-image: -moz-linear-gradient(0% 0%, 0% 30%, #fff,rgba(0,0,0,0));
+*/}
+
 #landingMainDialog div {
 	margin-top	: 1em;
 }

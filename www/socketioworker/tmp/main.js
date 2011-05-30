@@ -29,8 +29,6 @@ brequiredFiles.push("brequired/tileMap.js");
 brequiredFiles.push("brequired/tween.js");
 
 
-
-
 // import all the server
 if( true ){
 	importScripts('../examples/consoleWorkerWorker.js');
