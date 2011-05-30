@@ -80,19 +80,29 @@ WebyMaze.SoundRender.prototype.soundFxStart		= function(fxId, opts)
 {
 	// return now if opts.enabledFx
 	if( this._enableFx === false )	return;
-	console.log("soundRender.play() ", fxId);
+	console.log("soundRender.play() ", fxId, opts);
 	// if the sound isnt yet init, do nothing
 	if( !this._soundsFx[fxId] )	console.log("sound "+fxId+" isnt init");
 	if( !this._soundsFx[fxId] )	return;
 	// trigger the soundPlay
-	this._soundsFx[fxId].play(opts);
+	if(opts && opts.loops){
+		// NOTE: working around the 'loops' parameter failing
+		opts.onfinish	= function(){
+			if( opts.loops === 0 )	return;
+			opts.loops--;
+			this._soundsFx[fxId].play(opts);
+		}.bind(this)			
+		this._soundsFx[fxId].play(opts)
+	}else{
+		this._soundsFx[fxId].play(opts);
+	}
 }
 
 WebyMaze.SoundRender.prototype.soundFxStop		= function(fxId)
 {
 	// return now if opts.enabledFx
 	if( this._enableFx === false )	return;
-	console.log("soundRender.play() ", fxId);
+	console.log("soundRender.stop() ", fxId);
 	// if the sound isnt yet init, do nothing
 	if( !this._soundsFx[fxId] )	console.log("sound "+fxId+" isnt init");
 	if( !this._soundsFx[fxId] )	return;
