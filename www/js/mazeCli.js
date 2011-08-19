@@ -134,7 +134,7 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor0	= function()
 		if( textureUrl ){
 			var material	= [
 				// phong is super slow on macbook
-				new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.SmoothShading
+				new THREE.MeshLambertMaterial( {color: 0xcccccc, shading: THREE.SmoothShading
 								, map: THREE.ImageUtils.loadTexture(textureUrl)} ),
 				// normal material
 				//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
@@ -455,7 +455,7 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 				//new THREE.MeshBasicMaterial( { color: 0xcccccc } )
 				//new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading} ),
 				// phong is super slow on macbook
-				new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading
+				new THREE.MeshLambertMaterial( {color: 0xcccccc, shading: THREE.FlatShading
 								, map: THREE.ImageUtils.loadTexture(textureUrl)} ),
 				// default material
 				//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
