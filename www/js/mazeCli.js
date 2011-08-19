@@ -133,10 +133,15 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor0	= function()
 		var textureUrl	= this._config.groundTextureUrl;
 		if( textureUrl ){
 			var material	= [
+				// phong is super slow on macbook
+				new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.SmoothShading
+								, map: THREE.ImageUtils.loadTexture(textureUrl)} ),
+				// normal material
+				//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+				//				, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+
 				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/tmp/PaddedOrangeWall.png') } )
 				//new THREE.MeshBasicMaterial( {color: 0x4CC417} ),
-				new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-								, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
 				//new THREE.MeshBasicMaterial( { color: 0xffffff, map: THREE.ImageUtils.loadTexture('images/textures/MarbleGreen0001_39_thumbhuge.jpg') } )
 				//new THREE.MeshNormalMaterial( ),
 				//new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } )
@@ -161,7 +166,6 @@ WebyMaze.MazeCli.prototype._buildGroundSingleColor0	= function()
 		];
 	}
 	
-
 	var mesh = new THREE.Mesh( geometry, material );
 	mesh.position.x = -((mazeW+1)%2)* bodyW/2;
 	mesh.position.y	= -bodyW/2;
@@ -450,8 +454,12 @@ WebyMaze.MazeCli.prototype._buildWalls	= function()
 				//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10 } )
 				//new THREE.MeshBasicMaterial( { color: 0xcccccc } )
 				//new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading} ),
-				new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
-								, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
+				// phong is super slow on macbook
+				new THREE.MeshLambertMaterial( {color: 0x4488FF, shading: THREE.FlatShading
+								, map: THREE.ImageUtils.loadTexture(textureUrl)} ),
+				// default material
+				//new THREE.MeshPhongMaterial( { ambient: 0xcccccc, color: 0x553300, specular: 0x555555, shininess: 10
+				//				, map: THREE.ImageUtils.loadTexture(textureUrl) } ),
 			];			
 		}else{
 			var material	= [
