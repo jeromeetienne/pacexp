@@ -10,6 +10,9 @@ body {
 	/*background	: #87CEEB;*/
 	background	: #000000;
 	font-family	: arial;
+	
+	-moz-user-select	: none;
+	-webkit-user-select	: none;
 }
 #canvasContainer {
 	line-height	: 0;
