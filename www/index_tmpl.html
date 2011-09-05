@@ -1,6 +1,6 @@
 <?
 	// this version fails due to require
-	var project = require('/home/jerome/webwork/pacexp/lib/configProject.js');
+	var project = require(process.env.HOME+'/webwork/pacexp/lib/configProject.js');
 	var PROJECT_NAME		= PROJECT_NAME		|| project.PROJECT;
 	var PROJECT_VERSION		= PROJECT_VERSION	|| project.VERSION;
 	var PROJECT_ENV			= PROJECT_ENV		|| project.ENV;
