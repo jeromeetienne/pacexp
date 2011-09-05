@@ -6,7 +6,7 @@ PROJECT_ENV=prod
 PROJECT_VERSION=2
 PROJECT_LATEST_VERSION=2
 
-SHORTTAGJS=../shorttag.js/bin/node-shorttag
+SHORTTAGJS=node_modules/shorttag/bin/node-shorttag
 
 
 server_dev:
