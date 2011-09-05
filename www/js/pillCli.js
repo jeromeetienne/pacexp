@@ -32,13 +32,37 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 	return this._container;
 }
 
+
+
+/**
+ * TODO port this elsewhere
+*/
+WebyMaze.PillCli.TinyCache	= function(){
+	var _values	= {};
+	return {
+		get	: function(key){ return _values[key];	},
+		contains: function(key){ return key in _values;	},
+		set	: function(key, value){	_values[key]	= value;},
+		getSet	: function(key, value){
+			if( !this.contains(key) )	this.set(key, value)
+			return this.get(key);
+		},
+		values	: _values
+	}
+}
+
+// use TinyCache to cache the assets (texture and all, thus they arent pushed many time to the gpu)
+WebyMaze.PillCli._assetCache	= new WebyMaze.PillCli.TinyCache();
+
 WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 {
+	var assetCache	= WebyMaze.PillCli._assetCache;
 
 	if( this.pillType == 'white' ){
 		var mesh	= new THREE.Sprite({
 			//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
-			map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
+			map			: assetCache.getSet('textureFlare2', THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png')),
+			//map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
 			blending		: THREE.AdditiveBlending,
 			useScreenCoordinates	: false
 		});
