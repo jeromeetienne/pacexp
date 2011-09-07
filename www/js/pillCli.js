@@ -43,8 +43,15 @@ WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 	if( this.pillType == 'white' ){
 		var mesh	= new THREE.Sprite({
 			//map		: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
-			map		: cache.getSet('pillcli_textureFlare2', THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png')),
-			//map		: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
+			// FIXME the cache isnt invalidated once three.js is reset after each level
+			// - where to invalidate it ?
+			//   - at the begining of the game
+			// - how to invalidate it ?
+			//   - simply flush all elements. add a flush() method ?
+			//   - how to get all the caches ? at the begining of the game ?
+			// - register on exit callback ?
+			//map		: cache.getSet('pillcli_textureFlare2', THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png')),
+			map		: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
 			blending	: THREE.AdditiveBlending,
 			useScreenCoordinates	: false
 		});
