@@ -4,7 +4,7 @@ var WebyMaze	= WebyMaze || {};
 //		ctor/dtor							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.Object3dPacky	= function(opts)
+WebyMaze.Object3dPucky	= function(opts)
 {
 	this._appearance= opts.appearance	|| console.assert(false);
 
@@ -21,7 +21,7 @@ WebyMaze.Object3dPacky	= function(opts)
 	this._containerCtor();	
 }
 
-WebyMaze.Object3dPacky.prototype.destroy	= function()
+WebyMaze.Object3dPucky.prototype.destroy	= function()
 {
 }
 
@@ -29,8 +29,8 @@ WebyMaze.Object3dPacky.prototype.destroy	= function()
 //		colorTypes							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.Object3dPacky.colorTypes	= {};
-WebyMaze.Object3dPacky.colorTypes.yellow	= {
+WebyMaze.Object3dPucky.colorTypes	= {};
+WebyMaze.Object3dPucky.colorTypes.yellow	= {
 	phongAmbient		: 0xffa000,
 	phongColor		: 0x999999,
 	phongSpecular		: 0x000000,
@@ -39,7 +39,7 @@ WebyMaze.Object3dPacky.colorTypes.yellow	= {
 	textureSmileyFillStyle	: "#FF99FF"
 };
 
-WebyMaze.Object3dPacky.colorTypes.red	= {
+WebyMaze.Object3dPucky.colorTypes.red	= {
 	phongAmbient		: 0xDC143C,
 	phongColor		: 0x5500aa,
 	phongSpecular		: 0x555555,
@@ -48,7 +48,7 @@ WebyMaze.Object3dPacky.colorTypes.red	= {
 	textureSmileyFillStyle	: "#ff99ff"
 };
 
-WebyMaze.Object3dPacky.colorTypes.pink	= {
+WebyMaze.Object3dPucky.colorTypes.pink	= {
 	phongAmbient		: 0xff8080,
 	phongColor		: 0x5500aa,
 	phongSpecular		: 0x555555,
@@ -57,7 +57,7 @@ WebyMaze.Object3dPacky.colorTypes.pink	= {
 	textureSmileyFillStyle	: "#ff99ff"
 };
 
-WebyMaze.Object3dPacky.colorTypes.orange= {
+WebyMaze.Object3dPucky.colorTypes.orange= {
 	phongAmbient		: 0xff4500,
 	phongColor		: 0x5500aa,
 	phongSpecular		: 0x555555,
@@ -66,7 +66,7 @@ WebyMaze.Object3dPacky.colorTypes.orange= {
 	textureSmileyFillStyle	: "#ff99ff"
 };
 
-WebyMaze.Object3dPacky.colorTypes.lightblue= {
+WebyMaze.Object3dPucky.colorTypes.lightblue= {
 	phongAmbient		: 0x3DC5CC,
 	phongColor		: 0x5500aa,
 	phongSpecular		: 0x555555,
@@ -75,7 +75,7 @@ WebyMaze.Object3dPacky.colorTypes.lightblue= {
 	textureSmileyFillStyle	: "#ff99ff"
 };
 
-WebyMaze.Object3dPacky.colorTypes.blue= {
+WebyMaze.Object3dPucky.colorTypes.blue= {
 	phongAmbient		: 0x00a0FF,
 	phongColor		: 0x0044aa,
 	phongSpecular		: 0x555555,
@@ -91,7 +91,7 @@ WebyMaze.Object3dPacky.colorTypes.blue= {
 /**
  * Setter for this._appearance
 */
-WebyMaze.Object3dPacky.prototype.setAppearance	= function(appearance)
+WebyMaze.Object3dPucky.prototype.setAppearance	= function(appearance)
 {
 	console.log("SetAppearance from ", this._appearance, "to", appearance);
 	if( appearance.match(/^eyes-/) )	appearance	= "hurt-yellow-Ouch!";
@@ -115,32 +115,32 @@ WebyMaze.Object3dPacky.prototype.setAppearance	= function(appearance)
 /**
  * Getter for this._appearance
 */
-WebyMaze.Object3dPacky.prototype.getAppearance	= function(appearance)
+WebyMaze.Object3dPucky.prototype.getAppearance	= function(appearance)
 {
 	return this._appearance;
 }
 
-WebyMaze.Object3dPacky.prototype._textureType	= function()
+WebyMaze.Object3dPucky.prototype._textureType	= function()
 {
 	return this._appearance.match(/^(.*)-(.*)-(.*)/)[1];
 }
 
-WebyMaze.Object3dPacky.prototype._colorStr	= function()
+WebyMaze.Object3dPucky.prototype._colorStr	= function()
 {
 	return this._appearance.match(/^(.*)-(.*)-(.*)/)[2];
 }
 
-WebyMaze.Object3dPacky.prototype._nameStr	= function()
+WebyMaze.Object3dPucky.prototype._nameStr	= function()
 {
 	return this._appearance.match(/^(.*)-(.*)-(.*)/)[3];
 }
 
-WebyMaze.Object3dPacky.prototype.object3d	= function()
+WebyMaze.Object3dPucky.prototype.object3d	= function()
 {
 	return this._container;
 }
 
-WebyMaze.Object3dPacky.prototype.dirty		= function(val)
+WebyMaze.Object3dPucky.prototype.dirty		= function(val)
 {
 	if( typeof val !== 'undefined' )	this._dirtyObj3d	= val;
 	return this._dirtyObj3d;
@@ -150,9 +150,9 @@ WebyMaze.Object3dPacky.prototype.dirty		= function(val)
 //		container							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.Object3dPacky.prototype._containerCtor	= function()
+WebyMaze.Object3dPucky.prototype._containerCtor	= function()
 {
-	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
+	var colorType	= WebyMaze.Object3dPucky.colorTypes[this._colorStr()];
 	// build this._container
 	var bodyW	= 100;
 	
@@ -230,7 +230,7 @@ WebyMaze.Object3dPacky.prototype._containerCtor	= function()
 //		handle avatar							//
 //////////////////////////////////////////////////////////////////////////////////
 
-WebyMaze.Object3dPacky.prototype._buildTexture	= function()
+WebyMaze.Object3dPucky.prototype._buildTexture	= function()
 {
 	var username		= this._nameStr();
 	var isTwitterName	= username && username.charAt('@') === '@';
@@ -245,7 +245,7 @@ WebyMaze.Object3dPacky.prototype._buildTexture	= function()
  * - twitter api got a rate limit of 150req/s ... use it wisely
  *   - maybe cache the avatar url in localStore
 */
-WebyMaze.Object3dPacky.prototype._twitterAvatarLoad	= function()
+WebyMaze.Object3dPucky.prototype._twitterAvatarLoad	= function()
 {
 	var username	= this._nameStr();
 	console.log("loadavatar", username)
@@ -282,9 +282,9 @@ WebyMaze.Object3dPacky.prototype._twitterAvatarLoad	= function()
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
+WebyMaze.Object3dPucky.prototype._buildTwitterAvatarTexture	= function(img)
 {
-	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
+	var colorType	= WebyMaze.Object3dPucky.colorTypes[this._colorStr()];
 	var canvas	= this._canvas;
 	var w		= canvas.width;
 	var ctx		= canvas.getContext( '2d' );
@@ -331,9 +331,9 @@ WebyMaze.Object3dPacky.prototype._buildTwitterAvatarTexture	= function(img)
 /**
  * @param {DOMElement} img the <image> to map on the canvas for the texture
 */
-WebyMaze.Object3dPacky.prototype._buildSmileyTexture	= function()
+WebyMaze.Object3dPucky.prototype._buildSmileyTexture	= function()
 {
-	var colorType	= WebyMaze.Object3dPacky.colorTypes[this._colorStr()];
+	var colorType	= WebyMaze.Object3dPucky.colorTypes[this._colorStr()];
 	var textureType	= this._textureType();
 	var username	= this._nameStr();
 	var w		= this._canvas.width;

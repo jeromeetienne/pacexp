@@ -344,11 +344,11 @@ WebyMaze.ConfigCli.pacmaze.dev.enemyCli	= {
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.enemyCli	= {
-	object3d	: 'packy'
+	object3d	: 'pucky'
 };
 
 WebyMaze.ConfigCli.tweetymaze.dev.enemyCli	= {
-	object3d	: 'packy'
+	object3d	: 'pucky'
 };
 
 WebyMaze.ConfigCli.enemyCli	= WebyMaze.ConfigCli[WebyMaze.ConfigCli.PROJECT][WebyMaze.ConfigCli.ENV].enemyCli;
@@ -392,11 +392,11 @@ WebyMaze.ConfigCli.sample.playerCli	= {
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.playerCli	= {
-	forcedAppearanceName	: "Packy"
+	forcedAppearanceName	: "Pucky"
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.playerCli	= {
-	forcedAppearanceName	: "Packy"
+	forcedAppearanceName	: "Pucky"
 };
 
 WebyMaze.ConfigCli.tweetymaze.prod.playerCli	= {

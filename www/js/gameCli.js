@@ -70,7 +70,7 @@ WebyMaze.GameCli.prototype._onGameCompleted	= function(message)
 		tweetText	= "My pacmaze score is "+score+" !! can you do better ?";
 		gameResult	= "win";
 	}else if( reason === "playerKilled" && playerLives > 0 ){
-		dialogSel	= '#gameCompletedEndOfPackyDialog';
+		dialogSel	= '#gameCompletedEndOfPuckyDialog';
 		tweetText	= "Just had lot of fun with pacmaze. My score is "+score+"! You should check it out!";
 		gameResult	= "loss";
 	}else if( reason === "playerKilled" ){

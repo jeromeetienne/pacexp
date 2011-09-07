@@ -12,9 +12,9 @@ WebyMaze.EnemyCli	= function()
 
 	if( this._config.object3d === 'ghost' ){
 		this._object3d	= new WebyMaze.Object3dGhost();
-	}else if( this._config.object3d === 'packy' ){
-		this._object3d	= new WebyMaze.Object3dPacky({
-			appearance	: "happy-yellow-Packy"
+	}else if( this._config.object3d === 'pucky' ){
+		this._object3d	= new WebyMaze.Object3dPucky({
+			appearance	: "happy-yellow-Pucky"
 		});		
 	}else	console.assert(false);
 }
@@ -39,10 +39,10 @@ WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick)
 			console.log("enemey appearance change from ", this._object3d.getAppearance(), "to", ctxTick.appearance)
 			this._object3d.setAppearance( ctxTick.appearance );
 		}
-	}else if( this._object3d instanceof WebyMaze.Object3dPacky ){
-		var ghost2packyAppearance	= function(appearance){
+	}else if( this._object3d instanceof WebyMaze.Object3dPucky ){
+		var ghost2puckyAppearance	= function(appearance){
 			if( appearance.match(/^eyes-/) )	return "hurt-yellow-Ouch!";
-			appearance	= appearance+"-Packy";
+			appearance	= appearance+"-Pucky";
 			var matches	= appearance.match(/^(.*)-(.*)-(.*)/);
 			var textureType	= matches[1];
 			var colorStr	= matches[2];
@@ -51,8 +51,8 @@ WebyMaze.EnemyCli.prototype.setCtxTick	= function(ctxTick)
 			if( textureType === 'happy' )	return 'angry-'+colorStr+'-'+'Bad';
 			return "angry-blue-Bad";
 		}
-		if( this._object3d.getAppearance() != ghost2packyAppearance(ctxTick.appearance) ){
-			this._object3d.setAppearance( ghost2packyAppearance(ctxTick.appearance) );
+		if( this._object3d.getAppearance() != ghost2puckyAppearance(ctxTick.appearance) ){
+			this._object3d.setAppearance( ghost2puckyAppearance(ctxTick.appearance) );
 		}
 	}else	console.assert(false);
 

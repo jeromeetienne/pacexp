@@ -16,8 +16,8 @@ WebyMaze.PlayerCli	= function(){
 	// read the game config
 	this._config	= WebyMaze.ConfigCli.playerCli;
 
-	this._object3d	= new WebyMaze.Object3dPacky({
-		appearance	: "happy-yellow-Packy"
+	this._object3d	= new WebyMaze.Object3dPucky({
+		appearance	: "happy-yellow-Pucky"
 	});
 }
 
@@ -40,7 +40,7 @@ WebyMaze.PlayerCli.prototype.setCtxTick	= function(ctxTick)
 
 	if(this.username != ctxTick.username ){
 		this.username	= ctxTick.username
-		var appearanceName	= this.username.match(/^guest/) ? "Packy" : this.username;
+		var appearanceName	= this.username.match(/^guest/) ? "Pucky" : this.username;
 		if( this._config.forcedAppearanceName )		appearanceName = this._config.forcedAppearanceName;
 		this._object3d.setAppearance('happy-yellow-' + appearanceName );
 	}
