@@ -96,7 +96,10 @@ WebyMaze.PageGame.prototype._init	= function()
 	if( jQuery.url.param('render') == 'canvas' ){
 		renderer = new THREE.CanvasRenderer();
 	}else{
-		renderer = new THREE.WebGLRenderer();
+		renderer = new THREE.WebGLRenderer({
+			antialias		: false,
+			preserveDrawingBuffer	: true
+		});
 	}
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
