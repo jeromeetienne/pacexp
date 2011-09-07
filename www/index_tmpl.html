@@ -179,7 +179,8 @@ if( false ){
 		_buffer += "<!-- To get socket.io.js -->";
 		_buffer += "\n<!-- ********************************** -->\n";
 		if( SERVERINBROWSER === false ){
-			loadJavascript("vendor/socket.io-client/socket.io.js");
+			loadJavascript("vendor/socket.io-client/dist/socket.io.js");
+			//loadJavascript("http://localhost:8086/socket.io/socket.io.js");
 			loadJavascript("./js/configSocketio.js");
 		}
 

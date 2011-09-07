@@ -9,7 +9,6 @@ WebyMaze.GameCli	= function(opts)
 	// get parameters from options	
 	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
 
-
 	// clear the .chatArea
 	jQuery('#gamePageContainer .chatArea').empty().append( jQuery('<ul></ul>') );
 
@@ -318,22 +317,20 @@ WebyMaze.GameCli.prototype._socketCtor	= function()
 {
 	var listenHost	= WebyMaze.ConfigCli.server.listenHost;
 	var listenPort	= WebyMaze.ConfigCli.server.listenPort;
-
+console.log("listenHost", listenHost, listenPort)
 	// create and config the socket
-	this._sockio	= new io.Socket(listenHost, {
-		port	: listenPort
-	});
+	this._sockio	= io.connect("http://"+listenHost+":" + listenPort);
 
 	this._sockio.on('connect', function(){		this._socketOnConnect();	}.bind(this)) 
 	this._sockio.on('connect_failed', function(){	this._socketOnError()		}.bind(this)) 
 	this._sockio.on('message', function(message){	this._socketOnMessage(message)	}.bind(this)) 
 	this._sockio.on('disconnect', function(){	this._socketOnClose();		}.bind(this))
 
-	this._sockio.connect();
+//	this._sockio.connect();
 }
 
 WebyMaze.GameCli.prototype._socketDtor	= function(){
-	this._sockio.disconnect();
+	this._sockio.socket.disconnect();
 }
 
 WebyMaze.GameCli.prototype._socketOnConnect	= function(){
@@ -350,7 +347,9 @@ WebyMaze.GameCli.prototype._socketOnConnect	= function(){
 }
 
 WebyMaze.GameCli.prototype._socketOnMessage	= function(message){
-	//console.log("onMessage", JSON.stringify(message));
+	message	= JSON.parse(message);
+	console.log("onMessage", JSON.stringify(message));
+	//console.log("onMessage", message, JSON.stringify(message));
 	if( message.type === 'contextInit' ){
 		this._onContextInit(message);
 	}else if( message.type === 'contextTick' ){
@@ -373,8 +372,9 @@ WebyMaze.GameCli.prototype._socketOnClose	= function(){
 }
 
 WebyMaze.GameCli.prototype.socketSend	= function(message){
-	if( !this._sockio.connected ){
-		console.log("socket not connected, discard message ", message)
+	console.log("socketSend", message)
+	if( !this._sockio.socket.connected ){
+		console.log("socket not connected, discard message ", message, this._sockio)
 		return;
 	}
 	this._sockio.send(JSON.stringify(message));
