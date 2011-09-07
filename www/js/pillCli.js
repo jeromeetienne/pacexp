@@ -33,37 +33,19 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 }
 
 
-
-/**
- * TODO port this elsewhere
-*/
-WebyMaze.PillCli.TinyCache	= function(){
-	var _values	= {};
-	return {
-		get	: function(key){ return _values[key];	},
-		contains: function(key){ return key in _values;	},
-		set	: function(key, value){	_values[key]	= value;},
-		getSet	: function(key, value){
-			if( !this.contains(key) )	this.set(key, value)
-			return this.get(key);
-		},
-		values	: _values
-	}
-}
-
-// use TinyCache to cache the assets (texture and all, thus they arent pushed many time to the gpu)
-WebyMaze.PillCli._assetCache	= new WebyMaze.PillCli.TinyCache();
+// use MicroCache to cache the assets (texture and all, thus they arent pushed many time to the gpu)
+WebyMaze.assetCache	= new MicroCache();
 
 WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 {
-	var assetCache	= WebyMaze.PillCli._assetCache;
+	var cache	= WebyMaze.assetCache;
 
 	if( this.pillType == 'white' ){
 		var mesh	= new THREE.Sprite({
-			//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
-			map			: assetCache.getSet('textureFlare2', THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png')),
-			//map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
-			blending		: THREE.AdditiveBlending,
+			//map		: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
+			map		: cache.getSet('pillcli_textureFlare2', THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png')),
+			//map		: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
+			blending	: THREE.AdditiveBlending,
 			useScreenCoordinates	: false
 		});
 		mesh.scale.set( 0.4, 0.4, 1.0 );
