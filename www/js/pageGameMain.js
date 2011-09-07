@@ -30,13 +30,13 @@ WebyMaze.PageGame	= function(opts)
 	// forward 'autodestroy' event
 	['autodestroy'].forEach(function(event){
 		gameCli.bind(event, function(){
-			console.log(event, "received", this, this.trigger, arguments);
+			console.log("pageGame received", event, this);
 
 			var args	= Array.prototype.slice.call(arguments);
 			args.unshift(event);
 			this.trigger.apply(this, args)
 
-			console.log("event", event, "done")
+			console.log("pageGame event", event, "done")
 		}.bind(this))
 	}.bind(this))
 	

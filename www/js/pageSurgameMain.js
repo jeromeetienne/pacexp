@@ -96,7 +96,7 @@ WebyMaze.PageSurgame.prototype._pageGameCtor	= function()
 	});
 	// forward 'autodestroy' event
 	this._pageGame.bind("autodestroy", function(gameOutput){
-		console.log("autodestroyed received", gameOutput);
+		console.log("pageSurgameMain: autodestroyed received", gameOutput);
 		// update the score
 		this._playerScore	= parseInt(gameOutput.score, 10);
 		// handle the result

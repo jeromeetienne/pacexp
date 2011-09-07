@@ -6,6 +6,7 @@ var WebyMaze	= WebyMaze || {};
 
 WebyMaze.GameCli	= function(opts)
 {
+	console.log("gameCli ctor")
 	// get parameters from options	
 	this._roundInitCtx	= opts.roundInitCtx	|| console.assert(false);
 
@@ -20,6 +21,7 @@ WebyMaze.GameCli	= function(opts)
 
 WebyMaze.GameCli.prototype.destroy	= function()
 {
+	console.log("gameCli destroy")
 	this._userInputKeyDtor();
 	//this._userInputTouchDtor();
 	this._socketDtor();
@@ -51,6 +53,7 @@ WebyMaze.GameCli.prototype._onContextTick	= function(message){
 
 WebyMaze.GameCli.prototype._onGameCompleted	= function(message)
 {
+console.log("_onGameCompleted", message)
 	var playerLives	= this._roundInitCtx.playerLives;
 	// destroy the socket ... just a trick to free the game
 	this._socketDtor();
@@ -317,23 +320,28 @@ WebyMaze.GameCli.prototype._socketCtor	= function()
 {
 	var listenHost	= WebyMaze.ConfigCli.server.listenHost;
 	var listenPort	= WebyMaze.ConfigCli.server.listenPort;
-console.log("listenHost", listenHost, listenPort)
+	console.log("listenHost", listenHost, listenPort)
 	// create and config the socket
-	this._sockio	= io.connect("http://"+listenHost+":" + listenPort);
+	// - 'force new connection' is a workaround a bug in failed reconnecting
+	this._sockio	= io.connect("http://"+listenHost+":" + listenPort, {'force new connection':true});
+	// set the log level
+	//this._sockio.set("log level", 2);	
 
 	this._sockio.on('connect', function(){		this._socketOnConnect();	}.bind(this)) 
 	this._sockio.on('connect_failed', function(){	this._socketOnError()		}.bind(this)) 
 	this._sockio.on('message', function(message){	this._socketOnMessage(message)	}.bind(this)) 
 	this._sockio.on('disconnect', function(){	this._socketOnClose();		}.bind(this))
-
-//	this._sockio.connect();
 }
 
-WebyMaze.GameCli.prototype._socketDtor	= function(){
-	this._sockio.socket.disconnect();
+WebyMaze.GameCli.prototype._socketDtor	= function()
+{
+	if( !this._sockio )	return;
+	this._sockio.disconnect();
+	this._sockio	= null;
 }
 
-WebyMaze.GameCli.prototype._socketOnConnect	= function(){
+WebyMaze.GameCli.prototype._socketOnConnect	= function()
+{
 	console.log("onConnect", this._sockio)
 	this.socketSend({
 		type	: "gameReq",
@@ -348,7 +356,7 @@ WebyMaze.GameCli.prototype._socketOnConnect	= function(){
 
 WebyMaze.GameCli.prototype._socketOnMessage	= function(message){
 	message	= JSON.parse(message);
-	console.log("onMessage", JSON.stringify(message));
+	//console.log("onMessage", JSON.stringify(message));
 	//console.log("onMessage", message, JSON.stringify(message));
 	if( message.type === 'contextInit' ){
 		this._onContextInit(message);
@@ -373,7 +381,7 @@ WebyMaze.GameCli.prototype._socketOnClose	= function(){
 
 WebyMaze.GameCli.prototype.socketSend	= function(message){
 	console.log("socketSend", message)
-	if( !this._sockio.socket.connected ){
+	if( !this._sockio || !this._sockio.socket.connected ){
 		console.log("socket not connected, discard message ", message, this._sockio)
 		return;
 	}
