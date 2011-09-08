@@ -55,8 +55,8 @@ WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 	}else if( this.pillType == 'red' ){
 		var mesh	= new THREE.Sprite({
 			//map			: THREE.ImageUtils.loadTexture('images/tmp/sprite0.png'),
-			map			: THREE.ImageUtils.loadTexture('images/lensFlare/Flare1.png'),
-			blending		: THREE.AdditiveBlending,
+			map		: cache('textureFlare1', THREE.ImageUtils.loadTexture('images/lensFlare/Flare1.png')),
+			blending	: THREE.AdditiveBlending,
 			useScreenCoordinates	: false
 		});
 		mesh.scale.set( 0.6, 0.6, 1.0 );
@@ -109,8 +109,6 @@ WebyMaze.PillCli.prototype._containerCtor	= function(){
 			material	= new THREE.MeshLambertMaterial( { color: 0xFF0000, shading: THREE.FlatShading } );
 		}else console.assert(false, 'unknown pillType '+this.pillType);
 	}
-	
-
 
 	// build the object	
 	this._container	= new THREE.LOD();
