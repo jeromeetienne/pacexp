@@ -1,4 +1,5 @@
 // consoleWorker, the worker side
+
 (function(){
 	this.console		= {};
 	var names	= ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml"
@@ -6,7 +7,6 @@
 	for(var i = 0; i < names.length; ++i){
 		(function(name){
 			console[name]	= function(){
-				return;
 				//if( name === "log" )	return;
 				self.postMessage({
 					type	: "_consoleWorker",

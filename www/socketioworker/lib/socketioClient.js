@@ -10,6 +10,9 @@ io._postMessage	= function(message){
 	setTimeout(function(){	io._worker.postMessage(message); }.bind(this), 0);
 }
 
+/**
+ * To create the socket and connect it
+*/
 io.connect	= function(url, options){
 	console.log("url", url, options)
 	console.log("matches", url.match(/http:\/\/(\w+):(\d+)/));
@@ -66,6 +69,14 @@ io.Socket.prototype.destroy	= function()
 	this._$onWorkerMessage	= null;
 	io._worker.removeEventListener('error'	, this._$onWorkerError	, false);
 	this._$onWorkerError	= null;
+}
+
+
+/**
+ * To set variables
+*/
+io.Socket.prototype.set		= function(key, val){
+	
 }
 
 

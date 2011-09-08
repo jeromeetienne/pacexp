@@ -15,7 +15,7 @@ consoleWorker.filterEvent	= function(event){
 }
 consoleWorker.bind	= function(worker){
 	worker.addEventListener('message', function(event){
-		//console.log("consoleWorker.bind():", event.data, event)
+		console.log("consoleWorker.bind():", event.data, event)
 		if( consoleWorker.filterEvent(event) ){
 			// failed attempts to get message parsing less intrusive
 			//console.log("stopped event2")
