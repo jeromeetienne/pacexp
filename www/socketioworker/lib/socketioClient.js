@@ -10,6 +10,17 @@ io._postMessage	= function(message){
 	setTimeout(function(){	io._worker.postMessage(message); }.bind(this), 0);
 }
 
+io.connect	= function(url, options){
+	console.log("url", url, options)
+	console.log("matches", url.match(/http:\/\/(\w+):(\d+)/));
+	var matches	= url.match(/http:\/\/(\w+):(\d+)/)
+	var hostname	= matches[1];
+	var port	= parseInt(matches[1], 10);
+	var socket	= new io.Socket(hostname, {port: port});
+	socket.connect();
+	return socket;
+}
+
 /**
  * Socket.io client
 */
@@ -19,6 +30,7 @@ io.Socket	= function(host, opts)
 	console.log("Socket ctor");
 	// init this.connected
 	this.connected	= false;
+	this.socket	= this;
 
 	// set io._worker
 	io._worker	= socketioWorker;

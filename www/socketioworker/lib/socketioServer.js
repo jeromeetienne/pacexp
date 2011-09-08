@@ -20,6 +20,7 @@ io._boundSocket		= null;
 */
 io.listen	= function(server, options)
 {
+console.log("wow")
 	console.assert(!io._listeningSocket)
 
 	io._worker.addEventListener('message', function(event){
@@ -162,6 +163,7 @@ io.BoundSocket.prototype.removeAllListeners	= function(event)
 io.BoundSocket.prototype.send	= function(message)
 {
 	console.log("server send ", message)
+	console.assert(typeof message === 'string');
 	//socketioWorker.postmessage
 	io._postMessage({
 		type	: 'message',
