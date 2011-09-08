@@ -45,8 +45,8 @@ WebyMaze.PageGame	= function(opts)
 		enableTrack	: gameConfig.soundTrack() === "true",
 		enableFx	: gameConfig.soundFx() === "true"
 	});
-	this._init();
 
+	this._init();
 	this._animate();	
 }
 
@@ -103,6 +103,9 @@ WebyMaze.PageGame.prototype._init	= function()
 	}
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
+
+	// use MicroCaches to cache the assets (texture and all, thus they arent pushed many time to the gpu)
+	renderer._microCache	= new MicroCache();
 
 	// append the renderer to the DOM
 	this._container = document.createElement( 'div' );

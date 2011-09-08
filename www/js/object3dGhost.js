@@ -87,7 +87,9 @@ WebyMaze.Object3dGhost.prototype._containerCtor	= function()
 
 WebyMaze.Object3dGhost.prototype._containerCtorGhost	= function()
 {
-	var _textureType	= this._textureType();
+	var cache	= function(key,val){ return renderer._microCache.getSet('Object3dGhost/'+key,val);	};
+
+	var _textureType= this._textureType();
 	var _colorStr	= this._colorStr();
 	if( _colorStr === 'red' ){
 		var textOnBack	= "Blinky";
@@ -164,9 +166,13 @@ WebyMaze.Object3dGhost.prototype._containerCtorGhost	= function()
 
 	// add the shaddow
 	if( isWebGL ){
+		var material	= cache('shaddowMaterial', new THREE.MeshLambertMaterial({
+			map	: THREEx.Texture.Smiley.shaddowTexture(),
+			opacity	: 0.5
+		}));
+			
 		var mesh		= new THREE.Mesh(
-			new THREE.Plane( bodyW, bodyW ),
-			new THREE.MeshLambertMaterial( { map: THREEx.Texture.Smiley.shaddowTexture(), opacity: 0.5 } )
+			new THREE.Plane( bodyW, bodyW ), material
 		);
 		mesh.position.y	= -bodyW/2 + 1;
 		mesh.rotation.x	= - 90 * ( Math.PI / 180 );

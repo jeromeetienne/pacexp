@@ -32,13 +32,9 @@ WebyMaze.PillCli.prototype.obj3d	= function(){
 	return this._container;
 }
 
-
-// use MicroCache to cache the assets (texture and all, thus they arent pushed many time to the gpu)
-WebyMaze.assetCache	= new MicroCache();
-
 WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 {
-	var cache	= WebyMaze.assetCache;
+	var cache	= function(key,val){ return renderer._microCache.getSet('pills/'+key,val);	};
 
 	if( this.pillType == 'white' ){
 		var mesh	= new THREE.Sprite({
@@ -50,8 +46,8 @@ WebyMaze.PillCli.prototype._containerSpriteCtor	= function()
 			//   - simply flush all elements. add a flush() method ?
 			//   - how to get all the caches ? at the begining of the game ?
 			// - register on exit callback ?
-			//map		: cache.getSet('pillcli_textureFlare2', THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png')),
-			map		: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
+			map		: cache('textureFlare2', THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png')),
+			//map		: THREE.ImageUtils.loadTexture('images/lensFlare/Flare2.png'),
 			blending	: THREE.AdditiveBlending,
 			useScreenCoordinates	: false
 		});
