@@ -172,7 +172,7 @@ WebyMaze.ConfigCli.sample.client	= {
 };
 
 WebyMaze.ConfigCli.pacmaze.prod.client	= {
-	showStat	: false,
+	showStat	: true,
 };
 
 WebyMaze.ConfigCli.pacmaze.dev.client	= {
