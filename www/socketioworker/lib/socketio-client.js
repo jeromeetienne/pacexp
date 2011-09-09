@@ -65,7 +65,7 @@ io.Socket	= function(host, opts)
 		//console.log("received from io._Worker event", event.data)		
 	}.bind(this);
 	this._$onWorkerError	= function(error){
-		console.log("Worker error: " + error.message + "\n");
+		console.log("Worker error: " + JSON.stringify(error, null, '\t')  + "\n");
 	}.bind(this);
 	io._worker.addEventListener('message'	, this._$onWorkerMessage, false);
 	io._worker.addEventListener('error'	, this._$onWorkerError	, false);

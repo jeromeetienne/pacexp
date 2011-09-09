@@ -8,7 +8,9 @@ io._worker	= this;
  * - network operation are async, dont change the logic
 */
 io._postMessage	= function(message){
-	setTimeout(function(){	io._worker.postMessage(message); }.bind(this), 0);
+	setTimeout(function(){
+		io._worker.postMessage(message);
+	}.bind(this), 0);
 }
 
 
@@ -30,6 +32,7 @@ io.listen	= function(server, options)
 		console.log("socketioServer from io._worker eventType", eventType)
 		if( eventType === 'connect' ){
 			console.assert(io._listeningSocket, "no listening socket");
+			
 			io._listeningSocket._onConnect(eventData);
 		}else if( eventType === 'message' ){
 			if(!io._boundSocket)	return;
@@ -62,6 +65,9 @@ io.ListeningSocket	= function()
 	// set io._listeningSocket	
 	console.assert(io._listeningSocket === null, "panic io._listeningSocket already set");
 	io._listeningSocket	= this;
+	
+	// just for socket.io compatibility - during port to 0.8.4
+	this.sockets	= this;
 }
 
 io.ListeningSocket.prototype._onConnect	= function(eventData)
@@ -89,6 +95,14 @@ io.ListeningSocket.prototype.removeListener	= function(event, callback)
 {
 	// forward to MicroEvent
 	this.unbind(event, callback)
+}
+
+
+/**
+ * Set configuration variable 
+*/
+io.ListeningSocket.prototype.set	= function(key, value){
+	// do nothing - just for compatibility
 }
 
 // mixin MicroEvent in this object
@@ -119,6 +133,11 @@ io.BoundSocket	= function()
 
 // mixin MicroEvent in this object
 MicroEvent.mixin(io.BoundSocket);
+
+io.BoundSocket.prototype.disconnect	= function()
+{
+	this.connection.destroy();
+}
 
 io.BoundSocket.prototype._onMessage	= function(eventData)
 {
@@ -161,7 +180,7 @@ io.BoundSocket.prototype.removeAllListeners	= function(event)
 */
 io.BoundSocket.prototype.send	= function(message)
 {
-	console.log("server send ", message)
+	//console.log("server send ", message)
 	console.assert(typeof message === 'string', "message MUST be a string");
 	//socketioWorker.postmessage
 	io._postMessage({

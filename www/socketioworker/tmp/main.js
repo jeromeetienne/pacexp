@@ -45,6 +45,6 @@ if( true ){
 
 
 require('./serverMain');
-console.log("sduperblaa")
+
 //importScripts('../../brequired/gameSrv.js');
 //require('./server')
