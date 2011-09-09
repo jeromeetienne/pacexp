@@ -31,6 +31,7 @@ WebyMaze.WebglRender	= function(opts)
 	this.gameId	= ctxInit.gameId;
 	this.username	= ctxInit.username;
 	this.urBodyId	= ctxInit.urBodyId;
+
 	this.players	= {};
 	this.enemies	= {};
 	this.shoots	= {};

@@ -356,7 +356,7 @@ WebyMaze.GameCli.prototype._socketOnConnect	= function()
 
 WebyMaze.GameCli.prototype._socketOnMessage	= function(message)
 {
-	console.log("_socketOnMessage message", message)
+	//console.log("_socketOnMessage message", message)
 	// parse message
 	message	= JSON.parse(message);
 	//console.log("onMessage", JSON.stringify(message));
