@@ -1,7 +1,6 @@
-importScripts('./consoleWorkerWorker.js');
+importScripts('../vendor/console4Worker/console4Worker-worker.js');
 importScripts('../vendor/microevent.js');
-importScripts('../lib/socketioServer.js');
-
+importScripts('../lib/socketio-server.js');
 
 var socketio	= io.listen();
 

@@ -2,12 +2,22 @@
 var io	= io || {};
 /** worker object */
 io._worker	= null;
+
+io.setWorker	= function(worker){
+	io._worker	= worker;
+}
+
 /**
  * Delay the postMessage with a timer to avoid any sync operation
  * - network operation are async, dont change the logic
 */
 io._postMessage	= function(message){
-	setTimeout(function(){	io._worker.postMessage(message); }.bind(this), 0);
+	// sanity check - socketioWorker MUST be set
+	console.assert(io._worker, "io._worker isnt setup.");
+	// fake async with a 0timer
+	setTimeout(function(){
+		io._worker.postMessage(message);
+	}.bind(this), 0);
 }
 
 /**
@@ -36,7 +46,7 @@ io.Socket	= function(host, opts)
 	this.socket	= this;
 
 	// set io._worker
-	io._worker	= socketioWorker;
+	console.assert(io._worker, "io._worker must be set")
 	
 	// sanity check - io._worker MUST be set
 	console.assert(io._worker, "no server is listening");
@@ -50,7 +60,7 @@ io.Socket	= function(host, opts)
 		var methodName	= "_on" + eventType.substr(0,1).toUpperCase() + eventType.substr(1);
 		//console.log("********* io.socket methodName", methodName)
 		if( methodName in this )	this[methodName](eventData);
-		//console.log("received from socketioWorker event", event.data)		
+		//console.log("received from io._Worker event", event.data)		
 	}.bind(this);
 	this._$onWorkerError	= function(error){
 		console.log("Worker error: " + error.message + "\n");
@@ -140,8 +150,6 @@ io.Socket.prototype.disconnect	= function()
 io.Socket.prototype.send	= function(message)
 {
 	//console.log("client send ", message)
-	// sanity check - socketioWorker MUST be set
-	console.assert(socketioWorker, "no server is listening");
 
 	io._postMessage({
 		type	: 'message',
