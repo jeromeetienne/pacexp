@@ -11,6 +11,7 @@ this.console4Worker	=  {}
 */
 console4Worker.filterEvent	= function(event, exec){
 	// sanity check - check the event
+	console.assert(event);
 	if( 'data' in event === false )		return false;
 	if( typeof event.data !== 'object' )	return false;
 	if( 'type' in event.data === false )	return false;
@@ -29,13 +30,12 @@ console4Worker.filterEvent	= function(event, exec){
  * @param {MessageEvent} event the event from the 'message' event
 */
 console4Worker._callback	= function(event){
-	// exec the console.* call if it is from console4Worker-worker
+	//console.log("consoleWorker.bind():", event.data, event)
 	if( console4Worker.filterEvent(event, true) )	return;
 }
 
 /**
  * make it bind a given worker
- * 
  * @param {Worker} Worker the webworker to bind from now on
 */
 console4Worker.bind	= function(worker){
@@ -44,7 +44,6 @@ console4Worker.bind	= function(worker){
 
 /**
  * make it unbind a given worker
- * 
  * @param {Worker} Worker the webworker to no more bind
 */
 console4Worker.unbind	= function(worker){
