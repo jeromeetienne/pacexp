@@ -31,9 +31,9 @@ brequiredFiles.push("brequired/tween.js");
 
 // import all the server
 if( true ){
-	importScripts('../examples/consoleWorkerWorker.js');
+	importScripts('../vendor/console4Worker/console4Worker-worker.js');
 	importScripts('../vendor/microevent.js');
-	importScripts('../lib/socketioServer.js');
+	importScripts('../lib/socketio-server.js');
 	importScripts('../../vendor/brequire.js');
 	brequiredFiles.forEach(function(src){
 		//loadJavascript(src);

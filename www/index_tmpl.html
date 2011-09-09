@@ -71,7 +71,7 @@ if( false ){
 
 		var SERVERINBROWSER	= PROJECT_NAME === 'pacmaze' ? true : false;
 		// SERVERINBROWSER disabled for now
-		SERVERINBROWSER		= false;
+		//SERVERINBROWSER		= false;
 
 		if( SERVERINBROWSER ){
 			_buffer += "\n<!-- ********************************** -->\n";
@@ -107,10 +107,10 @@ if( false ){
 			brequiredFiles.push("brequired/tween.js");
 		}
 		if( SERVERINBROWSER ){
-			loadJavascript("./socketioworker/examples/consoleWorkerPage.js");
-			loadJavascript("./socketioworker/lib/socketioClient.js");
+			loadJavascript("./socketioworker/vendor/console4Worker/console4Worker-page.js");
+			loadJavascript("./socketioworker/lib/socketio-client.js");
 			echoJavascript("var socketioWorker = new Worker('./socketioworker/tmp/main.js');");
-			echoJavascript("consoleWorker.bind(socketioWorker);");
+			echoJavascript("console4Worker.bind(socketioWorker);");
 		}else if( SERVERINBROWSER ){
 			loadJavascript("./socketioemu/lib/socketio_emu_core.js");
 			loadJavascript("./socketioemu/lib/socketio_emu_client.js");
