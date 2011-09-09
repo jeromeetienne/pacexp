@@ -110,6 +110,7 @@ if( false ){
 			loadJavascript("./socketioworker/vendor/console4Worker/console4Worker-page.js");
 			loadJavascript("./socketioworker/lib/socketio-client.js");
 			echoJavascript("var socketioWorker = new Worker('./socketioworker/tmp/main.js');");
+			echoJavascript("io.setWorker(socketioWorker);");
 			echoJavascript("console4Worker.bind(socketioWorker);");
 		}else if( SERVERINBROWSER ){
 			loadJavascript("./socketioemu/lib/socketio_emu_core.js");
@@ -138,7 +139,7 @@ if( false ){
 			_buffer += "\n<!-- ********************************** -->\n";
 			_buffer += "<!-- include firebugx only in prod in case console.* got forgotten -->";
 			_buffer += "\n<!-- ********************************** -->\n";
-//			loadJavascript("vendor/firebugx.js");
+			loadJavascript("vendor/firebugx.js");
 		}
 
 		_buffer += "\n<!-- ********************************** -->\n";

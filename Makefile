@@ -39,10 +39,10 @@ release_build: release_clean build/index.html worker_build
 	mkdir -p build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	cp www/vendor/socket.io-client/lib/vendor/web-socket-js/*.swf -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
 	unzip www/vendor/socket.io-client/lib/vendor/web-socket-js/WebSocketMainInsecure.zip -d build/vendor/socket.io-client/lib/vendor/web-socket-js/
-	echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
-	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
-	echo "\nNETWORK:\n*\n" >> build/cache.manifest
-	(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	#echo "CACHE MANIFEST\nCACHE:\n" > build/cache.manifest
+	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
+	#echo "\nNETWORK:\n*\n" >> build/cache.manifest
+	#(cd build && find . -type f | grep -v .bw | grep -v Hot | grep -v .ogg| grep -v .htaccess) | sed 's/ /%20/' >> build/cache.manifest
 
 release_clean:
 	rm -rf build/*
@@ -56,13 +56,13 @@ build_monitor: build
 worker_build:
 	echo > build/worker_build.js
 	cat www/socketioworker/vendor/microevent.js		>> build/worker_build.js
-	cat www/socketioworker/lib/socketioServer.js		>> build/worker_build.js
+	cat www/socketioworker/lib/socketio-server.js		>> build/worker_build.js
 	cat www/vendor/brequire.js				>> build/worker_build.js
-	cat www/socketioworker/examples/consoleWorkerWorker.js	>> build/worker_build.js
+	cat www/socketioworker/vendor/console4Worker/console4Worker-worker.js	>> build/worker_build.js
 	cat www/brequired/*.js					>> build/worker_build.js
 	mkdir -p build/socketioworker/tmp/
-	cp www/socketioworker/tmp/main.js build/socketioworker/tmp/
-	uglifyjs build/worker_build.js > build/worker_build.min.js
+	uglifyjs -d CPPFLAGS_MINIFIED www/socketioworker/tmp/main.js > build/socketioworker/tmp/main.js
+	uglifyjs  build/worker_build.js > build/worker_build.min.js
 
 www/index_dev.html: www/index_tmpl.html
 	echo "<? PROJECT_ENV = 'dev';  ?>" | $(SHORTTAGJS) www/index_tmpl.html > www/index_dev.html

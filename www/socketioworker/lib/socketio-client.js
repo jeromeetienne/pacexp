@@ -27,7 +27,7 @@ io.connect	= function(url, options)
 {
 	//console.log("url", url, options)
 	//console.log("matches", url.match(/http:\/\/(\w+):(\d+)/));
-	var matches	= url.match(/http:\/\/(\w+):(\d+)/)
+	var matches	= url.match(/http:\/\/([^:]+):(\d+)/)
 	var hostname	= matches[1];
 	var port	= parseInt(matches[1], 10);
 	var socket	= new io.Socket(hostname, {port: port});

@@ -30,7 +30,10 @@ brequiredFiles.push("brequired/tween.js");
 
 
 // import all the server
-if( true ){
+// - during the build generation this file is passed thru uglify -d CPPFLAGS_MINIFIED
+if( typeof CPPFLAGS_MINIFIED !== "undefined" ){
+	importScripts('../../worker_build.min.js');	
+}else{
 	importScripts('../vendor/console4Worker/console4Worker-worker.js');
 	importScripts('../vendor/microevent.js');
 	importScripts('../lib/socketio-server.js');
@@ -39,8 +42,6 @@ if( true ){
 		//loadJavascript(src);
 		importScripts('../../'+src);
 	})	
-}else{
-	importScripts('../../worker_build.min.js');	
 }
 
 
