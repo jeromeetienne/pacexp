@@ -20,7 +20,6 @@ io._boundSocket		= null;
 */
 io.listen	= function(server, options)
 {
-console.log("wow")
 	console.assert(!io._listeningSocket)
 
 	io._worker.addEventListener('message', function(event){
@@ -113,7 +112,7 @@ io.BoundSocket	= function()
 			io._boundSocket	= null;
 		}
 	}
-	// set io._boundSocket	
+	// set io._boundSocket
 	console.assert(io._boundSocket === null, "panic io._boundSocket already set");
 	io._boundSocket	= this;
 }
@@ -123,13 +122,13 @@ MicroEvent.mixin(io.BoundSocket);
 
 io.BoundSocket.prototype._onMessage	= function(eventData)
 {
-	console.log("BoundSocket._onMe2ssage", eventData)
+	//console.log("BoundSocket._onMessage", eventData)
 	this.trigger('message', eventData);
 }
 
 io.BoundSocket.prototype._onDisconnect	= function(eventData)
 {
-	console.log("BoundSocket._onDisconnect", eventData)
+	//console.log("BoundSocket._onDisconnect", eventData)
 	this.trigger('disconnect', eventData);
 }
 
@@ -163,7 +162,7 @@ io.BoundSocket.prototype.removeAllListeners	= function(event)
 io.BoundSocket.prototype.send	= function(message)
 {
 	console.log("server send ", message)
-	console.assert(typeof message === 'string');
+	console.assert(typeof message === 'string', "message MUST be a string");
 	//socketioWorker.postmessage
 	io._postMessage({
 		type	: 'message',

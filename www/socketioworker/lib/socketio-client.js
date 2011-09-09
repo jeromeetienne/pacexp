@@ -52,10 +52,11 @@ io.Socket	= function(host, opts)
 	console.assert(io._worker, "no server is listening");
 
 	this._$onWorkerMessage	= function(event){
+		// filter console4Worker messages if present
+		if( typeof console4Worker !== 'undefined' && console4Worker.filterEvent(event))	return;
+		// parse normal message
 		var eventType	= event.data.type;
 		var eventData	= event.data.data;
-		// ignore consoleWorker messages
-		if( eventType === '_consoleWorker' )	return;
 		// notify local function
 		var methodName	= "_on" + eventType.substr(0,1).toUpperCase() + eventType.substr(1);
 		//console.log("********* io.socket methodName", methodName)
@@ -82,14 +83,6 @@ io.Socket.prototype.destroy	= function()
 }
 
 
-/**
- * To set variables
-*/
-io.Socket.prototype.set		= function(key, val){
-	
-}
-
-
 io.Socket.prototype._onConnected	= function()
 {
 	// mark the socket as connected
@@ -109,7 +102,6 @@ io.Socket.prototype._onMessage	= function(eventData)
 */
 io.Socket.prototype.on	= function(event, callback)
 {
-	//console.log("io.Socket.on", event)
 	// forward to MicroEvent
 	this.bind(event, callback)	
 }

@@ -5,12 +5,16 @@ importScripts('../lib/socketio-server.js');
 var socketio	= io.listen();
 
 socketio.on('connection', function(socket){
-	console.log("server received a socket")
+	console.log("server received a socket connection")
+
+	console.log("server originating message '' on connection");
+	socket.send(JSON.stringify({ hello: 'world' }));
+
+	// bind 'message' and echo all received message
 	socket.on('message', function(message){
-		console.log("server boundsocket received ", message)
+		console.log("server boundsocket just received and will echo: ", message)
 		socket.send(message)
 	})
-	//socket.send({ hello: 'world' });
 });
 //
 //
