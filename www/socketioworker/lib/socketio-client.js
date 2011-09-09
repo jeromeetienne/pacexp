@@ -23,7 +23,8 @@ io._postMessage	= function(message){
 /**
  * To create the socket and connect it
 */
-io.connect	= function(url, options){
+io.connect	= function(url, options)
+{
 	console.log("url", url, options)
 	console.log("matches", url.match(/http:\/\/(\w+):(\d+)/));
 	var matches	= url.match(/http:\/\/(\w+):(\d+)/)
