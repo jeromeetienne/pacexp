@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<body>
+		<!-- get consoleForWorker -->
+		<script src="../console4Worker-page.js"></script>
+
+		<script language="javascript">
+			// init the worker
+			var worker	= new Worker("worker.js");
+			// example of message not from console4Worker
+			worker.addEventListener('message', function(event){
+
+				// filter this event if it is from console4Worker
+				if( console4Worker.filterEvent(event) )	return;
+
+				console.log("event non console4Worker", event.data);
+			}, false);
+		</script>
+	</body>
+</html>
