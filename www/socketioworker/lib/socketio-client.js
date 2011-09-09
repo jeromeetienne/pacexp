@@ -13,7 +13,7 @@ io.setWorker	= function(worker){
 */
 io._postMessage	= function(message){
 	// sanity check - socketioWorker MUST be set
-	console.assert(io._worker, "io._worker isnt setup.");
+	console.assert(io._worker, "io._worker isnt set");
 	// fake async with a 0timer
 	setTimeout(function(){
 		io._worker.postMessage(message);
@@ -25,8 +25,8 @@ io._postMessage	= function(message){
 */
 io.connect	= function(url, options)
 {
-	console.log("url", url, options)
-	console.log("matches", url.match(/http:\/\/(\w+):(\d+)/));
+	//console.log("url", url, options)
+	//console.log("matches", url.match(/http:\/\/(\w+):(\d+)/));
 	var matches	= url.match(/http:\/\/(\w+):(\d+)/)
 	var hostname	= matches[1];
 	var port	= parseInt(matches[1], 10);
